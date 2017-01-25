@@ -1,0 +1,12 @@
+$(document).ready(function(){
+	$("#verfiltro").click(function(){
+		$("#fila_filtros").show(500);
+		$("#fila_botones_filtros").show(500);
+		$("#fila_ref").hide();
+    });
+    $("#ocultarfiltro").click(function(){
+		$("#fila_filtros").hide();
+		$("#fila_botones_filtros").hide();
+		$("#fila_ref").show(500);
+    });
+});

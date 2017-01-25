@@ -1,0 +1,200 @@
+--------------------------TEMA 2--------------------
+define ('FAV', 'La vida de brian'); 
+	Php: Definir constantes.
+	No se puede modificar durante el documento.
+rand([$min],[$max]);
+	php:Genera un entero aleatorio
+ceil($valor);
+	php:redondea un decimal hacia arriba hasta el siguiente entero mayor.
+floor($valor);
+	php: redondea un decimal hacia abajo hasta el siguiente entero menor.
+max($valor1,$valor2...);/min($valor1,$valor2...);
+	php: Devuelve el max/min valor de los proporcionados.
+echo '<a haref="moviesite.php?fav=Lucas">';
+	php: Pasamos la variable fav a la url moviesite.php
+$myf= urlencode('La vida de bri');
+	php: Nos guarda los caracteres especiales, así como espacios.
+session_start();
+$_SESSION['username']="nombreusuario";
+$_SESSION['authuser']=1;
+	php: Para inicio de sesión.
+<form method="post" action="direccion">
+<input type="tipo de formulario" name="nombre" value="valor">
+</form>
+	php: formulario, se pueden meter más input dentro de un mismo formulario.
+session_unset();
+	php: liberar varibles de sesiones anteriores.
+<?php include 'archivo.php'?>
+	php: nos include el código del archivo especificado.
+	podemos combinarlo con instrucciones if y demases.
+<div style="text-align: center">Lo que que queremos que se vea afectado</div>
+	html: alineamos texto al centro.
+global $varname
+	php: para que una funcion pueda acceder a una variable exterior.
+function nombre_funcion(parametro1_interno, parametro2_interno...) {
+	global $variable_externa;
+	Cosas que hace la función;}
+	php: funcion, solemos definir al principio del código, por tema de depuración
+		se las llama con "nombre_funcion(parametro1_exterior, parametro2_exterior);".
+isset(nombre_variable);
+	php:devuelve true, si se ha modificado; false si no.
+
+PAGINA 81 MATRICES
+$marido = array('elemento1' => 'valor1', 'elemento2' => 'valor2'...);
+echo $marido['elemento1'];
+	php: definicion de matrices y asignacion de valores a cada elemento.
+								o
+$marido['elemento1']='valor1'; Entre comillas cadenas de caracteres.
+$marido['elemento2']=valor2; Sin comillas, valor numerico.
+.....
+$marido[0]; Primer elemento de la matriz.
+$marido[1]; Segundo elemento de la matriz.....
+Ordenar matrices: sort($nom_matriz); por valor ascendente
+				  rsort($nom_matriz); descendente
+				  asort($nom_matriz); ascendente y mantiene relación calve/valor.
+				  arsort($nom_matriz); descendente y mantiene relación calve/valor.
+print_r($variable);
+	php: imprime variable para que se pueda leer.
+
+foreach($variable as $copia_en_esta_variable) {Instruciones;}
+	php: recorre los valores de la matriz/vector $variable, copiado en $copia_en_...
+		y las istrucciones se ejecutarán hasta que se acaben los valores de $variable.
+		Foreach recorre la matriz/vector desde el primer elemento al último.
+while (condicion=true){instrucciones;}
+	php: mientras la condicion sea verdadera, ejecutar instrucciones.
+do {instruciones;}while(condicion=true); ejecutar las instrucciones mientras la condicion
+			sea verdadera.
+
+Sintaxis HEREDOC:
+$value = <<<ABC
+Retaila a soltar;
+ABC;
+		php: Sintaxis heredoc, introducimos texto con comillas y demases.
+		
+OOP PROGRAMACION ORIENTADA A OBJETOS pagina 95
+<?php
+$micaja = new Caja('Jack');
+echo $micaja->obtener_su_contenido();
+?>
+	php: $micaja, guarda una referencia a Caja
+	
+----------------------- TEMA 3--------------------
+					www.mysql.com
+					
+MySQL: tipos de campos en pag 101.
+COMANDOS: pagina 108. 
+unique.....
+	MySQL: comprobación de duplicidad de un campo en concreto, normalmente para
+			usar sobre la clave.
+auto_increment.......
+	MySQL: se usa al crear una tabla, cada vez que se cree un nuevo registro incrementará
+			el campo especificado.
+CREATE: Crea nuevas bases de datos y tablas.
+ALTER: Modifica tablas existentes.
+SELECT: Selecciona los datos que indique. Sintaxis pagina 114.
+DELETE: Elimina los datos de una tabla.
+DESCRIBE: Le permite conocer la estructura y aspectos concretos de una tabla.
+INSERT INTO nombre_tabla VALUES: Añade valores a la tabla.
+UPDATE: Le permite modificar los datos que ya contiene la tabla.
+DROP: Borra una tabla o base de datos por completo.
+
+$query  'SELECT * FROM TABLE';     ò  $results= mysql_query('SELECT * FROM table');
+$results = mysql_query($query9;
+		PHP->MySQL: seleccionamos todo de una tabla y se guarda en la matriz temporal $results.
+$db = mysql_connect('localhost', 'bp6am', 'bp6ampass');
+o
+$host = 'localhost'; $user = 'bp6am';....
+$db = mysql_connect($host, $user, $pass);
+		Necesario para conectar con el servidor MySQL. La segunda opción se suele
+		usar más por motivos de seguridad, e incluso guardar las variables en otro archivo.
+mysql_query($consulta[,$recurso]);
+		PHP->MySQL: Se utiliza para enviar cualquier comando MySQL al servidor de la BD.
+SELECT * FROM products WHERE description LIKE "%shirt%"
+		MySQL: nos buscará en la tabla description cualquier registro que contenga "shirt".
+		 Gracias al comodín %. Sino buscaría la palabra exacta.
+FROM movie LEFT JOIN movietype ON movie_type = movietype_id
+			MySQL: La segunda tabla movietype depende de la primera, movie.
+			movie_type = movietype_id, campo que usamos para combinar las tablas.
+			
+----------------------- TEMA 4--------------------	
+UTILIZAR TABLAS PARA MOSTRAR DATOS
+
+$num=mysql_num_rows($result);
+	PHP->MySQL: nos devuelve el número de filas obtenidas.
+extract($row);
+	PHP->MySQL: crea variables con el mismo nombre de los campos.
+&trozo_codigo =<<<NOMBREX
+codigo tol que quiera
+NOMBREX;
+&trozo_docigo .=<<<NOMBREX
+codigo tol que quiera
+NOMBREX;
+echo $trozo_codigo;
+		PHP: Vamos añadiendo a la variable $trozo_codigo, trozos de codigo que queramos,
+			luego lo podremos llamar cuando queramos.
+			Util para estructuras de consultas a base datos:
+			$query = <<<ENDSQL
+				SELECT
+					campo 1, campo 2...
+				FROM
+					....
+			ENDSQL;
+<a href="asdñlfj.php?asdfas" title="Lo que queramos contar">Nombre_mostrar</a>
+		html: parametro title:al posar el ratón sobre el vínculo nos pone eso.
+mas info: http://developer.mozilla.org/en/docs/Defining_Cross-Browser_Tooltips.
+Añadir comlumnas a tabla: PAGINA 140. ALTER TABLE nombre ADD COLUMN
+----------------------- TEMA 5 --------------------	
+PAGINA 151
+print_r($variable);
+	php: vemos el contenido de la varible.
+header('Location: archivo.php');
+	php: Función, nos redirige a archivo.php. Util para resolver problemas de seguridad.
+		Debe estar arriba del todo, no se puede enviar anda antes, ni una linea vacía
+		antes del <?php...
+ucase();/ucfirst();
+	php: Devuelve una cadena con el primer carácter en mayúsculas.
+[expresion]?[se ejecuta si es TRUE]: [se ejecuta si es FALSE];
+	php: Operador ternario, sustitutivo de if-else.
+<input type="hidden" name="nombre" value="valor">
+	html: Este campo no se muestra en el explorador pero se enviará con el resto del formulario.
+			"valores por defecto", una de las formas de pasar valores entre formularios.
+			
+----------------------- TEMA 6 --------------------	
+PAGINA 171
+for (valor inicial; condicion; incremento){//codigo}
+switch(valor){
+	case 'valor1' {//codigo break;}
+	case 'valor2' {}
+}
+echo '<a href="' . $SERVER['REQUEST_URI'] . '&do=1">YES</a>';
+	htp:$SERVER['REQUEST_URI']->
+	nos devuelve a nuestra misma página, y en este caso actualiza $do. recarga página??
+----------------------- TEMA 7 --------------------	
+PAGINA 191 MANIPULACION IMAGENES
+	
+	
+	
+	
+----------------------- TEMA 8 --------------------	
+VALIDACION ENTRADAS USUARIO PAGINA 233
+trim();
+	php:nos elimina espacios al principio y final de una cadena.
+header('Location:movie.php?action=add' . '$error=' . join($error, urlencode('<br/>')));
+	php: $error es una matriz con todos los errores detectados dentro.
+Funciones de validación: pagina 250
+funciones "ctyp_*"->Sólo analiza contenidos de cadenas alfanuméricas, no matrices, ni objetos
+					ni recursos.
+preg_match();
+		php: comprueba si una cadena cumple con unos patrones especificados.
+		pagina 252. Validación de datos.
+		mirar "expresiones regulares";
+explode();list();checkdate();
+		MIRAR PAGINA 254
+
+----------------------- TEMA 10 --------------------
+$query = 'INSERT IGNORE INTO comic_zipcode....
+	php: IGNORE: permite realizar una inserción sin utilizar primero una consulta SELECT para comprobar si los
+	datos se encuentran ya en la tabla. Sólo compara claves principales. Si la clave principal es
+	autoincrementable, siempre se ejecutará INSERT!!! CUIDADÍN!!!
+
+
