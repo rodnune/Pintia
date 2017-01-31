@@ -4,7 +4,7 @@
     @include('layouts.navbar')
 @endsection
 
-@section('splash')
+@section('image')
     @include('splash_image')
 @endsection
 

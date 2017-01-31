@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.app');
 
 @section('navbar')
     @include('layouts.navbar')
 @endsection
 
-@section('image')
+@section('splash')
     @include('splash_image')
 @endsection
 
 @section('content')
-    @include('welcome')
+    @include('catalogo.uds_estratigraficas.search_uds_estratigraficas')
 @endsection
 
 @section('footer')
