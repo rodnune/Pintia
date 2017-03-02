@@ -4,7 +4,7 @@ namespace app\Http\Controllers;
 
 
 use App\Models\User;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 
@@ -12,13 +12,17 @@ class LoginController extends \App\Http\Controllers\Controller
 {
 
 
-    public function is_user()
+    public function is_user(Request $request)
     {
 
+        $this->validate($request, [
 
+            'usuario'	 =>  'required',
+            'password'   =>  'required'
+        ]);
 
-            $username = Input::get('usuario');
-        $password = Input::get('password');
+            $username = $request ->input('usuario');
+            $password = $request ->input('password');
 
         $usuario = User::where('username', $username)
             ->where('password', $password);
