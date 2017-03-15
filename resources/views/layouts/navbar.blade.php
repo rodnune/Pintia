@@ -10,30 +10,30 @@
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">Consultar <b class="caret"></b></a>
                     <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                        <li><a href="/index/objetos">Objetos</a></li>
-                        <li><a href="/index/tumbas">Tumbas</a></li>
+                        <li><a href="/objetos">Objetos</a></li>
+                        <li><a href="/tumbas">Tumbas</a></li>
                         <li><a href="#">Inhumaciones</a></li>
-                        <li><a href="/index/cremaciones">Cremaciones</a></li>
+                        <li><a href="/cremaciones">Cremaciones</a></li>
 
                        <li class="dropdown-submenu">
                            <a tabindex="-1" href="#">Estratigraf&iacute;as</a>
                             <ul class="dropdown-menu">
-                                <li><a href="/index/uds_estratigraficas">Unidades estratigr&aacute;ficas</a></li>
-                                <li><a href="/index/matrix_harris">Matrices de Harris</a></li>
+                                <li><a href="/uds_estratigraficas">Unidades estratigr&aacute;ficas</a></li>
+                                <li><a href="/matrix_harris">Matrices de Harris</a></li>
                                 </ul>
-                            </li>;
-                        <li><a href="/index/analiticas_faunas">Anal&iacute;ticas de faunas</a></li>
+                            </li>
+                        <li><a href="/analiticas_faunas">Anal&iacute;ticas de faunas</a></li>
 
                         <!--Bibliografía-->
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Bibliograf&iacute;a</a>
                             <ul class="dropdown-menu">
-                                <li><a href="/index/articulos">Art&iacute;culos</a></li>
+                                <li><a href="/articulos">Art&iacute;culos</a></li>
                                 <li><a href="#">Autores</a></li>
                                 </ul>
                             </li>
 
-                        <li><a href="/index/multimedia">Multimedia</a></li>
+                        <li><a href="/multimedia">Multimedia</a></li>
                         </ul>
                     </li> <!--Dropdown Consultar -->
                     @endif
@@ -44,29 +44,29 @@
                        <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">Nuevo/Modificar <b class="caret"></b></a>
                                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                                    <li><a href="/index/objetos">Objetos</a></li>
-                                    <li><a href="/index/tumbas">Tumbas</a></li>
+                                    <li><a href="/objetos">Objetos</a></li>
+                                    <li><a href="/tumbas">Tumbas</a></li>
                                     <li><a href="#">Inhumaciones</a></li>
-                                    <li><a href="/index/cremaciones">Cremaciones</a></li>
+                                    <li><a href="/cremaciones">Cremaciones</a></li>
                                     <li><a href="muestras.php">Muestras</a></li>
 
-                                <li class="dropdown-submenu">';
+                                <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">Estratigraf&iacute;as</a>
                                     <ul class="dropdown-menu">
                                         <li><a href="unidad_e.php?seccion=Lista">Unidades estratigr&aacute;ficas</a></li>
-                                        <li><a href="relaciones_e.php">Relaciones estratigr&aacute;ficas</a></li>
+                                        <li><a href="relaciones_e.php">Relaciones estratigráficas</a></li>
                                         <li><a href="matrix.php">Matrices de Harris</a></li>
                                     </ul>
                                 </li>
 
-                                <li><a href="analisis_meta.php">An&aacute;lisis metalogr&aacute;ficos</a></li>
-                                <li><a href="/index/analiticas_faunas">Anal&iacute;ticas de faunas</a></li>
+                                <li><a href="analisis_meta.php">Análisis metalográficos</a></li>
+                                <li><a href="/analiticas_faunas">Analíticas de faunas</a></li>
 
 
                                 <li class="dropdown-submenu">
-                                     <a tabindex="-1" href="#">Bibliograf&iacute;a</a>
+                                     <a tabindex="-1" href="#">Bibliografía</a>
                                      <ul class="dropdown-menu">
-                                         <li><a href="articulos0.php">Art&iacute;culos</a></li>
+                                         <li><a href="articulos0.php">Artículos</a></li>
                                          <li><a href="autores0.php">Autores</a></li>
                                          <li><a href="listas.php?idl=1">Palabras clave</a></li>
                                          </ul>
@@ -93,8 +93,8 @@
                                                 <li><a href="listas.php?idl=3">Tipos de tumbas</a></li>
                                                 <li><a href="listas.php?idl=4">Tipos de muestras</a></li>
                                                 <li><a href="listas.php?idl=5">Componentes artificiles</a></li>
-                                                <li><a href="listas.php?idl=6">Componentes geol&oacute;gicos</a></li>
-                                                <li><a href="listas.php?idl=7">Componentes org&aacute;nicos</a></li>
+                                                <li><a href="listas.php?idl=6">Componentes geológicos</a></li>
+                                                <li><a href="listas.php?idl=7">Componentes orgánicos</a></li>
                                                 <li><a href="listas.php?idl=8">Artefactos</a></li>
                                                 <li><a href="listas.php?idl=9">Superficies</a></li>
                                             </ul>
@@ -102,10 +102,10 @@
 
 
                                        <li><a href="mcobjetos1.php?seccion=4">Medidas</a></li>
-                                       <li><a href="mcobjetos1.php">Categor&iacute;as/Subcategor&iacute;as</a></li>
+                                       <li><a href="mcobjetos1.php">Categorías/Subcategorías</a></li>
 
                                     <li class="dropdown-submenu">
-                                       <a tabindex="-1" href="#">Geograf&iacute;a</a>
+                                       <a tabindex="-1" href="#">Geografía</a>
                                         <ul class="dropdown-menu">
                                            <li><a href="geolocalizacion.php?seccion=Lugar">Lugares</a></li>
                                            <li><a href="geolocalizacion.php?seccion=Localizacion&accion=Lista">Localizaciones</a></li>
@@ -113,7 +113,7 @@
                                     </li>
 
                                    <li class="dropdown-submenu">
-                                       <a tabindex="-1" href="#">Bibliograf&iacute;a</a>
+                                       <a tabindex="-1" href="#">Bibliografía</a>
                                        <ul class="dropdown-menu">
                                            <li><a href="articulos0.php">Art&iacute;culos</a></li>
                                            <li><a href="autores0.php">Autores</a></li>
@@ -155,13 +155,13 @@
                 @endif
                         @if(Session::get('logged')==1)
 
-                            <a href="/index/logout" class="btn btn-danger" title="cerrarSesion"><i class="fa fa-user-times"></i> Salir</a>
+                            <a href="/logout" class="btn btn-danger" title="cerrarSesion"><i class="fa fa-user-times"></i> Salir</a>
                             @if(Session::get('admin_level')>=1)
                             <a href="zona_mensajes.php" class="btn btn-info" title="Zona mensajes"><i class="fa fa-comments"></i></a>
                             @endif
                         @endif
 
-                &nbsp;<a href="#" id="boton-ayuda" class="btn btn-warning" title="Ayuda"><i class="fa fa-info-circle fa-lg"></i></a>
+                <a href="#" id="boton-ayuda" class="btn btn-warning" title="Ayuda"><i class="fa fa-info-circle fa-lg"></i></a>
                 </ul>
 
             <script type="text/javascript">

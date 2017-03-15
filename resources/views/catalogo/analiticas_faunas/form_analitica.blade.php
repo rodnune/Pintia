@@ -15,7 +15,7 @@
         </div>
             <div class="form-group">
                 {{ Form::submit('Guardar cambio', array('class' => 'btn btn-primary')) }}
-                <button class="btn btn-danger" onclick="window.location.href='/index/analiticas_faunas'";>Volver</button>
+                <button class="btn btn-danger" onclick="window.location.href='/analiticas_faunas'";>Volver</button>
             </div>
             {{Form::close()}}
             @if($errors->any())

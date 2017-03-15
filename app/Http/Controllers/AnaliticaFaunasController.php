@@ -19,7 +19,7 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
 
         $analiticasFaunas = AnaliticaFauna::all();
 
-        return view('catalogo.analiticas_faunas.seccion_analiticas',['analiticasFaunas' => $analiticasFaunas]);
+        return view('catalogo.analiticas_faunas.layout_analiticas',['analiticasFaunas' => $analiticasFaunas]);
     }
 
     public function create(Request $request){

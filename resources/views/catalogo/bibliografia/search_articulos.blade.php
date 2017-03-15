@@ -1,4 +1,4 @@
-<h1 class="text-center"><center>Lista de Articulos</center></h1><br>
+<h1 class="text-center">Lista de Articulos</h1><br>
 
 <!-- FILTROS -->
   <div class="form-group">
@@ -57,4 +57,4 @@
                 </tr>
         </form>
 
-    echo '</tbody></table>';
+    </tbody></table>

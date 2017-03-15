@@ -1,8 +1,10 @@
 
 
-    <div style="margin-top: 2%;"></div>
+    <div style="margin-top: 2% "></div>
+
     <!-- Contenido de la pagina -->
     <div id="page" style="margin: 0 0 20px 0;">
+        <div id="content-wide" style="margin-top:20px">
 <h1 class="text-center">Lista de Objetos</h1><br><br>
 
  <div class="form-group">
@@ -72,3 +74,7 @@
         </form>
     </table>
     </div>
+        <br class="clearfix">
+    </div>
+
+
