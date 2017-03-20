@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('layouts.app')
 
 @section('header')
     @include('layouts.header')
@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('catalogo.analiticas_faunas.form')
+    @include('catalogo.analiticas_faunas.form_update')
 @endsection
 
 @section('footer')

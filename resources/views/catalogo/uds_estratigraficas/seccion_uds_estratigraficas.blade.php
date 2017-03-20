@@ -1,11 +1,11 @@
 @extends('layouts.app');
 
-@section('navbar')
-    @include('layouts.navbar')
+@section('header')
+    @include('layouts.header')
 @endsection
 
-@section('splash')
-    @include('splash_image')
+@section('navbar')
+    @include('layouts.navbar')
 @endsection
 
 @section('content')
