@@ -35,6 +35,7 @@ class LoginController extends \App\Http\Controllers\Controller
 
         }else{
 
+            Session::put('logged',0);
             return view('seccion_principal');
 
 

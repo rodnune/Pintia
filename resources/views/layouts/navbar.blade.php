@@ -53,7 +53,7 @@
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">Estratigraf&iacute;as</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="unidad_e.php?seccion=Lista">Unidades estratigr&aacute;ficas</a></li>
+                                        <li><a href="/uds_estratigraficas">Unidades estratigr&aacute;ficas</a></li>
                                         <li><a href="relaciones_e.php">Relaciones estratigráficas</a></li>
                                         <li><a href="matrix.php">Matrices de Harris</a></li>
                                     </ul>
@@ -150,7 +150,7 @@
                     <a class="btn btn-success btn-user-regular"></a>
                 @elseif(Session::get('admin_level')==1)
                     <a class="btn btn-success btn-user-business"></a>
-                @else
+                @elseif(Session::get('admin_level')>1)
                     <a class="btn btn-success btn-user-admin">Administrador</a>
                 @endif
                         @if(Session::get('logged')==1)

@@ -49,6 +49,7 @@
                         </thead>
 
                         <tbody>
+                        @if(count($analiticasFaunas)>0)
                         @foreach ($analiticasFaunas as $analiticasFauna)
                             <tr>
                                 <td align="center">{{$analiticasFauna -> IdAnalitica}}</td>
@@ -76,6 +77,7 @@
                                 @endif
                             </tr>
                         @endforeach
+                            @endif
                         </tbody>
 
                     </table>

@@ -28,12 +28,15 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
     }
 
     public function create(Request $request){
-        $new_analitica = new AnaliticaFauna;
+        $new_analitica = new AnaliticaFauna();
         $descripcion = $request ->input('descripcion');
         $partes_oseas = $request->input('partes_oseas');
 
 
         $validator = Validator::make($request->all(), [
+
+
+
             'descripcion' => 'required|unique:analiticafaunas,descripcion',
             'partes_oseas' => 'required'
         ]);

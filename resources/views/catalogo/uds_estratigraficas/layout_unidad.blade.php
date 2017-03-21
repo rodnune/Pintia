@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    @include('catalogo.uds_estratigraficas.search_uds_estratigraficas')
+    @include('catalogo.uds_estratigraficas.grid_unidad')
 @endsection
 
 @section('footer')
