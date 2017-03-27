@@ -1,3 +1,7 @@
+<div id="wrapper">
+    <div id="header">
+
+        </div>
 <div id="page">
     <div id="content">
         <div class="post">
@@ -65,3 +69,4 @@
     </div> <!-- CONTENT -->
     <br class="clearfix" />
 </div> <!-- PAGE -->
+</div>

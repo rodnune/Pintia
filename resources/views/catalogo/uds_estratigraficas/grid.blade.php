@@ -17,7 +17,7 @@
                         <input id="ocultarfiltro" type="radio" name="filtro" value="No"> Buscar por identificador
                         </div>
 
-                    <table class="table table-bordered table-hover" rules="rows">
+                    <table id="tabla_principal" class="table table-bordered table-hover" rules="rows">
                             <input type="hidden" name="seccion" value="Lista">
 
 
@@ -56,7 +56,7 @@
                             <input type="hidden" name="seccion" value="Lista">
                                 <tr id="fila_ref" style="display:none;">
                                     <td><strong>Buscar por id UE:</strong></td>
-                                <td><input id="myInput" type="text" class="form-control" name="buscarRef" placeholder="Identificador" required></td>
+                                <td><input id="myInput" type="text" class="form-control" onkeyup="filter()" name="buscarRef" placeholder="Identificador" required></td>
                                     <td align="center" colspan="4">
 
 
@@ -94,7 +94,7 @@
 
                                     <input type="hidden" name="seccion" value="Info">
                                     <input type="hidden" name="ue">
-                                <a id="queryLink" href=""><button id="queryButton" type="submit" name="submit" class="btn btn-primary" value="{{$uds_estratigrafica->UE}}"><i class="fa fa-eye"></i> Ver</button></a>
+                                <a id="queryLink" href="/uds_estratigraficas/{{$uds_estratigrafica->UE}}"><button id="queryButton" type="submit" name="submit" class="btn btn-primary" value="{{$uds_estratigrafica->UE}}"><i class="fa fa-eye"></i> Ver</button></a>
                                     </td>
 
                             @if(Session::get('admin_level') > 1 )
@@ -103,7 +103,7 @@
                                     <input type="hidden" name="seccion" value="Formulario">
                                     <input type="hidden" name="subsec" value="Datos Generales">
                                     <input type="hidden" name="id_ue">
-                                    <button type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
+                                <a id="updateLink" href="/ud_estratigrafica/{{$uds_estratigrafica->UE}}"> <button id="updateButton" type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button></a>
                             </td>
                             </tr>
                         @endif
@@ -117,27 +117,18 @@
     </div>
 </div>
 <script>
-    $(function() {
-        $('#data').find('#queryButton').click(function(){
 
-            var id = $(this).val();
-            var path = "/uds_estratigraficas/"+id;
-
-            $('#data').find('#queryLink').attr('href',path);
-
-
-        });
-
-    });
     function filter() {
         // Declare variables
         var input, filter, table, tr, td, i;
 
         input = $("#myInput");
         filter = input.val();
-        table = $("#pagination_table");
-        tr = table.find("tr");
 
+        table = $("#pagination_table");
+
+        tr = table.find('#data');
+        console.log(tr.length);
         // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
             /*Busqueda por ID*/

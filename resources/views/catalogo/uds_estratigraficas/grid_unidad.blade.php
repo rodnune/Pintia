@@ -13,64 +13,64 @@
 
                         <tr>
                             <td align="left"><strong>Id UE</strong></td>
-                            <td colspan="3">{{$id}}</td>
+                            <td colspan="3">{{$ud_estratigrafica->UE}}</td>
 
                             </tr>
 
                         <tr>
                             <td colspan="1" align="left"><strong>Estrato Color</strong></td>
-                            <td colspan="3">EstratoColor</td>
+                            <td colspan="3">{{$ud_estratigrafica->EstratoColor}}</td>
                         </tr>
 
                         <tr>
                             <td colspan="1" align="left"><strong>T&eacute;cnica Excavaci&oacute;n</strong></td>
-                            <td colspan="3">TecnicaExcavacion</td>
+                            <td colspan="3">{{$ud_estratigrafica->TecnicaExcavacion}}</td>
                         </tr>
 
                         <tr>
                             <td colspan="1"><strong>Unidad Acci&oacute;n</strong></td>
-                            <td colspan="1">UnidadAcción</td>
+                            <td colspan="1">{{$ud_estratigrafica->UnidadAccion}}</td>
 
                             <td colspan="1"><strong>Tipo Unidad</strong></td>
-                            <td colspan="1">TipoUnidad</td>
+                            <td colspan="1">{{$ud_estratigrafica->TipoUnidad}}</td>
                         </tr>
 
                         <tr>
-                            <td colspan="1"><strong>Estrato Constituci&oacute;n 1</strong></td>
-                            <td colspan="1">EstratoConstitucion1</td>
-                            <td colspan="1"><strong>Estrato Constituci&oacute;n 2</strong></td>
-                            <td colspan="1">EstratoConstitucion2</td>
+                            <td colspan="1"><strong>Constitución del estrato 1</strong></td>
+                            <td colspan="1">{{$ud_estratigrafica->EstratoConstitucion1}}</td>
+                            <td colspan="1"><strong>Constitución del estrato 2</strong></td>
+                            <td colspan="1">{{$ud_estratigrafica->EstratoConstitucion2}}</td>
                             </tr>
                         <tr>
                             <td colspan="1"><strong>Excavada</strong></td>
-                            <td colspan="1">Excavada</td>
+                            <td colspan="1">{{$ud_estratigrafica->Excavada}}</td>
 
                              <td colspan="1"><strong>Alzada</strong></td>
-                            <td colspan="1">Alzada</td>
+                            <td colspan="1">{{$ud_estratigrafica->Alzada}}</td>
                             </tr>
                         <tr>
 
-                            <td colspan="1"><strong>Estratigraf&iacute;a Fiabilidad</strong></td>
-                            <td colspan="3">Fiabilidad</td>
+                            <td colspan="1"><strong>Fiabilidad de la estratigrafía</strong></td>
+                            <td colspan="3">{{$ud_estratigrafica->EstratigrafiaFiabilidad}}</td>
                         </tr>
 
                         <tr>
                             <td colspan="1" align="left"><strong>Descripci&oacute;n</strong></td>
                             <td colspan="3">
-                                <div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">Descripcion </div>
+                                <div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">{{$ud_estratigrafica->Descripcion}} </div>
                                </td>
                         </tr>
 
                         <tr>
                             <td colspan="1" align="left"><strong>Estratigraf&iacute;a Observaciones</strong></td>
                             <td colspan="3">
-                                <div class="form-control fake-textarea-lg" disabled="disabled" name="estratio">EstratigraficaObservaciones</div>
+                                <div class="form-control fake-textarea-lg" disabled="disabled" name="estratio">{{$ud_estratigrafica->EstratigrafiaObservaciones}}</div>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="1" align="left"><strong>Interpretaci&oacute;n</strong></td>
                             <td colspan="3">
-                               <div class="form-control fake-textarea-lg" disabled="disabled" name="interpreta">Interpretacion</div>
+                               <div class="form-control fake-textarea-lg" disabled="disabled" name="interpreta">{{$ud_estratigrafica->Interpretacion}}</div>
                             </td>
                         </tr>
 
@@ -113,7 +113,7 @@
                             <td colspan="1" align="left"><strong>Org&aacute;nicos</strong></td>
                             <td colspan="3"><select class="form-control" name="id_geo_eli" size="5" style="width:100%" disabled="disabled">
 
-                                    <option value="">Componentes Organicos</option>';
+                                    <option value="">Componentes Organicos</option>
 
                                     </select>
                             </td>
@@ -200,7 +200,7 @@
 
 
                         <tr>
-                            <td colspan="4" align="center"><button type="submit" name="submit" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver</button></td>
+                            <td colspan="4" align="center"><a href="/uds_estratigraficas"><button type="submit" name="submit" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver</button></a></td>
                         </tr>
                         </table>
                 </tbody>
