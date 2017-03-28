@@ -34,10 +34,36 @@ Route::get('/ud_estratigrafica_cgeologicos/{id}','CGeologicosController@indexUE'
 Route::post('/ud_estratigrafica_cgeologicos/asociar','CGeologicosController@asociarUE');
 Route::post('/ud_estratigrafica_cgeologicos/delete','CGeologicosController@eliminarAsociacionUE');
 
-//componentes artificiales de una UE
+//componentes organicos de una UE
 Route::get('/ud_estratigrafica_corganicos/{id}','COrganicosController@indexUE');
 Route::post('/ud_estratigrafica_corganicos/asociar','COrganicosController@asociarUE');
 Route::post('/ud_estratigrafica_corganicos/delete','COrganicosController@eliminarAsociacionUE');
+
+//componentes artificiales de una UE
+Route::get('/ud_estratigrafica_cartificiales/{id}','CArtificialesController@indexUE');
+Route::post('/ud_estratigrafica_cartificiales/asociar','CArtificialesController@asociarUE');
+Route::post('/ud_estratigrafica_cartificiales/delete','CArtificialesController@eliminarAsociacionUE');
+
+//superficies de una UE
+Route::get('/ud_estratigrafica_superficies/{id}','SuperficiesController@indexUE');
+Route::post('/ud_estratigrafica_superficies/asociar','SuperficiesController@asociarUE');
+Route::post('/ud_estratigrafica_superficies/delete','SuperficiesController@eliminarAsociacionUE');
+
+//artefactos de una UE
+Route::get('/ud_estratigrafica_artefactos/{id}','ArtefactosController@indexUE');
+Route::post('/ud_estratigrafica_artefactos/asociar','ArtefactosController@asociarUE');
+Route::post('/ud_estratigrafica_artefactos/delete','ArtefactosController@eliminarAsociacionUE');
+
+//dietas de fauna de una UE
+
+Route::get('/ud_estratigrafica_dietas/{id}','AnaliticaFaunasController@indexUE');
+Route::post('/ud_estratigrafica_dietas/asociar','AnaliticaFaunasController@asociarUE');
+Route::post('/ud_estratigrafica_dietas/delete','AnaliticaFaunasController@eliminarAsociacionUE');
+
+//relaciones estratigraficas de una UE
+Route::get('/ud_estratigrafica_relaciones/{id}','RelacionesEstratigraficasController@indexUE');
+Route::post('/ud_estratigrafica_relaciones/asociar','RelacionesEstratigraficasController@asociarUE');
+Route::post('/ud_estratigrafica_relaciones/delete','RelacionesEstratigraficasController@eliminarAsociacionUE');
 
 Route::get('/articulos',function(){return view('catalogo.bibliografia.seccion_articulos');});
 

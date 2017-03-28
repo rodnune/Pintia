@@ -9,7 +9,7 @@
                     <tbody>
 
                     <tr>
-                        <td class="info" colspan="4" align="center"><h3>Componentes Org&aacute;nicos</h3></td>
+                        <td class="info" colspan="4" align="center"><h3>Dietas Fauna</h3></td>
                     </tr>
 
 
@@ -17,12 +17,19 @@
                         <td colspan="2" align="center">
                             <strong>Seleccione componente para asociar:</strong><br><br>
 
-                            {{Form::open(array('action' => "COrganicosController@asociarUE", 'method' => 'post'))}}
+                            {{Form::open(array('action' => "AnaliticaFaunasController@asociarUE", 'method' => 'post'))}}
                             <input type="hidden" name="id" value="{{$ud_estratigrafica->UE}}">
+                            <div class="col-xs-3">
+                                <h5 class="text-left"><strong>Descripcion</strong></h5>
+                            </div>
+
                             <select class="form-control" name="add" size="10" style="width:100%" />
 
                             @foreach($no_asociados as $no_asociado)
-                                <option value="{{$no_asociado->IdCOrganico}}">{{$no_asociado->Denominacion}}</option>
+                                <option value="{{$no_asociado->IdAnalitica}}">
+                                    {{$no_asociado->Descripcion}}</p>
+
+                                </option>
                                 @endforeach
 
                                 </select></br>
@@ -33,13 +40,18 @@
 
                         <td colspan="2" align="center">
                             <strong>Seleccione componente para eliminar asociaci&oacuten:</strong><br><br>
-                            {{Form::open(array('action' => 'CGeologicosController@eliminarAsociacionUE','method' => 'post'))}}
+                            {{Form::open(array('action' => 'AnaliticaFaunasController@eliminarAsociacionUE','method' => 'post'))}}
                             <input type="hidden" name="id" value="{{$ud_estratigrafica->UE}}">
+                            <div class="col-xs-6">
+                                <h5 class="text-left"><strong>Descripcion</strong></h5>
+                            </div>
                             <select class="form-control" name="delete" size="10" style="width:100%">
 
 
                                 @foreach($asociados as $asociado)
-                                    <option value="{{$asociado->IdCOrganico}}">{{$asociado->Denominacion}}</option>
+                                    <option value="{{$asociado->IdAnalitica}}">
+                                        {{$asociado->Descripcion}}
+                                    </option>
                                 @endforeach
 
                             </select></br>
@@ -47,8 +59,10 @@
                             {{Form::close()}}
                         </td>
                     </tr>
+
                     </tbody>
                 </table>
+
             </div>
         </div>
 

@@ -16,18 +16,19 @@
         <hr>
         <h4 class="text-center" style="color: #000;">Secciones</h4>
         <p></p>
-
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales">
-        <a href="/ud_estratigrafica_cgeologicos/{{$ud_estratigrafica->UE}}"><input type="submit" class="btn btn-default btn-block" value="Componentes Geologicos"></a>
-        <a href="/ud_estratigrafica_corganicos/{{$ud_estratigrafica->UE}}"><input type="submit" class="btn btn-default btn-block" value="Componentes Organicos"></a>
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Componentes Artificiales">
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Superficies">
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Artefactos">
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Dietas Fauna">
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Relaciones Estratigraficas">
+            @php
+            $id = $ud_estratigrafica->UE;
+            @endphp
+        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales">
+        <a href="/ud_estratigrafica_cgeologicos/{{$id}}"><input type="submit" class="btn btn-default btn-block" value="Componentes Geologicos"></a>
+        <a href="/ud_estratigrafica_corganicos/{{$id}}"><input type="submit" class="btn btn-default btn-block" value="Componentes Organicos"></a>
+        <a href="/ud_estratigrafica_cartificiales/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Componentes Artificiales"></a>
+        <a href="/ud_estratigrafica_superficies/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Superficies"></a>
+        <a href="/ud_estratigrafica_artefactos/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Artefactos"></a>
+        <a href="/ud_estratigrafica_dietas/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Dietas Fauna"></a>
+        <a href="/ud_estratigrafica_relaciones/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Relaciones Estratigraficas"></a>
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Matriz Harris">
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Muestras">
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Relaciones Estratigraficas">
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion">
             <!--<input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos Pendientes">-->
             <hr>

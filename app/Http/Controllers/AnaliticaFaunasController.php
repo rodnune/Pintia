@@ -1,14 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Rodrigo
- * Date: 01/02/2017
- * Time: 11:08
- */
+
 
 namespace app\Http\Controllers;
 
 use App\Models\AnaliticaFauna;
+use App\Models\UnidadEstratigrafica;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -87,6 +84,61 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
         $analitica_fauna->delete();
 
         return redirect('/analiticas_faunas');
+    }
+
+    public function indexUE($id){
+        $ud_estratigrafica = UnidadEstratigrafica::find($id);
+
+        $no_asociados = DB::select(DB::raw('SELECT a.IdAnalitica, a.Descripcion, a.PartesOseasEspecieEdad
+								FROM
+									AnaliticaFaunas a
+								WHERE a.IdAnalitica  NOT IN
+								(
+                                    SELECT b.IdAnalitica
+                                    FROM DietasFauna b
+                                    WHERE b.UE = ' . $id . ' 
+                                  )
+								'));
+
+
+        $asociados = DB::select(DB::raw('SELECT a.IdAnalitica, a.Descripcion, a.PartesOseasEspecieEdad
+								FROM
+									AnaliticaFaunas a, DietasFauna b
+								WHERE
+									a.IdAnalitica = b.IdAnalitica AND
+									b.UE = ' . $id . '
+								ORDER BY a.Descripcion ASC'));
+
+
+        return view('catalogo.uds_estratigraficas.layout_dietas_fauna', ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados, 'no_asociados' => $no_asociados]);
+
+    }
+
+    public function asociarUE(Request $request)
+    {
+        $id_ue = $request->input('id');
+        $id_analitica = $request->input('add');
+        DB::table('dietasfauna')->insert(['IdAnalitica' => $id_analitica, 'UE' => $id_ue]);
+
+        return redirect('/ud_estratigrafica_dietas/' . $id_ue);
+    }
+
+    public function eliminarAsociacionUE(Request $request)
+    {
+        $id_ue = $request->input('id');
+        $id_analitica = $request->input('delete');
+ 
+
+
+        /*
+         * Doble condicion where
+         */
+        DB::table('dietasfauna')->where(
+            'IdAnalitica', '=', $id_analitica)
+            ->where('UE', '=', $id_ue)
+            ->delete();
+
+        return redirect('/ud_estratigrafica_dietas/' . $id_ue);
     }
 
 

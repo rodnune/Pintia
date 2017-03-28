@@ -3,7 +3,7 @@
         @include('catalogo.uds_estratigraficas.sidebar')
         <div id="content-edit" style="margin-top:0px;">
             <div class="post">
-                <h1 class="text-center">Ficha UE </h1>
+                <h1 class="text-center">Ficha UE({{$ud_estratigrafica->UE}}) </h1>
 
                 <table class="table table-hover table-bordered" rules="none">
                     <tbody>

@@ -9,37 +9,37 @@
                     <tbody>
 
                     <tr>
-                        <td class="info" colspan="4" align="center"><h3>Componentes Org&aacute;nicos</h3></td>
+                        <td class="info" colspan="4" align="center"><h3>Artefactos</h3></td>
                     </tr>
 
 
                     <tr>
                         <td colspan="2" align="center">
-                            <strong>Seleccione componente para asociar:</strong><br><br>
+                            <strong>Seleccione artefactos para asociar:</strong><br><br>
 
-                            {{Form::open(array('action' => "COrganicosController@asociarUE", 'method' => 'post'))}}
+                            {{Form::open(array('action' => "ArtefactosController@asociarUE", 'method' => 'post'))}}
                             <input type="hidden" name="id" value="{{$ud_estratigrafica->UE}}">
                             <select class="form-control" name="add" size="10" style="width:100%" />
 
                             @foreach($no_asociados as $no_asociado)
-                                <option value="{{$no_asociado->IdCOrganico}}">{{$no_asociado->Denominacion}}</option>
-                                @endforeach
+                            <option value="{{$no_asociado->IdFosil}}">{{$no_asociado->Denominacion}}</option>
+                            @endforeach
 
-                                </select></br>
-                                <button type="submit" name="accion" class="btn btn-primary" value="Asociar"><i class="fa fa-arrows-h"></i> Asociar</button>
-                                {{Form::close()}}
+                            </select></br>
+                            <button type="submit" name="accion" class="btn btn-primary" value="Asociar"><i class="fa fa-arrows-h"></i> Asociar</button>
+                            {{Form::close()}}
                         </td>
                         </td>
 
                         <td colspan="2" align="center">
-                            <strong>Seleccione componente para eliminar asociaci&oacuten:</strong><br><br>
-                            {{Form::open(array('action' => 'CGeologicosController@eliminarAsociacionUE','method' => 'post'))}}
+                            <strong>Seleccione artefactos para eliminar asociaci&oacuten:</strong><br><br>
+                            {{Form::open(array('action' => 'ArtefactosController@eliminarAsociacionUE','method' => 'post'))}}
                             <input type="hidden" name="id" value="{{$ud_estratigrafica->UE}}">
                             <select class="form-control" name="delete" size="10" style="width:100%">
 
 
                                 @foreach($asociados as $asociado)
-                                    <option value="{{$asociado->IdCOrganico}}">{{$asociado->Denominacion}}</option>
+                                <option value="{{$asociado->IdFosil}}">{{$asociado->Denominacion}}</option>
                                 @endforeach
 
                             </select></br>
