@@ -4,7 +4,15 @@
         <div id="content-edit" style="margin-top:0px;">
             <div class="post">
                 <h1 class="text-center">Ficha UE({{$ud_estratigrafica->UE}}) </h1>
-
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <table class="table table-hover table-bordered" rules="none">
                     <tbody>
 
@@ -21,8 +29,10 @@
 
                         <tr>
                             <td align="center">{{$ud_estratigrafica->UE}}</td>
+                            {{Form::open(array('action' => 'RelacionesEstratigraficasController@asociarUE', 'method' => 'post'))}}
                                 <td align="center">
-                                 <select class="form-control" name="id_ue_rel" size=5 style="width:100%" />
+                                    <input type="hidden" name="actual" value="{{$ud_estratigrafica->UE}}">
+                                 <select class="form-control" name="relacionada" size=5 style="width:100%" />
 
 
                                     @foreach($no_asociados as $no_asociado)
@@ -49,19 +59,25 @@
                                 </td>
                             </tr>
 
+                        {{Form::close()}}
+
                         <tr>
                             <td align="center"><strong>Seleccione para eliminar</strong></td>
                             <td colspan="2">
-                                <select class="form-control" name="id_rel_eli" size=5 style="width:100%" />
+                                {{Form::open(array('action' => 'RelacionesEstratigraficasController@eliminarAsociacionUE', 'method' => 'post'))}}
+                                <select class="form-control" name="id_relacion" size=5 style="width:100%" />
+
                                 @foreach($asociados as $asociado)
-                                <option value="">{{$asociado->UE}} ---- {{$asociado->TipoRelacion}} ---- {{$asociado->RelacionadaConUE}} </option>
+                                <option value="{{$asociado->IdRelacion}}">{{$asociado->UE}} ---- {{$asociado->TipoRelacion}} ---- {{$asociado->RelacionadaConUE}} </option>
                                 @endforeach
                                 </select>
+
                             </td>
 
                             <td align="center">
                                 <br><button type="submit" name="accion" class="btn btn-danger" value="Eliminar"><i class="fa fa-trash"></i> Eliminar asociaci&oacuten</button>
                             </td>
+                            {{Form::close()}}
                         </tr>
                     </tbody>
                 </table>

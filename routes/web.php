@@ -65,6 +65,16 @@ Route::get('/ud_estratigrafica_relaciones/{id}','RelacionesEstratigraficasContro
 Route::post('/ud_estratigrafica_relaciones/asociar','RelacionesEstratigraficasController@asociarUE');
 Route::post('/ud_estratigrafica_relaciones/delete','RelacionesEstratigraficasController@eliminarAsociacionUE');
 
+//matrices de Harris de una UE
+Route::get('/ud_estratigrafica_matrixharris/{id}','MatrixHarrisController@indexUE');
+Route::post('/ud_estratigrafica_matrixharris/asociar','MatrixHarrisController@asociarMatrixHarris');
+Route::post('/ud_estratigrafica_matrixharris/delete','MatrixHarrisController@eliminarMatrixHarris');
+
+//muestras de una UE
+Route::get('/ud_estratigrafica_muestras/{id}','MuestrasController@indexUE');
+Route::post('/ud_estratigrafica_muestras/asociar','MuestrasController@asociarUE');
+Route::post('/ud_estratigrafica_muestras/delete','MuestrasController@eliminarAsociacionUE');
+
 Route::get('/articulos',function(){return view('catalogo.bibliografia.seccion_articulos');});
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});
