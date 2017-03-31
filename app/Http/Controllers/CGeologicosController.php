@@ -11,28 +11,8 @@ class CGeologicosController extends \App\Http\Controllers\Controller
 
     public function indexUE($id){
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
-
-        $no_asociados =  DB::select(DB::raw('SELECT a.IdCGeologico, a.Denominacion 
-								FROM
-									ComponentesGeologicos a
-								WHERE a.IdCGeologico  NOT IN
-								(
-                                    SELECT b.IdCgeologico 
-                                    FROM CGeologicosUE b
-                                    WHERE b.UE = '.$id.' 
-                                  )
-								'));
-
-
-
-
-        $asociados =  DB::select(DB::raw('SELECT a.IdCGeologico, a.Denominacion 
-								FROM
-									ComponentesGeologicos a, CGeologicosUE b
-								WHERE
-									a.IdCGeologico = b.IdCGeologico AND
-									b.UE = '. $id.'
-								ORDER BY Denominacion ASC'));
+        $asociados = $ud_estratigrafica-> componentesGeologicosAsociados();
+        $no_asociados = $ud_estratigrafica-> componentesGeologicosNoAsociados();
 
 
         return view('catalogo.uds_estratigraficas.layout_cgeologicos',['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados,'no_asociados' => $no_asociados]);

@@ -38,4 +38,29 @@ class MuestrasController extends \App\Http\Controllers\Controller
         return view('catalogo.uds_estratigraficas.layout_muestras', ['ud_estratigrafica' => $ud_estratigrafica, 'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
     }
 
+    public function asociarUE(Request $request){
+        $id_ue = $request ->input('id');
+        $id_muestra = $request ->input('add');
+        DB::table('muestrasue')->insert(['NumeroRegistro' => $id_muestra,'UE' => $id_ue]);
+
+        return redirect('/ud_estratigrafica_muestras/'.$id_ue);
+    }
+
+    public function eliminarAsociacionUE(Request $request){
+        $id_ue = $request ->input('id');
+        $id_componente = $request ->input('delete');
+
+        /*
+         * Doble condicion where
+         */
+        DB::table('muestrasue')->where(
+            'NumeroRegistro','=',$id_componente)
+            ->where('UE', '=', $id_ue)
+
+
+            ->delete();
+
+        return redirect('/ud_estratigrafica_muestras/'.$id_ue);
+    }
+
 }

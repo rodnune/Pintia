@@ -12,26 +12,8 @@ class SuperficiesController extends \App\Http\Controllers\Controller
     public function indexUE($id)
     {
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
-
-        $no_asociados = DB::select(DB::raw('SELECT a.IdSuperficie, a.Denominacion 
-								FROM
-									Superficies a
-								WHERE a.IdSuperficie  NOT IN
-								(
-                                    SELECT b.IdSuperficie 
-                                    FROM SuperficiesUE b
-                                    WHERE b.UE = ' . $id . ' 
-                                  )
-								'));
-
-
-        $asociados = DB::select(DB::raw('SELECT a.IdSuperficie, a.Denominacion 
-								FROM
-									Superficies a, SuperficiesUE b
-								WHERE
-									a.IdSuperficie = b.IdSuperficie AND
-									b.UE = ' . $id . '
-								ORDER BY Denominacion ASC'));
+        $asociados = $ud_estratigrafica->superficiesAsociadas();
+        $no_asociados = $ud_estratigrafica->superficiesNoAsociadas();
 
 
         return view('catalogo.uds_estratigraficas.layout_superficies', ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados, 'no_asociados' => $no_asociados]);

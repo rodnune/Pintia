@@ -75,6 +75,10 @@ Route::get('/ud_estratigrafica_muestras/{id}','MuestrasController@indexUE');
 Route::post('/ud_estratigrafica_muestras/asociar','MuestrasController@asociarUE');
 Route::post('/ud_estratigrafica_muestras/delete','MuestrasController@eliminarAsociacionUE');
 
+Route::get('/ud_estratigrafica_localizacion/{id}','LocalizacionController@indexUE');
+Route::post('/ud_estratigrafica_localizacion/asociar','LocalizacionController@asociarUE');
+Route::post('/ud_estratigrafica_localizacion/delete','MuestrasController@eliminarAsociacionUE');
+
 Route::get('/articulos',function(){return view('catalogo.bibliografia.seccion_articulos');});
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});

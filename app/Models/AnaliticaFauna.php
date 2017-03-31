@@ -17,5 +17,4 @@ class AnaliticaFauna extends Model
         'Descripcion', 'PartesOseasEspecieEdad'
     ];
 
-
 }

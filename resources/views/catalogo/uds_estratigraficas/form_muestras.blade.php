@@ -33,7 +33,7 @@
 
                         <td colspan="2" align="center">
                             <strong>Seleccione muestra para eliminar asociaci&oacuten:</strong><br><br>
-                            {{Form::open(array('action' => 'CGeologicosController@eliminarAsociacionUE','method' => 'post'))}}
+                            {{Form::open(array('action' => 'MuestrasController@eliminarAsociacionUE','method' => 'post'))}}
                             <input type="hidden" name="id" value="{{$ud_estratigrafica->UE}}">
                             <select class="form-control" name="delete" size="10" style="width:100%">
 

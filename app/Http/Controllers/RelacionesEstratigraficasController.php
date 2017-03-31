@@ -10,28 +10,15 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
 
 {
 
+    public function index(){
+
+    }
+
     public function indexUE($id)
     {
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
-
-        $no_asociados = DB::select(DB::raw('SELECT a.UE
-								FROM 
-								UnidadEstratigrafica a
-								WHERE a.UE  NOT IN
-								(
-                                    SELECT b.RelacionadaConUE
-                                    FROM RelacionesEstratigraficas b
-                                    WHERE b.UE = ' . $id . ' 
-                                  )
-								'));
-
-
-        $asociados = DB::select(DB::raw('SELECT DISTINCT a.IdRelacion,a.UE,a.TipoRelacion, a.RelacionadaConUE 
-								FROM
-									RelacionesEstratigraficas a, UnidadEstratigrafica b
-								WHERE
-									a.UE = b.UE AND
-									b.UE = ' . $id . '  OR a.RelacionadaConUE = ' . $id .' '));
+        $asociados = $ud_estratigrafica->relacionesEstratigraficas();
+        $no_asociados = $ud_estratigrafica->ueSinAsociar();
 
 
         return view('catalogo.uds_estratigraficas.layout_relaciones',['ud_estratigrafica' => $ud_estratigrafica,'asociados' => $asociados,'no_asociados' => $no_asociados]);

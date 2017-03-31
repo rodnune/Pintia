@@ -88,27 +88,8 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
 
     public function indexUE($id){
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
-
-        $no_asociados = DB::select(DB::raw('SELECT a.IdAnalitica, a.Descripcion, a.PartesOseasEspecieEdad
-								FROM
-									AnaliticaFaunas a
-								WHERE a.IdAnalitica  NOT IN
-								(
-                                    SELECT b.IdAnalitica
-                                    FROM DietasFauna b
-                                    WHERE b.UE = ' . $id . ' 
-                                  )
-								'));
-
-
-        $asociados = DB::select(DB::raw('SELECT a.IdAnalitica, a.Descripcion, a.PartesOseasEspecieEdad
-								FROM
-									AnaliticaFaunas a, DietasFauna b
-								WHERE
-									a.IdAnalitica = b.IdAnalitica AND
-									b.UE = ' . $id . '
-								ORDER BY a.Descripcion ASC'));
-
+           $asociados = $ud_estratigrafica-> analiticasAsociadasUE();
+       $no_asociados = $ud_estratigrafica-> analiticasNoAsociadasUE();
 
         return view('catalogo.uds_estratigraficas.layout_dietas_fauna', ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados, 'no_asociados' => $no_asociados]);
 

@@ -11,28 +11,9 @@ class COrganicosController extends \App\Http\Controllers\Controller
 
     public function indexUE($id){
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
+        $asociados = $ud_estratigrafica->componentesOrganicosAsociados();
+        $no_asociados = $ud_estratigrafica -> componentesOrganicosNoAsociados();
 
-        $no_asociados =  DB::select(DB::raw('SELECT a.IdCOrganico, a.Denominacion 
-								FROM
-									ComponentesOrganicos a
-								WHERE a.IdCOrganico  NOT IN
-								(
-                                    SELECT b.IdCOrganico
-                                    FROM COrganicosUE b
-                                    WHERE b.UE = '.$id.' 
-                                  )
-								'));
-
-
-
-
-        $asociados =  DB::select(DB::raw('SELECT a.IdCOrganico, a.Denominacion 
-								FROM
-									ComponentesOrganicos a, COrganicosUE b
-								WHERE
-									a.IdCOrganico = b.IdCOrganico AND
-									b.UE = '. $id.'
-								ORDER BY Denominacion ASC'));
 
 
         return view('catalogo.uds_estratigraficas.layout_corganicos',['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados,'no_asociados' => $no_asociados]);

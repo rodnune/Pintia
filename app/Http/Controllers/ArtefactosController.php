@@ -12,27 +12,8 @@ class ArtefactosController extends \App\Http\Controllers\Controller
     public function indexUE($id)
     {
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
-
-        $no_asociados = DB::select(DB::raw('SELECT a.IdFosil, a.Denominacion 
-								FROM
-									Fosiles a
-								WHERE a.IdFosil  NOT IN
-								(
-                                    SELECT b.IdFosil
-                                    FROM FosilesUE b
-                                    WHERE b.UE = ' . $id . ' 
-                                  )
-								'));
-
-
-        $asociados = DB::select(DB::raw('SELECT a.IdFosil, a.Denominacion 
-								FROM
-									Fosiles a, FosilesUE b
-								WHERE
-									a.IdFosil = b.IdFosil AND
-									b.UE = ' . $id . '
-								ORDER BY Denominacion ASC'));
-
+        $asociados = $ud_estratigrafica->artefactosAsociados();
+        $no_asociados = $ud_estratigrafica->artefactosNoAsociados();
 
         return view('catalogo.uds_estratigraficas.layout_artefactos', ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados, 'no_asociados' => $no_asociados]);
 

@@ -8,8 +8,10 @@
 
 namespace app\Http\Controllers;
 
+use App\Models\ComponenteOrganicoUE;
 use App\Models\UnidadEstratigrafica;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class UdsEstratigraficasController extends \App\Http\Controllers\Controller
@@ -45,7 +47,26 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
 
             public function get_ud_estratigrafica($id){
                 $ud_estratigrafica = UnidadEstratigrafica::find($id);
-                return view('catalogo.uds_estratigraficas.layout_unidad',['ud_estratigrafica' => $ud_estratigrafica]);
+
+               $componentes_organicos =   $ud_estratigrafica->componentesOrganicosAsociados();
+               $componentes_geologicos = $ud_estratigrafica->componentesGeologicosAsociados();
+               $componentes_artificiales = $ud_estratigrafica->componentesArtificialesAsociados();
+               $analiticas = $ud_estratigrafica->analiticasAsociadasUE();
+               $superficies = $ud_estratigrafica->superficiesAsociadas();
+               $artefactos = $ud_estratigrafica->artefactosAsociados();
+                $localizacion = $ud_estratigrafica->localizacion();
+                $relaciones = $ud_estratigrafica->relacionesEstratigraficas();
+
+
+
+
+                return view('catalogo.uds_estratigraficas.layout_unidad',['ud_estratigrafica' => $ud_estratigrafica,
+                    'componentes_organicos' => $componentes_organicos,'componentes_geologicos' => $componentes_geologicos,
+                    'componentes_artificiales' => $componentes_artificiales,'analiticas' => $analiticas,
+                    'superficies' => $superficies,'artefactos' => $artefactos,'localizacion' => $localizacion[0],
+                    'relaciones' => $relaciones
+
+                    ]);
             }
 
             public function get_update_ud_estratigrafica($id){

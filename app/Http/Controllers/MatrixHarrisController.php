@@ -7,6 +7,7 @@
  */
 
 namespace app\Http\Controllers;
+use App\Models\ComponenteOrganicoUE;
 use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;

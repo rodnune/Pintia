@@ -78,10 +78,9 @@
                             <td colspan="1" align="left"><strong>Superficies</strong></td>
                             <td colspan="3">
                                 <select class="form-control" name="super" size="5" style="width:100%" disabled="disabled">
-
-
-                                    <option value="">Superficie</option>
-
+                                    @foreach($superficies as $superficie)
+                                    <option value="">{{$superficie->Denominacion}}</option>
+                                    @endforeach
                                     </select>
                                 </td>
                         </tr>
@@ -89,8 +88,9 @@
                         <tr>
                             <td colspan="1" align="left"><strong>Artefactos</strong></td>
                             <td colspan="3"><select class="form-control" name="artefactos" size="5" style="width:100%" disabled="disabled">
-
-                                    <option value="">Artefactos</option>
+                                    @foreach($artefactos as $artefacto)
+                                        <option value="">{{$artefacto->Denominacion}}</option>
+                                    @endforeach
 
                                     </select>
                             </td>
@@ -101,20 +101,22 @@
 
                         <tr>
                             <td colspan="1" align="left"><strong>Geol&oacute;gicos</strong></td>
-                            <td colspan="3"><select class="form-control" name="id_geo_eli" size="5" style="width:100%" disabled="disabled">
+                            <td colspan="3"><select class="form-control" size="5" style="width:100%" disabled="disabled">
 
 
-                                    <option value="">Componentes Geológicos</option>
+                                    @foreach($componentes_geologicos as $componente_geologico)
+                                        <option value=""> {{$componente_geologico->Denominacion}}</option>
+                                    @endforeach
                                    </select>
                                 </td>
                         </tr>
 
                         <tr>
                             <td colspan="1" align="left"><strong>Org&aacute;nicos</strong></td>
-                            <td colspan="3"><select class="form-control" name="id_geo_eli" size="5" style="width:100%" disabled="disabled">
-
-                                    <option value="">Componentes Organicos</option>
-
+                            <td colspan="3"><select class="form-control" size="5" style="width:100%" disabled="disabled">
+                                @foreach($componentes_organicos as $componente_organico)
+                                    <option value="">{{$componente_organico->Denominacion}}</option>
+                                 @endforeach
                                     </select>
                             </td>
 
@@ -123,7 +125,10 @@
                         <tr>
                             <td colspan="1" align="left"><strong>Artificiales</strong></td>
                             <td colspan="3"><select class="form-control" name="id_geo_eli" size="5" style="width:100%" disabled="disabled">
-                                    <option value="">Componentes Artificiales</option>
+                                    @foreach($componentes_artificiales as $componente_artificial)
+                                        <option value="">{{$componente_artificial->Denominacion}}</option>
+                                    @endforeach
+                                </select>
 
                                     </select>
                             </td>
@@ -133,18 +138,19 @@
                         <tr>
                             <td colspan="4" align="center" class="info"><h3>Dietas Fauna</h3></td>
                         </tr>
-
+                        @foreach($analiticas as $analitica)
                         <tr>
                             <td scope="col" align="left"><strong>Descripci&oacute;n</strong></td>
-                            <td colspan="3" align="left">Descripcion</td>
+                            <td colspan="3" align="left">PartesOseasEspecieEdad</td>
                         </tr>
 
                         <tr>
-                            <td colspan="1" align="left"><strong>Partes Oseas Especie Edad: </strong></td>
+                            <td colspan="col" align="left">{{$analitica->Descripcion}}</td>
                             <td colspan="3">
-                                <div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">PartesOseasEspecieEdad</div>
+                                <div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">{{$analitica->PartesOseasEspecieEdad}}</div>
                             </td>
                         </tr>
+                        @endforeach
 
                         <tr>
                             <td colspan="4" align="center" class="info"><h3>Localizaci&oacute;n</h3></td>
@@ -158,15 +164,15 @@
                             </tr>
 
                         <tr>
-                            <td align="center">SiglaZona</td>
-                            <td align="center">SectorTrama</td>
-                            <td align="center">SectorSubtrama</td>
+                            <td align="center">{{$localizacion->SiglaZona}}</td>
+                            <td align="center">{{$localizacion->SectorTrama}}</td>
+                            <td align="center">{{$localizacion->SectorSubtrama}}</td>
                             <td></td>
                         </tr>
 
                         <tr>
                             <td colspan="1" align="left"><strong>Notas Localizaci&oacute;n</strong></td>
-                            <td colspan="3">Localizacion</td>
+                            <td colspan="3">{{$localizacion->Notas}}</td>
                         </tr>
 
 
@@ -177,9 +183,9 @@
                         <tr>
                            <td colspan="4"><select class="form-control" name="id_rel_eli" size=5 style="width:100%" disabled="disabled"/>
 
-
-                                <option value="">RelacionesEstratigráficas</option>
-
+                                @foreach($relaciones as $relacion)
+                                   <option value="">{{$relacion->UE}}---{{$relacion->TipoRelacion}}---{{$relacion->RelacionadaConUE}}</option>
+                                @endforeach
                                </select>
                            </td>
                         </tr>

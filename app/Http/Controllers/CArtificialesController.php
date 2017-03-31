@@ -13,25 +13,8 @@ class CArtificialesController extends \App\Http\Controllers\Controller
     {
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
 
-        $no_asociados = DB::select(DB::raw('SELECT a.IdCArtificial, a.Denominacion 
-								FROM
-									ComponentesArtificiales a
-								WHERE a.IdCArtificial  NOT IN
-								(
-                                    SELECT b.IdCArtificial 
-                                    FROM CArtificialesUE b
-                                    WHERE b.UE = ' . $id . ' 
-                                  )
-								'));
-
-
-        $asociados = DB::select(DB::raw('SELECT a.IdCArtificial, a.Denominacion 
-								FROM
-									ComponentesArtificiales a, CArtificialesUE b
-								WHERE
-									a.IdCArtificial = b.IdCArtificial AND
-									b.UE = ' . $id . '
-								ORDER BY Denominacion ASC'));
+        $asociados = $ud_estratigrafica->componentesArtificialesAsociados();
+        $no_asociados = $ud_estratigrafica->componentesArtificialesNoAsociados();
 
 
         return view('catalogo.uds_estratigraficas.layout_cartificiales', ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados, 'no_asociados' => $no_asociados]);

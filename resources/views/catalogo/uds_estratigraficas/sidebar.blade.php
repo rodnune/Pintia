@@ -29,7 +29,7 @@
         <a href="/ud_estratigrafica_relaciones/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Relaciones Estratigraficas"></a>
         <a href="/ud_estratigrafica_matrixharris/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Matriz Harris"></a>
         <a href="/ud_estratigrafica_muestras/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Muestras"></a>
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion">
+        <a href="/ud_estratigrafica_localizacion/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"></a>
             <!--<input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos Pendientes">-->
             <hr>
         <form>
