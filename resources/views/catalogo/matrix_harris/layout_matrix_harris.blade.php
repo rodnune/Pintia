@@ -1,15 +1,19 @@
 @extends('layouts.app');
 
+@section('header')
+    @include('layouts.header')
+@endsection
+
 @section('navbar')
     @include('layouts.navbar')
 @endsection
 
-@section('splash')
+@section('image')
     @include('splash_image')
 @endsection
 
 @section('content')
-    @include('catalogo.bibliografia.search_autores')
+    @include('catalogo.matrix_harris.grid')
 @endsection
 
 @section('footer')

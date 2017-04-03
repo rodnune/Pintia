@@ -248,6 +248,37 @@ public function relacionesEstratigraficas(){
 }
 
 
+public function matrixHarrisAsociar(){
+    /**
+     * Distinct para que solo saque una relacion en una sola direccion
+     */
+    $ud_asociadas = DB::select(DB::raw('SELECT DISTINCT a.RelacionadaConUE 
+								FROM
+									RelacionesEstratigraficas a, UnidadEstratigrafica b
+								WHERE a.RelacionadaConUE  NOT IN
+								(
+                                    SELECT b.RelacionadaConUE
+                                    FROM MatrixHarris b
+                                    WHERE b.UE = ' . $this->UE . '
+                                    )
+    
+                                  '));
+
+    return $ud_asociadas;
+}
+
+public function matrixHarris(){
+    $matrix_harris = DB::select(DB::raw('SELECT IdElementoHarris, RelacionadaConUE, PosX, PosY, PosZ
+								FROM
+									MatrixHarris
+								WHERE
+									UE = ' . $this->UE . ' 
+                                ORDER BY RelacionadaConUE  '));
+
+    return $matrix_harris;
+
+}
+
 
 
 

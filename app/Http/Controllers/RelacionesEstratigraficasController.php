@@ -11,7 +11,33 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
 {
 
     public function index(){
+                $relaciones = DB::table('relacionesestratigraficas')->orderBy('UE')->get();
+        return view('catalogo.relaciones_estratigraficas.layout_relaciones',['relaciones' => $relaciones]);
+    }
 
+    public function delete(Request $request){
+        $ue = $request -> input('ue');
+        $relacionada = $request -> input('relacionada');
+
+                DB::table('relacionesestratigraficas')
+                    ->where('UE', '=', $ue)
+                    ->where('RelacionadaConUE','=',$relacionada)
+                    ->delete();
+        /*
+         * Eliminamos la relacion en la otra direccion
+         */
+
+        DB::table('relacionesestratigraficas')
+            ->where('UE', '=', $relacionada)
+            ->where('RelacionadaConUE','=',$ue)
+            ->delete();
+
+        return redirect('/relaciones_estratigraficas');
+
+    }
+
+    public function update(){
+        //actualizar, operacion en el aire
     }
 
     public function indexUE($id)

@@ -75,9 +75,22 @@ Route::get('/ud_estratigrafica_muestras/{id}','MuestrasController@indexUE');
 Route::post('/ud_estratigrafica_muestras/asociar','MuestrasController@asociarUE');
 Route::post('/ud_estratigrafica_muestras/delete','MuestrasController@eliminarAsociacionUE');
 
+//localizacion de una ue
 Route::get('/ud_estratigrafica_localizacion/{id}','LocalizacionController@indexUE');
 Route::post('/ud_estratigrafica_localizacion/asociar','LocalizacionController@asociarUE');
 Route::post('/ud_estratigrafica_localizacion/delete','MuestrasController@eliminarAsociacionUE');
+
+//relaciones estratigraficas
+
+Route::get('/relaciones_estratigraficas','RelacionesEstratigraficasController@index');
+Route::post('/relaciones_estratigraficas/delete','RelacionesEstratigraficasController@delete');
+
+//matrices de Harris
+
+Route::get('/matrices_harris','MatrixHarrisController@index');
+Route::post('/matrices_harris/delete','MatrixHarrisController@delete');
+Route::get('/matriz_harris', 'MatrixHarrisController@get');
+Route::post('matriz_harris','MatrixHarrisController@update');
 
 Route::get('/articulos',function(){return view('catalogo.bibliografia.seccion_articulos');});
 

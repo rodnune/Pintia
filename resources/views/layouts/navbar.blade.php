@@ -19,7 +19,7 @@
                            <a tabindex="-1" href="#">Estratigraf&iacute;as</a>
                             <ul class="dropdown-menu">
                                 <li><a href="/uds_estratigraficas">Unidades estratigr&aacute;ficas</a></li>
-                                <li><a href="/matrix_harris">Matrices de Harris</a></li>
+                                <li><a href="/matrices_harris">Matrices de Harris</a></li>
                                 </ul>
                             </li>
                         <li><a href="/analiticas_faunas">Anal&iacute;ticas de faunas</a></li>
@@ -54,8 +54,8 @@
                                     <a tabindex="-1" href="#">Estratigraf&iacute;as</a>
                                     <ul class="dropdown-menu">
                                         <li><a href="/uds_estratigraficas">Unidades estratigr&aacute;ficas</a></li>
-                                        <li><a href="relaciones_e.php">Relaciones estratigráficas</a></li>
-                                        <li><a href="matrix.php">Matrices de Harris</a></li>
+                                        <li><a href="/relaciones_estratigraficas">Relaciones estratigráficas</a></li>
+                                        <li><a href="/matrices_harris">Matrices de Harris</a></li>
                                     </ul>
                                 </li>
 

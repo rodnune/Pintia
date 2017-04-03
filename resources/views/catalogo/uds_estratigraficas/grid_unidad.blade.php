@@ -141,7 +141,7 @@
                         @foreach($analiticas as $analitica)
                         <tr>
                             <td scope="col" align="left"><strong>Descripci&oacute;n</strong></td>
-                            <td colspan="3" align="left">PartesOseasEspecieEdad</td>
+                            <td colspan="3" align="left"><strong>PartesOseasEspecieEdad</strong></td>
                         </tr>
 
                         <tr>
@@ -196,9 +196,11 @@
                        <tr><td colspan="4" align="center">
                                <select class="form-control" name="id_elem_eli" size=5 style="width:100%" disabled="disabled" />
 
+                                @foreach($matrix_harris as $matrix)
+                               <option value="{{$matrix->IdElementoHarris}}"> UE: {{$ud_estratigrafica->UE}} ... Relacionado con UE: {{$matrix->RelacionadaConUE}} ...
+                                   PosX: {{$matrix->PosX}}... PosY: {{$matrix->PosY}} ... PosZ: {{$matrix->PosZ}}</option>
 
-                                <option value="">MatrizHarris</option>
-
+                               @endforeach
                                 </select>
                            </td>
 
