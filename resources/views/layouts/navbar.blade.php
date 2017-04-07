@@ -66,7 +66,7 @@
                                 <li class="dropdown-submenu">
                                      <a tabindex="-1" href="#">Bibliografía</a>
                                      <ul class="dropdown-menu">
-                                         <li><a href="articulos0.php">Artículos</a></li>
+                                         <li><a href="/articulos">Artículos</a></li>
                                          <li><a href="autores0.php">Autores</a></li>
                                          <li><a href="listas.php?idl=1">Palabras clave</a></li>
                                          </ul>
@@ -115,7 +115,7 @@
                                    <li class="dropdown-submenu">
                                        <a tabindex="-1" href="#">Bibliografía</a>
                                        <ul class="dropdown-menu">
-                                           <li><a href="articulos0.php">Art&iacute;culos</a></li>
+                                           <li><a href="/articulos">Art&iacute;culos</a></li>
                                            <li><a href="autores0.php">Autores</a></li>
                                        </ul>
                                    </li>

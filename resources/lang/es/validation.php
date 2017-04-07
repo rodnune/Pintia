@@ -80,7 +80,7 @@ return [
     'state'                => 'El estado no es válido para el país seleccionado.',
     'string'               => 'El campo :attribute debe contener solo caracteres.',
     'timezone'             => 'El campo :attribute debe contener una zona válida.',
-    'unique'               => 'El campo :attribute ya está en uso.',
+    'unique'               => 'El campo :attribute ya está en uso en la base de datos.',
     'url'                  => 'El formato de :attribute no corresponde con el de una URL válida.',
 
     /*

@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('catalogo.bibliografia.articulos.form_articulos')
+    @include('catalogo.bibliografia.articulos.new_articulo')
 @endsection
 
 @section('footer')

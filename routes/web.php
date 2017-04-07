@@ -92,15 +92,41 @@ Route::post('/matrices_harris/delete','MatrixHarrisController@delete');
 Route::get('/matriz_harris', 'MatrixHarrisController@get');
 Route::post('matriz_harris','MatrixHarrisController@update');
 
-Route::get('/articulos',function(){return view('catalogo.bibliografia.seccion_articulos');});
+
+//bibliografia artículos
+Route::get('/articulos','ArticulosController@index');
+Route::get('/articulo/{id}','ArticulosController@get_articulo');
+Route::get('/articulo_new',function(){return view('catalogo.bibliografia.articulos.layout_new_articulo');});
+Route::post('/articulo_new','ArticulosController@create');
+Route::get('/editar_articulo','ArticulosController@get_form_update');
+Route::post('/editar_articulo','ArticulosController@update');
+
+Route::get('/articulo/{id}/palabras_clave','PalabrasClaveController@indexArticulo');
+Route::post('/articulo_palabras_clave/delete','PalabrasClaveController@eliminarAsociacionArticulo');
+Route::post('/articulo_palabras_clave/add','PalabrasClaveController@asociarArticulo');
+
+Route::get('/articulo/{id}/autores','AutoresController@indexArticulo');
+Route::post('/articulo_autores/delete','AutoresController@eliminarAsociacionArticulo');
+Route::post('/articulo_autores/add','AutoresController@asociarArticulo');
+
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});
 
+//otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
+    $query2 = DB::select(DB::raw('SELECT 
+							Nombre, Apellido, Autor.IdAutor
+						FROM
+							Articulo,Autor
+							JOIN Autoria
+								ON Autor.IdAutor = Autoria.IdAutor
+						
+						ORDER BY
+							OrdenFirma ASC'));
 
-    //return Session::get('logged');
-    //mapa
+    return $query2;
+
 return view('pruebas');
 
 });

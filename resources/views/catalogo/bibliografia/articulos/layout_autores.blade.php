@@ -8,12 +8,8 @@
     @include('layouts.navbar')
 @endsection
 
-@section('image')
-    @include('logo')
-@endsection
-
 @section('content')
-    @include('catalogo.bibliografia.articulos.form_articulos')
+    @include('catalogo.bibliografia.articulos.form_autores')
 @endsection
 
 @section('footer')
