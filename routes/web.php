@@ -100,6 +100,7 @@ Route::get('/articulo_new',function(){return view('catalogo.bibliografia.articul
 Route::post('/articulo_new','ArticulosController@create');
 Route::get('/editar_articulo','ArticulosController@get_form_update');
 Route::post('/editar_articulo','ArticulosController@update');
+Route::post('delete_articulo','ArticulosController@delete');
 
 Route::get('/articulo/{id}/palabras_clave','PalabrasClaveController@indexArticulo');
 Route::post('/articulo_palabras_clave/delete','PalabrasClaveController@eliminarAsociacionArticulo');
@@ -110,20 +111,25 @@ Route::post('/articulo_autores/delete','AutoresController@eliminarAsociacionArti
 Route::post('/articulo_autores/add','AutoresController@asociarArticulo');
 
 
+
+//bibliografia autores
+
+Route::get('/autores','AutoresController@index');
+Route::get('/autor_new',function(){return view('catalogo.bibliografia.autores.layout_new_autor');});
+Route::post('/autor_new','AutoresController@create');
+Route::post('/autor_delete','AutoresController@delete');
+Route::get('/editar_autor','AutoresController@get_form_update');
+Route::post('/editar_autor','AutoresController@update');
+
+
+
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});
 
 //otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
-    $query2 = DB::select(DB::raw('SELECT 
-							Nombre, Apellido, Autor.IdAutor
-						FROM
-							Articulo,Autor
-							JOIN Autoria
-								ON Autor.IdAutor = Autoria.IdAutor
-						
-						ORDER BY
-							OrdenFirma ASC'));
+
+    $query2 = DB::table('almacenmultimedia')->where('IdMutimedia',1)->get();
 
     return $query2;
 

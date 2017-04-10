@@ -129,4 +129,13 @@ public function autoresNoAsociados(){
     return $no_asociados;
 }
 
+
+public function multimediaAsociado(){
+
+    $asociados = DB::table('almacenmultimedia')->where('IdMutimedia',$this->IdArticulo)->get();
+
+    return $asociados;
+    
+}
+
 }

@@ -93,10 +93,6 @@ class ArticulosController extends \App\Http\Controllers\Controller
 
 
 
-        /*public function autores($id){
-
-        }*/
-
         public function create(Request $request){
             $titulo = $request -> input('titulo');
             $publicacion = $request -> input('publicacion');
@@ -141,10 +137,13 @@ class ArticulosController extends \App\Http\Controllers\Controller
             $articulo = Articulo::find($id);
             $autores = $articulo->autoresAsociados();
             $keywords =  $articulo->palabrasClaveAsociadas();
+            $multimedias = $articulo->multimediaAsociado();
 
 
 
-            return view('catalogo.bibliografia.articulos.layout_articulo',['articulo' => $articulo,'autores' => $autores,'keywords' => $keywords ]);
+
+
+            return view('catalogo.bibliografia.articulos.layout_articulo',['articulo' => $articulo,'autores' => $autores,'keywords' => $keywords,'multimedias' => $multimedias ]);
         }
 
         public function get_form_update(Request $request){
@@ -197,34 +196,15 @@ class ArticulosController extends \App\Http\Controllers\Controller
 
         }
 
+        public function delete(Request $request){
 
+            $id = $request->input('id');
 
+            DB::table('articulos')->where('IdArticulo',$id)->delete();
 
+            return redirect('/articulos');
 
-
-    /*public function searchArticulo(Request $request){
-        $palabra_clave = $request -> input('palabra_clave');
-        $autor = $request -> input('autor');
-
-        $articulo = new Articulo();
-
-        $validator = Validator::make($request->all(), [
-
-
-
-            'palabra_clave' => 'numeric',
-            'autor'         => 'numeric'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('/articulos')
-                ->withErrors($validator);
         }
 
-        if($palabra_clave!=1){
-            if($autor!=1){
 
-            }
-        }
-    }*/
 }

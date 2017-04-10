@@ -58,7 +58,6 @@
                        </tr>
                         </thead>
                        <tbody>
-
                     @foreach($autores as $autor)
                         <tr>
                             <td>{{$autor->Nombre}}</td>
@@ -94,35 +93,40 @@
 
 
 
-                        <tr>
-                            <th><strong>T&iacute;tulo</strong></th>
-                            <th><strong>Descripci&oacute;n</strong></th>
-                            <th><strong>Tipo</strong></th>
-                            <th><strong>Archivo</strong></th>
-                        </tr>
+
+
+                        @if($multimedias -> count()==0)
+                            <tr>
+                                <td colspan="4" align="center"><strong>No hay elemento multimedia asociado</strong></td>
+                            </tr>
+                        @else
+                            <tr>
+                                <th><strong>T&iacute;tulo</strong></th>
+                                <th><strong>Descripci&oacute;n</strong></th>
+                                <th><strong>Tipo</strong></th>
+                                <th><strong>Archivo</strong></th>
+                            </tr>
+                        @foreach($multimedias as $multimedia)
 
                         <tr>
-                           <td>
-                               <a href=" ">' . $row['Titulo'</a>
-                           </td>
-                            <td>'. $row6['Descripcion'] .'</td>
-                            <td>'. $row6['Tipo'] .'</td>
-                            <td>'. $row6['NombreArchivo'] .'</td>
+                           <td></td>
+                            <td>{{$multimedia->Titulo}}/td>
+                            <td>{{$multimedia->Tipo}}</td>
+                            <td>{{$multimedia->NombreArchivo}}</td>
                         </tr>
+                        @endforeach
+                        @endif
 
-                        <tr>
-                            <td colspan="4" align="center"><strong>No hay elemento multimedia asociado</strong></td>
-                           </tr>
+
 
 
                        </tbody>
                     </table></br>
 
                    <center>
-                       <form action="autores0.php" method="post">
-                           <button type="submit" name="submit" class="btn btn-primary" value="Lista art&iacute;culos"><i class="fa fa-arrow-left"></i> Volver a lista autores</button>
-                            <input type="hidden" name="form" value="1"/>
-                       </form>
+
+                       <a href="/articulos"><button type="submit" name="submit" class="btn btn-primary" value="Lista art&iacute;culos"><i class="fa fa-arrow-left"></i> Volver a lista de articulos</button></a>
+
                       </center>
 
 

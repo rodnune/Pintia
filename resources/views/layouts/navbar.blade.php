@@ -29,7 +29,7 @@
                             <a tabindex="-1" href="#">Bibliograf&iacute;a</a>
                             <ul class="dropdown-menu">
                                 <li><a href="/articulos">Art&iacute;culos</a></li>
-                                <li><a href="#">Autores</a></li>
+                                <li><a href="/autores">Autores</a></li>
                                 </ul>
                             </li>
 
@@ -67,7 +67,7 @@
                                      <a tabindex="-1" href="#">Bibliografía</a>
                                      <ul class="dropdown-menu">
                                          <li><a href="/articulos">Artículos</a></li>
-                                         <li><a href="autores0.php">Autores</a></li>
+                                         <li><a href="/autores">Autores</a></li>
                                          <li><a href="listas.php?idl=1">Palabras clave</a></li>
                                          </ul>
                                 </li>
@@ -116,7 +116,7 @@
                                        <a tabindex="-1" href="#">Bibliografía</a>
                                        <ul class="dropdown-menu">
                                            <li><a href="/articulos">Art&iacute;culos</a></li>
-                                           <li><a href="autores0.php">Autores</a></li>
+                                           <li><a href="/autores">Autores</a></li>
                                        </ul>
                                    </li>
 

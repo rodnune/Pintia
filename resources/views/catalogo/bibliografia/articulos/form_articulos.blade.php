@@ -114,24 +114,7 @@
                          <td>{{$articulo->Titulo}}</td>
                             <td>{{$articulo->Publicacion}}</td>
 
-                            <!--<td align="left">
 
-
-                                    <select class="form-control" name="id_autor" style="width:100%">
-
-                                        <option value="'.$row2['IdAutor'].'" > '.$row2['Nombre'].', '.$row2['Apellido'];</option>
-
-                                           </select>
-
-
-                            <!--@if(Session::get('admin_level') > 2 )
-                            <td align="center"><button class="btn btn-primary" type="submit" value="Ver" name="submit"><i class="fa fa-pencil-square-o"></i> Gestionar autor</button>
-
-
-                                @endif
-
-
-                            </td>-->
 
                             <td align="center">
                                 <a href="/articulo/{{$articulo->IdArticulo}}"><button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-eye"></i> Ver</button></a>
@@ -148,9 +131,10 @@
                             </td>
 
                             <td align="center">
-
+                                {{Form::open(array('action' => 'ArticulosController@delete','method' => 'post'))}}
+                                <input type="hidden" name="id" value="{{$articulo->IdArticulo}}"/>
                                     <button type="submit" name="accion" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Borrar</button>
-
+                                {{Form::close()}}
 
                             </td>
                             @endif
@@ -181,7 +165,6 @@
         for (i = 0; i < tr.length; i++) {
             /*Busqueda por ID*/
             td = tr[i].getElementsByTagName("td")[0];
-            console.log(td);
             if (td) {
                 if (td.innerHTML.indexOf(filter) > -1) {
                     tr[i].style.display = "";
