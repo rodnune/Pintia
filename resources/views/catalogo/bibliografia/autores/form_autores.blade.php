@@ -24,7 +24,7 @@
 
                                 <td><strong>Buscar por nombre del autor:</strong></td>
 
-                                <td><input id="myInput" onkeyup="filter()" type="text" class="form-control" name="buscarRef" placeholder="Título" required></td>
+                                <td><input id="myInput" onkeyup="filter()" type="text" class="form-control" name="buscarRef" placeholder="Nombre"></td>
 
 
                                 <td align="center"><a class="btn btn-primary" href="/autores"><i class="fa fa-eye"></i> Ver todo</a></td>

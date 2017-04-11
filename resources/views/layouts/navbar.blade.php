@@ -48,7 +48,7 @@
                                     <li><a href="/tumbas">Tumbas</a></li>
                                     <li><a href="#">Inhumaciones</a></li>
                                     <li><a href="/cremaciones">Cremaciones</a></li>
-                                    <li><a href="muestras.php">Muestras</a></li>
+                                    <li><a href="/muestras">Muestras</a></li>
 
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">Estratigraf&iacute;as</a>

@@ -13,6 +13,15 @@ use Illuminate\Http\Request;
 
 class MuestrasController extends \App\Http\Controllers\Controller
 {
+
+    public function index(Request $request){
+                if(!$request->has('tipo')){
+                    $tipos = DB::table('tiposmuestra')->orderBy('denominacion','asc')->get();
+                    return view('catalogo.muestras.layout_muestras',['tipos'=>$tipos]);
+                }
+
+    }
+
     public function indexUE($id){
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
 
