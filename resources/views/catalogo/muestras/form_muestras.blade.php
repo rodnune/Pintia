@@ -29,13 +29,14 @@
                                         <option value="{{$tipo->IdTipoMuestra}}">{{$tipo->Denominacion}}</option>
                                         @endforeach
                                         </select>
-                                    {{Form::close()}}
+
                                 </td>
 
 
                                 <td align="center" colspan="6">
                                     <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar muestras</button>
-                                    <a class="btn btn-primary" href="muestras.php"><i class="fa fa-eye"></i> Ver todo</a>
+                                    {{Form::close()}}
+                                    <a class="btn btn-primary" href="/muestras"><i class="fa fa-eye"></i> Ver todo</a>
                                 </td>
                            </tr>
 
@@ -44,17 +45,16 @@
                            <tr id="fila_ref" style="display:none;">
                                 <td><strong>Buscar por número de registro de la muestra:</strong></td>
 
-                                <td><input type="text" class="form-control" name="buscarRef" placeholder="Número registro" required></td>
+                                <td><input id="myInput" onkeyup="filter()" type="text" class="form-control" name="buscarRef" placeholder="Número registro" required></td>
 
                                 <td align="center" colspan="4">
-                                    <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar muestra</button>
-                                    <a class="btn btn-primary" href="ficha_objeto.php?seccion=Lista"><i class="fa fa-eye"></i> Ver todo</a>
+                                    <a class="btn btn-primary" href="/muestras"><i class="fa fa-eye"></i> Ver todo</a>
                                 </td>
                           </tr>
 
                     </table>
 
-                  <p class="text-muted text-center"><strong>Total de resultados encontrados: '.mysql_num_rows($result).'</strong></p>
+                  <p class="text-muted text-center"><strong>Total de resultados encontrados: {{count($muestras)}}</strong></p>
                         <table id="pagination_table" class="table table-bordered" rules="all">
                         <thead>
 
@@ -75,22 +75,23 @@
                         </tr>
                        </thead>
                             <tbody>
-
+                            @foreach ($muestras as $key => $value)
 
                             <tr>
 
-                                <td>' . $row['NumeroRegistro'] . '</td>
+                                <td>{{$muestras[$key][0]->NumeroRegistro}}</td>
 
                                 <td colspan="1">
-                                <div class="form-control fake-textarea-lg" name="notas" disabled="disabled">' . $row['Notas'] .'</div>
+                                <div class="form-control fake-textarea-lg" name="notas" disabled="disabled">{{$muestras[$key][0]->Notas}}</div>
 
                                 </td>
 
                             <td colspan="1">
+
                                 <select class="form-control" name="" size="5" style="width:100%"  disabled="disabled" />
-
-                                <option value="">' . $row2['Denominacion'] . '</option>
-
+                                @foreach ($muestras[$key] as $key2 => $value2)
+                                <option value="">{{$muestras[$key][$key2]->denominacion}}</option>
+                                @endforeach
                                 </select>
                             </td>
 
@@ -113,7 +114,11 @@
                                 </form>
                            </td>
                                 @endif
+
                            </tr>
+
+                            @endforeach
+
 
                        </tbody>
                       </table>
@@ -136,17 +141,21 @@
 
         table = $("#pagination_table");
         tr = table.find("tr");
-
         for (i = 0; i < tr.length; i++) {
             /*Busqueda por ID*/
             td = tr[i].getElementsByTagName("td")[0];
             if (td) {
                 if (td.innerHTML.indexOf(filter) > -1) {
                     tr[i].style.display = "";
+
                 } else {
+                    $('.info').show();
                     tr[i].style.display = "none";
                 }
             }
+
+
+
         }
     }
 </script>

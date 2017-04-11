@@ -17,7 +17,38 @@ class MuestrasController extends \App\Http\Controllers\Controller
     public function index(Request $request){
                 if(!$request->has('tipo')){
                     $tipos = DB::table('tiposmuestra')->orderBy('denominacion','asc')->get();
-                    return view('catalogo.muestras.layout_muestras',['tipos'=>$tipos]);
+                    $muestras = DB::table('muestraesdetipo')
+                        ->join('muestras','muestras.NumeroRegistro','=','muestraesdetipo.NumeroRegistro')
+                        ->join('tiposmuestra','tiposmuestra.IdTipoMuestra','=','muestraesdetipo.IdTipoMuestra')
+                        ->select('tiposmuestra.denominacion','muestras.*')->get();
+
+
+                    $grouped = $muestras->groupBy('NumeroRegistro');
+
+                    $array = $grouped->toArray();
+
+
+
+
+                    return view('catalogo.muestras.layout_muestras',['tipos'=>$tipos,'muestras' => $array]);
+                } else {
+                    $tipo = $request->input('tipo');
+
+                    $tipos = DB::table('tiposmuestra')->orderBy('denominacion','asc')->get();
+                    $muestras = DB::table('muestraesdetipo')
+                        ->join('muestras','muestras.NumeroRegistro','=','muestraesdetipo.NumeroRegistro')
+                        ->join('tiposmuestra','tiposmuestra.IdTipoMuestra','=','muestraesdetipo.IdTipoMuestra')
+                        ->where('tiposmuestra.IdTipoMuestra',$tipo)
+                        ->select('tiposmuestra.denominacion','muestras.*')->get();
+
+
+                    $grouped = $muestras->groupBy('NumeroRegistro');
+
+                    $array = $grouped->toArray();
+
+
+
+                    return view('catalogo.muestras.layout_muestras',['tipos'=>$tipos,'muestras' => $array]);
                 }
 
     }
