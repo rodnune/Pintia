@@ -18,4 +18,15 @@ class Autor extends Model
     protected $primaryKey = 'IdAutor';
     public $timestamps = false;
 
+    public  function articulosAsociados(){
+
+        $articulos =    DB::table('articulos')
+            ->join('autoria','articulos.IdArticulo', '=', 'autoria.IdArticulo')
+            -> where('autoria.IdAutor','=',$this->IdAutor)
+            ->orderBy('articulos.Titulo')
+            ->get();
+
+        return $articulos;
+    }
+
 }

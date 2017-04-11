@@ -120,6 +120,8 @@ Route::post('/autor_new','AutoresController@create');
 Route::post('/autor_delete','AutoresController@delete');
 Route::get('/editar_autor','AutoresController@get_form_update');
 Route::post('/editar_autor','AutoresController@update');
+Route::get('/autor/{id}', 'AutoresController@get_autor');
+
 
 
 

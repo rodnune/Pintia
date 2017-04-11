@@ -75,9 +75,9 @@
                                     <td>{{$autor->Nombre}}</td>
                                     <td>{{$autor->Apellido}}</td>
                                     <td>{{$autor->Filiacion}}</td>
-                                    <td>
-                                        <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-eye"></i> Ver</button>
-                                        <input type="hidden" name="id" value="{{$autor->IdAutor}}"/>
+                                    <td align="center">
+                                        <a href="/autor/{{$autor->IdAutor}}"><button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-eye"></i> Ver</button></a>
+
                                     </td>
 
 

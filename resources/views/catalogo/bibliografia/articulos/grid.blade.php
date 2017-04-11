@@ -60,7 +60,7 @@
                        <tbody>
                     @foreach($autores as $autor)
                         <tr>
-                            <td>{{$autor->Nombre}}</td>
+                            <td><a href="/autor/{{$autor->IdAutor}}">{{$autor->Nombre}}</a></td>
                             <td>{{$autor->Apellido}}</td>
                             <td>{{$autor->Filiacion}}</td>
                             <td>{{$autor->OrdenFirma}}</td>

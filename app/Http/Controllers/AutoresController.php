@@ -75,10 +75,22 @@ class AutoresController extends \App\Http\Controllers\Controller
 
     }
 
+    public function get_autor($id){
+        $autor = Autor::find($id);
+        $articulos = $autor->articulosAsociados();
+
+        return view('catalogo.bibliografia.autores.layout_autor',['autor' => $autor,'articulos' => $articulos]);
+
+
+
+
+    }
+
     public function get_form_update(Request $request){
 
         $id = $request -> input('autor');
         $autor = Autor::find($id);
+
 
         return view('catalogo.bibliografia.autores.layout_update_autor',['autor' => $autor]);
 
