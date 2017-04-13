@@ -22,7 +22,7 @@
 
 
                         {{Form::open(array('action' => 'MuestrasController@update','method' => 'post'))}}
-                        <input type="hidden" value="{{$muestra->NumeroRegistro}}">
+                        <input type="hidden" name="id" value="{{$muestra->NumeroRegistro}}">
                         <tr>
                             <td colspan="2" align="left"><img src="images/required.gif" height="16" width="16"><strong>N&uacute;mero Registro</strong></td>
                             <td colspan="2" align="center"><input class="form-control" type="number" name="registro" value="{{$muestra->NumeroRegistro}}" style="width:100%" maxlength="20" /></td></tr><tr>
@@ -44,11 +44,12 @@
                             </td>
                         </tr>
 
-
                         <tr>
                             <td align="left"><strong>Tipos de Muestra Sin Asociar</strong></td>
+                            {{Form::open(array('action' => 'MuestrasController@addAsociacion', 'method' => 'post'))}}
+                            <input type="hidden" name="id" value="{{$muestra->NumeroRegistro}}">
                             <td>
-                                <select class="form-control" name="id_tipo_sel" size="5" style="width:100%" />
+                                <select class="form-control" name="muestra" size="5" style="width:100%" />
 
                                 @foreach($no_asociados as $no_asociado)
                                     <option value="{{$no_asociado->IdTipoMuestra}}">{{$no_asociado->Denominacion}}</option>
@@ -59,8 +60,12 @@
                                 <center><button type="submit" name="accion" class="btn btn-primary" value="Asociar"><i class="fa fa-arrows-h"></i> Asociar</button></center>
                                 <br>
                                 </td>
+
+                            {{Form::close()}}
                             <td align="left"><strong>Tipos de Muestra Asociadas</strong></td>
-                           <td><select class="form-control" name="asociado" size="5" style="width:100%" />
+                            {{Form::open(array('action' => 'MuestrasController@eliminarAsociacion','method' => 'post'))}}
+                            <input type="hidden" name="id" value="{{$muestra->NumeroRegistro}}">
+                           <td><select class="form-control" name="muestra" size="5" style="width:100%" />
 
                                @foreach($asociados as $asociado)
                                 <option value="{{$asociado->IdTipoMuestra}}">{{$asociado->Denominacion}}</option>
@@ -70,6 +75,7 @@
                                 <center><button type="submit" name="accion" class="btn btn-danger" value="Eliminar"><i class="fa fa-trash"></i> Eliminar asociaci&oacuten</button></center>
                               <br>
                                </td>
+                            {{Form::close()}}
                             </tr>
 
 

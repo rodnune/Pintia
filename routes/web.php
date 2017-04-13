@@ -130,6 +130,9 @@ Route::post('/new_muestra','MuestrasController@create');
 Route::post('/delete_muestra','MuestrasController@delete');
 Route::get('/muestra/{id}','MuestrasController@get');
 Route::post('/update_muestra','MuestrasController@update');
+Route::post('/muestra_delete_tipo','MuestrasController@eliminarAsociacion');
+Route::post('/muestra_add_tipo','MuestrasController@addAsociacion');
+
 
 
 

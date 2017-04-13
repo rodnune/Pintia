@@ -98,15 +98,72 @@ class MuestrasController extends \App\Http\Controllers\Controller
     }
 
     public function update(Request $request){
+        $registro = $request ->input('id');
+        $new_registro = $request -> input('registro');
+        $notas = $request -> input('notas');
 
+        $validator = Validator::make($request->all(), [
+
+
+
+            'registro' => 'required|numeric|min:0|unique:muestras,NumeroRegistro',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/muestra/'.$registro)
+                ->withErrors($validator);
+        }
+
+                DB::table('muestras')
+                    ->where('NumeroRegistro',$registro)
+                    ->update(['NumeroRegistro' => $new_registro,'Notas' => $notas ]);
+
+                return redirect('/muestra/'.$new_registro);
     }
 
-    public function eliminarAsociacion(){
+    public function eliminarAsociacion(Request $request){
+                $id = $request->input('id');
+                $muestra = $request->input('muestra');
 
+        $validator = Validator::make($request->all(), [
+
+
+
+            'muestra' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/muestra/'.$id)
+                ->withErrors($validator);
+        }
+
+                DB::table('muestraesdetipo')
+                    ->where('NumeroRegistro','=',$id)
+                    ->where('IdTipoMuestra','=',$muestra)
+                    ->delete();
+
+                return redirect('/muestra/'.$id);
     }
 
-    public function addAsociacion(){
+    public function addAsociacion(Request $request){
+        $id = $request->input('id');
+        $muestra = $request->input('muestra');
 
+        $validator = Validator::make($request->all(), [
+
+
+
+            'muestra' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/muestra/'.$id)
+                ->withErrors($validator);
+        }
+
+        DB::table('muestraesdetipo')->insert(['NumeroRegistro' => $id , 'IdTipoMuestra' => $muestra]);
+
+        return redirect('/muestra/'.$id);
     }
 
 
