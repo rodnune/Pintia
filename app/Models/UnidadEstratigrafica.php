@@ -279,6 +279,35 @@ public function matrixHarris(){
 
 }
 
+public function muestrasAsociadas(){
+    $asociadas =  DB::select(DB::raw('SELECT a.NumeroRegistro, a.Notas 
+								FROM
+									Muestras a, MuestrasUE b
+								WHERE
+									a.NumeroRegistro = b.NumeroRegistro AND
+									b.UE = '. $this->UE .'
+								'));
+
+    return $asociadas;
+
+}
+
+public function muestrasNoAsociadas(){
+    $no_asociadas = DB::select(DB::raw('SELECT a.NumeroRegistro, a.Notas 
+								FROM
+									Muestras a
+								WHERE a.NumeroRegistro  NOT IN
+								(
+                                    SELECT b.NumeroRegistro 
+                                    FROM MuestrasUE b
+                                    WHERE b.UE = ' . $this->UE . ' 
+                                  )
+								'));
+
+    return $no_asociadas;
+}
+
+
 
 
 

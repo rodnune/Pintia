@@ -13,9 +13,7 @@
                 <table class="table table-bordered" rules="all">
                     <tbody>
                     {{Form::open(array('action' => 'UdsEstratigraficasController@create' , 'method' => 'post'))}}
-                        <!--
-                        <input type="hidden" name="seccion" value="Formulario">
-                        echo '<input type="hidden" name="subsec" value="Datos Generales">-->
+
                         <tr>
                             <td colspan="1" align="right"><strong>Id UE</strong></td>
                             <td colspan="2" align="center">

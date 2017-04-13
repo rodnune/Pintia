@@ -125,7 +125,11 @@ Route::get('/autor/{id}', 'AutoresController@get_autor');
 //muestras
 
 Route::get('/muestras','MuestrasController@index');
-
+Route::get('/new_muestra',function(){return view('catalogo.muestras.layout_new_muestra');});
+Route::post('/new_muestra','MuestrasController@create');
+Route::post('/delete_muestra','MuestrasController@delete');
+Route::get('/muestra/{id}','MuestrasController@get');
+Route::post('/update_muestra','MuestrasController@update');
 
 
 

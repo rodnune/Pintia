@@ -68,7 +68,7 @@
 
                                <th scope="col" align="center"></th>
                                 <td align="center">
-                                  <button type="submit" name="submit" class="btn btn-success" value="Nueva"><i class="fa fa-plus"></i> Nueva</button>
+                                    <a href="/new_muestra" class="btn btn-success" value="Nueva"><i class="fa fa-plus"></i> Nueva</a>
                                  </td>
 
                             @endif
@@ -99,19 +99,17 @@
 
                            <td align="center">
                                 <form action="muestras.php" method="post">
-                                    <button type="submit" name="submit" class="btn btn-primary" value="Modificar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
-                                    <input type="hidden" name="opcion" value=1>
-                                    <input type="hidden" name="form" value=2>
-                                    <input type="hidden" name="id_num" value="numeroregistro" />
-                                </form>
+                                    <a href="/muestra/{{$muestras[$key][0]->NumeroRegistro}}" class="btn btn-primary" value="Modificar"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
+
+
                            </td>
 
+                                {{Form::open(array('action' => 'MuestrasController@delete','method' => 'post'))}}
                            <td align="center">
-                                <form action="muestras.php" method="post">
+                              <input type="hidden" name="registro" value="{{$muestras[$key][0]->NumeroRegistro}}">
                                     <button type="submit" name="submit" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Eliminar</button>
-                                    <input type="hidden" name="form" value=4>
-                                    <input type="hidden" name="id_num" value="numeroregistro" />
-                                </form>
+
+                                    {{Form::close()}}
                            </td>
                                 @endif
 

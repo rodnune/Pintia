@@ -8,8 +8,10 @@
 
 namespace app\Http\Controllers;
 use App\Models\UnidadEstratigrafica;
+use App\Models\Muestra;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Validator;
 
 class MuestrasController extends \App\Http\Controllers\Controller
 {
@@ -17,9 +19,9 @@ class MuestrasController extends \App\Http\Controllers\Controller
     public function index(Request $request){
                 if(!$request->has('tipo')){
                     $tipos = DB::table('tiposmuestra')->orderBy('denominacion','asc')->get();
-                    $muestras = DB::table('muestraesdetipo')
-                        ->join('muestras','muestras.NumeroRegistro','=','muestraesdetipo.NumeroRegistro')
-                        ->join('tiposmuestra','tiposmuestra.IdTipoMuestra','=','muestraesdetipo.IdTipoMuestra')
+                    $muestras = DB::table('muestras')
+                        ->leftJoin('muestraesdetipo','muestras.NumeroRegistro','=','muestraesdetipo.NumeroRegistro')
+                        ->leftJoin('tiposmuestra','tiposmuestra.IdTipoMuestra','=','muestraesdetipo.IdTipoMuestra')
                         ->select('tiposmuestra.denominacion','muestras.*')->get();
 
 
@@ -53,27 +55,69 @@ class MuestrasController extends \App\Http\Controllers\Controller
 
     }
 
+    public function create(Request $request){
+             $registro = $request->input('registro');
+             $notas = $request->input('notas');
+
+        $validator = Validator::make($request->all(), [
+
+
+
+            'registro' => 'required|numeric|min:0|unique:muestras,NumeroRegistro',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/new_muestra')
+                ->withErrors($validator);
+        }
+
+        DB::table('muestras')->insert(['NumeroRegistro' => $registro ,'Notas' => $notas]);
+
+
+
+        return redirect('/muestras');
+    }
+
+
+    public function delete(Request $request){
+                $registro = $request ->input('registro');
+
+        DB::table('muestras')->where('NumeroRegistro', '=', $registro)->delete();
+
+        return redirect('/muestras');
+    }
+
+    public function get($id){
+
+       $muestra      =  Muestra::find($id);
+       $asociados    = $muestra->tiposMuestrasAsociados();
+       $no_asociados = $muestra->tiposMuestraNoAsociados();
+
+
+        return view('catalogo.muestras.layout_update_muestra',['muestra' => $muestra,'asociados' => $asociados,'no_asociados' => $no_asociados ]);
+    }
+
+    public function update(Request $request){
+
+    }
+
+    public function eliminarAsociacion(){
+
+    }
+
+    public function addAsociacion(){
+
+    }
+
+
+
     public function indexUE($id){
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
 
-        $no_asociadas = DB::select(DB::raw('SELECT a.NumeroRegistro, a.Notas 
-								FROM
-									Muestras a
-								WHERE a.NumeroRegistro  NOT IN
-								(
-                                    SELECT b.NumeroRegistro 
-                                    FROM MuestrasUE b
-                                    WHERE b.UE = ' . $id . ' 
-                                  )
-								'));
+        $no_asociadas = $ud_estratigrafica->muestrasNoAsociadas();
 
-        $asociadas =  DB::select(DB::raw('SELECT a.NumeroRegistro, a.Notas 
-								FROM
-									Muestras a, MuestrasUE b
-								WHERE
-									a.NumeroRegistro = b.NumeroRegistro AND
-									b.UE = '. $id.'
-								'));
+
+        $asociadas = $ud_estratigrafica->muestrasAsociadas();
 
         return view('catalogo.uds_estratigraficas.layout_muestras', ['ud_estratigrafica' => $ud_estratigrafica, 'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
     }
