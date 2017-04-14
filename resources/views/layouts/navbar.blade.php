@@ -12,7 +12,7 @@
                     <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
                         <li><a href="/objetos">Objetos</a></li>
                         <li><a href="/tumbas">Tumbas</a></li>
-                        <li><a href="#">Inhumaciones</a></li>
+                        <li><a href="/inhumaciones">Inhumaciones</a></li>
                         <li><a href="/cremaciones">Cremaciones</a></li>
 
                        <li class="dropdown-submenu">
@@ -46,7 +46,7 @@
                                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
                                     <li><a href="/objetos">Objetos</a></li>
                                     <li><a href="/tumbas">Tumbas</a></li>
-                                    <li><a href="#">Inhumaciones</a></li>
+                                    <li><a href="/inhumaciones">Inhumaciones</a></li>
                                     <li><a href="/cremaciones">Cremaciones</a></li>
                                     <li><a href="/muestras">Muestras</a></li>
 

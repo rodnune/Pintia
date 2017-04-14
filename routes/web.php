@@ -133,6 +133,10 @@ Route::post('/update_muestra','MuestrasController@update');
 Route::post('/muestra_delete_tipo','MuestrasController@eliminarAsociacion');
 Route::post('/muestra_add_tipo','MuestrasController@addAsociacion');
 
+//inhumaciones
+Route::get('/inhumaciones','InhumacionesController@index');
+Route::get('/new_inhumacion',function(){return view('catalogo.inhumaciones.layout_new_inhumacion');});
+Route::post('/new_inhumacion','MuestrasController@create');
 
 
 
