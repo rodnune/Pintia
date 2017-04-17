@@ -56,8 +56,46 @@ return [
          'contenida_en'       => "contenida en",
          'se_le_apoya'        => "se le apoya"
 
-    ]
+    ],
 
+
+    'bool' => [
+        'no' => "No",
+        'si' => "Si"
+    ],
+
+    'inhumacion_conservacion' => [
+        'completa' => "Completa",
+        'parcial'  =>  "Parcial"
+     ],
+
+    'inhumacion_conexion_anatomica' => [
+        'articulado'       => "Articulado",
+        'desarticulado'    => "Desarticulado"
+    ],
+
+    'inhumacion_posicion' => [
+        'supino'             => "Decubito supino",
+        'prono'              => "Decubito prono",
+        'lateral_derecho'    => "Decubito lateral derecho",
+        'lateral_izqdo'      => "Decubito lateral izquierdo",
+        'otros'              => "Otros"
+    ],
+
+    'inhumacion_actitud' => [
+        'extension'         => "En extension",
+        'flexion'           => "En flexion",
+        'flexion_extrema'   => "En flexion extrema",
+        'contorsionado'     => "Contorsionado"
+    ],
+
+    'sexo' => [
+        'hombre'    => "Hombre",
+        'mujer'     => "Mujer",
+        'infante'   => "Alofiso (infante)",
+        'masculino' => "Alofiso (masculino)",
+        'femenino'  => "Alofiso (femenino)"
+    ]
 
 
 

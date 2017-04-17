@@ -1,3 +1,6 @@
+@php
+use Carbon\Carbon;
+@endphp
 
 <div id="wrapper">
     <div id="header">
@@ -6,28 +9,37 @@
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
                     <h1 class="text-center">Nueva Inhumaci&oacute;n </h1><br>
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                         <table class="table table-bordered table-hover" rules="all">
                            <tbody>
+
+                           {{Form::open(array('action' => 'InhumacionesController@create' , 'method' => 'post'))}}
 
                             <tr>
                                 <td colspan="1"><strong>UECadaver</strong></td>
                                     <td colspan="2">
                                     <select class="form-control" name="ue_cadaver" style="width:100%">
-                                        <option value=NULL ></option>
-
-
-                                        <option value="" selected="selected">' . $row2['UE'] . '</option>
-                                        <option value="">' . $row2['UE'] . '</option>
-
+                                        @foreach($ud_estratigraficas as $ud_estratigrafica)
+                                        <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                                        @endforeach
                                     </select>
                                    </td>
 
                                 <td colspan="1"><strong>UEFosa</strong></td>
                                 <td colspan="2">
                                     <select class="form-control" name="ue_fosa" style="width:100%">
-                                        <option value=NULL ></option>
-                                        <option value="" selected="selected">' . $row21['UE'] . '</option>
-                                        <option value="">' . $row21['UE'] . '</option>
+                                        @foreach($ud_estratigraficas as $ud_estratigrafica)
+                                            <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                                        @endforeach
+
                                     </select>
                                  </td>
                             </tr>
@@ -36,20 +48,18 @@
                                 <td colspan="1"><strong>UEEstructura</strong></td>
                                 <td colspan="2">
                                     <select class="form-control" name="ue_estructura" style="width:100%">
-                                        <option value=NULL ></option>
-
-                                       <option value="" selected="selected">' . $row22['UE'] . '</option>
-                                        <option value="">' . $row22['UE'] . '</option>
-
+                                        @foreach($ud_estratigraficas as $ud_estratigrafica)
+                                            <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                                        @endforeach
                                      </select>
                                 </td>
 
                                <td colspan="1"><strong><label for="">UERelleno</label></strong></td>
                                 <td colspan="2">
                                     <select class="form-control" name="ue_relleno" style="width:100%">
-                                        <option value=NULL ></option>
-                                        <option value="" selected="selected">' . $row23['UE'] . '</option>
-                                        <option value="">' . $row23['UE'] . '</option>
+                                        @foreach($ud_estratigraficas as $ud_estratigrafica)
+                                            <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                                        @endforeach
 
                                     </select>
                                 </td>
@@ -60,8 +70,13 @@
                            <tr>
 
 
-                            <td colspan="2"><strong>Fecha (dd-mm-aa) </strong></td>
-                            <td colspan="4"><input type="date" name="fecha" size="25" maxlength="255" value="" /></td>
+                            <td colspan="2"><strong>Fecha (dd-mm-aa) </strong>
+                                <input type="date" name="fecha" size="25" maxlength="255" value="" />
+                            </td>
+
+                            <td colspan="4"><strong>Fecha actual </strong>
+                                <input type="date" name="actual" value="{{Carbon::now()->toDateString()}}" disabled />
+                            </td>
                            </tr>
 
 
@@ -86,17 +101,15 @@
                                 <tr>
                                 <td colspan="1"><strong>Tiene Ajuar</strong></td>
                                 <td colspan="1">
-                                    <select class="form-control" name="tiene" style="width:100%">
-                                        <option value=NULL ></option>
-
-                                        <option value="" selected="selected">' . $value . '</option>
-                                        <option value="">' . $value . '</option>
-
+                                    <select id="ajuar_select" class="form-control" name="tiene" style="width:100%">
+                                      @foreach(Config::get('enums.bool') as $bool)
+                                          <option value="{{$bool}}">{{$bool}}</option>
+                                      @endforeach
                                   </select>
                                 </td>
 
-                               <td colspan="1"><strong>Ajuar</strong></td>
-                                <td colspan="3">
+                               <td id="ajuar" colspan="1" style="display:none"><strong>Ajuar</strong></td>
+                                <td id="ajuar2" colspan="3" style="display:none">
 
                                     <div onclick="displayHtml('source1','display1');">
                                         <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
@@ -122,11 +135,9 @@
                                         <td colspan="1"><strong>Conservaci&oacute;n</strong></td>
                                         <td colspan="2">
                                        <select class="form-control" name="conservacion" style="width:100%">
-                                       <option value=NULL ></option>
-
-
-                                                <option value="" selected="selected">' . $value . '</option>
-                                           <option value="">' . $value . '</option>
+                                           @foreach(Config::get('enums.inhumacion_conservacion') as $conservacion)
+                                               <option value="{{$conservacion}}">{{$conservacion}}</option>
+                                           @endforeach
 
                                         </select>
                                    </td>
@@ -134,12 +145,9 @@
                                 <td colspan="1"><strong>Conexi&oacute;n Anat&oacute;mica</strong></td>
                                         <td colspan="2">
                                         <select class="form-control" name="conex" style="width:100%">
-                                        <option value=NULL ></option>
-
-
-                                                <option value="" selected="selected">' . $value . '</option>
-                                               <option value="' . $value . '">' . $value . '</option>
-
+                                            @foreach(Config::get('enums.inhumacion_conexion_anatomica') as $conexion)
+                                                <option value="{{$conexion}}">{{$conexion}}</option>
+                                            @endforeach
                                        </select>
                                       </td>
 
@@ -149,11 +157,9 @@
                                 <td colspan="1"><strong>Posici&oacute;n</strong></td>
                                         <td colspan="2">
                                        <select class="form-control" name="posicion" style="width:100%">
-                                        <option value=NULL ></option>
-
-                                                <option value="' . $value . '" selected="selected">' . $value . '</option>
-
-                                                <option value="' . $value . '">' . $value . '</option>
+                                           @foreach(Config::get('enums.inhumacion_posicion') as $posicion)
+                                               <option value="{{$posicion}}">{{$posicion}}</option>
+                                           @endforeach
 
                                     </select>
                                         </td>
@@ -163,11 +169,9 @@
 
                                         <select class="form-control" name="actitud" style="width:100%">
 
-                                            <option value=NULL ></option>
-
-                                                <option value="' . $value . '" selected="selected">' . $value . '</option>
-
-                                                <option value="' . $value . '">' . $value . '</option>
+                                            @foreach(Config::get('enums.inhumacion_actitud') as $actitud)
+                                                <option value="{{$actitud}}">{{$actitud}}</option>
+                                            @endforeach
 
                                         </select>
                                       </td>
@@ -178,13 +182,13 @@
                                 <td colspan="1"><strong>Sexo</strong></td>
                                         <td colspan="2">
                                         <select class="form-control" name="sexo" style="width:100%">
-                                        <option value=NULL ></option>
+
+                                            @foreach(Config::get('enums.sexo') as $sexo)
+                                                <option value="{{$sexo}}">{{$sexo}}</option>
+                                            @endforeach
 
 
-                                               <option value="' . $value . '" selected="selected">' . $value . '</option>
-                                                <option value="' . $value . '">' . $value . '</option>
-
-                                       </select>
+                                        </select>
                                         </td>
 
                                       <td colspan="2"></td>
@@ -255,12 +259,14 @@
 
     <tr><td colspan="3" align="right">
 
-        <button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar cambios</button>
+        <button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar </button>
 
 
     </td>
+                               {{Form::close()}}
 
-   <td colspan="3" align="left">
+
+                               <td colspan="3" align="left">
 
         <a href="/inhumaciones" class="btn btn-danger" value="Volver a listado"><i class="fa fa-times"></i> Cancelar/Volver a lista inhumaciones</a>
 
@@ -279,3 +285,27 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+
+
+
+    $('#ajuar_select').change(function() {
+
+        var valor = $("#ajuar_select option:selected").val();
+
+        if (valor == "No") {
+            $('#ajuar').css('display','none');
+            $('#ajuar2').css('display', 'none');
+
+        } else {
+            $('#ajuar').show();
+            $('#ajuar2').show();
+        }
+
+    });
+
+
+</script>

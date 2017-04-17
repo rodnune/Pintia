@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use \Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\Models\UnidadEstratigrafica;
 
 //Rutas generales
 Route::get('/index', function () { return view('seccion_principal'); });
@@ -135,8 +136,8 @@ Route::post('/muestra_add_tipo','MuestrasController@addAsociacion');
 
 //inhumaciones
 Route::get('/inhumaciones','InhumacionesController@index');
-Route::get('/new_inhumacion',function(){return view('catalogo.inhumaciones.layout_new_inhumacion');});
-Route::post('/new_inhumacion','MuestrasController@create');
+Route::get('/new_inhumacion','InhumacionesController@form_create');
+Route::post('/new_inhumacion','InhumacionesController@create');
 
 
 
@@ -146,9 +147,8 @@ Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objeto
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
 
-    $query2 = DB::table('almacenmultimedia')->where('IdMutimedia',1)->get();
-
-    return $query2;
+    $ud_estratigraficas =  UnidadEstratigrafica::all()->keys();
+    return $ud_estratigraficas;
 
 return view('pruebas');
 
