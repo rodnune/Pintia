@@ -138,6 +138,7 @@ Route::post('/muestra_add_tipo','MuestrasController@addAsociacion');
 Route::get('/inhumaciones','InhumacionesController@index');
 Route::get('/new_inhumacion','InhumacionesController@form_create');
 Route::post('/new_inhumacion','InhumacionesController@create');
+Route::get('/search_inhumaciones','InhumacionesController@search');
 
 
 
@@ -147,8 +148,8 @@ Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objeto
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
 
-    $ud_estratigraficas =  UnidadEstratigrafica::all()->keys();
-    return $ud_estratigraficas;
+    $ud =  DB::table('inhumacion')->max('IdEnterramiento');
+    return $ud;
 
 return view('pruebas');
 

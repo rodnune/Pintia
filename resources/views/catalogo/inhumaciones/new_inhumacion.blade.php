@@ -71,11 +71,11 @@ use Carbon\Carbon;
 
 
                             <td colspan="2"><strong>Fecha (dd-mm-aa) </strong>
-                                <input type="date" name="fecha" size="25" maxlength="255" value="" />
+                                <input type="date" name="fecha" size="25" maxlength="255" />
                             </td>
 
                             <td colspan="4"><strong>Fecha actual </strong>
-                                <input type="date" name="actual" value="{{Carbon::now()->toDateString()}}" disabled />
+                                <input type="date" name="actual" value="{{Carbon::now()->toDateString()}}" readonly="readonly" />
                             </td>
                            </tr>
 
@@ -91,7 +91,7 @@ use Carbon\Carbon;
 
                             <tr>
                                <td colspan="2"><strong>Adscrici&oacute;n Cultural Cronolog&iacute;a</strong></td>
-                                <td colspan="4"><input class="form-control" type="text" name="adscricion" style="width:100%" maxlength="255" value="" /></td>
+                                <td colspan="4"><input class="form-control" type="text" name="adscripcion" style="width:100%" maxlength="255" value="" /></td>
                              </tr>
 
                             </tr>
@@ -101,7 +101,7 @@ use Carbon\Carbon;
                                 <tr>
                                 <td colspan="1"><strong>Tiene Ajuar</strong></td>
                                 <td colspan="1">
-                                    <select id="ajuar_select" class="form-control" name="tiene" style="width:100%">
+                                    <select id="ajuar_select" class="form-control" name="tiene_ajuar" style="width:100%">
                                       @foreach(Config::get('enums.bool') as $bool)
                                           <option value="{{$bool}}">{{$bool}}</option>
                                       @endforeach
@@ -123,7 +123,7 @@ use Carbon\Carbon;
                                     </div>
 
 
-                                        <textarea class="form-control vresize" rows="6" cols="60" name="ajuar" id="display1" style="display:none;">'.$ajuar.'</textarea>
+                                        <textarea class="form-control vresize" rows="6" cols="60" name="ajuar" id="display1" style="display:none;"></textarea>
 
                                    </td>
                             </tr>
@@ -144,7 +144,7 @@ use Carbon\Carbon;
 
                                 <td colspan="1"><strong>Conexi&oacute;n Anat&oacute;mica</strong></td>
                                         <td colspan="2">
-                                        <select class="form-control" name="conex" style="width:100%">
+                                        <select class="form-control" name="conexion" style="width:100%">
                                             @foreach(Config::get('enums.inhumacion_conexion_anatomica') as $conexion)
                                                 <option value="{{$conexion}}">{{$conexion}}</option>
                                             @endforeach
@@ -225,10 +225,9 @@ use Carbon\Carbon;
 
                                             <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source3','display3');" contenteditable id="source3">
 
-                                            $descripcion;
                                              </div>
 
-                                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display3" style="display:none;">'.$descripcion.'</textarea>
+                                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display3" style="display:none;"></textarea>
                                                </td>
                                            </tr>
                                            <tr>
@@ -243,11 +242,11 @@ use Carbon\Carbon;
 
                                                 <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source4','display4');" contenteditable id="source4">
 
-                                                    $observaciones;
+
 
                                                 </div>
 
-<textarea class="form-control vresize" rows="6" cols="60" name="observaciones" id="display4" style="display:none;">'.$observaciones.'</textarea>
+<textarea class="form-control vresize" rows="6" cols="60" name="observaciones" id="display4" style="display:none;"></textarea>
 </td>
 </tr>
 </tr>

@@ -9,10 +9,13 @@
 namespace app\Http\Controllers;
 
 use App\Models\UnidadEstratigrafica;
+use App\Models\Inhumacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Validator;
-use Carbon\Carbon;
-use Illuminate\Validation\Rule;
+use Config;
+use Illuminate\Support\Facades\DB;
+
 
 
 class InhumacionesController extends \App\Http\Controllers\Controller
@@ -20,44 +23,119 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
     public function index(){
 
-        return view('catalogo.inhumaciones.layout_inhumaciones');
+
+
+        $inhumaciones = DB::table('inhumacion')->get(['IdEnterramiento','UECadaver'
+            ,'UERelleno','UEFosa','UEEstructura','Descripcion']);
+
+        $ud_estratigraficas = UnidadEstratigrafica::all();
+
+        return view('catalogo.inhumaciones.layout_inhumaciones',['inhumaciones' => $inhumaciones,
+            'ud_estratigraficas' => $ud_estratigraficas ]);
     }
 
-    public function create(Request $request){
-               $ue_cadaver =  $request -> input('ue_cadaver');
-               $ue_fosa =  $request -> input('ue_fosa');
-               $ue_estructura =  $request -> input('ue_estructura');
-               $ue_relleno = $request -> input('ue_relleno');
-               $orientacion = $request -> input('orientacion');
-                $fecha = strtotime($request -> input('fecha'));
+    public function search(Request $request,Inhumacion $inhumacion){
 
-        $validator = Validator::make($request->all(), [
-            'fecha' => 'before_or_equal:actual',
+              $inhumaciones =  $inhumacion->newQuery();
 
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('/new_inhumacion')
-                ->withErrors($validator);
+        if($request->has('filtro_cadaver')){
+           $inhumaciones->where('UECadaver', $request->input('filtro_cadaver'));
         }
 
+        if($request->has('filtro_fosa')){
+          $inhumaciones->where('UEFosa', $request->input('filtro_fosa'));
+        }
+
+        if($request->has('filtro_estructura')){
+            $inhumaciones->where('UEEstructura', $request->input('filtro_estructura'));
+        }
+
+        if($request->has('filtro_estructura')){
+            $inhumaciones->where('UERelleno', $request->input('filtro_relleno'));
+        }
+
+        $inhumaciones = $inhumaciones->get();
 
 
 
 
+        $ud_estratigraficas = UnidadEstratigrafica::all();
 
-
-
-
-
-
-                //return $actual;
-
-                //return $request -> all();
-
-
-
+        return view('catalogo.inhumaciones.layout_inhumaciones',['inhumaciones' => $inhumaciones,
+            'ud_estratigraficas' => $ud_estratigraficas ]);
     }
+
+
+        public function create(Request $request)
+        {
+            $ue_cadaver = $request->input('ue_cadaver');
+            $ue_fosa = $request->input('ue_fosa');
+            $ue_estructura = $request->input('ue_estructura');
+            $ue_relleno = $request->input('ue_relleno');
+            $fecha = $request->input('fecha');
+            $orientacion = $request->input('orientacion');
+            $edad = $request->input('edad');
+            $adscripcion = $request->input('adscripcion');
+            $tiene_ajuar = $request->input('tiene_ajuar');
+            $ajuar = $request->input('ajuar');
+            $conservacion = $request->input('conservacion');
+            $conexion = $request->input('conexion');
+            $posicion = $request->input('posicion');
+            $actitud = $request->input('actitud');
+            $sexo = $request->input('sexo');
+            $medidas = $request->input('medidas');
+            $descripcion = $request->input('descripcion');
+            $observaciones = $request->input('observaciones');
+
+            $validator = Validator::make($request->all(), [
+                'ue_cadaver' => 'numeric',
+                'ue_fosa' => 'numeric',
+                'ue_estructura' => 'numeric',
+                'ue_relleno' => 'numeric',
+                'actual' => 'required|date',
+                'fecha' => 'required|date|before_or_equal:actual',
+                'orientacion' => 'string',
+                'edad' => 'string',
+                'adscripcion' => 'string',
+                'tiene_ajuar' => 'required|in:Si,No',
+                'ajuar' => 'string',
+                'conservacion' => 'in:Completa,Parcial',
+                'conexion' => 'in:Articulado,Desarticulado',
+                'posicion' => 'in:' . implode(',', Config::get('enums.inhumacion_posicion')),
+                'actitud' => 'in:' . implode(',', Config::get('enums.inhumacion_actitud')),
+                'sexo' => 'in:' . implode(',', Config::get('enums.sexo')),
+                'medidas' => 'string',
+                'descripcion' => 'required|string',
+                'observaciones' => 'string'
+
+
+            ]);
+
+            DB::table('inhumacion')->insert(['UECadaver' => $ue_cadaver, 'Fecha' => $fecha, 'UEFosa' => $ue_fosa
+                , 'UEEstructura' => $ue_estructura, 'UERelleno' => $ue_relleno, 'TieneAjuar' => $tiene_ajuar,
+                'Orientacion' => $orientacion, 'Conservacion' => $conservacion, 'ConexAnatomica' => $conexion,
+                'Posicion' => $posicion, 'Actitud' => $actitud, 'MedidasEsqueleto' => $medidas,
+                'Sexo' => $sexo, 'Edad' => $edad, 'Descripcion' => $descripcion, 'Ajuar' => $ajuar,
+                'AdscricionCulturalCronologia' => $adscripcion, 'Observaciones' => $observaciones]);
+
+            if ((Session::get('admin_level') == 1) || (Session::get('admin_level') == 2)) {
+
+                $id_enterramiento = DB::table('inhumacion')->max('IdEnterramiento');
+                DB::table('registro')
+                    ->insert(['user_id' => Session::get('user_id'), 'Fecha' => $fecha,
+                        'IdEnterramiento' => $id_enterramiento, 'admin_level' => Session::get('admin_level')]);
+
+                if ($validator->fails()) {
+                    return redirect('/new_inhumacion')
+                        ->withErrors($validator);
+                }
+
+
+                return redirect('/inhumaciones');
+
+
+            }
+        }
 
     public function form_create(){
         $ud_estratigraficas =  UnidadEstratigrafica::all();

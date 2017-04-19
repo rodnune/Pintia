@@ -13,18 +13,17 @@
 </div>
 
 <table class="table table-bordered table-hover" rules="rows">
-    <form action="inhumacion.php" method="post">
-        <input type="hidden" name="form" value="1">
+    {{Form::open(array('action' => 'InhumacionesController@search' ,'method' => 'get'))}}
 
 
         <tr id="fila_filtros">
+
             <td align="center"><strong>UE cadáver: </strong></td>
            <td align="left">
                     <select class="form-control" name="filtro_cadaver" style="width:100%">
-                        <option value="-1" selected>--- Seleccionar UE  ---</option>
-
-                        <option value="">' . $rowcadaver['UE'] . '</option>
-
+                        @foreach($ud_estratigraficas as $ud_estratigrafica)
+                        <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                        @endforeach
                     </select>
            </td>
 
@@ -33,17 +32,18 @@
             <td align="center"><strong>UE fosa: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_fosa" style="width:100%">
-                    <option value="-1" selected>--- Seleccionar UE ---</option>
-
-                    <option value="">' . $rowfosa['UE'] . '</option>
+                    @foreach($ud_estratigraficas as $ud_estratigrafica)
+                        <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                    @endforeach
                 </select>
             </td>
 
            <td align="center"><strong>UE estructura: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_estructura" style="width:100%">
-                    <option value="-1" selected>--- Seleccionar UE ---</option>
-                    <option value="">' . $rowestructura['UE'] . '</option>
+                    @foreach($ud_estratigraficas as $ud_estratigrafica)
+                        <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                    @endforeach
 
                 </select>
             </td>
@@ -52,8 +52,9 @@
             <td align="center"><strong>UE Relleno: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_relleno" style="width:100%">
-                    <option value="-1" selected>--- Seleccionar UE ---</option>
-                    <option value="ç">' . $rowrelleno['UE'] . '</option>
+                    @foreach($ud_estratigraficas as $ud_estratigrafica)
+                        <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                    @endforeach
                    </select>
              </td>
 
@@ -69,33 +70,35 @@
 
             <td align="center" colspan="6">
                 <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar inhumaciones</button>
-                <a class="btn btn-primary" href="inhumacion.php"><i class="fa fa-eye"></i> Ver todo</a>
+                <a class="btn btn-primary" href="/inhumaciones"><i class="fa fa-eye"></i> Ver todo</a>
             </td>
        </tr>
-    </form>
+    {{Form::close()}}
 
-    <form action="inhumacion.php" method="post">
-        <input type="hidden" name="form" value="1">
+
         <tr id="fila_ref" style="display:none;">
             <td><strong>Buscar por id de la inhumación:</strong></td>
-            <td><input type="text" class="form-control" name="buscarRef" placeholder="Identificador inhumación" required></td>
+            <td><input type="text" class="form-control" id="myInput" onkeyup="filter()" placeholder="Identificador inhumación" required></td>
 
             <td align="center" colspan="4">
-                <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar inhumación</button>
-                <a class="btn btn-primary" href="inhumacion.php"><i class="fa fa-eye"></i> Ver todo</a>
+
+                <a class="btn btn-primary" href="/inhumaciones"><i class="fa fa-eye"></i> Ver todo</a>
             </td>
         </tr>
-       </form>
 
     </table>
 
-                  <p class=" text-center text-muted"><strong>Total de resultados encontrados: '.mysql_num_rows($result).'</strong></p>
-                        <table id="pagination_table" class="table table-hover table-bordered" rules="rows">
+                  <p class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($inhumaciones)}}</strong></p>
+                    @if(count($inhumaciones)>0)
+                    <table id="pagination_table" class="table table-hover table-bordered" rules="rows">
                         <thead>
+
                         <tr class="info">
                             <th scope="col" align="center"><strong>Id</strong></th>
-                            <th scope="col" align="center"><strong>UECadaver</strong></th>
-                            <th scope="col" align="center"><strong>UEFosa</strong></th>
+                            <th scope="col" align="center"><strong>UE Cadaver</strong></th>
+                            <th scope="col" align="center"><strong>UE Fosa</strong></th>
+                            <th scope="col" align="center"><strong>UE Estructura</strong></th>
+                            <th scope="col" align="center"><strong>UE Relleno</strong></th>
                             <th scope="col" align="center"><strong>Descripci&oacute;n</strong></th>
                             @if( Session::get('admin_level') > 0 )
 
@@ -110,22 +113,25 @@
                         </thead>
 
                         <tbody>
-
+                    @foreach($inhumaciones as $inhumacion)
                         <tr>
-                            <td colspan="1" align="left">' . $row['IdEnterramiento'] . '</td>
-                            <td colspan="1" align="left">' . $row['UEFosa'] . '</td>
-                            <td colspan="1" align="left">' . $row['UEFosa'] . '</td>
-                            <td colspan="1" align="left"><div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">' . $row['Descripcion'] .'</div></td>
+                            <td colspan="1" align="left">{{$inhumacion ->IdEnterramiento}}</td>
+                            <td colspan="1" align="left">{{$inhumacion->UECadaver}}</td>
+                            <td colspan="1" align="left">{{$inhumacion->UEFosa}}</td>
+                            <td colspan="1" align="left">{{$inhumacion->UEEstructura}}</td>
+                            <td colspan="1" align="left">{{$inhumacion->UERelleno}}</td>
+                            <td colspan="1" align="left"><div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">{{$inhumacion->Descripcion}}</div></td>
                             <form action="inhumacion.php" method="post">
                                 <td colspan="1" align="center"><button type="submit" name="submit" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</button></td>
 
                              </form>
                            </tr>
+                        @endforeach
 
                         </tbody>
                       </table>
+                    @endif
 
-                    <h4 class="text-center text-danger">No se encuentran resultados.</h4>
 
 
                    <br/>
@@ -134,3 +140,30 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    function filter() {
+        // Declare variables
+        var input, filter, table, tr, td, i;
+
+        input = $("#myInput");
+        filter = input.val();
+        table = $("#pagination_table");
+        tr = table.find("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            /*Busqueda por ID*/
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+</script>

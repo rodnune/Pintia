@@ -30,6 +30,7 @@ class LoginController extends \App\Http\Controllers\Controller
         if ($usuario->exists()) {
 
          Session::put('admin_level',$usuario->value('admin_level'));
+         Session::put('user_id',$usuario->value('user_id'));
          Session::put('logged',1);
             return view('seccion_principal');
 
