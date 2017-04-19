@@ -111,6 +111,11 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
             ]);
 
+            if ($validator->fails()) {
+                return redirect('/new_inhumacion')
+                    ->withErrors($validator);
+            }
+
             DB::table('inhumacion')->insert(['UECadaver' => $ue_cadaver, 'Fecha' => $fecha, 'UEFosa' => $ue_fosa
                 , 'UEEstructura' => $ue_estructura, 'UERelleno' => $ue_relleno, 'TieneAjuar' => $tiene_ajuar,
                 'Orientacion' => $orientacion, 'Conservacion' => $conservacion, 'ConexAnatomica' => $conexion,
@@ -120,22 +125,36 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
             if ((Session::get('admin_level') == 1) || (Session::get('admin_level') == 2)) {
 
-                $id_enterramiento = DB::table('inhumacion')->max('IdEnterramiento');
+                $id_enterramiento = Inhumacion::all()->last()->IdEnterramiento;
                 DB::table('registro')
                     ->insert(['user_id' => Session::get('user_id'), 'Fecha' => $fecha,
                         'IdEnterramiento' => $id_enterramiento, 'admin_level' => Session::get('admin_level')]);
 
-                if ($validator->fails()) {
-                    return redirect('/new_inhumacion')
-                        ->withErrors($validator);
-                }
-
-
-                return redirect('/inhumaciones');
-
 
             }
+            return redirect('/inhumaciones');
         }
+
+    public function delete(Request $request){
+                $id = $request->input('id');
+
+
+        DB::table('inhumacion')->where('IdEnterramiento', '=', $id)->delete();
+
+        //DB::table('inhumacionestumba')->where('IdEnterramiento', '=', $id)->delete();
+
+        return redirect('/inhumaciones');
+
+    }
+
+    public function get($id){
+            $inhumacion = Inhumacion::find($id);
+
+            return view('catalogo.inhumaciones.layout_inhumacion',['inhumacion' => $inhumacion]);
+
+
+    }
+
 
     public function form_create(){
         $ud_estratigraficas =  UnidadEstratigrafica::all();

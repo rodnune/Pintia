@@ -261,7 +261,16 @@ use Carbon\Carbon;
         <button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar </button>
 
 
-    </td>
+    </td>  <tr>
+
+
+
+                           <tr><td colspan="3" align="right">
+
+                                   <button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar </button>
+
+
+                               </td>
                                {{Form::close()}}
 
 

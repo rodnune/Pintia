@@ -138,7 +138,9 @@ Route::post('/muestra_add_tipo','MuestrasController@addAsociacion');
 Route::get('/inhumaciones','InhumacionesController@index');
 Route::get('/new_inhumacion','InhumacionesController@form_create');
 Route::post('/new_inhumacion','InhumacionesController@create');
+Route::get('/inhumacion/{id}','InhumacionesController@get');
 Route::get('/search_inhumaciones','InhumacionesController@search');
+Route::post('/delete_inhumacion','InhumacionesController@delete');
 
 
 
@@ -148,7 +150,7 @@ Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objeto
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
 
-    $ud =  DB::table('inhumacion')->max('IdEnterramiento');
+    $ud =  \App\Models\Inhumacion::all()->last()->IdEnterramiento;
     return $ud;
 
 return view('pruebas');

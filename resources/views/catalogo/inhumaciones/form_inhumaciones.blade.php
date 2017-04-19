@@ -21,6 +21,7 @@
             <td align="center"><strong>UE cadáver: </strong></td>
            <td align="left">
                     <select class="form-control" name="filtro_cadaver" style="width:100%">
+                        <option value="" selected>--- Seleccionar UE ---</option>
                         @foreach($ud_estratigraficas as $ud_estratigrafica)
                         <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
                         @endforeach
@@ -32,6 +33,7 @@
             <td align="center"><strong>UE fosa: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_fosa" style="width:100%">
+                    <option value="" selected>--- Seleccionar UE ---</option>
                     @foreach($ud_estratigraficas as $ud_estratigrafica)
                         <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
                     @endforeach
@@ -41,6 +43,7 @@
            <td align="center"><strong>UE estructura: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_estructura" style="width:100%">
+                    <option value="" selected>--- Seleccionar UE ---</option>
                     @foreach($ud_estratigraficas as $ud_estratigrafica)
                         <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
                     @endforeach
@@ -52,6 +55,7 @@
             <td align="center"><strong>UE Relleno: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_relleno" style="width:100%">
+                    <option value="" selected>--- Seleccionar UE ---</option>
                     @foreach($ud_estratigraficas as $ud_estratigrafica)
                         <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
                     @endforeach
@@ -104,10 +108,12 @@
 
 
                                 <th scope="col" align="right"><center><a href="/new_inhumacion" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nueva</a></center></th>
-
+                                <th scope="col" align="center"></th>
+                                <th scope="col" align="center"></th>
                             @else{
                                 <th scope="col" align="center"></th>
                             @endif
+
 
                             </tr>
                         </thead>
@@ -121,11 +127,29 @@
                             <td colspan="1" align="left">{{$inhumacion->UEEstructura}}</td>
                             <td colspan="1" align="left">{{$inhumacion->UERelleno}}</td>
                             <td colspan="1" align="left"><div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">{{$inhumacion->Descripcion}}</div></td>
-                            <form action="inhumacion.php" method="post">
-                                <td colspan="1" align="center"><button type="submit" name="submit" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</button></td>
 
-                             </form>
+                                <td colspan="1" align="center"><a href="/inhumacion/{{$inhumacion ->IdEnterramiento}}" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</a></td>
+
+                            @if( Session::get('admin_level') > 1 )
+                                <td colspan="1" align="center">
+                                    {{Form::open()}}
+
+                                    <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-pencil"></i> Gestionar</button>
+                                {{Form::close()}}
+                                </td>
+                                <td colspan="1" align="center">
+                                    {{Form::open(array('action' => 'InhumacionesController@delete','method' => 'post'))}}
+                                    <input type="hidden" name="id" value="{{$inhumacion ->IdEnterramiento}}">
+                                    <button type="submit" name="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
+
+                                    {{Form::close()}}
+
+                            </td>
+
+                            @endif
                            </tr>
+
+
                         @endforeach
 
                         </tbody>
