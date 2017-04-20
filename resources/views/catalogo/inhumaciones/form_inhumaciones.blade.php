@@ -132,10 +132,10 @@
 
                             @if( Session::get('admin_level') > 1 )
                                 <td colspan="1" align="center">
-                                    {{Form::open()}}
-
+                                    {{Form::open(array('action' => 'InhumacionesController@form_update','method' => 'get'))}}
+                                    <input type="hidden" name="id" value="{{$inhumacion ->IdEnterramiento}}">
                                     <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-pencil"></i> Gestionar</button>
-                                {{Form::close()}}
+                                        {{Form::close()}}
                                 </td>
                                 <td colspan="1" align="center">
                                     {{Form::open(array('action' => 'InhumacionesController@delete','method' => 'post'))}}

@@ -7,7 +7,18 @@
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
 
+
+
                    <h1 class="text-center">Modificar informaci&oacute;n de autor {{$autor->Nombre}}</h1><br>
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                     {{Form::open(array('action' => 'AutoresController@update', 'method' => 'post'))}}
                         <table class="table table-hover table-bordered">

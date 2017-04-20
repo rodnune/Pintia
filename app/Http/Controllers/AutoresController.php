@@ -102,6 +102,7 @@ class AutoresController extends \App\Http\Controllers\Controller
         $apellido = $request -> input('apellido');
         $filiacion = $request->input('filiacion');
 
+
         $validator = Validator::make($request->all(), [
 
 
@@ -112,13 +113,18 @@ class AutoresController extends \App\Http\Controllers\Controller
 
         ]);
 
+
+
         if ($validator->fails()) {
-            return redirect('/editar_autor')
-                ->withErrors($validator);
+            $autor = Autor::find($id);
+            return view('catalogo.bibliografia.autores.layout_update_autor',['autor' => $autor])->withErrors($validator);
+
         }
 
         DB::table('autor')->where('IdAutor',$id)->update(['Nombre' =>$nombre , 'Apellido' => $apellido,
             'Filiacion' => $filiacion]);
+
+        return redirect('/autores');
     }
 
     public function asociarArticulo(Request $request){

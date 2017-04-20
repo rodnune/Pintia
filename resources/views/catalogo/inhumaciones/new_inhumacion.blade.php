@@ -156,9 +156,9 @@ use Carbon\Carbon;
                              <tr>
                                 <td colspan="1"><strong>Posici&oacute;n</strong></td>
                                         <td colspan="2">
-                                       <select class="form-control" name="posicion" style="width:100%">
-                                           @foreach(Config::get('enums.inhumacion_posicion') as $posicion)
-                                               <option value="{{$posicion}}">{{$posicion}}</option>
+                                       <select class="form-control" name="actitud" style="width:100%">
+                                           @foreach(Config::get('enums.inhumacion_posicion') as $actitud)
+                                               <option value="{{$actitud}}">{{$actitud}}</option>
                                            @endforeach
 
                                     </select>

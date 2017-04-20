@@ -141,7 +141,8 @@ Route::post('/new_inhumacion','InhumacionesController@create');
 Route::get('/inhumacion/{id}','InhumacionesController@get');
 Route::get('/search_inhumaciones','InhumacionesController@search');
 Route::post('/delete_inhumacion','InhumacionesController@delete');
-
+Route::get('/edit_inhumacion','InhumacionesController@form_update');
+Route::post('/edit_inhumacion','InhumacionesController@update');
 
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});

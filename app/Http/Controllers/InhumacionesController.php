@@ -162,4 +162,86 @@ class InhumacionesController extends \App\Http\Controllers\Controller
         return view('catalogo.inhumaciones.layout_new_inhumacion',['ud_estratigraficas' => $ud_estratigraficas]);
     }
 
+    public function form_update(Request $request){
+
+                $id = $request->input('id');
+
+        $inhumacion = Inhumacion::find($id);
+        $ud_estratigraficas = DB::table('unidadestratigrafica')->get(['UE']);
+
+
+        return view('catalogo.inhumaciones.layout_update',['ud_estratigraficas' => $ud_estratigraficas
+            ,'inhumacion' => $inhumacion]);
+    }
+
+    public function update(Request $request){
+        $id = $request->input('id');
+        $ue_cadaver = $request->input('ue_cadaver');
+        $ue_fosa = $request->input('ue_fosa');
+        $ue_estructura = $request->input('ue_estructura');
+        $ue_relleno = $request->input('ue_relleno');
+        $fecha = $request->input('fecha');
+        $orientacion = $request->input('orientacion');
+        $edad = $request->input('edad');
+        $adscripcion = $request->input('adscripcion');
+        $tiene_ajuar = $request->input('tiene_ajuar');
+        $ajuar = $request->input('ajuar');
+        $conservacion = $request->input('conservacion');
+        $conexion = $request->input('conexion');
+        $posicion = $request->input('posicion');
+        $actitud = $request->input('actitud');
+        $sexo = $request->input('sexo');
+        $medidas = $request->input('medidas');
+        $descripcion = $request->input('descripcion');
+        $observaciones = $request->input('observaciones');
+
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+            'ue_cadaver' => 'numeric',
+            'ue_fosa' => 'numeric',
+            'ue_estructura' => 'numeric',
+            'ue_relleno' => 'numeric',
+            'actual' => 'required|date',
+            'fecha' => 'date|before_or_equal:actual',
+            'orientacion' => 'string',
+            'edad' => 'string',
+            'adscripcion' => 'string',
+            'tiene_ajuar' => 'required|in:Si,No',
+            'ajuar' => 'string',
+            'conservacion' => 'in:Completa,Parcial',
+            'conexion' => 'in:Articulado,Desarticulado',
+            'posicion' => 'in:' . implode(',', Config::get('enums.inhumacion_posicion')),
+            'actitud' => 'in:' . implode(',', Config::get('enums.inhumacion_actitud')),
+            'sexo' => 'in:' . implode(',', Config::get('enums.sexo')),
+            'medidas' => 'string',
+            'descripcion' => 'required|string',
+            'observaciones' => 'string'
+
+
+        ]);
+
+        if ($validator->fails()) {
+
+           return InhumacionesController::form_update($request)->withErrors($validator);
+
+        }
+
+
+        DB::table('inhumacion')
+            ->where('IdEnterramiento', $id)
+            ->update(['UECadaver' => $ue_cadaver, 'Fecha' => $fecha, 'UEFosa' => $ue_fosa
+                , 'UEEstructura' => $ue_estructura, 'UERelleno' => $ue_relleno, 'TieneAjuar' => $tiene_ajuar,
+                'Orientacion' => $orientacion, 'Conservacion' => $conservacion, 'ConexAnatomica' => $conexion,
+                'Posicion' => $posicion, 'Actitud' => $actitud, 'MedidasEsqueleto' => $medidas,
+                'Sexo' => $sexo, 'Edad' => $edad, 'Descripcion' => $descripcion, 'Ajuar' => $ajuar,
+                'AdscricionCulturalCronologia' => $adscripcion, 'Observaciones' => $observaciones]);
+
+
+
+        return redirect('/inhumaciones');
+    }
+
+
+
 }
