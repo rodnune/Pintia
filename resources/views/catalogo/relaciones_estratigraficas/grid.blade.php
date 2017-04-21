@@ -40,8 +40,7 @@
                                 <input type="hidden" name="id_relacion" value=""/>
                                 <input type="hidden" name="id_ue" value=""/>
                             </td>
-                           if( isset($_SESSION['logged']) AND $_SESSION['admin_level'] > 1 )
-                           {
+
                         @if(Session::get('admin_level')>1 )
                            {{Form::open(array('action' => 'RelacionesEstratigraficasController@delete' , 'method' => 'post'))}}
                                 <td align="center">
