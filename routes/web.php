@@ -150,6 +150,10 @@ Route::get('/cremaciones','CremacionesController@index');
 Route::get('/new_cremacion','CremacionesController@form_create');
 Route::post('/new_cremacion','CremacionesController@create');
 Route::get('/cremacion/{id}','CremacionesController@get');
+Route::post('/delete_cremacion','CremacionesController@delete');
+Route::get('/edit_cremacion','CremacionesController@form_update');
+Route::post('/edit_cremacion','CremacionesController@update');
+Route::get('/search_cremaciones','CremacionesController@search');
 
 
 

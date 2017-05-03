@@ -239,8 +239,10 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
 
 
-        return redirect('/inhumaciones');
+        return redirect('/inhumacion/'.$id);
     }
+
+
 
 
 

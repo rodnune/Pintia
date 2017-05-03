@@ -15,7 +15,7 @@
 </div>
 
 <table class="table table-bordered table-hover" rules="rows">
-    <form action="cremacion.php" method="post">
+   {{Form::open(array('action' => 'CremacionesController@search' , 'method' => 'get'))}}
         <input type="hidden" name="form" value="1">
 
         <tr id="fila_filtros">
@@ -23,20 +23,19 @@
                 <td align="center"><strong>UE: </strong></td>
                 <td align="left">
                     <select class="form-control" name="filtro_ue" style="width:100%">
-                        <option value="-1" selected> Seleccionar UE  </option>
+                        @foreach($ud_estratigraficas as $ud_estratigrafica)
+                            <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                            @endforeach
                     </select>
                 </td>
-            <!-- FILTRAR POR EDAD -->
-            <!--<td align="center"><strong>Edad: </strong></td>
-                <td align="left">
-                    <input type="number" placeholder="Introduzca la edad">  </input>
 
-                </td>-->
             <!-- FILTRAR POR SEXO -->
             <td align="center"><strong>Sexo: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_sexo" style="width:100%">
-                    <option value="-1" selected> Seleccionar Sexo </option>
+                    @foreach(Config::get('enums.sexo') as $sexo)
+                        <option value="{{$sexo}}">{{$sexo}}</option>
+                    @endforeach
                 </select>
             </td>
 
@@ -51,13 +50,12 @@
         <tr id="fila_botones_filtros">
             <td align="center" colspan="8">
                 <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar Cremaciones</button>
-                    <a class="btn btn-primary" href="cremacion.php"><i class="fa fa-eye"></i> Ver todo</a>
+                    <a class="btn btn-primary" href="/cremaciones"><i class="fa fa-eye"></i> Ver todo</a>
             </td>
         </tr>
-    </form>
+   {{Form::close()}}
 
-    <form action="cremacion.php" method="post">
-        <input type="hidden" name="form" value="1">
+
              <tr id="fila_ref" style="display:none;">
             <td><strong>Buscar por código de la cremación:</strong></td>
             <td><input type="text" class="form-control" id="myInput" onkeyup="filter()" placeholder="Código cremación" required></td>
@@ -66,7 +64,7 @@
                     <a class="btn btn-primary" href="/cremaciones"><i class="fa fa-eye"></i> Ver todo</a>
             </td>
             </tr>
-    </form>
+
 </table>
 
                     <p  class="text-center text-muted"><strong>Total de resultados encontrados: {{count($cremaciones)}}</strong></p>
@@ -77,7 +75,7 @@
                         <tr class="info">
                             <th align="center"><strong>UE</strong></th>
                             <th colspan="2" align="center"><strong>C&oacute;digo Propio</strong></th>
-                            <th colspan="2" align="center"><strong>Observaciones</strong></th>
+                            <th colspan="2" align="center"><strong>Sexo</strong></th>
                             @if(Session::get('admin_level') > 1 )
 
                                 <th align="center"><center><a href="/new_cremacion" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nueva</a></center></th>
@@ -95,9 +93,7 @@
                        <tr>
                             <td align="left">{{$cremacion->UE}}</td>
                             <td colspan="2" align="left">{{$cremacion->CodigoPropio}}</td>
-                            <td colspan="2" align="left">
-                                <div class="form-control fake-textarea-lg" disabled="disabled" name="observaciones">{{$cremacion->Observaciones}}</div>
-                            </td>
+                            <td colspan="2" align="left">{{$cremacion->Sexo}}</td>
 
                                 <td align="center"><a href="/cremacion/{{$cremacion->IdCremacion}}" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</a></td>
 
@@ -105,15 +101,18 @@
                            @if( Session::get('admin_level') > 1 )
                                <td colspan="1" align="center">
 
-
+                                   {{Form::open(array('action' => 'CremacionesController@form_update' , 'method' => 'get'))}}
+                                   <input type="hidden" name="id" value="{{$cremacion->IdCremacion}}">
                                    <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-pencil"></i> Gestionar</button>
-
+                                    {{Form::close()}}
                                </td>
+
                                <td colspan="1" align="center">
+                                {{Form::open(array('action' => 'CremacionesController@delete','method' => 'post'))}}
+                                   <input type="hidden" name="id" value="{{$cremacion->IdCremacion}}">
+                                   <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
 
-                                   <button type="submit" name="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
-
-
+                                {{Form::close()}}
 
                                </td>
 
