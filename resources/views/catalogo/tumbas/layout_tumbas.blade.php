@@ -1,15 +1,19 @@
 @extends('layouts.app');
 
+@section('header')
+    @include('layouts.header')
+@endsection
+
 @section('navbar')
     @include('layouts.navbar')
 @endsection
 
-@section('splash')
-    @include('splash_image')
+@section('image')
+    @include('logo')
 @endsection
 
 @section('content')
-    @include('catalogo.tumbas.search_tumbas')
+    @include('catalogo.tumbas.form_tumbas')
 @endsection
 
 @section('footer')

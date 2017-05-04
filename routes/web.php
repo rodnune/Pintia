@@ -150,11 +150,16 @@ Route::get('/cremaciones','CremacionesController@index');
 Route::get('/new_cremacion','CremacionesController@form_create');
 Route::post('/new_cremacion','CremacionesController@create');
 Route::get('/cremacion/{id}','CremacionesController@get');
-Route::post('/delete_cremacion','CremacionesController@delete');
+Route::delete('/delete_cremacion','CremacionesController@delete');
 Route::get('/edit_cremacion','CremacionesController@form_update');
 Route::post('/edit_cremacion','CremacionesController@update');
 Route::get('/search_cremaciones','CremacionesController@search');
 
+
+//tumbas
+Route::get('/tumbas','TumbasController@index');
+Route::get('/new_tumba','TumbasController@form_create');
+Route::post('/new_tumba','TumbasController@create');
 
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});

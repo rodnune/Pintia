@@ -150,31 +150,7 @@
     </div>
 </div>
 
-<script>
 
-    function filter() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
-
-        input = $("#myInput");
-        filter = input.val();
-
-        table = $("#pagination_table");
-        tr = table.find("tr");
-
-        for (i = 0; i < tr.length; i++) {
-            /*Busqueda por ID*/
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
 
 
 
