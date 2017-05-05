@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 use Carbon\Carbon;
+use App\Models\Tumba;
 use Illuminate\Support\Facades\Session;
 
 
@@ -71,4 +72,34 @@ class TumbasController extends \App\Http\Controllers\Controller
         return redirect('/tumbas');
     }
 
+
+    public function form_update(Request $request){
+
+        $id = $request->input('id');
+
+
+        $tumba = DB::table('tumba')->where('IdTumba','=',$id)->get();
+
+
+
+
+
+        return view('catalogo.tumbas.layout_update',['tumba' => $tumba[0]]);
+    }
+
+
+    public function update(Request $request){
+        $id = $request ->input('id_tumba');
+
+    }
+
+
+    public function get($id){
+
+        $tumba = DB::table('tumba')->where('IdTumba','=',$id)->get();
+
+
+        return view('catalogo.tumbas.layout_tumba',['tumba' => $tumba[0]]);
+
+    }
 }

@@ -16,7 +16,7 @@
 
                             <table class="table table-bordered table-hover" rules="rows">
                                 <form action="tumba.php" method="post">
-                                    <input type="hidden" name="seccion" value="Lista">
+
 
                                 <!-- FILTROS -->
                                 <tr id="fila_filtros">
@@ -51,7 +51,7 @@
                                         </td>
                                     </tr>
                                 </form>
-                                <form action="tumba.php" method="post">
+
                                     <input type="hidden" name="seccion" value="Lista">
                                         <tr id="fila_ref" style="display:none;">
                                             <td><strong>Buscar por identificador tumba:</strong></td>
@@ -62,7 +62,7 @@
                                                     <a class="btn btn-primary" href="/tumbas"><i class="fa fa-eye"></i> Ver todo</a>
                                             </td>
                                         </tr>
-                                </form>
+
                             </table>
                         <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                                <p class="text-muted text-center"><strong>Total de resultados encontrados: {{count($tumbas)}}</strong></p>
@@ -80,6 +80,7 @@
                             </th>
 
                             @endif
+
                         </tr>
                     </thead>
                             <tbody>
@@ -90,9 +91,9 @@
                             <td align="center">{{$tumba->AnyoCampanya}}</td>
 
                            <td align="center">
-                                <form  action="tumba.php" method="post">
-                                   <button type="submit" name="submit" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</button>
-                                  </form>
+
+                                   <a href="/tumba/{{$tumba->IdTumba}}" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</a>
+
                            </td>
 
                            <!--if(($_SESSION['admin_level'] == 3) OR ($row['user_id'] == $_SESSION['user_id']) OR (($admin_level != NULL) AND ($admin_level < $_SESSION['admin_level'])))-->
@@ -101,15 +102,13 @@
 
 
                            <td align="center">
-                               <form action="tumba.php" method="post">
-                                    <input type="hidden" name="seccion" value="Formulario">
-                                    <input type="hidden" name="subsec" value="Datos Generales">
-                                    <input type="hidden" name="id_tumba" value="">
-                                    <button type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
-                               </form>
+                               {{Form::open(array('action' => 'TumbasController@form_update', 'method' => 'get'))}}
+
+                               <input type="hidden" name="id" value="{{$tumba->IdTumba}}">
+                                    <button type="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
+                                {{Form::close()}}
                            </td>
-                            @else
-                            <td></td>
+
 
                            @endif
 

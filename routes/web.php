@@ -160,6 +160,9 @@ Route::get('/search_cremaciones','CremacionesController@search');
 Route::get('/tumbas','TumbasController@index');
 Route::get('/new_tumba','TumbasController@form_create');
 Route::post('/new_tumba','TumbasController@create');
+Route::get('/edit_tumba','TumbasController@form_update');
+Route::post('/edit_tumba','TumbasController@update');
+Route::get('/tumba/{id}','TumbasController@get');
 
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});
