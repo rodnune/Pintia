@@ -12,20 +12,20 @@
                             <tr><td colspan="4" class="info" align="center"><h3>Datos generales</h3></td></tr>
                             <tr>
                                 <td colspan="2"align="left"><strong>Id Tumba </strong></td>
-                                <td colspan="2"align="left">' .$tumba. '</td>
+                                <td colspan="2"align="left">{{$tumba->IdTumba}}</td>
                             </tr>
 
                             <tr>
                                 <td colspan="2"><strong>Neonato Casa </strong></td>
                                 <td colspan="2">
-
+                                        {{$tumba->NeonatoCasa}}
                                    </td>
                             </tr>
 
                             <tr>
                                 <td colspan="2"><strong>A&ntilde;o Campa&ntilde;a  </strong></td>
                                 <td colspan="2">
-
+                                            {{$tumba->AnyoCampanya}}
                                 </td>
                             </tr>
 
@@ -38,37 +38,37 @@
                             <tr>
                                 <td colspan="2" align="left"><strong>Conservaci&oacute;n</strong></br>
                                     <td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="conservacion">' . $row['Conservacion'] .'</div>
+                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="conservacion">{{$tumba->Conservacion}}</div>
                                     </td>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" align="left"><strong>Estructura</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="estructura">' . $row['Estructura'] .'</div>
+                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="estructura">{{$tumba->Estructura}}</div>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td colspan="2" align="left"><strong>Composici&oacute;n</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="composicion">' . $row['Composicion'] .'</div>
+                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="composicion">{{$tumba->Composicion}}</div>
                                 </td>
                             </tr>
 
                             <tr>
                                <td colspan="2" align="left"><strong>Sintaxis</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="organizacion">' . $row['OrganizacionYJerarquia'] .'</div>
+                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="organizacion">{{$tumba->OrganizacionYJerarquia}}</div>
                                 </td>
                             </tr>
 
                             <tr>
                                <td colspan="2" align="left"><strong>Restos Humanos</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="restos">' . $row['RestosHumanos'] .'</div>
+                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="restos">{{$tumba->RestosHumanos}}</div>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td colspan="2" align="left"><strong>Ofrendas Animales</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="ofrendas">' . $row['OfrendasAnimales'] .'</div>
+                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="ofrendas">{{$tumba->OfrendasAnimales}}</div>
                                 </td>
                             </tr>
 

@@ -163,7 +163,9 @@ Route::post('/new_tumba','TumbasController@create');
 Route::get('/edit_tumba','TumbasController@form_update');
 Route::post('/edit_tumba','TumbasController@update');
 Route::get('/tumba/{id}','TumbasController@get');
-
+Route::get('/tumba_tipos/{id}','TumbasController@index_tipos');
+Route::post('/tumba_tipos/asociar','TumbasController@asociar_tipo_tumba');
+Route::post('/tumba_tipos/delete','TumbasController@eliminar_asoc_tipo_tumba');
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});
 

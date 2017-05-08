@@ -6,6 +6,16 @@
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
 
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
 
                     <h1 class="text-center">Ficha Tumba ({{$tumba->IdTumba}})</h1>
 
@@ -61,9 +71,9 @@
                                     <br>
 
                                     <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source1','display1');" contenteditable id="source1";>
-
+                                    {{$tumba->Conservacion}}
                                     </div>
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="conservacion" id="display1" value ="" style="display:none;"></textarea>
+                                    <textarea class="form-control vresize" rows="6" cols="60" name="conservacion" id="display1" value ="{{$tumba->Conservacion}}" style="display:none;">{{$tumba->Conservacion}}</textarea>
                                     </td>
 
                                   </tr>
@@ -79,10 +89,10 @@
                                     <br>
 
                                     <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source2','display2');" contenteditable id="source2";>
-
+                                        {{$tumba->Estructura}}
                                     </div>
 
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="estructura" id="display2" style="display:none;">'.$row['Estructura'].'</textarea>
+                                    <textarea class="form-control vresize" rows="6" cols="60" name="estructura" id="display2" style="display:none;" value="{{$tumba->Estructura}}">{{$tumba->Estructura}}</textarea>
                                     </td>
                                     </tr>
 
@@ -98,10 +108,10 @@
                                     <br>
 
                                     <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source3','display3');" contenteditable id="source3";>
+                                        {{$tumba->Composicion}}
+                                                                            </div>
 
-                                    </div>
-
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="composicion" id="display3" style="display:none;">'.$row['Composicion'].'</textarea>
+                                                                            <textarea class="form-control vresize" rows="6" cols="60" name="composicion" id="display3" style="display:none;" value="{{$tumba->Composicion}}">{{$tumba->Composicion}}</textarea>
                                    </td>
                                    </tr>
 
@@ -118,10 +128,10 @@
 
                                     <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source4','display4');" contenteditable id="source4";>
 
-                                     $row['OrganizacionYJerarquia'];
+                                    {{$tumba->OrganizacionYJerarquia}}
                                    </div>
 
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="organizacion" id="display4" style="display:none;">'.$row['OrganizacionYJerarquia'].'</textarea>
+                                    <textarea class="form-control vresize" rows="6" cols="60" name="organizacion" id="display4" style="display:none;" value="{{$tumba->OrganizacionYJerarquia}}">{{$tumba->OrganizacionYJerarquia}}</textarea>
                                     </td>
                                    </tr>
 
@@ -139,10 +149,10 @@
                                     <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source5','display5');" contenteditable id="source5";>
 
 
-                                    echo $row['RestosHumanos'];
+                                    {{$tumba->RestosHumanos}}
                                     </div>
 
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="restos" id="display5" style="display:none;">'.$row['RestosHumanos'].'</textarea>
+                                    <textarea class="form-control vresize" rows="6" cols="60" name="restos" id="display5" style="display:none;" value="{{$tumba->RestosHumanos}}">{{$tumba->RestosHumanos}}</textarea>
 
                                     </td>
 
@@ -160,19 +170,20 @@
                                     <br>
 
                                     <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source6','display6');" contenteditable id="source6";>
-                            $row['OfrendasAnimales'];
+                           {{$tumba->OfrendasAnimales}}
                                     </div>
 
-                                <textarea class="form-control vresize" rows="6" cols="60" name="ofrendas" id="display6" style="display:none;">'.$row['OfrendasAnimales'].'</textarea>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="ofrendas" id="display6" style="display:none;" value="{{$tumba->OfrendasAnimales}}">{{$tumba->OfrendasAnimales}}</textarea>
                                 </td>
                                     </tr>
                                     <tr>
                                     <td colspan="4" align="center"><button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar cambios </button>
-
+                                        {{Form::close()}}
+                                        <a href="tumbas" class="btn btn-danger" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista de tumbas </a>
                                                                 </td>
                                     </tr>
 
-                                    {{Form::close()}}
+
                                     </tbody>
                                     </table>
 

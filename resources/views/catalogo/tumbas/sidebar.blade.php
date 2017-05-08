@@ -1,7 +1,7 @@
 <div id="sidebar" style="float:left; margin:20px 35px 0 0;">
     <div class="post" style="padding-right: 10px; padding-left: 0px;">
 
-        <p>
+
 
 
                 {{Form::open(array('action' => 'TumbasController@form_update', 'method' => 'get'))}}
@@ -9,7 +9,7 @@
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/>
             {{Form::close()}}
 
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Tipo de Tumba"/>
+        <a href="/tumba_tipos/{{$tumba->IdTumba}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Tipos de tumba"></a>
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Cremaciones"/>
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Inhumaciones"/>
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"/>
