@@ -163,9 +163,22 @@ Route::post('/new_tumba','TumbasController@create');
 Route::get('/edit_tumba','TumbasController@form_update');
 Route::post('/edit_tumba','TumbasController@update');
 Route::get('/tumba/{id}','TumbasController@get');
+
+//tipos de tumbas de una tumba
 Route::get('/tumba_tipos/{id}','TumbasController@index_tipos');
 Route::post('/tumba_tipos/asociar','TumbasController@asociar_tipo_tumba');
 Route::post('/tumba_tipos/delete','TumbasController@eliminar_asoc_tipo_tumba');
+
+//cremaciones de una tumba
+Route::get('/tumba_cremaciones/{id}','TumbasController@cremaciones_tumba');
+Route::post('/tumba_cremaciones/asociar','TumbasController@asociar_cremacion');
+Route::post('/tumba_cremaciones/delete','TumbasController@eliminar_asoc_cremacion');
+
+//inhumaciones de una tumba
+Route::get('/tumba_inhumaciones/{id}','TumbasController@inhumaciones_tumba');
+Route::post('/tumba_inhumaciones/asociar','TumbasController@asociar_inhumacion');
+Route::post('/tumba_inhumaciones/delete','TumbasController@eliminar_asoc_inhumacion');
+
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});
 

@@ -8,15 +8,17 @@
             <input type="hidden" name="id" value="{{$tumba->IdTumba}}">
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/>
             {{Form::close()}}
-
+                <br>
         <a href="/tumba_tipos/{{$tumba->IdTumba}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Tipos de tumba"></a>
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Cremaciones"/>
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Inhumaciones"/>
+        <br>
+        <a href="/tumba_cremaciones/{{$tumba->IdTumba}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Cremaciones"/></a>
+        <br>
+        <a href="/tumba_inhumaciones/{{$tumba->IdTumba}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Inhumaciones"/></a>
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"/>
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="UE"/>
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Ofrendas Fauna"/>
             <input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"/>
-            <input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/>
+            <!--<input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/>-->
             <br/>
             <center><a href="/tumbas" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Tumbas / Salir</a></center>
 

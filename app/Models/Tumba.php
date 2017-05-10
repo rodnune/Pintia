@@ -46,5 +46,66 @@ class Tumba extends Model
 
     }
 
+    public function cremacionesAsociadas(){
+        $asociadas = DB::select(DB::raw('SELECT a.CodigoPropio, a.Presentacion, a.IdCremacion
+								FROM
+									Cremacion a, CremacionesTumba b
+								WHERE
+									a.IdCremacion = b.IdCremacion AND
+									b.IdTumba = '. $this->IdTumba . '
+								ORDER BY a.CodigoPropio'
+        ));
+
+        return $asociadas;
+    }
+
+    public function cremacionesSinAsociar(){
+
+        $no_asociadas = DB::select(DB::raw('SELECT a.CodigoPropio, a.Presentacion , a.IdCremacion
+								FROM
+									Cremacion a
+								WHERE a.IdCremacion  NOT IN
+								(
+                                    SELECT b.IdCremacion 
+                                    FROM CremacionesTumba b
+                                    WHERE b.IdTumba = ' . $this->IdTumba . ' 
+                                  )
+								'));
+
+        return $no_asociadas;
+
+    }
+
+    public function inhumacionesAsociadas(){
+       $asociadas = DB::select(DB::raw('SELECT a.Orientacion, a.Observaciones, a.IdEnterramiento
+								FROM
+									Inhumacion a, InhumacionesTumba b
+								WHERE
+									a.IdEnterramiento = b.IdEnterramiento AND
+                                    b.IdTumba = '. $this->IdTumba
+       ));
+
+       return $asociadas;
+    }
+
+
+    public function inhumacionesSinAsociar(){
+
+
+        $no_asociadas = DB::select(DB::raw('SELECT a.Orientacion, a.Observaciones , a.IdEnterramiento
+								FROM
+									Inhumacion a
+								WHERE a.IdEnterramiento  NOT IN
+								(
+                                    SELECT b.IdEnterramiento
+                                    FROM InhumacionesTumba b
+                                    WHERE b.IdTumba = ' . $this->IdTumba . ' 
+                                  )
+								'));
+
+        return $no_asociadas;
+
+    }
+
 
 }
