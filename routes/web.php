@@ -179,6 +179,21 @@ Route::get('/tumba_inhumaciones/{id}','TumbasController@inhumaciones_tumba');
 Route::post('/tumba_inhumaciones/asociar','TumbasController@asociar_inhumacion');
 Route::post('/tumba_inhumaciones/delete','TumbasController@eliminar_asoc_inhumacion');
 
+//localizacion tumba
+Route::get('/tumba_localizacion/{id}','TumbasController@localizacion_tumba');
+Route::post('/tumba_localizacion/asociar','TumbasController@asociar_localizacion');
+Route::delete('/tumba_localizacion/delete','TumbasController@eliminar_asoc_localizacion');
+
+//UE tumba
+Route::get('/tumba_ue/{id}','TumbasController@ue_tumba');
+Route::post('/tumba_ue/asociar','TumbasController@asociar_ue');
+Route::delete('/tumba_ue/delete','TumbasController@eliminar_asoc_ue');
+
+
+
+//ofrendas tumba
+Route::get('/tumba_ofrendas/{id}','TumbasController@ofrendas_tumba');
+
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});
 

@@ -339,8 +339,102 @@ class TumbasController extends \App\Http\Controllers\Controller
         return redirect('/tumba_inhumaciones/'.$id);
     }
 
+    public function localizacion_tumba($id){
+        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
+
+        $tumba = Tumba::where('IdTumba','=',$id)->first();
+
+
+        $localizacion = $tumba->localizacion();
+        $no_asociadas = $tumba->localizacionesNoAsociadas();
 
 
 
+        return view('catalogo.tumbas.layout_localizacion_tumba',['tumba'=> $tumba_sidebar[0] ,'localizacion' => $localizacion->first(),'no_asociadas' => $no_asociadas]);
+    }
+
+
+    public function asociar_localizacion(Request $request){
+
+        $id = $request->input('id');
+        $localizacion = $request->input('localizacion');
+
+        $validator = Validator::make($request->all(), [
+            'localizacion' => 'required|exists:localizacion,idlocalizacion',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('/tumba_localizacion/'.$id)->withErrors($validator);
+        }
+
+
+
+        DB::table('tumba')->where('IdTumba','=',$id)
+            ->update(['Localizacion' => $localizacion]);
+
+            return redirect('/tumba_localizacion/'.$id)->with('update','Actualizado');
+
+    }
+
+
+    public function eliminar_asoc_localizacion(Request $request){
+
+        $id = $request->input('id');
+
+
+        DB::table('tumba')->where('IdTumba','=',$id)
+            ->update(['Localizacion' => NULL]);
+
+        return redirect('/tumba_localizacion/'.$id);
+
+    }
+
+    public function ue_tumba($id){
+        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
+
+        $tumba = Tumba::where('IdTumba','=',$id)->first();
+
+        $ue = $tumba->ue();
+        $no_asociadas = $tumba->ueNoAsociadas();
+
+
+
+
+        return view('catalogo.tumbas.layout_ue_tumba',['tumba'=> $tumba_sidebar[0] ,'ue' => $ue->first(),'no_asociadas' => $no_asociadas]);
+
+    }
+
+    public function asociar_ue(Request $request){
+
+        $id = $request->input('id');
+        $ue = $request->input('ue');
+
+        $validator = Validator::make($request->all(), [
+            'ue' => 'required|exists:unidadestratigrafica,ue',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('/tumba_ue/'.$id)->withErrors($validator);
+        }
+
+
+
+        DB::table('tumba')->where('IdTumba','=',$id)
+            ->update(['UE' => $ue]);
+
+        return redirect('/tumba_ue/'.$id)->with('update','Actualizado');
+    }
+
+    public function eliminar_asoc_ue(Request $request){
+        $id = $request->input('id');
+
+
+        DB::table('tumba')->where('IdTumba','=',$id)
+            ->update(['UE' => NULL]);
+
+        return redirect('/tumba_ue/'.$id);
+    }
 
 }

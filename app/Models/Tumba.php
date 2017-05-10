@@ -107,5 +107,58 @@ class Tumba extends Model
 
     }
 
+    public function localizacion()
+    {
+       $localizacion = DB::table('localizacion')
+        ->join('tumba', function ($join) {
+            $join->on('localizacion.idlocalizacion', '=', 'tumba.localizacion')
+                ->where('tumba.idtumba', '=', $this->IdTumba);
+        })
+        ->get();
+
+        /*$localizacion = DB::select(DB::raw('SELECT a.IdLocalizacion, a.SiglaZona, a.SectorTrama, a.SectorSubtrama, a.Notas
+								FROM
+									Localizacion a, Tumba b
+								WHERE
+									a.IdLocalizacion = b.Localizacion AND
+									b.IdTumba = ' . $this->IdTumba
+
+        ));*/
+
+        return $localizacion;
+    }
+
+       public function localizacionesNoAsociadas(){
+           $localizaciones = DB::select(DB::raw('SELECT a.IdLocalizacion, a.SiglaZona, a.SectorTrama, a.SectorSubtrama
+								FROM
+									Localizacion a
+								
+								ORDER BY SiglaZona'
+
+
+           ));
+
+           return $localizaciones;
+       }
+
+
+       public function ue(){
+           $ue = DB::table('unidadestratigrafica')
+               ->join('tumba', function ($join) {
+                   $join->on('unidadestratigrafica.ue', '=', 'tumba.ue')
+                       ->where('tumba.idtumba', '=', $this->IdTumba);
+               })
+               ->get();
+
+           return $ue;
+       }
+
+       public function ueNoAsociadas(){
+         $no_asociadas =  DB::select(DB::raw(
+               'SELECT UE FROM UnidadEstratigrafica ORDER BY UE ASC'
+           ));
+
+        return  $no_asociadas;
+       }
 
 }
