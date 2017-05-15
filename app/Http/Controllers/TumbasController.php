@@ -136,27 +136,45 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     public function get($id){
 
-        $tumba = DB::table('tumba')->where('IdTumba','=',$id)->get();
+
+
+        $tumba = Tumba::where('IdTumba','=',$id)->first();
+
+        //Objetos asociados a la tumba
+
+        $tipos_tumba  = $tumba->tiposTumbaAsociados();
+        $cremaciones  = $tumba->cremacionesAsociadas();
+        $inhumaciones = $tumba->inhumacionesAsociadas();
+        $localizacion = $tumba->localizacion();
+        $ofrendas     = $tumba->ofrendasAsociadas();
 
 
 
 
-        return view('catalogo.tumbas.layout_tumba',['tumba' => $tumba[0]]);
+
+
+
+        return view('catalogo.tumbas.layout_tumba',['tumba' => $tumba,'tipos_tumba' => $tipos_tumba,
+            'cremaciones' => $cremaciones,'inhumaciones' => $inhumaciones,'localizacion' => $localizacion,
+        'ofrendas' => $ofrendas]);
 
     }
 
     public function index_tipos($id){
 
-        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
 
         $tumba = Tumba::where('IdTumba','=',$id)->first();
 
 
         $asociadas = $tumba->tiposTumbaAsociados();
+
+
         $no_asociadas = $tumba->tiposTumbaSinAsociar();
 
 
-        return view('catalogo.tumbas.layout_tipos_tumba',['tumba'=> $tumba_sidebar[0] ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+
+
+        return view('catalogo.tumbas.layout_tipos_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
 
     }
 
@@ -200,6 +218,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         if ($validator->fails()) {
             return redirect('/tumba_tipos/'.$id)->withErrors($validator);
         }
+
 
         DB::table('tumbaesdetipo')
             ->where('IdTumba','=',$id)
@@ -350,7 +369,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        return view('catalogo.tumbas.layout_localizacion_tumba',['tumba'=> $tumba_sidebar[0] ,'localizacion' => $localizacion->first(),'no_asociadas' => $no_asociadas]);
+        return view('catalogo.tumbas.layout_localizacion_tumba',['tumba'=> $tumba_sidebar[0] ,'localizacion' => $localizacion,'no_asociadas' => $no_asociadas]);
     }
 
 
@@ -435,6 +454,72 @@ class TumbasController extends \App\Http\Controllers\Controller
             ->update(['UE' => NULL]);
 
         return redirect('/tumba_ue/'.$id);
+    }
+
+    public function ofrendas_tumba($id){
+
+        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
+
+        $tumba = Tumba::where('IdTumba','=',$id)->first();
+
+
+        $asociadas = $tumba->ofrendasAsociadas();
+        $no_asociadas = $tumba->ofrendasNoAsociadas();
+
+
+
+
+        return view('catalogo.tumbas.layout_ofrendas_tumba',['tumba'=> $tumba_sidebar[0] ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+
+
+    }
+
+
+    public function asociar_ofrenda(Request $request){
+        $id = $request->input('id');
+        $ofrenda = $request->input('ofrenda');
+
+
+
+
+        $validator = Validator::make($request->all(), [
+            'ofrenda' => 'required|exists:analiticafaunas,idanalitica',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tumba_ofrendas/'.$id)->withErrors($validator);
+        }
+
+        DB::table('ofrendasfauna')->insert(['IdTumba' => $id,'IdAnalitica'=> $ofrenda]);
+
+        return redirect('/tumba_ofrendas/'.$id);
+    }
+
+    public function eliminar_asoc_ofrenda(Request $request){
+        $id = $request->input('id');
+        $ofrenda = $request->input('ofrenda');
+
+
+
+
+        $validator = Validator::make($request->all(), [
+            'ofrenda' => 'required|exists:analiticafaunas,idanalitica',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tumba_ofrendas/'.$id)->withErrors($validator);
+        }
+
+
+        DB::table('ofrendasfauna')
+            ->where('IdTumba','=',$id)
+            ->where('IdAnalitica','=',$ofrenda)
+            ->delete();
+
+
+
+
+        return redirect('/tumba_ofrendas/'.$id);
     }
 
 }

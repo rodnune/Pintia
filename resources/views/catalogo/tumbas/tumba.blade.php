@@ -75,9 +75,9 @@
                            <tr>
                                 <td colspan="2" align="left"><strong>Tipos de Tumba Asociados</strong></td><td colspan="2">
                                     <select class="form-control" name="" size="8" style="width:100%" disabled="disabled">
-
-                                        <option value="">' . $row1['Denominacion'] . '</option>
-
+                                                @foreach($tipos_tumba as $tipo_tumba)
+                                        <option value="">{{$tipo_tumba->Denominacion}}</option>
+                                                @endforeach
                                     </select>
 
                                </td>
@@ -86,9 +86,9 @@
 
                                 <td colspan="2" align="left"><strong>Cremaciones Asociadas</strong></td><td colspan="2">
                                     <select class="form-control" name="" size="8" style="width:100%" disabled="disabled">
-
-                                        <option value=""> IdCremacion: ' . $row2['IdCremacion'] . ' ----- CodigoPropio: ' . $row2['CodigoPropio'] . ' </option>
-
+                                            @foreach($cremaciones as $cremacion)
+                                        <option value=""> IdCremacion: {{$cremacion->IdCremacion}} ----- CodigoPropio: {{$cremacion->CodigoPropio}}</option>
+                                            @endforeach
                                     </select>
 
                                  </td>
@@ -98,7 +98,10 @@
                                 <td colspan="2" align="left"><strong>Inhumaciones Asociadas</strong></td><td colspan="2">
                                     <select class="form-control" name="" size="8" style="width:100%" disabled="disabled">
 
-                                        <option value="' . $row3['IdEnterramiento'] . '"> IdEnterramiento: ' . $row3['IdEnterramiento'] . ' ----- Observaciones: ' . $row3['Observaciones'] . ' </option>
+                                        @foreach($inhumaciones as $inhumacion)
+
+                                        <option value=""> IdEnterramiento: {{$inhumacion->IdEnterramiento}} ----- Observaciones: {{$inhumacion->Observaciones}} </option>
+                                            @endforeach
                                     </select>
                                 </td>
                             </tr>
@@ -215,47 +218,54 @@
                            <tr>
                                 <td class="info" colspan="4" align="center"><h3>Localizaci&oacute;n</h3></td>
                            </tr>
-                            <!--if(!empty($row5['SiglaZona']))-->
+                          @if($localizacion!=null)
 
                             <tr>
-                                <th colspan="2" scope="col" align="center"><strong>Sigla Zona</strong></th><td colspan="2" align="left">' . $row5['SiglaZona'] . '</td></tr>
-                           <th colspan="2" scope="col" align="center"><strong>Sector Trama</strong></th><td colspan="2" align="left">' . $row5['SectorTrama'] . '</td></tr>
-                           <th colspan="2" scope="col" align="center"><strong>Sector Subtrama</strong></th><td colspan="2" align="left">' . $row5['SectorSubtrama'] . '</td></tr>
+                                <th colspan="2" scope="col" align="center"><strong>Sigla Zona</strong></th><td colspan="2" align="left">{{$localizacion->SiglaZona}}</td></tr>
+                           <th colspan="2" scope="col" align="center"><strong>Sector Trama</strong></th><td colspan="2" align="left">{{$localizacion->SectorTrama}}</td></tr>
+                           <th colspan="2" scope="col" align="center"><strong>Sector Subtrama</strong></th><td colspan="2" align="left">{{$localizacion->SectorSubtrama}}</td></tr>
                            <th colspan="2" scope="col" align="center"><strong></strong></th>
                            </tr>
 
                             <tr>
                                 <td colspan="2" align="left"><strong>Notas Localizaci&oacute;n</strong></td><td colspan="2">
-                                   <div class="form-control fake-textarea-xlg" disabled="disabled">' . $row5['Notas'] .'</div>
+                                   <div class="form-control fake-textarea-xlg" disabled="disabled">{{$localizacion->Notas}}</div>
                                     </td>
                             </tr>
 
+                            @else
+
                             <tr><td colspan="4" align="center"><p class="text-danger">No hay localizaciones asociadas</p></td></tr>
 
+                            @endif
 
                             <tr>
                                 <td class="info" colspan="4" align="center"><h3>Ofrendas Fauna</h3></td>
                             </tr>
 
 
+                                @if(count($ofrendas)==0)
                            <tr><td colspan="4" align="center"><p class="text-danger">No hay ofrendas de fauna</p></td></tr>
-
+                                @else
+                                    @foreach($ofrendas as $ofrenda)
                             <tr>
                                 <td colspan="2" scope="col" align="left"><strong>Id Ofrenda</strong></td>
                                 <td colspan="2"><input type="text" class="form-control" disabled="disabled"
-                                                             value = ''>
+                                                             value = '{{$ofrenda->IdAnalitica}}'>
                             </tr>
 
                             <tr>
                                <td colspan="2" scope="col" align="left"><strong>Descripci&oacute;n</strong></td>
-                                <td colspan="2" align="left"><div class="form-control fake-textarea-xlg" name="descripcion" disabled="disabled">' . $row6['Descripcion'] .'</div></td>
+                                <td colspan="2" align="left"><div class="form-control fake-textarea-xlg" name="descripcion" disabled="disabled">{{$ofrenda->Descripcion}}</div></td>
                             </tr>
 
                             <tr>
                                 <td  colspan="2" align="left"><strong>Partes Oseas Especie Edad </strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled">' . $row6['PartesOseasEspecieEdad'] .'</div>
+                                    <div class="form-control fake-textarea-xlg" disabled="disabled">{{$ofrenda->PartesOseasEspecieEdad}}</div>
                                 </td>
                             </tr>
+                            @endforeach
+                            @endif
 
 
 

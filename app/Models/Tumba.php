@@ -14,76 +14,72 @@ use Illuminate\Support\Facades\DB;
 class Tumba extends Model
 {
     protected $table = 'tumba';
-    protected $primaryKey = 'IdTumba';
+    protected $primaryKey = 'idtumba';
 
 
     public function tiposTumbaAsociados(){
-        $asociadas = DB::select(DB::raw('SELECT a.IdTipoTumba, a.Denominacion 
-								FROM
-									TiposTumbas a, TumbaEsDeTipo b
-								WHERE
-									a.IdTipoTumba = b.IdTipoTumba AND
-									b.IdTumba = '. $this->IdTumba ));
 
-									return $asociadas;
+        $asociadas = DB::table('tipostumbas')
+            ->join('tumbaesdetipo', function ($join) {
+                $join->on('tipostumbas.idtipotumba', '=', 'tumbaesdetipo.idtipotumba')
+                    ->where('tumbaesdetipo.idtumba', '=', $this->IdTumba);
+            })
+            ->get();
+
+        return $asociadas;
+
 
     }
 
     public function tiposTumbaSinAsociar(){
 
-        $no_asociadas = DB::select(DB::raw('SELECT a.IdTipoTumba, a.Denominacion 
-								FROM
-									TiposTumbas a
-								WHERE a.IdTipoTumba  NOT IN
-								(
-                                    SELECT b.IdTipoTumba 
-                                    FROM TumbaEsDeTipo b
-                                    WHERE b.IdTumba = ' . $this->IdTumba . ' 
-                                  )
-								'));
+
+
+        $no_asociadas = DB::table('tipostumbas')->whereNotIn('tipostumbas.idtipotumba',function($q){
+            $q->select('tumbaesdetipo.idtipotumba')->from('tumbaesdetipo')->where('tumbaesdetipo.idtumba','=',$this->IdTumba);
+        })->get();
+
 
         return $no_asociadas;
 
-    }
+
+
+        }
+
 
     public function cremacionesAsociadas(){
-        $asociadas = DB::select(DB::raw('SELECT a.CodigoPropio, a.Presentacion, a.IdCremacion
-								FROM
-									Cremacion a, CremacionesTumba b
-								WHERE
-									a.IdCremacion = b.IdCremacion AND
-									b.IdTumba = '. $this->IdTumba . '
-								ORDER BY a.CodigoPropio'
-        ));
+
+        $asociadas = DB::table('cremacion')
+            ->join('cremacionestumba', function ($join) {
+                $join->on('cremacionestumba.idcremacion', '=', 'cremacion.idcremacion')
+                    ->where('cremacionestumba.idtumba', '=', $this->IdTumba);
+            })
+            ->get();
 
         return $asociadas;
+
     }
 
     public function cremacionesSinAsociar(){
 
-        $no_asociadas = DB::select(DB::raw('SELECT a.CodigoPropio, a.Presentacion , a.IdCremacion
-								FROM
-									Cremacion a
-								WHERE a.IdCremacion  NOT IN
-								(
-                                    SELECT b.IdCremacion 
-                                    FROM CremacionesTumba b
-                                    WHERE b.IdTumba = ' . $this->IdTumba . ' 
-                                  )
-								'));
+        $no_asociadas = DB::table('cremacion')->whereNotIn('cremacion.idcremacion',function($q){
+            $q->select('cremacionestumba.idcremacion')->from('cremacionestumba')->where('cremacionestumba.idtumba','=',$this->IdTumba);
+        })->get();
+
 
         return $no_asociadas;
 
     }
 
     public function inhumacionesAsociadas(){
-       $asociadas = DB::select(DB::raw('SELECT a.Orientacion, a.Observaciones, a.IdEnterramiento
-								FROM
-									Inhumacion a, InhumacionesTumba b
-								WHERE
-									a.IdEnterramiento = b.IdEnterramiento AND
-                                    b.IdTumba = '. $this->IdTumba
-       ));
+
+        $asociadas = DB::table('inhumacion')
+            ->join('inhumacionestumba', function ($join) {
+                $join->on('inhumacionestumba.identerramiento', '=', 'inhumacion.identerramiento')
+                    ->where('inhumacionestumba.idtumba', '=', $this->IdTumba);
+            })
+            ->get();
+
 
        return $asociadas;
     }
@@ -91,17 +87,11 @@ class Tumba extends Model
 
     public function inhumacionesSinAsociar(){
 
+        $no_asociadas = DB::table('inhumacion')->whereNotIn('inhumacion.identerramiento',function($q){
+            $q->select('inhumacionestumba.identerramiento')->from('inhumacionestumba')
+                ->where('inhumacionestumba.idtumba','=',$this->IdTumba);
+        })->get();
 
-        $no_asociadas = DB::select(DB::raw('SELECT a.Orientacion, a.Observaciones , a.IdEnterramiento
-								FROM
-									Inhumacion a
-								WHERE a.IdEnterramiento  NOT IN
-								(
-                                    SELECT b.IdEnterramiento
-                                    FROM InhumacionesTumba b
-                                    WHERE b.IdTumba = ' . $this->IdTumba . ' 
-                                  )
-								'));
 
         return $no_asociadas;
 
@@ -114,16 +104,8 @@ class Tumba extends Model
             $join->on('localizacion.idlocalizacion', '=', 'tumba.localizacion')
                 ->where('tumba.idtumba', '=', $this->IdTumba);
         })
-        ->get();
+        ->first();
 
-        /*$localizacion = DB::select(DB::raw('SELECT a.IdLocalizacion, a.SiglaZona, a.SectorTrama, a.SectorSubtrama, a.Notas
-								FROM
-									Localizacion a, Tumba b
-								WHERE
-									a.IdLocalizacion = b.Localizacion AND
-									b.IdTumba = ' . $this->IdTumba
-
-        ));*/
 
         return $localizacion;
     }
@@ -160,5 +142,31 @@ class Tumba extends Model
 
         return  $no_asociadas;
        }
+
+       public function ofrendasAsociadas(){
+           $ofrendas = DB::table('analiticafaunas')
+               ->join('ofrendasfauna', function ($join) {
+                   $join->on('analiticafaunas.idanalitica', '=', 'ofrendasfauna.idanalitica')
+                       ->where('ofrendasfauna.idtumba', '=', $this->IdTumba);
+               })
+               ->get();
+
+           return $ofrendas;
+
+       }
+
+    public function ofrendasNoAsociadas(){
+
+
+        $no_asociadas = DB::table('analiticafaunas')->whereNotIn('analiticafaunas.idanalitica',function($q){
+            $q->select('ofrendasfauna.idanalitica')->from('ofrendasfauna')
+                ->where('ofrendasfauna.idtumba','=',$this->IdTumba);
+        })->get();
+
+
+
+        return $no_asociadas;
+
+    }
 
 }

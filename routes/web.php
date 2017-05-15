@@ -190,6 +190,13 @@ Route::post('/tumba_ue/asociar','TumbasController@asociar_ue');
 Route::delete('/tumba_ue/delete','TumbasController@eliminar_asoc_ue');
 
 
+//Ofrendas tumba
+
+Route::get('/tumba_ofrendas/{id}','TumbasController@ofrendas_tumba');
+Route::post('/tumba_ofrendas/asociar','TumbasController@asociar_ofrenda');
+Route::delete('/tumba_ofrendas/delete','TumbasController@eliminar_asoc_ofrenda');
+
+
 
 //ofrendas tumba
 Route::get('/tumba_ofrendas/{id}','TumbasController@ofrendas_tumba');
@@ -201,8 +208,19 @@ Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objeto
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
 
-    $ud =  \App\Models\Inhumacion::all()->last()->IdEnterramiento;
-    return $ud;
+    $id = 'TUMBA 2';
+
+    $asociadas = DB::table('tipostumbas')
+        ->join('tumbaesdetipo', function ($join) {
+            $join->on('tipostumbas.idtipotumba', '=', 'tumbaesdetipo.idtipotumba')
+                ->where('tumbaesdetipo.idtumba', '=', 'TUMBA 2');
+        })
+        ->get();
+
+
+
+
+    return $asociadas;
 
 return view('pruebas');
 
