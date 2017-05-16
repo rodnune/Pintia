@@ -24,7 +24,7 @@
                                         <td align="center"><strong>Año: </strong></td>
                                             <td align="left">
                                                 <select class="form-control" name="anio" style="width:100%">
-
+                                                    <option value="" selected>---Seleccionar año---</option>
                                                     @foreach($campanyas as $campanya)
                                                     <option value="{{$campanya->anyocampanya}}">{{$campanya->anyocampanya}}</option>
                                                         @endforeach
@@ -34,6 +34,7 @@
                                         <td align="center"><strong>Tipo de Tumba: </strong></td>
                                         <td align="left">
                                                 <select class="form-control" name="tipo_tumba" style="width:100%">
+                                                    <option value="" selected>---Seleccionar tipo de tumba---</option>
                                                     @foreach($tipos as $tipo)
                                                         <option value="{{$tipo->IdTipoTumba}}">{{$tipo->Denominacion}}</option>
                                                         @endforeach
@@ -44,6 +45,7 @@
                                         <td align="center"><strong>Localización: </strong></td>
                                         <td align="left">
                                             <select class="form-control" name="lugar" style="width:100%">
+                                                <option value="" selected>---Seleccionar localizacion---</option>
                                                 @foreach($localizaciones as $localizacion)
                                                 <option value="{{$localizacion->IdLocalizacion}}">
                                                    {{$localizacion->SectorTrama}} - {{$localizacion->SectorSubtrama}}</option>
@@ -71,9 +73,21 @@
                                             </td>
                                         </tr>
 
+
                             </table>
                         <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                                <p class="text-muted text-center"><strong>Total de resultados encontrados: {{count($tumbas)}}</strong></p>
+                            <p class="text-muted text-center">
+                            @if(isset($datos[0]))
+                                <strong>Año: </strong>{{$datos[0]}}
+                             @if(isset($datos[1]))
+                                <strong>Tipo tumba:  </strong>{{$datos[1][0]->Denominacion}}
+                                 @endif
+                                    @if(isset($datos[2]))
+                                        <strong>Lugar:  </strong>{{$datos[2][0]->SectorTrama}}
+                                    @endif
+                            @endif
+                            </p>
                         <thead>
                         <tr class="info">
                             <th scope="col" align="center"><center><strong>Id Tumba</strong></center></th>

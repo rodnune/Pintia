@@ -170,6 +170,66 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     }
 
+
+    public function search(Request $request,Tumba $tumba){
+
+        $datos_consulta = array();
+        $tumbas =  $tumba->newQuery();
+
+        if($request->has('anio')){
+            $tumbas->where('AnyoCampanya', $request->input('anio'));
+
+                array_push($datos_consulta,$request->input('anio'));
+        }
+
+        if($request->has('tipo_tumba')){
+
+            /*
+             * Necesitamos acceder globalmente a la peticion
+             */
+
+            $tumbas->whereIn('idtumba',function($q){
+                $q->select('tumbaesdetipo.idtumba')->from('tumbaesdetipo')
+                    ->where('tumbaesdetipo.idtipotumba','=',$_REQUEST['tipo_tumba']);
+
+            });
+
+            $tipo_tumba = DB::table('tipostumbas')->where('idtipotumba','=',$_REQUEST['tipo_tumba'])->get(['Denominacion']);
+
+
+            array_push($datos_consulta,$tipo_tumba);
+
+            }
+
+        if($request->has('lugar')){
+            $tumbas->where('localizacion', $request->input('lugar'));
+
+            $lugar = DB::table('localizacion')->where('IdLocalizacion','=',$request->input('lugar'))->get();
+
+            array_push($datos_consulta,$lugar);
+
+
+
+        }
+
+        $tumbas = $tumbas->get();
+
+
+
+
+        $campanyas =  DB::table('tumba')->select('anyocampanya')->distinct()->orderBy('anyocampanya')->get();
+
+        $tipos = DB::table('tipostumbas')->orderBy('denominacion')->get();
+
+        $localizaciones = DB::table('localizacion')->get(['IdLocalizacion','SectorTrama','SectorSubtrama']);
+
+        return view('catalogo.tumbas.layout_tumbas',['tumbas' => $tumbas,
+            'campanyas' => $campanyas, 'tipos' => $tipos,'localizaciones' => $localizaciones,'datos' => $datos_consulta]);
+
+
+
+    }
+
     public function index_tipos($id){
 
 
@@ -242,7 +302,6 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     public function cremaciones_tumba($id){
 
-        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
 
         $tumba = Tumba::where('IdTumba','=',$id)->first();
 
@@ -252,7 +311,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        return view('catalogo.tumbas.layout_cremaciones_tumba',['tumba'=> $tumba_sidebar[0] ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+        return view('catalogo.tumbas.layout_cremaciones_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
 
 
     }
@@ -309,7 +368,6 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     public function inhumaciones_tumba($id){
 
-        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
 
         $tumba = Tumba::where('IdTumba','=',$id)->first();
 
@@ -319,7 +377,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        return view('catalogo.tumbas.layout_inhumaciones_tumba',['tumba'=> $tumba_sidebar[0] ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+        return view('catalogo.tumbas.layout_inhumaciones_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
 
 
     }
@@ -370,7 +428,7 @@ class TumbasController extends \App\Http\Controllers\Controller
     }
 
     public function localizacion_tumba($id){
-        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
+
 
         $tumba = Tumba::where('IdTumba','=',$id)->first();
 
@@ -380,7 +438,8 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        return view('catalogo.tumbas.layout_localizacion_tumba',['tumba'=> $tumba_sidebar[0] ,'localizacion' => $localizacion,'no_asociadas' => $no_asociadas]);
+        return view('catalogo.tumbas.layout_localizacion_tumba',['tumba'=> $tumba
+            ,'localizacion' => $localizacion,'no_asociadas' => $no_asociadas]);
     }
 
 
