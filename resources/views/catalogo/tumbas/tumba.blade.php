@@ -247,27 +247,34 @@
                                 @if(count($ofrendas)==0)
                            <tr><td colspan="4" align="center"><p class="text-danger">No hay ofrendas de fauna</p></td></tr>
                                 @else
-                                    @foreach($ofrendas as $ofrenda)
                             <tr>
-                                <td colspan="2" scope="col" align="left"><strong>Id Ofrenda</strong></td>
-                                <td colspan="2"><input type="text" class="form-control" disabled="disabled"
-                                                             value = '{{$ofrenda->IdAnalitica}}'>
+                                    <td colspan="2" align="left"><strong>Ofrendas Fauna Asociadas</strong></td><td colspan="2">
+                                        <select class="form-control" name="" size="8" style="width:100%" disabled="disabled">
+                                            @foreach($ofrendas as $ofrenda)
+                                                <option> IdAnalitica: {{$ofrenda->IdAnalitica}}
+                                                    ----- Descripcion: {{$ofrenda->Descripcion}}
+                                                    ----- PartesOseasEspecieEdad: {{$ofrenda->PartesOseasEspecieEdad}}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </td>
                             </tr>
 
-                            <tr>
-                               <td colspan="2" scope="col" align="left"><strong>Descripci&oacute;n</strong></td>
-                                <td colspan="2" align="left"><div class="form-control fake-textarea-xlg" name="descripcion" disabled="disabled">{{$ofrenda->Descripcion}}</div></td>
-                            </tr>
 
-                            <tr>
-                                <td  colspan="2" align="left"><strong>Partes Oseas Especie Edad </strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled">{{$ofrenda->PartesOseasEspecieEdad}}</div>
-                                </td>
-                            </tr>
-                            @endforeach
+
                             @endif
 
+                            <tr>
+                                <td colspan="1" align="right">
+                                    <a href="/tumbas" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista de tumbas</a>
+                                </td>
 
+                                <td colspan="3" align="left">
+
+                                      <button type="submit" name="accion" class="btn btn-success" value="OK"><i class="fa fa-check"></i> Validar</button>
+
+                                </td>
+                            </tr>
 
                             <!--if( isset($_SESSION['logged']) AND $_SESSION['admin_level'] > 2 ){
                             $query = 'SELECT NumControl FROM Registro WHERE IdTumba = "' . $tumba . '"';

@@ -15,7 +15,7 @@
                         </div>
 
                             <table class="table table-bordered table-hover" rules="rows">
-                                <form action="tumba.php" method="post">
+                                {{Form::open(array('action' => 'TumbasController@search', 'method' => 'get'))}}
 
 
                                 <!-- FILTROS -->
@@ -23,23 +23,32 @@
                                     <!-- FILTRAR POR AÑO -->
                                         <td align="center"><strong>Año: </strong></td>
                                             <td align="left">
-                                                <select class="form-control" name="filtro_anio" style="width:100%">
-                                                    <option value="-1" selected> Seleccionar año </option>
+                                                <select class="form-control" name="anio" style="width:100%">
+
+                                                    @foreach($campanyas as $campanya)
+                                                    <option value="{{$campanya->anyocampanya}}">{{$campanya->anyocampanya}}</option>
+                                                        @endforeach
                                                 </select>
                                             </td>
                                     <!-- FILTRAR POR TIPO DE TUMBA -->
                                         <td align="center"><strong>Tipo de Tumba: </strong></td>
                                         <td align="left">
-                                                <select class="form-control" name="filtro_tipo" style="width:100%">
-                                                    <option value="-1" selected> Seleccionar tipo de tumba </option>
+                                                <select class="form-control" name="tipo_tumba" style="width:100%">
+                                                    @foreach($tipos as $tipo)
+                                                        <option value="{{$tipo->IdTipoTumba}}">{{$tipo->Denominacion}}</option>
+                                                        @endforeach
                                                     </select>
 
                                             </td>
                                     <!-- FILTRAR POR LOCALIZACION -->
                                         <td align="center"><strong>Localización: </strong></td>
                                         <td align="left">
-                                            <select class="form-control" name="filtro_lugar" style="width:100%">
-                                                <option value="-1" selected> Seleccionar Trama - Subtrama </option>
+                                            <select class="form-control" name="lugar" style="width:100%">
+                                                @foreach($localizaciones as $localizacion)
+                                                <option value="{{$localizacion->IdLocalizacion}}">
+                                                   {{$localizacion->SectorTrama}} - {{$localizacion->SectorSubtrama}}</option>
+
+                                                    @endforeach
                                             </select>
                                         </td>
                                     </tr>
@@ -50,7 +59,7 @@
                                                 <a class="btn btn-primary" href="/tumbas"><i class="fa fa-eye"></i> Ver todo</a>
                                         </td>
                                     </tr>
-                                </form>
+                               {{Form::close()}}
 
                                     <input type="hidden" name="seccion" value="Lista">
                                         <tr id="fila_ref" style="display:none;">
@@ -58,7 +67,6 @@
                                             <td><input type="text" class="form-control" id="myInput" onkeyup="filter()" placeholder="Identificador" required></td>
 
                                             <td align="center" colspan="4">
-                                                <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar tumba</button>
                                                     <a class="btn btn-primary" href="/tumbas"><i class="fa fa-eye"></i> Ver todo</a>
                                             </td>
                                         </tr>

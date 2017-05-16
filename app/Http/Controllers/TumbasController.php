@@ -22,9 +22,19 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     public function index(){
 
+
+
+       $campanyas =  DB::table('tumba')->select('anyocampanya')->distinct()->orderBy('anyocampanya')->get();
+
+        $tipos = DB::table('tipostumbas')->orderBy('denominacion')->get();
+
+        $localizaciones = DB::table('localizacion')->get(['IdLocalizacion','SectorTrama','SectorSubtrama']);
+
+
        $tumbas =  DB::table('tumba')->orderBy('IdTumba')->get();
 
-        return view('catalogo.tumbas.layout_tumbas',['tumbas' => $tumbas]);
+        return view('catalogo.tumbas.layout_tumbas',['tumbas' => $tumbas,
+            'campanyas' => $campanyas, 'tipos' => $tipos,'localizaciones' => $localizaciones]);
     }
 
     public function form_create(){
@@ -161,6 +171,7 @@ class TumbasController extends \App\Http\Controllers\Controller
     }
 
     public function index_tipos($id){
+
 
 
         $tumba = Tumba::where('IdTumba','=',$id)->first();
