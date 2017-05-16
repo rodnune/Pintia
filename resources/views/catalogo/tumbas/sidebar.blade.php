@@ -1,6 +1,5 @@
-<div id="sidebar" style="float:left; margin:20px 35px 0 0;">
-    <div class="post" style="padding-right: 10px; padding-left: 0px;">
-
+ <div id="sidebar-list" class="affix" style="float:left; margin:20px 35px 0 0;">
+            <div class="post" style="padding-right: 0px; padding-left: 0px;">
 
 
 
@@ -46,3 +45,5 @@
 
        </div>
   </div>
+
+ <br class="clearfix" />

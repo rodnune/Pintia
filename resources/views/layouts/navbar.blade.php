@@ -88,7 +88,7 @@
                                        <a tabindex="-1" href="#">Listas</a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="listas.php?idl=0" class="dir">Listas</a><li>
-                                                <li><a href="listas.php?idl=1">Palabras clave</a></li>
+                                                <li><a href="/gestion_keywords">Palabras clave</a></li>
                                                 <li><a href="listas.php?idl=2">Materias primas</a></li>
                                                 <li><a href="listas.php?idl=3">Tipos de tumbas</a></li>
                                                 <li><a href="listas.php?idl=4">Tipos de muestras</a></li>
@@ -172,6 +172,10 @@
                 });
             </script>
 
+
+
+
+
             <!-- Modal login -->
             <div id="modalLogin" class="modal fade">
                 <div class="modal-dialog">
@@ -185,47 +189,44 @@
 
 
                         <div class="modal-body">
-                            {{ csrf_field() }}
+
                             {{ Form::open(array('class' => "input-group col-sm-6 col-sm-offset-3",'action' => 'LoginController@is_user')) }}
+                            <div class="form-group">
+                                <div class="input-group col-sm-6 col-sm-offset-3">
+                                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                    <input type="text" class="form-control" id="usuario" name="usuario" autocomplete="off" size="14" placeholder="Usuario" required autofocus>
 
-                            {{ Form::text('usuario') }}
-                            {{ Form::password('password') }}
-                            {{ Form::submit('Entrar', array('class' => 'btn btn-primary')) }}
-                            {{ Form::close() }}
-
-                          <!--
-
-                                <div class="form-group">
-                                   <div class="input-group col-sm-6 col-sm-offset-3">
-                                        <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                        <input type="text" class="form-control" id="usuario" name="username" autocomplete="off" size="14" placeholder="Usuario" required autofocus>
-
-                                        </div>
                                     </div>
+                            </div>
 
-                                <div class="form-group">
-                                   <div class="input-group col-sm-6 col-sm-offset-3">
-                                        <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-                                        <input type="password" class="form-control" id="password" name="password" autocomplete="off" size="14" placeholder="Contraseña" required>
+                            <div class="form-group">
+                                <div class="input-group col-sm-6 col-sm-offset-3">
+                                    <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                                    <input type="password" class="form-control" id="password" name="password" autocomplete="off" size="14" placeholder="Contraseña" required>
 
-                                        </div>
-                                    </div><br>
+                                </div>
+                            </div><br>
 
+                        </div>
 
+                        <div class="modal-footer">
 
-
-                       <div class=" text-center modal-footer">
-
-                             <p><button type="submit" name="submit" class="btn btn-primary"
-                                    value="Entrar"><i class="fa fa-sign-in"></i> Entrar</button>
+                                <p class="text-center">
+                                    <button type="submit" name="submit" class="btn btn-primary">
+                                        <i class="fa fa-sign-in"></i> Entrar</button>
                                     &nbsp;&nbsp;&nbsp;
 
-                                    <button type="reset" name="cancel" class="btn btn-danger"
-                                    value="Limpiar"><i class="fa fa-times"></i> Limpiar</button>
+                                    <button type="reset" name="cancel" class="btn btn-danger">
+                                   <i class="fa fa-times"></i> Limpiar</button>
                                     </p>
+
                             </div>
-                        </form> -->
-                        <!-- Formulario end -->
+
+
+
+                        {{ Form::close() }}
+
+
                         </div>
                     </div>
                  </div>

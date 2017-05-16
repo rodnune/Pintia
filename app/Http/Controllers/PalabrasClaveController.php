@@ -57,4 +57,34 @@ class PalabrasClaveController extends \App\Http\Controllers\Controller
 
     }
 
+    public function get(){
+
+        $keywords = DB::table('palabraclave')->orderBy('palabraclave')->get();
+
+        return view('gestion.layout_palabras_clave',['keywords' => $keywords]);
+    }
+
+    public function add(Request $request){
+
+        $keyword = $request->input('nuevo');
+
+        $validator = Validator::make($request->all(), [
+            'nuevo' => 'required|unique:palabraclave,palabraclave',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/gestion_keywords')->withErrors($validator);
+        }
+       DB::table('palabraclave')->insert(['palabraclave' => $keyword]);
+
+        return redirect('/gestion_keywords');
+
+
+
+    }
+
+
+
+
+
 }

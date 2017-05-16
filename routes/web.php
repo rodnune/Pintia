@@ -199,6 +199,23 @@ Route::delete('/tumba_ofrendas/delete','TumbasController@eliminar_asoc_ofrenda')
 
 
 
+
+
+
+//Multimedia
+
+
+//Objetos
+
+
+
+//GESTION
+
+Route::get('/gestion_keywords','PalabrasClaveController@get');
+Route::post('add_keyword','PalabrasClaveController@add');
+
+
+
 //ofrendas tumba
 Route::get('/tumba_ofrendas/{id}','TumbasController@ofrendas_tumba');
 
@@ -209,19 +226,6 @@ Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objeto
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
 
-    $id = 'TUMBA 2';
-
-    $asociadas = DB::table('tipostumbas')
-        ->join('tumbaesdetipo', function ($join) {
-            $join->on('tipostumbas.idtipotumba', '=', 'tumbaesdetipo.idtipotumba')
-                ->where('tumbaesdetipo.idtumba', '=', 'TUMBA 2');
-        })
-        ->get();
-
-
-
-
-    return $asociadas;
 
 return view('pruebas');
 
