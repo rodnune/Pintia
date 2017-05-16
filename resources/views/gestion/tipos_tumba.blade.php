@@ -5,7 +5,7 @@
             @include('gestion.sidebar')
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
-                <h1 class="text-center"> Palabras Clave</h1><br>
+                    <h1 class="text-center"> Tipos de Tumbas</h1><br>
 
                     @if($errors->any())
                         <div class="alert alert-danger">
@@ -20,12 +20,12 @@
 
                     <table class="table table-bordered table-hover" rules="all">
                         <tbody><tr>
-                            <td><strong>Seleccionar Palabra Clave:</strong></td>
+                            <td><strong>Seleccionar tipo de tumba:</strong></td>
                             <th  align="center" colspan="2">
-                                {{Form::open(array('action' => 'PalabrasClaveController@gestionar','method' => 'post'))}}
+                                {{Form::open(array('action' => 'TiposTumbaController@gestionar','method' => 'post'))}}
                                 <select class="form-control" name="palabra_clave" style="width:100%">
-                                    @foreach($keywords as $keyword)
-                                        <option value="{{$keyword->IdPalabraClave}}">{{$keyword->PalabraClave}}</option>
+                                    @foreach($tipos as $tipo)
+                                        <option value="{{$tipo->IdTipoTumba}}">{{$tipo->Denominacion}}</option>
                                     @endforeach
                                 </select>
 
@@ -56,8 +56,8 @@
                         {{Form::close()}}
                         </tbody>
                     </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>

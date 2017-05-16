@@ -204,4 +204,74 @@ class MuestrasController extends \App\Http\Controllers\Controller
         return redirect('/ud_estratigrafica_muestras/'.$id_ue);
     }
 
+    public function get_tipos(){
+       $tipos = DB::table('tiposmuestra')->orderBy('denominacion')->get();
+
+        return view('gestion.layout_muestras',['tipos' => $tipos]);
+    }
+
+    public function gestionar(Request $request){
+        if( $request->submit == 'Agregar'){
+
+            $keyword = $request->input('nuevo');
+
+            $validator = Validator::make($request->all(), [
+                'nuevo' => 'required|unique:tiposmuestra,denominacion',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_tipos_muestra')->withErrors($validator);
+            }
+            DB::table('tiposmuestra')->insert(['denominacion' => $keyword]);
+
+            return redirect('/gestion_tipos_muestra');
+
+        }
+
+
+        if($request->submit == 'Modificar'){
+            $keyword = $request->input('palabra_clave');
+            $keyword_update = $request->input('reemplazar');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:tiposmuestra,idtipomuestra',
+                'reemplazar' => 'required|unique:tiposmuestra,denominacion'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_tipos_muestra')->withErrors($validator);
+            }
+
+            DB::table('tiposmuestra')
+                ->where('idtipomuestra','=',$keyword)
+                ->update(['denominacion' => $keyword_update]);
+
+
+            return redirect('/gestion_tipos_muestra');
+        }
+
+
+        if($request->submit == 'Borrar'){
+            $keyword = $request->input('palabra_clave');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:tiposmuestra,idtipomuestra',
+
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_tipos_muestra')->withErrors($validator);
+            }
+
+            DB::table('tiposmuestra')
+                ->where('idtipomuestra','=',$keyword)
+                ->delete();
+
+
+            return redirect('/gestion_tipos_muestra');
+        }
+    }
+
+
+
 }

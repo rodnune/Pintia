@@ -4,6 +4,7 @@ namespace app\Http\Controllers;
 use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Validator;
 
 class CArtificialesController extends \App\Http\Controllers\Controller
 
@@ -38,12 +39,83 @@ class CArtificialesController extends \App\Http\Controllers\Controller
         /*
          * Doble condicion where
          */
-        DB::table('cartificialesue')->where(
-            'IdCArtificial', '=', $id_componente)
+        DB::table('cartificialesue')
+            ->where('IdCArtificial', '=', $id_componente)
             ->where('UE', '=', $id_ue)
             ->delete();
 
         return redirect('/ud_estratigrafica_cartificiales/' . $id_ue);
+    }
+
+    public function get(){
+       $artificiales = DB::table('componentesartificiales')->orderBy('denominacion')->get();
+
+       return view('gestion.layout_comp_artificales',['artificiales' => $artificiales]);
+
+    }
+
+    public function gestionar(Request $request){
+
+        if( $request->submit == 'Agregar'){
+
+            $keyword = $request->input('nuevo');
+
+            $validator = Validator::make($request->all(), [
+                'nuevo' => 'required|unique:componentesartificiales,denominacion',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_artificiales')->withErrors($validator);
+            }
+            DB::table('componentesartificiales')->insert(['denominacion' => $keyword]);
+
+            return redirect('/gestion_artificiales');
+
+        }
+
+
+        if($request->submit == 'Modificar'){
+            $keyword = $request->input('palabra_clave');
+            $keyword_update = $request->input('reemplazar');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:componentesartificiales,idcartificial',
+                'reemplazar' => 'required|unique:componentesartificiales,denominacion'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_artificiales')->withErrors($validator);
+            }
+
+            DB::table('componentesartificiales')
+                ->where('idcartificial','=',$keyword)
+                ->update(['denominacion' => $keyword_update]);
+
+
+            return redirect('/gestion_artificiales');
+        }
+
+
+        if($request->submit == 'Borrar'){
+
+            $keyword = $request->input('palabra_clave');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:componentesartificiales,idcartificial',
+
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_artificiales')->withErrors($validator);
+            }
+
+            DB::table('componentesartificiales')
+                ->where('idcartificial','=',$keyword)
+                ->delete();
+
+
+            return redirect('/gestion_artificiales');
+        }
     }
 }
 

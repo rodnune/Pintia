@@ -64,20 +64,69 @@ class PalabrasClaveController extends \App\Http\Controllers\Controller
         return view('gestion.layout_palabras_clave',['keywords' => $keywords]);
     }
 
-    public function add(Request $request){
+    public function gestionar(Request $request){
 
-        $keyword = $request->input('nuevo');
+        if( $request->submit == 'Agregar'){
 
-        $validator = Validator::make($request->all(), [
-            'nuevo' => 'required|unique:palabraclave,palabraclave',
-        ]);
+            $keyword = $request->input('nuevo');
 
-        if ($validator->fails()) {
-            return redirect('/gestion_keywords')->withErrors($validator);
+            $validator = Validator::make($request->all(), [
+                'nuevo' => 'required|unique:palabraclave,palabraclave',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_keywords')->withErrors($validator);
+            }
+            DB::table('palabraclave')->insert(['palabraclave' => $keyword]);
+
+            return redirect('/gestion_keywords');
+
         }
-       DB::table('palabraclave')->insert(['palabraclave' => $keyword]);
 
-        return redirect('/gestion_keywords');
+
+        if($request->submit == 'Modificar'){
+            $keyword = $request->input('palabra_clave');
+            $keyword_update = $request->input('reemplazar');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:palabraclave,idpalabraclave',
+                'reemplazar' => 'required|unique:palabraclave,palabraclave'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_keywords')->withErrors($validator);
+            }
+
+            DB::table('palabraclave')
+                ->where('idpalabraclave','=',$keyword)
+                ->update(['palabraclave' => $keyword_update]);
+
+
+            return redirect('/gestion_keywords');
+        }
+
+
+        if($request->submit == 'Borrar'){
+            $keyword = $request->input('palabra_clave');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:palabraclave,idpalabraclave',
+
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_keywords')->withErrors($validator);
+            }
+
+            DB::table('palabraclave')
+                ->where('idpalabraclave','=',$keyword)
+                ->delete();
+
+
+            return redirect('/gestion_keywords');
+        }
+
+
 
 
 

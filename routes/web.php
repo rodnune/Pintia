@@ -198,10 +198,6 @@ Route::post('/tumba_ofrendas/asociar','TumbasController@asociar_ofrenda');
 Route::delete('/tumba_ofrendas/delete','TumbasController@eliminar_asoc_ofrenda');
 
 
-
-
-
-
 //Multimedia
 
 
@@ -212,12 +208,23 @@ Route::delete('/tumba_ofrendas/delete','TumbasController@eliminar_asoc_ofrenda')
 //GESTION
 
 Route::get('/gestion_keywords','PalabrasClaveController@get');
-Route::post('add_keyword','PalabrasClaveController@add');
+Route::post('/gestion_keywords','PalabrasClaveController@gestionar');
+Route::get('/gestion_materia_prima','MateriaPrimaController@get');
+Route::post('/gestion_materia_prima','MateriaPrimaController@gestionar');
+Route::get('/gestion_tipos_tumba','TiposTumbaController@get');
+Route::post('/gestion_tipos_tumba','TiposTumbaController@gestionar');
+Route::get('/gestion_tipos_muestra','MuestrasController@get_tipos');
+Route::post('/gestion_tipos_muestra','MuestrasController@gestionar');
+Route::get('/gestion_artificiales','CArtificialesController@get');
+Route::post('/gestion_artificiales','CArtificialesController@gestionar');
+Route::get('/gestion_geologicos','CGeologicosController@get');
+Route::post('/gestion_geologicos','CGeologicosController@gestionar');
+Route::get('/gestion_organicos','COrganicosController@get');
+Route::post('/gestion_organicos','COrganicosController@gestionar');
 
 
 
-//ofrendas tumba
-Route::get('/tumba_ofrendas/{id}','TumbasController@ofrendas_tumba');
+
 
 
 Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});

@@ -4,17 +4,17 @@
         <p class="text-center">
             <a href="/gestion_keywords" class="btn btn-default btn-block">Palabras clave</a>
 
-            <a href="listas.php?idl=2" class="btn btn-default btn-block">Materias primas</a>
+            <a href="/gestion_materia_prima" class="btn btn-default btn-block">Materias primas</a>
 
-            <a href="listas.php?idl=3" class="btn btn-default btn-block">Tipos de tumbas</a>
+            <a href="/gestion_tipos_tumba" class="btn btn-default btn-block">Tipos de tumbas</a>
 
-            <a href="listas.php?idl=4" class="btn btn-default btn-block">Tipos de muestras</a>
+            <a href="/gestion_tipos_muestra" class="btn btn-default btn-block">Tipos de muestras</a>
 
-            <a href="listas.php?idl=5" class="btn btn-default btn-block">Componentes artificiales</a>
+            <a href="/gestion_artificiales" class="btn btn-default btn-block">Componentes artificiales</a>
 
-            <a href="listas.php?idl=6" class="btn btn-default btn-block">Componentes geol&oacute;gicos</a>
+            <a href="/gestion_geologicos" class="btn btn-default btn-block">Componentes geol&oacute;gicos</a>
 
-            <a href="listas.php?idl=7" class="btn btn-default btn-block">Componentes org&aacute;nicos</a>
+            <a href="/gestion_organicos" class="btn btn-default btn-block">Componentes org&aacute;nicos</a>
 
             <a href="listas.php?idl=8" class="btn btn-default btn-block">Artefactos</a>
 

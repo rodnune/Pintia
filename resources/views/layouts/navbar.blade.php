@@ -87,14 +87,13 @@
                                    <li class="dropdown-submenu">
                                        <a tabindex="-1" href="#">Listas</a>
                                             <ul class="dropdown-menu">
-                                                <li><a href="listas.php?idl=0" class="dir">Listas</a><li>
                                                 <li><a href="/gestion_keywords">Palabras clave</a></li>
-                                                <li><a href="listas.php?idl=2">Materias primas</a></li>
-                                                <li><a href="listas.php?idl=3">Tipos de tumbas</a></li>
-                                                <li><a href="listas.php?idl=4">Tipos de muestras</a></li>
-                                                <li><a href="listas.php?idl=5">Componentes artificiles</a></li>
-                                                <li><a href="listas.php?idl=6">Componentes geológicos</a></li>
-                                                <li><a href="listas.php?idl=7">Componentes orgánicos</a></li>
+                                                <li><a href="/gestion_materia_prima">Materias primas</a></li>
+                                                <li><a href="/gestion_tipos_tumba">Tipos de tumbas</a></li>
+                                                <li><a href="/gestion_tipos_muestra">Tipos de muestras</a></li>
+                                                <li><a href="/gestion_artificiales">Componentes artificiales</a></li>
+                                                <li><a href="/gestion_geologicos">Componentes geológicos</a></li>
+                                                <li><a href="/gestion_organicos">Componentes orgánicos</a></li>
                                                 <li><a href="listas.php?idl=8">Artefactos</a></li>
                                                 <li><a href="listas.php?idl=9">Superficies</a></li>
                                             </ul>
