@@ -229,9 +229,12 @@ Route::post('/gestion_superficies','SuperficiesController@gestionar');
 
 //GESTION MEDIDAS Y CATEGORIAS
 
-Route::get('/gestion_medidas','MedidasCategoriaController@get');
+Route::get('/gestion_medidas','MedidasCategoriaController@get_medidas');
 Route::post('/gestion_medidas','MedidasCategoriaController@gestionar_medida');
 Route::get('/medida/{id}','MedidasCategoriaController@get_medida');
+
+Route::get('/gestion_categorias','MedidasCategoriaController@get_categorias');
+Route::post('/gestion_categorias','MedidasCategoriaController@gestionar_categoria');
 
 
 

@@ -101,7 +101,7 @@
 
 
                                        <li><a href="/gestion_medidas">Medidas</a></li>
-                                       <li><a href="mcobjetos1.php">Categorías/Subcategorías</a></li>
+                                       <li><a href="/gestion_categorias">Categorías/Subcategorías</a></li>
 
                                     <li class="dropdown-submenu">
                                        <a tabindex="-1" href="#">Geografía</a>

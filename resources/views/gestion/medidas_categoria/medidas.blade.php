@@ -25,7 +25,7 @@
                             <tr>
                                 <th>Seleccionar medida para gestionar: </th>
                                 <th align="center" colspan="2">
-                                    <select id="medida" class="form-control" name="id_siglas_sel" style="width:100%">
+                                    <select id="medida" class="form-control" name="medida" style="width:100%">
                                         <option  value="-1" >--- Definir una nueva medida ---</option>
                                         @foreach($medidas as $medida )
                                            <option value="{{$medida->SiglasMedida}}">{{$medida->Denominacion}} ({{$medida->SiglasMedida}} / {{$medida->Unidades}})</option>
@@ -48,7 +48,7 @@
                            <tr>
                                <td align="left"><img src="images/required.gif" height="16" width="16"><strong>Siglas de la medida:</strong></td>
                                 <td colspan="2">
-                                    <input class="form-control" type="text" name="new_siglas" id="nuevaSiglasMedida" value="" size="40" maxlength="255" value="'" />
+                                    <input class="form-control" type="text" name="update_siglas" id="nuevaSiglasMedida" value="" size="40" maxlength="255" value="'" />
                                 </td>
 
                            </tr>
@@ -56,7 +56,7 @@
                             <tr>
                                 <td align="left"><img src="images/required.gif" height="16" width="16"><strong>Descripci&oacute;n de la medida:</strong></td>
                                 <td colspan="2" >
-                                    <input class="form-control" type="text" name="new_sigla_den" id="nuevaDenominacion" value="" size="40" maxlength="255" value="" />
+                                    <input class="form-control" type="text" name="update_denominacion" id="nuevaDenominacion" value="" size="40" maxlength="255" value="" />
                                 </td>
 
 
@@ -64,7 +64,7 @@
 
                             <tr>
                                 <td align="left"><img src="images/required.gif" height="16" width="16"><strong>Unidades de la medida:</strong></td>
-                                <td colspan="2"><input class="form-control" type="text" name="new_unidades" id="nuevaUnidades" value="" size="40" maxlength="255" value="" />
+                                <td colspan="2"><input class="form-control" type="text" name="update_unidades" id="nuevaUnidades" value="" size="40" maxlength="255" value="" />
                                 </td>
 
                             </tr>
@@ -72,13 +72,13 @@
                             <tr>
                                 <td colspan="2" align="right">
 
-                                   <button type="submit" name="accion" class="btn btn-primary" value="Modificar"><i class="fa fa-check"></i> Guardar cambios</button>
+                                   <button name="submit" type="submit" name="accion" class="btn btn-primary" value="Modificar"><i class="fa fa-check"></i> Guardar cambios</button>
 
                                 </td>
 
 
                                 <td colspan="2" align="left">
-                                   <button type="submit" name="accion" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Eliminar medida</button>
+                                   <button name="submit" type="submit" name="accion" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Eliminar medida</button>
                                 </td>
 
 
@@ -92,19 +92,19 @@
 
                                 <tr>
                                     <td align="left"><img src="images/required.gif" height="16" width="16"><strong>Siglas de la medida:</strong></td>
-                                    <td colspan="2"><input class="form-control" type="text" name="new_siglas" id="nuevoSiglas" size="40" maxlength="255" /></td>
+                                    <td colspan="2"><input class="form-control" type="text" name="new_siglas"  size="40" maxlength="255" /></td>
 
                                 </tr>
 
                                 <tr>
                                     <td align="left"><img src="images/required.gif" height="16" width="16"><strong>Descripci&oacute;n de la medida:</strong></td>
-                                    <td colspan="2"><input class="form-control" type="text" name="new_denominacion" id="nuevaDenominacion" size="40" maxlength="255"  /></td>
+                                    <td colspan="2"><input class="form-control" type="text" name="new_denominacion"  size="40" maxlength="255"  /></td>
 
                                 </tr>
 
                                 <tr>
                                     <td align="left"><img src="images/required.gif" height="16" width="16"><strong>Unidades de la medida:</strong></td>
-                                    <td colspan="2"><input class="form-control" type="text" name="new_unidades" id="nuevaUnidades" size="40" maxlength="255" /></td>
+                                    <td colspan="2"><input class="form-control" type="text" name="new_unidades"  size="40" maxlength="255" /></td>
 
                                 </tr>
 
@@ -125,7 +125,6 @@
 
 
 <script>
-console.log($('#medida').val());
     if($('#medida').val()==-1) {
 
         $( "#formularioNew" ).show();
