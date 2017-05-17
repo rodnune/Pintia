@@ -100,7 +100,7 @@
                                        </li>
 
 
-                                       <li><a href="mcobjetos1.php?seccion=4">Medidas</a></li>
+                                       <li><a href="/gestion_medidas">Medidas</a></li>
                                        <li><a href="mcobjetos1.php">Categorías/Subcategorías</a></li>
 
                                     <li class="dropdown-submenu">
