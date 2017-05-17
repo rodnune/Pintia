@@ -94,8 +94,8 @@
                                                 <li><a href="/gestion_artificiales">Componentes artificiales</a></li>
                                                 <li><a href="/gestion_geologicos">Componentes geológicos</a></li>
                                                 <li><a href="/gestion_organicos">Componentes orgánicos</a></li>
-                                                <li><a href="listas.php?idl=8">Artefactos</a></li>
-                                                <li><a href="listas.php?idl=9">Superficies</a></li>
+                                                <li><a href="/gestion_artefactos">Artefactos</a></li>
+                                                <li><a href="/gestion_superficies">Superficies</a></li>
                                             </ul>
                                        </li>
 

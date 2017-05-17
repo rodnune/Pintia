@@ -4,6 +4,7 @@ namespace app\Http\Controllers;
 use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Validator;
 
 class SuperficiesController extends \App\Http\Controllers\Controller
 
@@ -43,5 +44,76 @@ class SuperficiesController extends \App\Http\Controllers\Controller
             ->delete();
 
         return redirect('/ud_estratigrafica_superficies/' . $id_ue);
+    }
+
+    public function get(){
+       $superficies = DB::table('superficies')->orderBy('denominacion')->get();
+
+       return view('gestion.layout_superficies',['superficies' => $superficies]);
+    }
+
+    public function gestionar(Request $request){
+
+        if( $request->submit == 'Agregar'){
+
+            $keyword = $request->input('nuevo');
+
+            $validator = Validator::make($request->all(), [
+                'nuevo' => 'required|unique:superficies,denominacion',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_superficies')->withErrors($validator);
+            }
+            DB::table('superficies')->insert(['denominacion' => $keyword]);
+
+            return redirect('/gestion_superficies');
+
+        }
+
+
+        if($request->submit == 'Modificar'){
+            $keyword = $request->input('palabra_clave');
+            $keyword_update = $request->input('reemplazar');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:superficies,idsuperficie',
+                'reemplazar' => 'required|unique:superficies,denominacion'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_superficies')->withErrors($validator);
+            }
+
+            DB::table('superficies')
+                ->where('idsuperficie','=',$keyword)
+                ->update(['denominacion' => $keyword_update]);
+
+
+            return redirect('/gestion_superficies');
+        }
+
+
+        if($request->submit == 'Borrar'){
+
+            $keyword = $request->input('palabra_clave');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:superficies,idsuperficie',
+
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_superficies')->withErrors($validator);
+            }
+
+            DB::table('superficies')
+                ->where('idsuperficie','=',$keyword)
+                ->delete();
+
+
+            return redirect('/gestion_superficies');
+        }
+
     }
 }

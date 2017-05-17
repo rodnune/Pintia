@@ -205,7 +205,7 @@ Route::delete('/tumba_ofrendas/delete','TumbasController@eliminar_asoc_ofrenda')
 
 
 
-//GESTION
+//GESTION LISTAS
 
 Route::get('/gestion_keywords','PalabrasClaveController@get');
 Route::post('/gestion_keywords','PalabrasClaveController@gestionar');
@@ -221,6 +221,10 @@ Route::get('/gestion_geologicos','CGeologicosController@get');
 Route::post('/gestion_geologicos','CGeologicosController@gestionar');
 Route::get('/gestion_organicos','COrganicosController@get');
 Route::post('/gestion_organicos','COrganicosController@gestionar');
+Route::get('/gestion_artefactos','ArtefactosController@get');
+Route::post('/gestion_artefactos','ArtefactosController@gestionar');
+Route::get('/gestion_superficies','SuperficiesController@get');
+Route::post('/gestion_superficies','SuperficiesController@gestionar');
 
 
 

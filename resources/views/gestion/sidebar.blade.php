@@ -16,9 +16,9 @@
 
             <a href="/gestion_organicos" class="btn btn-default btn-block">Componentes org&aacute;nicos</a>
 
-            <a href="listas.php?idl=8" class="btn btn-default btn-block">Artefactos</a>
+            <a href="/gestion_artefactos" class="btn btn-default btn-block">Artefactos</a>
 
-            <a href="listas.php?idl=9" class="btn btn-default btn-block">Superficies</a>
+            <a href="/gestion_superficies" class="btn btn-default btn-block">Superficies</a>
         </p>
 
 

@@ -4,6 +4,7 @@ namespace app\Http\Controllers;
 use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Validator;
 
 class ArtefactosController extends \App\Http\Controllers\Controller
 
@@ -42,5 +43,78 @@ class ArtefactosController extends \App\Http\Controllers\Controller
             ->delete();
 
         return redirect('/ud_estratigrafica_artefactos/' . $id_ue);
+    }
+
+
+    public function get(){
+       $artefactos =  DB::table('fosiles')->orderBy('denominacion')->get();
+
+       return view('gestion.layout_artefactos',['artefactos' => $artefactos]);
+
+
+    }
+
+    public function gestionar(Request $request){
+        if( $request->submit == 'Agregar'){
+
+            $keyword = $request->input('nuevo');
+
+            $validator = Validator::make($request->all(), [
+                'nuevo' => 'required|unique:fosiles,denominacion',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_artefactos')->withErrors($validator);
+            }
+            DB::table('fosiles')->insert(['denominacion' => $keyword]);
+
+            return redirect('/gestion_artefactos');
+
+        }
+
+
+        if($request->submit == 'Modificar'){
+            $keyword = $request->input('palabra_clave');
+            $keyword_update = $request->input('reemplazar');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:fosiles,idfosil',
+                'reemplazar' => 'required|unique:fosiles,denominacion'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_artefactos')->withErrors($validator);
+            }
+
+            DB::table('fosiles')
+                ->where('idfosil','=',$keyword)
+                ->update(['denominacion' => $keyword_update]);
+
+
+            return redirect('/gestion_artefactos');
+        }
+
+
+        if($request->submit == 'Borrar'){
+
+            $keyword = $request->input('palabra_clave');
+
+            $validator = Validator::make($request->all(), [
+                'palabra_clave' => 'required|exists:fosiles,idfosil',
+
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/gestion_artefactos')->withErrors($validator);
+            }
+
+            DB::table('fosiles')
+                ->where('idfosil','=',$keyword)
+                ->delete();
+
+
+            return redirect('/gestion_artefactos');
+        }
+
     }
 }
