@@ -181,19 +181,64 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
 
             $categoria = Categoria::find($id);
 
-            $asociadas    = $categoria->medidasAsociadas();
-            $no_asociadas = $categoria->medidasNoAsociadas();
+            $asociadas    =  $categoria->medidasAsociadas();
+            $no_asociadas =  $categoria->medidasNoAsociadas();
+            $subcategorias = $categoria->subcategorias();
 
 
 
             return view('gestion.medidas_categoria.layout_categoria',['categoria' => $categoria,'asociadas' => $asociadas,
-            'no_asociadas' => $no_asociadas]);
+            'no_asociadas' => $no_asociadas,'subcategorias' => $subcategorias]);
         }
 
 
-        public function asociar_medida(){
+        public function gestionar_medida_categoria(Request $request){
+
+
+
+                $id = $request->input('id');
+                $medida = $request->input('medida');
+
+
+                $validator = Validator::make($request->all(), [
+                    'id' => 'required|exists:categoria,idcat',
+                    'medida' => 'required|exists:medidas,siglasmedida'
+
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect('/categoria/' . $id)->withErrors($validator);
+                }
+
+
+                if($request->submit == 'Asociar'){
+
+                    DB::table('medidascategoria')->insert(['idcat' => $id, 'siglasmedida' => $medida]);
+
+                    return redirect('/categoria/'.$id);
+                }
+
+
+
+            if($request->submit == 'Eliminar'){
+
+
+                DB::table('medidascategoria')
+                    ->where('idcat','=', $id)
+                    ->where('siglasmedida','=',$medida)
+                    ->delete();
+
+                return redirect('/categoria/'.$id);
+
+            }
+
+
+
 
         }
+
+
+
 
 
 

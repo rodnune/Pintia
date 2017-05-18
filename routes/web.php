@@ -236,7 +236,11 @@ Route::get('/medida/{id}','MedidasCategoriaController@get_medida');
 Route::get('/gestion_categorias','MedidasCategoriaController@get_categorias');
 Route::post('/gestion_categorias','MedidasCategoriaController@gestionar_categoria');
 Route::get('/categoria/{id}','MedidasCategoriaController@get_categoria');
-Route::get('/asociar_medida_categoria','MedidasCategoriaController@asociar_medida');
+Route::post('/gestionar_medida_categoria','MedidasCategoriaController@gestionar_medida_categoria');
+
+Route::post('/gestion_subcategorias','MedidasSubcategoriaController@gestionar_subcategoria');
+Route::get('/subcategoria/{id}','MedidasSubcategoriaController@get_subcategoria');
+
 
 
 

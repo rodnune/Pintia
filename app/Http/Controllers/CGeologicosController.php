@@ -114,6 +114,9 @@ class CGeologicosController extends \App\Http\Controllers\Controller
             return redirect('/gestion_geologicos');
         }
 
+
+
+
     }
 
 }

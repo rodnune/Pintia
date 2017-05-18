@@ -45,4 +45,13 @@ class Categoria extends Model
         }
 
 
+        public function subcategorias(){
+
+            $subcategorias = DB::table('subcategoria')->where('idcat', '=', $this->IdCat)->get();
+
+            return $subcategorias;
+
+        }
+
+
 }
