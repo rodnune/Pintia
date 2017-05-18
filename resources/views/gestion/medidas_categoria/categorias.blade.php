@@ -40,7 +40,7 @@
                        <tr><td><strong>Seleccione una categor&iacute;a a Modificar/Borrar:</strong></td>
 
                                 <th align="right" colspan="2">
-                                    <select class="form-control" name="id_cat_sel" style="width:100%">
+                                    <select id="categoria" class="form-control" name="id_cat_sel" style="width:100%">
                                         <option value=-1>Seleccionar Categor&iacutea</option>
                                                 @foreach($categorias as $categoria)
                                         <option value="{{$categoria->IdCat}}" >{{$categoria->Denominacion}}</option>
@@ -48,7 +48,7 @@
                                     </select>
                                 </th>
                                 <td align="center">
-                                    <button type="submit" name="submit" class="btn btn-primary btn-block" value="ver"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
+                                    <a href="" class="btn btn-primary btn-block" value="ver"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
 
                             </td></tr>
                         </tbody>
@@ -59,3 +59,13 @@
         </div>
     </div>
 </div>
+
+
+<script>
+
+
+    $( "#categoria" ).change(function () {
+        var id = ($('#categoria').val());
+        $('a').attr('href','/categoria/'+id);
+    });
+</script>

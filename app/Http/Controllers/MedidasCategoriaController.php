@@ -10,6 +10,7 @@ namespace app\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\Categoria;
 use Validator;
 
 class MedidasCategoriaController extends \App\Http\Controllers\Controller
@@ -132,6 +133,66 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_categorias');
 
             }
+
+            if($request->submit == 'Modificar') {
+                $idcat = $request->input('id');
+                $denominacion = $request->input('denominacion');
+
+                $validator = Validator::make($request->all(), [
+                    'id' => 'exists:categoria,idcat',
+                    'denominacion' => 'unique:categoria,denominacion'
+
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect('/categoria/'.$idcat)->withErrors($validator);
+                }
+
+                DB::table('categoria')->where('idcat','=',$idcat)->update(['denominacion' => $denominacion]);
+
+                return redirect('/categoria/'.$idcat);
+
+            }
+
+            if($request->submit == 'Borrar') {
+                $idcat = $request->input('id');
+
+                $validator = Validator::make($request->all(), [
+                    'id' => 'exists:categoria,idcat'
+
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect('/categoria/'.$idcat)->withErrors($validator);
+                }
+
+                DB::table('categoria')
+                    ->where('idcat','=',$idcat)
+                    ->delete();
+
+                return redirect('/gestion_categorias');
+
+            }
+
+        }
+
+
+        public function get_categoria($id){
+
+            $categoria = Categoria::find($id);
+
+            $asociadas    = $categoria->medidasAsociadas();
+            $no_asociadas = $categoria->medidasNoAsociadas();
+
+
+
+            return view('gestion.medidas_categoria.layout_categoria',['categoria' => $categoria,'asociadas' => $asociadas,
+            'no_asociadas' => $no_asociadas]);
+        }
+
+
+        public function asociar_medida(){
+
         }
 
 

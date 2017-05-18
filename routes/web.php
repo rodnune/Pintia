@@ -235,6 +235,8 @@ Route::get('/medida/{id}','MedidasCategoriaController@get_medida');
 
 Route::get('/gestion_categorias','MedidasCategoriaController@get_categorias');
 Route::post('/gestion_categorias','MedidasCategoriaController@gestionar_categoria');
+Route::get('/categoria/{id}','MedidasCategoriaController@get_categoria');
+Route::get('/asociar_medida_categoria','MedidasCategoriaController@asociar_medida');
 
 
 
@@ -242,7 +244,8 @@ Route::post('/gestion_categorias','MedidasCategoriaController@gestionar_categori
 
 
 
-Route::get('/objetos', function (){return view ('catalogo.objetos.seccion_objetos');});
+
+
 
 //otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');
