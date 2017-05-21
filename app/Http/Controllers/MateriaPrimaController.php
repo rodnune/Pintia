@@ -21,7 +21,7 @@ public function get(){
    $materias =  DB::table('materiaprima')->orderBy('denominacion')->get();
 
 
-   return view('gestion.layout_materia_prima',['materias' => $materias ]);
+   return view('gestion.listas.layout_materia_prima',['materias' => $materias ]);
 
 }
 

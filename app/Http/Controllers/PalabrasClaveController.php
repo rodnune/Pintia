@@ -61,7 +61,7 @@ class PalabrasClaveController extends \App\Http\Controllers\Controller
 
         $keywords = DB::table('palabraclave')->orderBy('palabraclave')->get();
 
-        return view('gestion.layout_palabras_clave',['keywords' => $keywords]);
+        return view('gestion.listas.layout_palabras_clave',['keywords' => $keywords]);
     }
 
     public function gestionar(Request $request){

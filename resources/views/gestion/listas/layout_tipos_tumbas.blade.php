@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('gestion.muestras')
+    @include('gestion.listas.tipos_tumba')
 @endsection
 
 @section('footer')

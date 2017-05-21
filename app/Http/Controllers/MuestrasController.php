@@ -207,7 +207,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
     public function get_tipos(){
        $tipos = DB::table('tiposmuestra')->orderBy('denominacion')->get();
 
-        return view('gestion.layout_muestras',['tipos' => $tipos]);
+        return view('gestion.listas.layout_muestras',['tipos' => $tipos]);
     }
 
     public function gestionar(Request $request){

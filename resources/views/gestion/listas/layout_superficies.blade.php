@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('gestion.superficies')
+    @include('gestion.listas.superficies')
 @endsection
 
 @section('footer')

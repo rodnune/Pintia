@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('gestion.palabras_clave')
+    @include('gestion.listas.materia_prima')
 @endsection
 
 @section('footer')

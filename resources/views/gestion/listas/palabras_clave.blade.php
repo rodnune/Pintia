@@ -2,10 +2,10 @@
     <div id="header">
         <div style="margin-top: 2%;"></div>
         <div id="page" style="margin: 0px 0 20px 0;">
-            @include('gestion.sidebar')
+            @include('gestion.listas.sidebar')
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
-                    <h1 class="text-center"> Componentes Geologicos</h1><br>
+                <h1 class="text-center"> Palabras Clave</h1><br>
 
                     @if($errors->any())
                         <div class="alert alert-danger">
@@ -20,12 +20,12 @@
 
                     <table class="table table-bordered table-hover" rules="all">
                         <tbody><tr>
-                            <td><strong>Seleccionar componente geologico:</strong></td>
+                            <td><strong>Seleccionar Palabra Clave:</strong></td>
                             <th  align="center" colspan="2">
-                                {{Form::open(array('action' => 'CGeologicosController@gestionar','method' => 'post'))}}
+                                {{Form::open(array('action' => 'PalabrasClaveController@gestionar','method' => 'post'))}}
                                 <select class="form-control" name="palabra_clave" style="width:100%">
-                                    @foreach($geologicos as $geologico)
-                                        <option value="{{$geologico->IdCGeologico}}">{{$geologico->Denominacion}}</option>
+                                    @foreach($keywords as $keyword)
+                                        <option value="{{$keyword->IdPalabraClave}}">{{$keyword->PalabraClave}}</option>
                                     @endforeach
                                 </select>
 
@@ -56,8 +56,8 @@
                         {{Form::close()}}
                         </tbody>
                     </table>
-                </div>
             </div>
         </div>
     </div>
+</div>
 </div>

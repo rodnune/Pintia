@@ -48,7 +48,7 @@ class COrganicosController extends \App\Http\Controllers\Controller
     public function  get(){
        $organicos = DB::table('componentesorganicos')->orderBy('denominacion')->get();
 
-       return view('gestion.layout_comp_organicos',['organicos' => $organicos]);
+       return view('gestion.listas.layout_comp_organicos',['organicos' => $organicos]);
     }
 
     public function gestionar(Request $request){

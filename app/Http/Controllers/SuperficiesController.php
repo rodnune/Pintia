@@ -49,7 +49,7 @@ class SuperficiesController extends \App\Http\Controllers\Controller
     public function get(){
        $superficies = DB::table('superficies')->orderBy('denominacion')->get();
 
-       return view('gestion.layout_superficies',['superficies' => $superficies]);
+       return view('gestion.listas.layout_superficies',['superficies' => $superficies]);
     }
 
     public function gestionar(Request $request){

@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('gestion.materia_prima')
+    @include('gestion.listas.artefactos')
 @endsection
 
 @section('footer')

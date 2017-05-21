@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('gestion.comp_organicos')
+    @include('gestion.listas.muestras')
 @endsection
 
 @section('footer')

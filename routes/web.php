@@ -240,6 +240,8 @@ Route::post('/gestionar_medida_categoria','MedidasCategoriaController@gestionar_
 
 Route::post('/gestion_subcategorias','MedidasSubcategoriaController@gestionar_subcategoria');
 Route::get('/subcategoria/{id}','MedidasSubcategoriaController@get_subcategoria');
+Route::post('/gestion_medida_subcategoria','MedidasSubcategoriaController@gestionar_medida');
+
 
 
 

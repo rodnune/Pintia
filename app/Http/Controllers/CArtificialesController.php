@@ -50,7 +50,7 @@ class CArtificialesController extends \App\Http\Controllers\Controller
     public function get(){
        $artificiales = DB::table('componentesartificiales')->orderBy('denominacion')->get();
 
-       return view('gestion.layout_comp_artificales',['artificiales' => $artificiales]);
+       return view('gestion.listas.layout_comp_artificales',['artificiales' => $artificiales]);
 
     }
 

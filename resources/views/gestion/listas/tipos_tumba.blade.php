@@ -2,10 +2,10 @@
     <div id="header">
         <div style="margin-top: 2%;"></div>
         <div id="page" style="margin: 0px 0 20px 0;">
-            @include('gestion.sidebar')
+            @include('gestion.listas.sidebar')
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
-                    <h1 class="text-center"> Materias Primas</h1><br>
+                    <h1 class="text-center"> Tipos de Tumbas</h1><br>
 
                     @if($errors->any())
                         <div class="alert alert-danger">
@@ -20,12 +20,12 @@
 
                     <table class="table table-bordered table-hover" rules="all">
                         <tbody><tr>
-                            <td><strong>Seleccionar materia prima:</strong></td>
+                            <td><strong>Seleccionar tipo de tumba:</strong></td>
                             <th  align="center" colspan="2">
-                                {{Form::open(array('action' => 'MateriaPrimaController@gestionar','method' => 'post'))}}
+                                {{Form::open(array('action' => 'TiposTumbaController@gestionar','method' => 'post'))}}
                                 <select class="form-control" name="palabra_clave" style="width:100%">
-                                    @foreach($materias as $materia)
-                                        <option value="{{$materia->IdMat}}">{{$materia->Denominacion}}</option>
+                                    @foreach($tipos as $tipo)
+                                        <option value="{{$tipo->IdTipoTumba}}">{{$tipo->Denominacion}}</option>
                                     @endforeach
                                 </select>
 

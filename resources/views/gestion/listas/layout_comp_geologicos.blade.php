@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('gestion.comp_artificiales')
+    @include('gestion.listas.comp_geologicos')
 @endsection
 
 @section('footer')

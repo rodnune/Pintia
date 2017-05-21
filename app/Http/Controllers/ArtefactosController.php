@@ -49,7 +49,7 @@ class ArtefactosController extends \App\Http\Controllers\Controller
     public function get(){
        $artefactos =  DB::table('fosiles')->orderBy('denominacion')->get();
 
-       return view('gestion.layout_artefactos',['artefactos' => $artefactos]);
+       return view('gestion.listas.layout_artefactos',['artefactos' => $artefactos]);
 
 
     }

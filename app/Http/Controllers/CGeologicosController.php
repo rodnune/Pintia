@@ -48,7 +48,7 @@ class CGeologicosController extends \App\Http\Controllers\Controller
     public function get(){
         $geologicos = DB::table('componentesgeologicos')->orderBy('denominacion')->get();
 
-        return view('gestion.layout_comp_geologicos', ['geologicos' => $geologicos]);
+        return view('gestion.listas.layout_comp_geologicos', ['geologicos' => $geologicos]);
     }
 
     public function gestionar(Request $request){

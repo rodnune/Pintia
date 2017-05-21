@@ -2,7 +2,7 @@
     <div id="header">
         <div style="margin-top: 2%;"></div>
         <div id="page" style="margin: 0px 0 20px 0;">
-            @include('gestion.sidebar')
+            @include('gestion.listas.sidebar')
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
                     <h1 class="text-center"> Componentes Artificiales</h1><br>

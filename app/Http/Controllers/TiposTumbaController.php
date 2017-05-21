@@ -21,7 +21,7 @@ class TiposTumbaController extends \App\Http\Controllers\Controller
         $tipos_tumba =  DB::table('tipostumbas')->orderBy('denominacion')->get();
 
 
-        return view('gestion.layout_tipos_tumbas',['tipos' => $tipos_tumba ]);
+        return view('gestion.listas.layout_tipos_tumbas',['tipos' => $tipos_tumba ]);
 
     }
 
