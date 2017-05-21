@@ -106,7 +106,7 @@
                                     <li class="dropdown-submenu">
                                        <a tabindex="-1" href="#">Geografía</a>
                                         <ul class="dropdown-menu">
-                                           <li><a href="geolocalizacion.php?seccion=Lugar">Lugares</a></li>
+                                           <li><a href="/gestion_lugares">Lugares</a></li>
                                            <li><a href="geolocalizacion.php?seccion=Localizacion&accion=Lista">Localizaciones</a></li>
                                         </ul>
                                     </li>

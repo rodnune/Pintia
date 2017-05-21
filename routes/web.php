@@ -244,6 +244,9 @@ Route::post('/gestion_medida_subcategoria','MedidasSubcategoriaController@gestio
 
 
 
+//GESTION GEOGRAFIA
+
+Route::get('/gestion_lugares','LugaresController@get_lugares');
 
 
 

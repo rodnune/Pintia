@@ -39,4 +39,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
         return redirect('/ud_estratigrafica_localizacion/'.$id_ue);
     }
 
+
+
+
 }
