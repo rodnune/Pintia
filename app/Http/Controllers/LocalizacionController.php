@@ -40,6 +40,32 @@ class LocalizacionController extends \App\Http\Controllers\Controller
     }
 
 
+    public function get_localizaciones(){
+
+         $lugares = DB::table('lugar')->orderBy('municipio')->get();
+
+
+        return view('gestion.geografia.layout_localizaciones',['lugares' => $lugares]);
+
+    }
+
+
+    public function  localizaciones_lugar($id){
+
+
+									$localizaciones =	DB::table('localizacion')
+                                            ->where('siglazona','=',$id)
+                                            ->orderBy('sectortrama')
+                                            ->orderBy('sectorsubtrama')
+                                            ->get();
+
+
+									return $localizaciones;
+
+
+    }
+
+
 
 
 }

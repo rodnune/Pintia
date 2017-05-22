@@ -5,7 +5,7 @@
            <br/>
            <a href="/gestion_lugares" class="btn btn-default btn-block">Lugares</a>
 
-           <a href="geolocalizacion.php?seccion=Localizacion&accion=Lista" class="btn btn-default btn-block">Localizacion</a>
+           <a href="/gestion_localizaciones" class="btn btn-default btn-block">Localizacion</a>
             </p>
         </div>
     </div>

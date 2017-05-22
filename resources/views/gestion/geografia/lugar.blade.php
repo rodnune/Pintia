@@ -6,7 +6,15 @@
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
                     <h1 class="text-center">Gesti&oacute;n de Lugares</h1><br><br>
-
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                    <table class="table table-hover table-bordered" rules="all">
                        <tbody>
                         <tr>
@@ -18,21 +26,18 @@
                             <td align="right" colspan="2">
 
 
+                                {{Form::open(array('action' => 'LugaresController@gestion_lugares','method' => 'post'))}}
 
-
-                                    <select class="form-control" name="id_lugar" style="width:100%">
+                                    <select id="zona" class="form-control" name="id_lugar" style="width:100%">
                                         <option value="-1">--- Seleccione una zona para Modificar/Borrar ---</option>
 
-
-                                        <option value="' . $row['SiglaZona'] . '">  (' . $row['SiglaZona'] . ') ' . $row['Municipio'] . ', ' . $row['Toponimo'] . ', ' . $row['Parcela'] . '</option>
-
+                                        @foreach($lugares as $lugar)
+                                        <option value="{{$lugar->SiglaZona}}">  ({{$lugar->SiglaZona}}) {{$lugar->Municipio}}, {{$lugar->Toponimo}}, {{$lugar->Parcela}}</option>
+                                        @endforeach
                                     </select>
                             </td>
 
-                            <td align="center" colspan="2">
-                                <button type="submit" name="submit" class="btn btn-primary" value="ver"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
 
-                            </td>
                         </tr>
                        </tbody>
                    </table>
@@ -41,17 +46,17 @@
 
 
 
-                        <table style="display:none" class="table table-hover table-bordered" rules="all">
+                        <table id="zonaUpdate" style="display:none" class="table table-hover table-bordered" rules="all">
                             <tbody>
                             <tr><td colspan="2" align="right"><img src="images/required.gif" height="16" width="16">&nbsp;<strong>Siglas de la zona arqueol&oacute;gica:</strong></td>
-                                <td><input class="form-control" type="text" name="newsiglazona" style="width:100%" maxlength="255" value="' . $newsiglazona . '"/></td>
+                                <td><input id="siglazona" class="form-control" type="text" style="width:100%" maxlength="255" value="" readonly="readonly"/></td>
                                <td></td>
                             </tr>
 
                             <tr>
                                 <td></td>
                                 <td align="right"><img src="images/required.gif" height="16" width="16">&nbsp;<strong>Municipio:</strong></td>
-                                <td><input class="form-control" type="text" name="newmunicipio" style="width:100%" maxlength="255" value="' . $newmunicipio . '"/>
+                                <td><input id="municipio" class="form-control" type="text" name="municipio" style="width:100%" maxlength="255" value=""/>
                                 </td>
                                 <td></td>
                             </tr>
@@ -59,7 +64,7 @@
                             <tr>
                                 <td></td>
                                 <td align="right"><strong>Top&oacute;nimo:</strong></td>
-                                <td><input class="form-control" type="text" name="newtoponimo" style="width:100%" maxlength="255" value="' . $newtoponimo . '"/>
+                                <td><input id="toponimo" class="form-control" type="text" name="toponimo" style="width:100%" maxlength="255" value=""/>
                                 </td>
                                 <td></td>
                             </tr>
@@ -67,7 +72,7 @@
                             <tr>
                                 <td></td>
                                 <td align="right"><strong>Parcela:</strong></td>
-                               <td><input class="form-control" type="number" name="newparcela" size="3" maxlength="11" value="' . $newparcela . '"/></td>
+                               <td><input id="parcela" class="form-control" type="number" name="parcela" size="3" maxlength="11" value=""/></td>
                                 <td></td>
                             </tr>
 
@@ -76,18 +81,26 @@
                                     <strong>Modificar los valores establecidos de la zona arqueol&oacute;gica seleccionada:</strong>
                                 </td>
                                 <td align="center">
-                                    <button type="submit" name="accion" class="btn btn-primary" value="Modificar"><i class="fa fa-check"></i> Guardar cambios</button>
+                                    <button type="submit" name="submit" class="btn btn-primary" value="Modificar"><i class="fa fa-check"></i> Guardar cambios</button>
                                 </td>
 
-                                <td align="center"><button type="submit" name="accion" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Eliminar</button>
+                                <td align="center"><button type="submit" name="submit" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Eliminar</button>
 
                                 </td>
                             </tr>
 
+
+
                             </tbody>
                         </table>
 
-                    <table class="table table-hover table-bordered" rules="all">
+                    {{Form::close()}}
+
+
+                    {{Form::open(array('action' => 'LugaresController@gestion_lugares','method' => 'post'))}}
+
+
+                    <table id="nuevaZona" class="table table-hover table-bordered" rules="all">
                         <tbody>
 
                             <tr>
@@ -98,37 +111,43 @@
 
                             <tr>
                                 <td colspan="2" align="right"><img src="images/required.gif" height="16" width="16">&nbsp;<strong>Siglas de la zona arqueol&oacute;gica:</strong></td>
-                                <td><input class="form-control" type="text" name="newsiglazona" style="width:100%" maxlength="255" value=""/></td>
+                                <td><input class="form-control" type="text" name="siglazona" style="width:100%" maxlength="255" value=""/></td>
                                 <td></td>
                             </tr>
 
                             <tr>
                                 <td></td>
                                 <td align="right"><img src="images/required.gif" height="16" width="16">&nbsp;<strong>Municipio:</strong></td>
-                                <td><input class="form-control" type="text" name="newmunicipio" style="width:100%" maxlength="255" value=""/></td>
+                                <td><input class="form-control" type="text" name="municipio" style="width:100%" maxlength="255" value=""/></td>
                                 <td></td>
                             </tr>
 
                             <tr>
                                 <td></td>
                                 <td align="right"><strong>Top&oacute;nimo:</strong></td>
-                                <td><input class="form-control" type="text" name="newtoponimo" style="width:100%" maxlength="255" value=""/></td>
+                                <td><input class="form-control" type="text" name="toponimo" style="width:100%" maxlength="255" value=""/></td>
                                 <td></td>
                             </tr>
 
                             <tr><td></td><td align="right"><strong>Parcela:</strong></td>
-                               <td><input class="form-control" type="number" name="newparcela" size="3" maxlength="11" value=""/></td>
+                               <td><input class="form-control" type="number" name="parcela" size="3" maxlength="11" value=""/></td>
                                 <td></td>
                             </tr>
 
 
                            <tr><td align="right" colspan="2"><strong>A&ntilde;adir la zona arqueol&oacute;gica definida:</strong></td>
-                                <td align="center" colspan="1"><button type="submit" name="accion" class="btn btn-success" value="Agregar"> <i class="fa fa-check"></i> Agregar</button>
+                                <td align="center" colspan="1"><button type="submit" name="submit" class="btn btn-success" value="Agregar"> <i class="fa fa-check"></i> Agregar</button>
                                 </td><td colspan="1"></td>
                            </tr>
 
                         </tbody>
                     </table>
+
+                    {{Form::close()}}
+
+
+
+
 
 
 
@@ -137,3 +156,57 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    if($('#zona').val()==-1) {
+
+        $( "#nuevaZona" ).show();
+
+    }
+
+    /*
+     *Funcion AJAX que trae la medida que queremos
+     */
+    $( "#zona" ).change(function () {
+        if($('#zona').val()==-1){
+            $('#zonaUpdate').css('display','none');
+            $('#nuevaZona').show();
+
+        }else{
+
+            $('#nuevaZona').css('display','none');
+            $('#zonaUpdate').show();
+
+            $(document).ready(function(){
+                var sigla = $('#zona').val();
+                $.ajax({
+                    type:   'GET',
+                    url:    '/lugar/'+sigla,
+
+                    success: function(lugar) {
+                        lugar = lugar[0];
+
+                        $('#siglazona').val(lugar.SiglaZona);
+                        $('#municipio').val(lugar.Municipio);
+                        $('#toponimo').val(lugar.Toponimo);
+                        $('#parcela').val(lugar.Parcela);
+
+
+                    },
+                    error: function(data){
+                        alert('Error en la conexion');
+                    }
+                });
+            });
+
+
+        }
+
+    });
+
+
+
+
+
+</script>
