@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 
+
 class CArtificialesController extends \App\Http\Controllers\Controller
 
 {
@@ -26,6 +27,20 @@ class CArtificialesController extends \App\Http\Controllers\Controller
     {
         $id_ue = $request->input('id');
         $id_componente = $request->input('add');
+
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'add'  => 'required',
+
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica_cartificiales/' . $id_ue)->withErrors($validator);
+        }
+
+
         DB::table('cartificialesue')->insert(['IdCArtificial' => $id_componente, 'UE' => $id_ue]);
 
         return redirect('/ud_estratigrafica_cartificiales/' . $id_ue);

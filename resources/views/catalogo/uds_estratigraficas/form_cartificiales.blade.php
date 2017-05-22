@@ -4,6 +4,15 @@
         <div id="content-edit" style="margin-top:0px;">
             <div class="post">
                 <h1 class="text-center">Ficha UE({{$ud_estratigrafica->UE}}) </h1>
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <table class="table table-hover table-bordered" rules="none">
                     <tbody>

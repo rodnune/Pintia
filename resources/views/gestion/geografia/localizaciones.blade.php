@@ -19,12 +19,13 @@
                     <table class="table table-hover table-bordered" rules="all">
                        <tbody>
                         <tr>
-                            <td align="center"><strong>Seleccionar categor&iacute;a: </strong></td>
+                            <td align="center"><strong>Seleccionar localizacion: </strong></td>
                             <th align="right">
 
 
                                     <select class="form-control" name="selec_zona" id="selec_zona" style="width:100%">
-                                        <option value="-1">Mostrar todas las localizaciones</option>
+
+                                        <option selected>Seleccionar</option>
 
                                         @foreach($lugares as $lugar)
                                         <option value="{{$lugar->SiglaZona}}">({{$lugar->SiglaZona}}) {{$lugar->Municipio}},{{$lugar->Toponimo}} , {{$lugar->Parcela}}</option>
@@ -33,7 +34,12 @@
                                         </select>
                             </th>
 
-                            <td colspan="2" align="center"><button type="submit" name="submit" class="btn btn-primary" value="ver"><i class="fa fa-eye"></i> Ver</button></td>
+                            @if(Session::get('admin_level') > 1)
+                                <td colspan="2" align="center"><a href="/localizacion_nueva" class="btn btn-success"><i class="fa fa-plus"></i> Nueva</a></td>
+
+                            @endif
+
+                            <td colspan="2" align="center"><a href="/gestion_localizaciones" class="btn btn-primary"><i class="fa fa-eye"></i> Ver todas</a></td>
 
 
                         </tr>
@@ -41,14 +47,30 @@
                     </table>
 
 
-                    <p class="text-center text-muted"></p>
+                    <p class="text-center text-muted"><strong>Total de resultados encontrados: {{count($localizaciones)}}</strong></p>
                     <p>
                         <table id="pagination_table" class="table table-hover table-bordered" rules="all">
                             <thead>
+                            <tr class='info'>
 
+                               <th scope='col' align='center'><strong>Sigla Zona</strong></th>
+                                <th scope='col' align='center'><strong>Sector Trama</strong></th>
+                                <th scope='col' align='center'><strong>Sector Subtrama</strong></th>
+                                <th scope='col' align='center'></th>
+                                </tr>
                             </thead>
 
                         <tbody>
+
+                        @foreach($localizaciones as $localizacion)
+                           <tr>
+
+                                <td>{{$localizacion->SiglaZona}}</td>
+                                <td>{{$localizacion->SectorTrama}}</td>
+                                <td>{{$localizacion->SectorSubtrama}}</td>
+                                <td align='center'>  <a href="/localizacion/{{$localizacion->IdLocalizacion}}" class='btn btn-primary' value='Ver'><i class='fa fa-eye'></i> Ver</a>
+                                    </td> </tr>
+                            @endforeach
                         </tbody>
 
                         </table>
@@ -119,7 +141,7 @@
             + "<td>" + location.SiglaZona + "</td>"
                 + "<td>" + location.SectorTrama + "</td>"
                 + "<td>" + location.SectorSubtrama + "</td>"
-                +"<td align='center'>  <button type='submit' name='submit' class='btn btn-primary' value='Ver'><i class='fa fa-eye'></i> Ver</button>" +
+                +"<td align='center'>  <a href='/localizacion/"+location.IdLocalizacion+"' class='btn btn-primary' value='Ver'><i class='fa fa-eye'></i> Ver</a>" +
                 "</td> </tr>";
 
             $('#pagination_table tbody').append(loc);
