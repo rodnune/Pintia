@@ -254,6 +254,7 @@ Route::get('/localizaciones/{id}','LocalizacionController@localizaciones_lugar')
 Route::get('/localizacion_nueva','LocalizacionController@form_create');
 Route::post('/localizacion_nueva','LocalizacionController@create');
 Route::get('/localizacion/{id}','LocalizacionController@get');
+Route::post('/gestion_localizacion','LocalizacionController@gestionar');
 
 
 

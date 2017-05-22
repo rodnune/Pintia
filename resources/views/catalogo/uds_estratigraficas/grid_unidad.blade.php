@@ -152,10 +152,11 @@
                         </tr>
                         @endforeach
 
+
                         <tr>
                             <td colspan="4" align="center" class="info"><h3>Localizaci&oacute;n</h3></td>
                         </tr>
-
+                            @if(count($localizacion) > 0)
                         <tr>
                             <td scope="col" align="center"><strong>Sigla Zona</strong></td>
                             <td scope="col" align="center"><strong>Sector Trama</strong></td>
@@ -164,16 +165,23 @@
                             </tr>
 
                         <tr>
-                            <td align="center">{{$localizacion->SiglaZona}}</td>
-                            <td align="center">{{$localizacion->SectorTrama}}</td>
-                            <td align="center">{{$localizacion->SectorSubtrama}}</td>
+                            <td align="center">{{$localizacion[0]->SiglaZona}}</td>
+                            <td align="center">{{$localizacion[0]->SectorTrama}}</td>
+                            <td align="center">{{$localizacion[0]->SectorSubtrama}}</td>
                             <td></td>
                         </tr>
 
                         <tr>
                             <td colspan="1" align="left"><strong>Notas Localizaci&oacute;n</strong></td>
-                            <td colspan="3">{{$localizacion->Notas}}</td>
+                            <td colspan="3">{{$localizacion[0]->Notas}}</td>
                         </tr>
+
+                                @else
+                                <tr>
+                                    <td colspan="4" align="center"><strong>No hay localizacion asociada</strong></td>
+
+                                </tr>
+                        @endif
 
 
                        <tr>

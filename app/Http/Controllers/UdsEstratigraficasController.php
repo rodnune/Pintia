@@ -54,7 +54,10 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                $analiticas = $ud_estratigrafica->analiticasAsociadasUE();
                $superficies = $ud_estratigrafica->superficiesAsociadas();
                $artefactos = $ud_estratigrafica->artefactosAsociados();
+
                 $localizacion = $ud_estratigrafica->localizacion();
+
+
                 $relaciones = $ud_estratigrafica->relacionesEstratigraficas();
                 $matrix_harris = $ud_estratigrafica->matrixHarris();
 
@@ -64,7 +67,7 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                 return view('catalogo.uds_estratigraficas.layout_unidad',['ud_estratigrafica' => $ud_estratigrafica,
                     'componentes_organicos' => $componentes_organicos,'componentes_geologicos' => $componentes_geologicos,
                     'componentes_artificiales' => $componentes_artificiales,'analiticas' => $analiticas,
-                    'superficies' => $superficies,'artefactos' => $artefactos,'localizacion' => $localizacion[0],
+                    'superficies' => $superficies,'artefactos' => $artefactos,'localizacion' => $localizacion,
                     'relaciones' => $relaciones, 'matrix_harris' => $matrix_harris
 
                     ]);

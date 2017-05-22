@@ -26,7 +26,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
         $localizacion = $ud_estratigrafica->localizacion();
 
 
-        return view('catalogo.uds_estratigraficas.layout_localizacion',['ud_estratigrafica' => $ud_estratigrafica, 'localizacion' => $localizacion[0], 'localizaciones' => $localizaciones]);
+        return view('catalogo.uds_estratigraficas.layout_localizacion',['ud_estratigrafica' => $ud_estratigrafica, 'localizacion' => $localizacion, 'localizaciones' => $localizaciones]);
 
 
     }
@@ -119,7 +119,74 @@ class LocalizacionController extends \App\Http\Controllers\Controller
 
       $localizacion =  DB::table('localizacion')->where('idlocalizacion','=',$id)->first();
 
-        return $localizacion->SiglaZona;
+
+
+        $lugares = DB::table('lugar')->orderBy('siglazona')->get();
+
+        return view('gestion.geografia.layout_localizacion',['lugares' => $lugares
+            ,'localizacion' => $localizacion]);
+
+    }
+
+
+    public function gestionar(Request $request){
+
+        $idlocal = $request->input('id');
+        $lugar = $request->input('siglazona');
+        $sector_trama    = $request->input('trama');
+        $sector_subtrama = $request->input('subtrama');
+        $notas = $request->input('notas');
+
+        if($request->submit == 'Modificar'){
+
+
+
+            $validator = Validator::make($request->all(), [
+                'id'        => 'required|idlocalizacion',
+                'siglazona' => 'required|exists:lugar,SiglaZona',
+                'trama'  => 'required|string',
+                'subtrama' => 'required|string'
+
+            ]);
+
+            if ($validator->fails()) {
+
+                return redirect('/localizacion/' . $idlocal)->withErrors($validator);
+            }
+
+
+
+            DB::table('localizacion')->where('idlocalizacion','=',$idlocal)->update(['siglazona' => $lugar, 'sectortrama' => $sector_trama,
+                'sectorsubtrama' => $sector_subtrama,'notas' => $notas]);
+
+
+            return redirect('/localizacion/' . $idlocal);
+
+        }
+
+        if($request->submit == 'Borrar'){
+
+            $validator = Validator::make($request->all(), [
+                'id'        => 'required|exists:localizacion,idlocalizacion',
+
+            ]);
+
+            if ($validator->fails()) {
+
+                return redirect('/localizacion/' . $idlocal)->withErrors($validator);
+            }
+
+
+
+            DB::table('localizacion')->where('idlocalizacion','=',$idlocal)->delete();
+
+
+            return redirect('/gestion_localizaciones');
+        }
+
+
+
+
 
     }
 

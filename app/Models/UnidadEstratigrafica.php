@@ -204,14 +204,16 @@ public function artefactosNoAsociados(){
 }
 
 public function localizacion(){
-    $localizacion =    DB::select(DB::raw('SELECT a.IdLocalizacion, a.SiglaZona, a.SectorTrama, a.SectorSubtrama, a.Notas
-								FROM
-									Localizacion a, UnidadEstratigrafica b
-								WHERE
-									a.IdLocalizacion = b.IdLocalizacion AND
-									b.UE = '. $this->UE. ' 
-									 
-                                     '));
+
+
+
+    $localizacion = DB::table('localizacion')
+        ->join('unidadestratigrafica', function ($join) {
+            $join->on('unidadestratigrafica.idlocalizacion', '=', 'localizacion.idlocalizacion')
+                ->where('unidadestratigrafica.ue', '=', $this->UE);
+        })
+        ->get();
+
 
     return $localizacion;
 }

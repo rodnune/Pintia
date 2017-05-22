@@ -12,7 +12,7 @@
                        <td class="info" colspan="4" align="center"><h3>Localizaci&oacute;n</h3></td>
                     </tr>
 
-                    @if($localizacion != NULL)
+                    @if(count($localizacion) > 0)
                    <tr>
                         <td scope="col" align="center"><strong>Sigla Zona</strong></td>
                         <td scope="col" align="center"><strong>Sector Trama</strong></td>
@@ -21,9 +21,9 @@
                    </tr>
 
                    <tr>
-                       <td align="center">{{$localizacion->SiglaZona}}</td>
-                       <td align="center">{{$localizacion->SectorTrama}}</td>
-                       <td align="center">{{$localizacion->SectorSubtrama}}</td>
+                       <td align="center">{{$localizacion[0]->SiglaZona}}</td>
+                       <td align="center">{{$localizacion[0]->SectorTrama}}</td>
+                       <td align="center">{{$localizacion[0]->SectorSubtrama}}</td>
                        <td></td>
                    </tr>
 
@@ -32,19 +32,11 @@
                         <td colspan="2"><textarea class="form-control vresize" rows="6" cols="60" size="3" value="">Notas</textarea></td>
 
                         <td colspan="1" align="center">
-                           <form action="geolocalizacion.php" method="post">
-                                <input type="hidden" name="seccion" value="Localizacion">
+
+
                                 <br><br><button type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
-                                <input type="hidden" name="submit" value="Nuevo">
-                                <input type="hidden" name="asociado" value=TRUE>
-                                <input type="hidden" name="id_ue">
-                                <input type="hidden" name="id_loca">
-                                <input type="hidden" name="newsiglazona">
-                                <input type="hidden" name="newtrama">
-                                <input type="hidden" name="newsubtrama">
-                                <input type="hidden" name="newnotas">
-                                <input type="hidden" name="origen" value="ue">
-                            </form>
+
+
                         </td>
                     </tr>
                     @else
