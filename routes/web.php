@@ -21,7 +21,7 @@ Route::post('/analiticas_faunas/delete','AnaliticaFaunasController@delete');
 Route::get('/analiticas_faunas/{id}','AnaliticaFaunasController@get_analitica');
 Route::post('/analiticas_faunas/update','AnaliticaFaunasController@update');
 
-
+//UE
 
 Route::get('/uds_estratigraficas','UdsEstratigraficasController@index');
 Route::get('/uds_estratigraficas/new',function(){return view('catalogo.uds_estratigraficas.new_uds_estratigrafica');});
@@ -200,6 +200,8 @@ Route::delete('/tumba_ofrendas/delete','TumbasController@eliminar_asoc_ofrenda')
 
 //Multimedia
 
+Route::get('/multimedias', 'MultimediaController@index');
+
 
 //Objetos
 
@@ -255,6 +257,10 @@ Route::get('/localizacion_nueva','LocalizacionController@form_create');
 Route::post('/localizacion_nueva','LocalizacionController@create');
 Route::get('/localizacion/{id}','LocalizacionController@get');
 Route::post('/gestion_localizacion','LocalizacionController@gestionar');
+
+//GESTION REGISTROS
+
+Route::get('/registros','RegistrosController@index');
 
 
 

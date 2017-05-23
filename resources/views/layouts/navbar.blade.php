@@ -33,7 +33,7 @@
                                 </ul>
                             </li>
 
-                        <li><a href="/multimedia">Multimedia</a></li>
+                        <li><a href="/multimedias">Multimedia</a></li>
                         </ul>
                     </li> <!--Dropdown Consultar -->
                     @endif
@@ -68,11 +68,11 @@
                                      <ul class="dropdown-menu">
                                          <li><a href="/articulos">Artículos</a></li>
                                          <li><a href="/autores">Autores</a></li>
-                                         <li><a href="listas.php?idl=1">Palabras clave</a></li>
+                                         <li><a href="/gestion_keywords">Palabras clave</a></li>
                                          </ul>
                                 </li>
 
-                                <li><a href="almacenm.php">Multimedia</a></li>
+                                <li><a href="/multimedias">Multimedia</a></li>
                                 </ul>
                             </li>
                        @endif
@@ -120,7 +120,7 @@
                                    </li>
 
                                     @if(Session::get('admin_level') > 2 )
-                                    <li><a href="registro.php">Registros</a></li>
+                                    <li><a href="/registros">Registros</a></li>
                                     @endif
                                     @if( Session::get('admin_level') > 1 )
                                     <li><a href="index.php?seccion=usuarios">Usuarios</a></li>

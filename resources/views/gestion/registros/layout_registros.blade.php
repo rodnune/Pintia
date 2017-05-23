@@ -1,15 +1,19 @@
-@extends('layouts.app');
+@extends('layouts.app')
+
+@section('header')
+    @include('layouts.header')
+@endsection
 
 @section('navbar')
     @include('layouts.navbar')
 @endsection
 
-@section('splash')
-    @include('splash_image')
+@section('image')
+    @include('logo')
 @endsection
 
 @section('content')
-    @include('catalogo.multimedia.search_obj_multimedia')
+    @include('gestion.registros.registros')
 @endsection
 
 @section('footer')
