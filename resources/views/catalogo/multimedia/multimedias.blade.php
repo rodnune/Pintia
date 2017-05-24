@@ -41,7 +41,7 @@
 
                                 <td align="center">
 
-                                        <button type="submit" name="submit" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo</button>
+                                        <a href="/new_multimedia" class="btn btn-success" ><i class="fa fa-plus"></i> Nuevo</a>
 
                                        </td>
                                 @endif
@@ -73,7 +73,8 @@
 
                                             </div>
                                         </div>
-                                            
+
+
                                         <div class="col-md-4" style="border: thin solid black">
                                             <a href="./images/fotos/thumb/thumb_74.jpg"><img class="img-thumbnail"   width="150"   src="./images/fotos/thumb/thumb_74.jpg"></a>
                                             <button class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</button>

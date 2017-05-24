@@ -95,6 +95,15 @@ return [
         'infante'   => "Alofiso (infante)",
         'masculino' => "Alofiso (masculino)",
         'femenino'  => "Alofiso (femenino)"
+    ],
+
+    'multimedia' => [
+
+        'foto'      => "Fotografia",
+        'plano'     => "Planimetria",
+        'dibujo'    => "Dibujo",
+        'documento' => "Documento"
+
     ]
 
 
