@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Image;
 use Illuminate\Http\File;
 use Validator;
+use Config;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Filesystem\Fylesystem;
 
 class MultimediaController extends \App\Http\Controllers\Controller
 {
@@ -39,7 +39,9 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
         $titulo = $request->input('titulo');
         $tipo = $request->input('tipo');
-        $imagen = $request->file('uploadfile');
+        $nombre_archivo = $_FILES['uploadfile']['name'];
+        $archivo = $request->file('uploadfile');
+
 
 
             $validator = Validator::make($request->all(), [
@@ -56,29 +58,27 @@ class MultimediaController extends \App\Http\Controllers\Controller
                 ->withErrors($validator);
         }
 
-        DB::table('almacenmultimedia')->insert([]);
-
-        /*'INSERT INTO AlmacenMultimedia (IdMutimedia, Titulo, Descripcion, Tipo, NombreArchivo)
-								VALUES (
-										NULL,
-										"' . mysql_real_escape_string($titulo, $db) . '",
-										"' . mysql_real_escape_string($descripcion, $db) . '",
-										"' . mysql_real_escape_string($tipo, $db) . '",
-										"' . mysql_real_escape_string($_FILES['uploadfile']['name'], $db) . '")';*/
-
-        MultimediaController::procesar_multimedia($id,$tipo,$imagen);
 
 
+
+        DB::table('almacenmultimedia')->insert(['titulo' => $titulo , 'tipo' => $tipo ,'nombrearchivo' => $nombre_archivo]);
+
+
+
+        MultimediaController::procesar_multimedia($tipo,$archivo);
+
+        return redirect('/multimedias');
     }
 
     public function procesar_multimedia($tipo, $file)
     {
 
 
-        $dir_plani = './images/planimetria';
-        $dir_doc = './images/doc';
-        $id_multimedia = 0;
-        $extension2 = 0;
+
+
+        $last =  DB::table('almacenmultimedia')->orderBy('idmutimedia','desc')->get()->first();
+
+
         switch ($tipo) {
             case "Fotografia": {
                 {
@@ -99,23 +99,28 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
                     //No vamos a guardarlo en storage
 
-                    $id = "Hola";
 
-                    $thumb->save(public_path().'/images/fotos/thumb/thumb_'.$id.'.jpg');
+                    $thumb->save(public_path().'/images/fotos/thumb/thumb_'.$last->IdMutimedia.'.jpg');
 
 
                     //Storage::put('fotos/thumb', $thumb);
 
                 }//PROCESADO IMAGENES
 
-                $real->save(public_path().'/images/fotos/Foto_'.$id.'.jpg');
+                $real->save(public_path().'/images/fotos/Foto_'.$last->IdMutimedia.'.jpg');
+
+
 
                 //Storage::put('fotos',$real);
 
                 break;
             }
             case 'Planimetria': {
-                //move_uploaded_file($_FILES['uploadfile']['tmp_name'], $dir_plani . '/Plani_' . $id_multimedia . '.' . $extension2);
+
+                $real  = Image::make($file);
+
+                $real->save(public_path().'/images/fotos/Plani_'.$last->IdMutimedia.'.jpg');
+
                 break;
             }
             case 'Dibujo': {
