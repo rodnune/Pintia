@@ -203,6 +203,7 @@ Route::delete('/tumba_ofrendas/delete','TumbasController@eliminar_asoc_ofrenda')
 Route::get('/multimedias', 'MultimediaController@index');
 Route::get('/new_multimedia','MultimediaController@form_create');
 Route::post('/new_multimedia','MultimediaController@create');
+Route::get('/archivo/{id}','MultimediaController@getArchivo');
 
 
 //Objetos

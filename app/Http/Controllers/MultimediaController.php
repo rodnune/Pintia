@@ -8,14 +8,14 @@
 
 namespace app\Http\Controllers;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Image;
-use Illuminate\Http\File;
+use Illuminate\Support\Facades\File;
 use Validator;
 use Config;
-use Illuminate\Support\Facades\Storage;
+
 
 class MultimediaController extends \App\Http\Controllers\Controller
 {
@@ -23,7 +23,10 @@ class MultimediaController extends \App\Http\Controllers\Controller
     public function index()
     {
 
-        return view('catalogo.multimedia.layout_multimedias');
+        $multimedias = DB::table('almacenmultimedia')->get();
+
+
+        return view('catalogo.multimedia.layout_multimedias', ['multimedias' => $multimedias]);
     }
 
 
@@ -43,46 +46,62 @@ class MultimediaController extends \App\Http\Controllers\Controller
         $archivo = $request->file('uploadfile');
 
 
+        if ($tipo != "Documento") {
 
             $validator = Validator::make($request->all(), [
 
 
-
-                'titulo'     => 'required|unique:almacenmultimedia,titulo',
-                'tipo'       => 'required|in:' . implode(',' ,Config::get('enums.multimedia')),
-                'uploadfile' => 'mimes:png,jpg,gif,bmp,pdf,doc'
+                'titulo' => 'required|unique:almacenmultimedia,titulo',
+                'tipo' => 'required|in:' . implode(',', Config::get('enums.multimedia')),
+                'uploadfile' => 'mimes:png,jpg,gif,bmp'
             ]);
 
-        if ($validator->fails()) {
-            return redirect('/new_multimedia')
-                ->withErrors($validator);
+            if ($validator->fails()) {
+                return redirect('/new_multimedia')
+                    ->withErrors($validator);
+            }
+
+        } else {
+            $validator = Validator::make($request->all(), [
+
+
+                'titulo' => 'required|unique:almacenmultimedia,titulo',
+                'tipo' => 'required|in:' . implode(',', Config::get('enums.multimedia')),
+                'uploadfile' => 'mimes:pdf,doc,txt'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/new_multimedia')
+                    ->withErrors($validator);
+            }
         }
 
 
+        MultimediaController::procesar_multimedia($tipo, $archivo);
 
+        DB::table('almacenmultimedia')->insert(['titulo' => $titulo, 'tipo' => $tipo, 'nombrearchivo' => $nombre_archivo]);
 
-        DB::table('almacenmultimedia')->insert(['titulo' => $titulo , 'tipo' => $tipo ,'nombrearchivo' => $nombre_archivo]);
-
-
-
-        MultimediaController::procesar_multimedia($tipo,$archivo);
 
         return redirect('/multimedias');
+
+
     }
 
     public function procesar_multimedia($tipo, $file)
     {
 
 
+        $last = DB::table('almacenmultimedia')->orderBy('idmutimedia', 'desc')->get()->first();
 
-
-        $last =  DB::table('almacenmultimedia')->orderBy('idmutimedia','desc')->get()->first();
+        if ($tipo != "Documento") {
+            $real = Image::make($file);
+        }
 
 
         switch ($tipo) {
             case "Fotografia": {
                 {
-                    $real  = Image::make($file);
+
 
                     $height = $real->height();
                     $width = $real->width();
@@ -95,20 +114,19 @@ class MultimediaController extends \App\Http\Controllers\Controller
                     $new_width = 200;
                     $new_height = round($new_width / $ratio);
 
-                    $thumb = Image::make($file)->resize($new_width,$new_height);
+                    $thumb = Image::make($file)->resize($new_width, $new_height);
 
                     //No vamos a guardarlo en storage
 
 
-                    $thumb->save(public_path().'/images/fotos/thumb/thumb_'.$last->IdMutimedia.'.jpg');
+                    $thumb->save(public_path() . '/images/fotos/thumb/thumb_' . $last->IdMutimedia . '.jpg');
 
 
                     //Storage::put('fotos/thumb', $thumb);
 
                 }//PROCESADO IMAGENES
 
-                $real->save(public_path().'/images/fotos/Foto_'.$last->IdMutimedia.'.jpg');
-
+                $real->save(public_path() . '/images/fotos/Foto_' . $last->IdMutimedia . '.jpg');
 
 
                 //Storage::put('fotos',$real);
@@ -117,19 +135,22 @@ class MultimediaController extends \App\Http\Controllers\Controller
             }
             case 'Planimetria': {
 
-                $real  = Image::make($file);
 
-                $real->save(public_path().'/images/fotos/Plani_'.$last->IdMutimedia.'.jpg');
+                $real->save(public_path() . '/images/planimetria/Plani_' . $last->IdMutimedia . '.jpg');
 
                 break;
             }
             case 'Dibujo': {
-                //move_uploaded_file($_FILES['uploadfile']['tmp_name'], $dir_dib . '/Dib_' . $id_multimedia . '.' . $extension2);
+
+
+                $real->save(public_path() . '/images/dibujos/Dib_' . $last->IdMutimedia . '.jpg');
+
                 break;
             }
             case 'Documento': {
 
-                //move_uploaded_file($_FILES['uploadfile']['tmp_name'], $dir_doc . '/Doc_' . $id_multimedia . '.' . $extension2);
+
+                move_uploaded_file($file, public_path() . '/images/doc/Doc_' . $last->IdMutimedia . '.' . $file->extension());
                 break;
             }
 
@@ -137,8 +158,51 @@ class MultimediaController extends \App\Http\Controllers\Controller
     }
 
 
+    public function getArchivo($id)
+    {
+
+        $multimedia = DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->first();
 
 
+        switch ($multimedia->Tipo) {
 
+            case "Fotografia": {
+
+                {
+
+                    $file = File::get(public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg');
+
+                    return response($file, 200)->header('Content-Type', 'image/jpg');
+                    break;
+                }
+
+            }
+
+            case "Documento":{
+
+                
+               $extension = explode( ".", $multimedia->NombreArchivo);
+
+
+               if($extension[1] == 'txt'){
+                   $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.'.$extension[1]);
+
+                   return response($file, 200)->header('Content-Type', 'text/plain');
+               }
+
+                if($extension[1] == 'pdf'){
+                    $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.'.$extension[1]);
+
+                    return response($file, 200)->header('Content-Type', 'application/pdf');
+                }
+
+
+                break;
+            }
+
+
+        }
+    }
 }
+
 

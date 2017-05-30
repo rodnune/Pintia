@@ -50,7 +50,7 @@
                             </tbody>
                         </table>
 
-                       <p class="text-center text-muted"><strong>Total de resultados encontrados: '.mysql_num_rows($result).'</strong></p>
+                       <p class="text-center text-muted"><strong>Total de resultados encontrados: {{count($multimedias)}}</strong></p>
 
 
 
@@ -60,53 +60,51 @@
                             <div class="container-fluid" >
 
 
+
+                                    @php
+                                    $elementos=1;
+                                    @endphp
+
+
                                     <div class="row">
-                                        <div class="col-md-4" style="border: thin solid black">
-                                            <a href="./images/fotos/thumb/thumb_74.jpg"><img class="img-thumbnail"   width="150"   src="./images/fotos/thumb/thumb_74.jpg"></a>
+
+                                        @foreach($multimedias as $multimedia)
+                                            @if(!(($elementos++ ) % 3))
+                                        <div id="ficha" class="col-md-4" style="border: thin solid black">
+                                            <a href="/archivo/{{$multimedia->IdMutimedia}}"><img class="img-thumbnail"  height="50px" width="100px"   src="/archivo/{{$multimedia->IdMutimedia}}"></a>
                                             <button class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</button>
                                             <button class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</button>
                                             <div class="row"  style="border-top: thin solid black">
                                                 <ul class="list-group">
-                                                    <li class="list-group-item"><strong>Hierro ancoriforme (de mango de cuchillo o de un arreo), T.2 (A) </strong></li>
-                                                    <li class="list-group-item"><span class="text-danger">(Fotografia)</span></li>
+                                                    <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
+                                                    <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
                                                 </ul>
 
                                             </div>
                                         </div>
-
-
-                                        <div class="col-md-4" style="border: thin solid black">
-                                            <a href="./images/fotos/thumb/thumb_74.jpg"><img class="img-thumbnail"   width="150"   src="./images/fotos/thumb/thumb_74.jpg"></a>
-                                            <button class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</button>
-                                            <button class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</button>
-                                            <div class="row"style="border-top: thin solid black;">
-                                                <ul class="list-group">
-                                                    <li class="list-group-item"><strong>Bola pétrea, T.13 (B)  </strong></li>
-                                                    <li class="list-group-item"><span class="text-danger">(Fotografia)</span></li>
-                                                </ul>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4" style="border: thin solid black">
-                                            <a href="./images/fotos/thumb/thumb_74.jpg"><img class="img-thumbnail"   width="150"   src="./images/fotos/thumb/thumb_74.jpg"></a>
-                                            <button class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</button>
-                                            <button class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</button>
-                                            <div class="row"  style="border-top: thin solid black">
-                                                <ul class="list-group">
-                                                    <li class="list-group-item"><strong>Fusayola bitroncocónica, T.13 (C) </strong></li>
-                                                    <li class="list-group-item"><span class="text-danger">(Fotografia)</span></li>
-                                                </ul>
-
-                                            </div>
-                                        </div>
-
-
-
-
-
-
                                     </div>
+                                    <div class="row">
+
+                                        @else
+
+                                            <div id="ficha" class="col-md-4" style="border: thin solid black">
+                                                <a href="/archivo/{{$multimedia->IdMutimedia}}"><img class="img-thumbnail"  height="50px" width="100px"   src="/archivo/{{$multimedia->IdMutimedia}}"></a>
+                                                <button class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</button>
+                                                <button class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</button>
+                                                <div class="row"  style="border-top: thin solid black">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
+                                                        <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+
+
+                                        @endif
+
+                                @endforeach
+
 
 
 
@@ -128,3 +126,14 @@
             </div>
         </div>
     </div>
+<style>
+    #ficha {
+        padding-top: 40px;
+        padding-right: 25px;
+        padding-bottom: 25px;
+        padding-left: 25px;
+    }
+
+
+
+</style>
