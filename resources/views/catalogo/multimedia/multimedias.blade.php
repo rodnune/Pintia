@@ -70,10 +70,14 @@
 
                                         @foreach($multimedias as $multimedia)
                                             @if(!(($elementos++ ) % 3))
+                                                @if($multimedia->Tipo!="Documento")
                                         <div id="ficha" class="col-md-4" style="border: thin solid black">
                                             <a href="/archivo/{{$multimedia->IdMutimedia}}"><img class="img-thumbnail"  height="50px" width="100px"   src="/archivo/{{$multimedia->IdMutimedia}}"></a>
-                                            <button class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</button>
-                                            <button class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</button>
+
+
+                                            <a href="/edit_multimedia/{{$multimedia->IdMutimedia}}" type="submit" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</a>
+
+                                            <a href="/delete_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</a>
                                             <div class="row"  style="border-top: thin solid black">
                                                 <ul class="list-group">
                                                     <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
@@ -82,31 +86,70 @@
 
                                             </div>
                                         </div>
+
+                                            @else
+                                                    <div id="ficha" class="col-md-4" style="border: thin solid black">
+                                                        <a class="btn btn-primary" href="/archivo/{{$multimedia->IdMutimedia}}" download><i class="fa fa-download"></i>Descargar</a>
+
+
+                                                        <a href="/edit_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</a>
+                                                        <a href="/delete_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</a>
+
+                                                        <div class="row"  style="border-top: thin solid black">
+                                                            <ul class="list-group">
+                                                                <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
+                                                                <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
+                                                            </ul>
+
+                                                        </div>
+                                                    </div>
+                                            @endif
                                     </div>
                                     <div class="row">
 
                                         @else
 
-                                            <div id="ficha" class="col-md-4" style="border: thin solid black">
-                                                <a href="/archivo/{{$multimedia->IdMutimedia}}"><img class="img-thumbnail"  height="50px" width="100px"   src="/archivo/{{$multimedia->IdMutimedia}}"></a>
-                                                <button class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</button>
-                                                <button class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</button>
-                                                <div class="row"  style="border-top: thin solid black">
-                                                    <ul class="list-group">
-                                                        <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
-                                                        <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
-                                                    </ul>
+                                            @if($multimedia->Tipo!="Documento")
+                                                <div id="ficha" class="col-md-4" style="border: thin solid black">
+                                                    <a href="/archivo/{{$multimedia->IdMutimedia}}"><img class="img-thumbnail"  height="50px" width="100px"   src="/archivo/{{$multimedia->IdMutimedia}}"></a>
 
+
+                                                    <a href="/edit_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</a>
+                                                    <a href="/delete_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</a>
+
+                                                    <div class="row"  style="border-top: thin solid black">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
+                                                            <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
+                                                        </ul>
+
+                                                    </div>
                                                 </div>
-                                            </div>
+
+                                            @else
+
+                                                <div id="ficha" class="col-md-4" style="border: thin solid black">
+                                                    <a class="btn btn-primary" href="/archivo/{{$multimedia->IdMutimedia}}" download><i class="fa fa-download"></i>Descargar</a>
+
+
+                                                    <a href="/edit_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</a>
+
+
+                                                    <a href="/delete_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</a>
+
+                                                    <div class="row"  style="border-top: thin solid black">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
+                                                            <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
+                                                        </ul>
+
+                                                    </div>
+                                                </div>
 
 
                                         @endif
-
+                                                @endif
                                 @endforeach
-
-
-
 
 
 
@@ -128,9 +171,9 @@
     </div>
 <style>
     #ficha {
-        padding-top: 40px;
-        padding-right: 25px;
-        padding-bottom: 25px;
+        padding-top: 20px;
+        padding-right: 40px;
+        padding-bottom: 40px;
         padding-left: 25px;
     }
 

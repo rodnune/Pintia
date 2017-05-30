@@ -178,22 +178,52 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
             }
 
-            case "Documento":{
+            case "Planimetria": {
 
-                
-               $extension = explode( ".", $multimedia->NombreArchivo);
+                {
+
+                    $file = File::get(public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg');
+
+                    return response($file, 200)->header('Content-Type', 'image/jpg');
+                    break;
+                }
+
+            }
+
+            case "Dibujo": {
+
+                {
+
+                    $file = File::get(public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg');
+
+                    return response($file, 200)->header('Content-Type', 'image/jpg');
+                    break;
+                }
+
+            }
+
+            case "Documento": {
 
 
-               if($extension[1] == 'txt'){
-                   $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.'.$extension[1]);
+                $extension = explode(".", $multimedia->NombreArchivo);
 
-                   return response($file, 200)->header('Content-Type', 'text/plain');
-               }
 
-                if($extension[1] == 'pdf'){
-                    $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.'.$extension[1]);
+                if ($extension[1] == 'txt') {
+                    $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.' . $extension[1]);
+
+                    return response($file, 200)->header('Content-Type', 'text/plain');
+                }
+
+                if ($extension[1] == 'pdf') {
+                    $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.' . $extension[1]);
 
                     return response($file, 200)->header('Content-Type', 'application/pdf');
+                }
+
+                if ($extension[1] == 'doc') {
+                    $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.' . $extension[1]);
+
+                    return response($file, 200)->header('Content-Type', 'application/msword');
                 }
 
 
@@ -203,6 +233,94 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
         }
     }
+
+
+    public function form_update($id)
+    {
+
+        $multimedia = DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->first();
+
+
+        return view('catalogo.multimedia.layout_update', ['multimedia' => $multimedia]);
+    }
+
+    public function update(Request $request)
+    {
+
+        $titulo = $request->input('titulo');
+        $tipo = $request->input('tipo');
+        $id = $request->input('id');
+
+        $multimedia = DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->first();
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:almacenmultimedia,idmutimedia',
+            'titulo' => 'required|unique:almacenmultimedia,titulo',
+            'tipo' => 'in:' . implode(',', Config::get('enums.multimedia')),
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return redirect('/edit_multimedia/' . $multimedia->IdMutimedia)
+                ->withErrors($validator);
+        }
+
+        if ($multimedia->Tipo == 'Fotografia') {
+
+            if ($tipo == 'Planimetria') {
+                File::move(public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg',
+                    public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg');
+            }
+
+            if ($tipo == 'Dibujo') {
+                File::move(public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg',
+                    public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg');
+            }
+        }
+
+            if ($multimedia->Tipo == 'Planimetria') {
+
+                if ($tipo == 'Fotografia') {
+                    File::move(public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg',
+                        public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg');
+                }
+
+                if ($tipo == 'Dibujo') {
+                    File::move(public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg',
+                        public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg');
+                }
+            }
+                if ($multimedia->Tipo == 'Dibujo') {
+
+                    if ($tipo == 'Fotografia') {
+                        File::move(public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg',
+                            public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg');
+                    }
+
+                    if ($tipo == 'Planimetria') {
+                        File::move(public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg',
+                            public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg');
+                    }
+
+
+                }
+
+
+                DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->update(['titulo' => $titulo, 'tipo' => $tipo]);
+
+                return redirect('/multimedias');
+
+            }
+
+            public function delete($id){
+
+        DB::table('almacenmultimedia')
+            ->where('idmutimedia','=',$id)
+            ->delete();
+
+        return redirect('/multimedias');
+            }
 }
 
 

@@ -204,6 +204,9 @@ Route::get('/multimedias', 'MultimediaController@index');
 Route::get('/new_multimedia','MultimediaController@form_create');
 Route::post('/new_multimedia','MultimediaController@create');
 Route::get('/archivo/{id}','MultimediaController@getArchivo');
+Route::get('/edit_multimedia/{id}','MultimediaController@form_update');
+Route::post('/edit_multimedia','MultimediaController@update');
+Route::get('/delete_multimedia/{id}','MultimediaController@delete');
 
 
 //Objetos
