@@ -4,7 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use \Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-use App\Models\UnidadEstratigrafica;
+use App\Models\User;
 
 //Rutas generales
 Route::get('/index', function () { return view('seccion_principal'); });
@@ -276,6 +276,7 @@ Route::get('/registros','RegistrosController@index');
 Route::get('/usuarios','UsuariosController@index');
 Route::get('/new_usuario','UsuariosController@form_create');
 Route::post('/new_usuario','UsuariosController@create');
+Route::get('/search_usuarios','UsuariosController@search');
 
 
 
@@ -283,6 +284,7 @@ Route::post('/new_usuario','UsuariosController@create');
 //otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
+
 
 
 return view('pruebas');

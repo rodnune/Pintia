@@ -6,7 +6,11 @@
                 <div class="post">
 
                     <h1 class="text-center">Administración de usuarios</h1><br><br>
-
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="form-group">
                        <input id="verfiltro" type="radio" name="filtro" value="Si" checked> Buscar por filtro(s) &nbsp;&nbsp;&nbsp;
                         <input id="ocultarfiltro" type="radio" name="filtro" value="No"> Buscar por nombre de usuario
@@ -16,9 +20,9 @@
                         <tr id="fila_filtros">
                             <td><strong>Tipo usuario</strong></td>
                             <td>
-                               <form action="http://pintiadata.infor.uva.es/index.php?seccion=usuarios" method="post">
-                                   <select class="form-control" name="filtro_tipo" style="width:100%">
-                                        <option value="-1" selected>Mostrar todos los tipos</option>
+                               {{Form::open(array('action' => 'UsuariosController@search','method' => 'get'))}}
+                                   <select class="form-control" name="tipo" style="width:100%">
+
                                        @php
                                        $tipos_usuario = Config::get('enums.tipos_usuarios');
                                        @endphp
@@ -27,12 +31,13 @@
 
                                        @endforeach
                                    </select>
-                               </form>
+
                             </td>
 
                             <td align="center">
                                 <button type="submit" name="submit" class="btn btn-primary" value="buscar"><i class="fa fa-search"></i> Buscar usuarios</button>
                             </td>
+                            {{Form::close()}}
 
                             <td align="center">
                                 <a class="btn btn-primary" href="/usuarios"><i class="fa fa-eye"></i> Ver todo</a>
