@@ -104,7 +104,32 @@ return [
         'dibujo'    => "Dibujo",
         'documento' => "Documento"
 
+    ],
+
+        'tipos_usuarios' => [
+            0 => 'Usuario Regular',
+            1 => 'Arque&oacute;logo Novel',
+            2 => 'Arque&oacute;logo Experto',
+            3 => 'Administrador'
+
+
+    ],
+
+    'hobbies' => [
+
+        'ordernadores' => 'Ordenadores',
+        'bailes'       => 'Bailes',
+        'deporte'      => 'Deporte',
+        'volar'        => 'Volar',
+        'golf'         => 'Golf',
+        'musica'       => 'M&uacute;sica',
+        'lectura'      => 'Lectura',
+        'viajes'       => 'Viajes',
+        'otros'        => 'Otros'
+
     ]
+
+
 
 
 

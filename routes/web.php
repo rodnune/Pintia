@@ -271,7 +271,11 @@ Route::get('/registros','RegistrosController@index');
 
 
 
+//GESTION USUARIOS
 
+Route::get('/usuarios','UsuariosController@index');
+Route::get('/new_usuario','UsuariosController@form_create');
+Route::post('/new_usuario','UsuariosController@create');
 
 
 

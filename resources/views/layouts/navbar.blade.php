@@ -123,7 +123,7 @@
                                     <li><a href="/registros">Registros</a></li>
                                     @endif
                                     @if( Session::get('admin_level') > 1 )
-                                    <li><a href="index.php?seccion=usuarios">Usuarios</a></li>
+                                    <li><a href="/usuarios">Usuarios</a></li>
                                     @endif
                                     </ul>
                                </li>
