@@ -157,7 +157,7 @@
                             <a href="/logout" class="btn btn-danger" title="cerrarSesion"><i class="fa fa-user-times"></i> Salir</a>
                         @endif
                 @if( isset(Session::all()['logged']) AND Session::get('admin_level') >= 1 )
-                            <a href="zona_mensajes.php" class="btn btn-info" title="Zona mensajes"><i class="fa fa-comments"></i></a>
+                            <a href="/mensajes" class="btn btn-info" title="Zona mensajes"><i class="fa fa-comments"></i></a>
                             @endif
 
 

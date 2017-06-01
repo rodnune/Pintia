@@ -284,6 +284,12 @@ Route::delete('/delete_usuario','UsuariosController@delete');
 
 
 
+//Mensajes
+
+Route::get('/mensajes','MensajesController@generales');
+
+
+
 
 //otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');

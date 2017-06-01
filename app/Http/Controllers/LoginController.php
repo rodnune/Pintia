@@ -25,9 +25,14 @@ class LoginController extends \App\Http\Controllers\Controller
             $username = $request ->input('usuario');
             $password = $request ->input('password');
 
+            $password = (int)$password;
+        $password_sql =  DB::select("SELECT PASSWORD(". $password .") as password;");
+        $password_sql = $password_sql[0]->password;
+
+
         $usuario = DB::table('site_user')
             ->where('username','=',$username)
-            ->where('password','=',DB::raw('PASSWORD('.$password.')'))
+            ->where('password','=',$password_sql)
             ->get()
             ->first();
 
@@ -35,7 +40,6 @@ class LoginController extends \App\Http\Controllers\Controller
 
 
         if ($usuario!=null) {
-
             $nombre = DB::table('site_user_info')
                 ->where('user_id','=',$usuario->user_id)
                 ->get(['first_name','last_name'])
@@ -52,11 +56,7 @@ class LoginController extends \App\Http\Controllers\Controller
             return view('seccion_principal');
 
         }else{
-
-
-
-            Session::put('logged',0);
-            return view('seccion_principal');
+            return view('seccion_principal')->with('fail','El usuario no existe');
 
 
         }
