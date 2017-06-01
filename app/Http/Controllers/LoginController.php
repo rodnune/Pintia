@@ -4,6 +4,7 @@ namespace app\Http\Controllers;
 
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -24,17 +25,35 @@ class LoginController extends \App\Http\Controllers\Controller
             $username = $request ->input('usuario');
             $password = $request ->input('password');
 
-        $usuario = User::where('username', $username)
-            ->where('password', $password);
+        $usuario = DB::table('site_user')
+            ->where('username','=',$username)
+            ->where('password','=',DB::raw('PASSWORD('.$password.')'))
+            ->get()
+            ->first();
 
-        if ($usuario->exists()) {
 
-         Session::put('admin_level',$usuario->value('admin_level'));
-         Session::put('user_id',$usuario->value('user_id'));
+
+
+        if ($usuario!=null) {
+
+            $nombre = DB::table('site_user_info')
+                ->where('user_id','=',$usuario->user_id)
+                ->get(['first_name','last_name'])
+                ->first();
+
+
+
+         Session::put('admin_level',$usuario->admin_level);
+         Session::put('user_name',$usuario->username);
+         Session::put('user_id',$usuario->user_id);
+         Session::put('real_name',trim($nombre->first_name[0] . '. ' . $nombre->last_name));
          Session::put('logged',1);
+
             return view('seccion_principal');
 
         }else{
+
+
 
             Session::put('logged',0);
             return view('seccion_principal');

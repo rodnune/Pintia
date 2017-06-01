@@ -6,7 +6,6 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><li><a href="/index">Presentaci&oacute;n</a></li></li>
-                @if(Session::get('admin_level')<=2)
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">Consultar <b class="caret"></b></a>
                     <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -36,10 +35,10 @@
                         <li><a href="/multimedias">Multimedia</a></li>
                         </ul>
                     </li> <!--Dropdown Consultar -->
-                    @endif
-               @if(!is_null(Session::get('logged')) && !is_null(Session::get('admin_level')))
-                   @if(Session::get('logged')==1)
-                   @if(Session::get('admin_level') >=1)
+
+               @if(Session::has('logged') && Session::get('admin_level') >= 1 )
+
+
                        <!--Menu Nuevo/Modificar -->
                        <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">Nuevo/Modificar <b class="caret"></b></a>
@@ -76,7 +75,9 @@
                                 </ul>
                             </li>
                        @endif
-                   @if(Session::get('admin_level')>=2)
+
+
+                   @if( Session::has('logged') && Session::get('admin_level')>=2)
                        <!--Menu Gestionar -->
                            <li class="dropdown">
                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">Gestionar <b class="caret"></b></a>
@@ -128,8 +129,7 @@
                                     </ul>
                                </li>
                                     @endif
-                       @endif
-                  @endif
+
                <li><a href="http://www.pintiavaccea.es" target="blank">PintiaVaccea</a></li>
                 <li><a href="/acerca_de">Acerca de...</a></li>
                <li><a href="/contactar"><div align=right>Contactar</div></a></li>
@@ -146,19 +146,20 @@
                 @if(is_null(Session::get('logged')))
                 <a id="boton" class="btn btn-primary btn-user-gris">Acceder</a>
                 @elseif(Session::get('admin_level')==0)
-                    <a class="btn btn-success btn-user-regular"></a>
+                    <a class="btn btn-success btn-user-regular">{{Session::get('real_name')}}</a>
                 @elseif(Session::get('admin_level')==1)
-                    <a class="btn btn-success btn-user-business"></a>
+                    <a class="btn btn-success btn-user-business">{{Session::get('real_name')}}</a>
                 @elseif(Session::get('admin_level')>1)
-                    <a class="btn btn-success btn-user-admin">Administrador</a>
+                    <a class="btn btn-success btn-user-admin">{{Session::get('real_name')}}</a>
                 @endif
-                        @if(Session::get('logged')==1)
 
+                        @if(Session::has('logged'))
                             <a href="/logout" class="btn btn-danger" title="cerrarSesion"><i class="fa fa-user-times"></i> Salir</a>
-                            @if(Session::get('admin_level')>=1)
+                        @endif
+                @if( isset(Session::all()['logged']) AND Session::get('admin_level') >= 1 )
                             <a href="zona_mensajes.php" class="btn btn-info" title="Zona mensajes"><i class="fa fa-comments"></i></a>
                             @endif
-                        @endif
+
 
                 <a href="#" id="boton-ayuda" class="btn btn-warning" title="Ayuda"><i class="fa fa-info-circle fa-lg"></i></a>
                 </ul>

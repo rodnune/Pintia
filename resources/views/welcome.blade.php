@@ -1,3 +1,6 @@
+@php
+    use \Illuminate\Support\Facades\Session;
+@endphp
 <div id="wrapper">
     <div id="header">
 

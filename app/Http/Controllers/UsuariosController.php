@@ -73,7 +73,7 @@ class UsuariosController extends \App\Http\Controllers\Controller
         if(is_null($hobbies)){
             $hobbies = array();
         }
-        
+
 
         $validator = Validator::make($request->all(), [
 
