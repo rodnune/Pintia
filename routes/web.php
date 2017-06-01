@@ -277,6 +277,10 @@ Route::get('/usuarios','UsuariosController@index');
 Route::get('/new_usuario','UsuariosController@form_create');
 Route::post('/new_usuario','UsuariosController@create');
 Route::get('/search_usuarios','UsuariosController@search');
+Route::get('/usuario/{id}','UsuariosController@get_usuario');
+Route::post('/update_usuario','UsuariosController@update');
+Route::get('/delete_usuario/{id}','UsuariosController@delete_usuario');
+Route::delete('/delete_usuario','UsuariosController@delete');
 
 
 

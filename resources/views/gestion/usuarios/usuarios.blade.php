@@ -7,8 +7,14 @@
 
                     <h1 class="text-center">Administración de usuarios</h1><br><br>
                     @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
+                        <div class="col-md-12">
+                           <div class="alert alert-success alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
+                               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="text-center"><i class="fa fa-thumbs-up fa-1x"></i>
+
+                                       {{session('success')}}
+                                </h4>
+                           </div>
                         </div>
                     @endif
                     <div class="form-group">
@@ -45,7 +51,7 @@
                             </td>
                         </tr>
 
-                        <form action="http://pintiadata.infor.uva.es/index.php?seccion=usuarios" method="post">
+
                             <tr id="fila_ref" style="display:none;">
                                <td><strong>Buscar por nombre de usuario:</strong></td>
                                 <td><input type="text" class="form-control" id="myInput" onkeyup="filter()" name="buscarRef" placeholder="Nombre usuario" required></td>
@@ -54,7 +60,7 @@
                                     <a class="btn btn-primary" href="/usuarios"><i class="fa fa-eye"></i> Ver todo</a>
                                 </td>
                             </tr>
-                        </form>
+
 
                        </table>
 
@@ -88,11 +94,11 @@
                             @if(Session::get('admin_level') > 2 )
 
                             <td align="center">
-                                <a href="usuarios_update.php?user_id=' .  $row['user_id']. '" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
+                                <a href="/usuario/{{$usuario->user_id}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
                             </td>
 
                             <td align="center">
-                                <a href="usuarios_delete.php?user_id=' .  $row['user_id']. '&username=' . $row['username'] . '" class="btn btn-danger"><i class="fa fa-trash"></i> Borrar</a>
+                                <a href="/delete_usuario/{{$usuario->user_id}}" class="btn btn-danger"><i class="fa fa-trash"></i> Borrar</a>
                             </td>
                             @else
                             <td></td>

@@ -70,6 +70,11 @@ class UsuariosController extends \App\Http\Controllers\Controller
         $city = $request->input('city');
         $hobbies = $request->input('hobbies');
 
+        if(is_null($hobbies)){
+            $hobbies = array();
+        }
+        
+
         $validator = Validator::make($request->all(), [
 
 
@@ -100,6 +105,103 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
         return redirect('/usuarios')->with('success', 'El usuario '.$username . ' se ha creado correctamente');
 
+
+
+    }
+
+    public function get_usuario($id){
+
+        $usuario = DB::table('site_user_info')
+            ->join('site_user', 'site_user.user_id', '=', 'site_user_info.user_id')
+            ->where('site_user.user_id','=',$id)
+            ->get()
+            ->first();
+
+            $usuario->hobbies = explode(", ",$usuario->hobbies);
+
+
+        return view('gestion.usuarios.layout_update_usuario',['usuario' => $usuario]);
+    }
+
+
+    public function update(Request $request){
+
+        $user_id = $request->input('id');
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $admin_level = $request->input('admin_level');
+        $email = $request->input('email');
+        $first_name = $request->input('first_name');
+        $last_name = $request->input('last_name');
+        $pais = $request->input('pais');
+        $city = $request->input('city');
+        $hobbies = $request->input('hobbies');
+
+        if(is_null($hobbies)){
+            $hobbies = array();
+        }
+
+        $validator = Validator::make($request->all(), [
+
+
+            'id'            => 'required|exists:site_user,user_id',
+            'username'      => 'required|unique:site_user,username',
+            'password'      => 'required|string',
+            'admin_level'   => 'required|numeric|between:0,3',
+            'email'         => 'required|email',
+            'first_name'    => 'required|string',
+            'last_name'     => 'required|string',
+            'pais'          => 'required|size:2',
+            'city'          => 'string|max:20',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/usuario/'.$user_id)->withErrors($validator);
+
+        }
+
+        DB::table('site_user')
+            ->where('user_id','=',$user_id)
+            ->update(['admin_level' => $admin_level ,'username' => $username,'password' => DB::raw('PASSWORD('.$password.')')]);
+
+        DB::table('site_user_info')
+            ->where('user_id','=',$user_id)
+            ->update(['first_name' => $first_name,'last_name' => $last_name,'email' => $email,'city' => $city,
+            'state' => $pais,'hobbies' =>join(', ', $hobbies) ]);
+
+
+            return redirect('/usuarios')->with('success','Cuenta actualizada con exito');
+    }
+
+
+    public function delete_usuario($id){
+        $user = User::find($id);
+
+        return view('gestion.usuarios.layout_delete',['usuario' => $user]);
+    }
+
+    public function delete(Request $request){
+
+        $user_id = $request->input('user_id');
+
+
+        $validator = Validator::make($request->all(), [
+
+            'user_id'      => 'required|exists:site_user,user_id',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/delete_usuario/'.$user_id)->withErrors($validator);
+
+        }
+
+        DB::table('site_user_info')->where('user_id','=',$user_id)->delete();
+        DB::table('site_user')->where('user_id','=',$user_id)->delete();
+
+
+        return redirect('/usuarios')->with('success','Cuenta borrada con exito');
 
 
     }
