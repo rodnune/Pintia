@@ -1,11 +1,13 @@
 <div id="sidebar-list" class="affix" style="float:left; margin:20px 35px 0 0;width: 300px;">
     <div class="post" style="padding-right: 0px; padding-left: 0px; padding-top: 10px;">
-        <form action="zona_mensajes.php" method="post">
+
+
+        {{Form::open(array('action' => 'MensajesController@enviar_mensaje' , 'method' => 'post'))}}
 
             <div class="form-group">
                 <h4 class="text-center">Escribir mensaje</h4>
                 <br>
-                <textarea class="form-control vresize" rows="6" cols="60" name="mensaje" required="required"></textarea>
+                <textarea class="form-control vresize" rows="6" cols="60" name="contenido" required="required"></textarea>
             </div>
 
             <div class="form-group">
@@ -31,10 +33,14 @@
 
             <div id="privado" class="form-group">
                 <label>Nombre usuario destinatario:</label>
-                <select class="form-control" name="usuariodestino" 	style="width:100%">
+                <select class="form-control" name="destino" 	style="width:100%">
                 <option value="-1" selected>--- Seleccionar usuario ---		</option>
 
-                   <option value="'.$row['user_id'].'">' .	$row['first_name'] . ' ' . $row['last_name'] . 	'</option>
+                    @foreach($usuarios as $usuario)
+                        @if(Session::get('user_id')!== $usuario->user_id)
+                        <option value="{{$usuario->user_id}}">{{$usuario->username}}</option>
+                        @endif
+                    @endforeach
 
                </select>
 
@@ -44,8 +50,9 @@
                     <button type="submit" name="submit" class="btn btn-primary" value="Enviar"><i class="fa fa-paper-plane"></i> Enviar</button>
                     <button type="reset" class="btn btn-danger" value="Limpiar"><i class="fa fa-times"></i> Limpiar</button>
                 </p>
-        </form>
+       {{Form::close()}}
     </div>
 </div>
+
 
 <script src="/js/mensajes.js"></script>
