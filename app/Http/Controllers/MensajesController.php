@@ -22,17 +22,11 @@ class MensajesController extends \App\Http\Controllers\Controller
 
     public function index(){
 
-        $generales = DB::table('mensajesusuario')
-            ->join('site_user', function ($join) {
-                $join->on('mensajesusuario.user_id', '=', 'site_user.user_id')
-                    ->orderBy('mensajesusuario.id_mensaje');
-
-            })
-            ->get();
-
 
 
         $usuarios = DB::table('site_user')->get(['username','user_id']);
+
+        $generales = MensajesController::generales();
 
 
 
@@ -114,10 +108,6 @@ class MensajesController extends \App\Http\Controllers\Controller
                })
                ->get();
 
-           /*$privados = DB::table('mensajesusuario')
-               ->where('usuariodestino','=',$id)
-               ->orderBy('id_mensaje')
-               ->get();*/
 
                return $privados;
        }
@@ -138,5 +128,42 @@ class MensajesController extends \App\Http\Controllers\Controller
 
 
 
+    public function noveles(){
+
+
+        $noveles = DB::table('mensajesusuario')
+            ->join('site_user', function ($join) {
+                $join->on('mensajesusuario.user_id', '=', 'site_user.user_id')
+                    ->where('mensajesusuario.categoria', '=', 2);
+            })
+            ->get();
+
+        return $noveles;
+    }
+
+    public function generales(){
+
+
+        $generales = DB::table('mensajesusuario')
+            ->join('site_user', function ($join) {
+                $join->on('mensajesusuario.user_id', '=', 'site_user.user_id')
+                    ->where('mensajesusuario.categoria', '=', 1);
+            })
+            ->get();
+
+        return $generales;
+    }
+
+
+    public function search(){
 
     }
+
+
+
+
+
+
+
+
+}

@@ -54,7 +54,7 @@
 
 
 
-
+                        <!--Hay que cambiarlo a table para poderlo paginar--->
 
 
                             <div class="container-fluid" >
@@ -64,6 +64,7 @@
                                     @php
                                     $elementos=1;
                                     @endphp
+
 
 
                                     <div class="row">

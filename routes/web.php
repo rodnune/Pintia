@@ -289,6 +289,10 @@ Route::delete('/delete_usuario','UsuariosController@delete');
 Route::get('/mensajes','MensajesController@index');
 Route::post('/enviar_mensaje','MensajesController@enviar_mensaje');
 Route::get('/privados/{id}','MensajesController@privados');
+Route::get('/expertos','MensajesController@expertos');
+Route::get('/generales','MensajesController@generales');
+Route::get('/noveles','MensajesController@noveles');
+Route::get('/search_mensajes','MensajesController@search');
 
 
 
