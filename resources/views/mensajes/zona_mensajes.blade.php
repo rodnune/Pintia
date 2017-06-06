@@ -279,7 +279,7 @@
 
         $.ajax({
             type:   'GET',
-            url:    '/privados/'+user_id,
+            url:    '/privados/',
 
             success: function(privados) {
                 $('#pagination_table').find("tr").remove();

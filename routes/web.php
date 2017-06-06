@@ -2,9 +2,8 @@
 
 
 use Illuminate\Support\Facades\Route;
-use \Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
+use App\Http\Middleware\CheckIfExperto;
 
 //Rutas generales
 Route::get('/index', function () { return view('seccion_principal'); });
@@ -288,8 +287,8 @@ Route::delete('/delete_usuario','UsuariosController@delete');
 
 Route::get('/mensajes','MensajesController@index');
 Route::post('/enviar_mensaje','MensajesController@enviar_mensaje');
-Route::get('/privados/{id}','MensajesController@privados');
-Route::get('/expertos','MensajesController@expertos');
+Route::get('/privados','MensajesController@privados');
+Route::get('/expertos','MensajesController@expertos')->middleware(CheckIfExperto::class);
 Route::get('/generales','MensajesController@generales');
 Route::get('/noveles','MensajesController@noveles');
 Route::get('/search_mensajes','MensajesController@search');
