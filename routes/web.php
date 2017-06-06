@@ -293,6 +293,7 @@ Route::get('/expertos','MensajesController@expertos');
 Route::get('/generales','MensajesController@generales');
 Route::get('/noveles','MensajesController@noveles');
 Route::get('/search_mensajes','MensajesController@search');
+Route::post('/delete_mensaje','MensajesController@delete');
 
 
 

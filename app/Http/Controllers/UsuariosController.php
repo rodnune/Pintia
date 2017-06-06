@@ -38,8 +38,6 @@ class UsuariosController extends \App\Http\Controllers\Controller
     {
 
 
-
-
         if ($request->has('tipo')) {
 
             $usuarios = DB::table('site_user_info')
@@ -48,6 +46,7 @@ class UsuariosController extends \App\Http\Controllers\Controller
                         ->where('site_user.admin_level', '=', $_REQUEST['tipo']);
                 })
                 ->get();
+
 
 
 
