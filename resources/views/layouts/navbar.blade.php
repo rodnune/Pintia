@@ -146,11 +146,11 @@
                 @if(is_null(Session::get('logged')))
                 <a id="boton" class="btn btn-primary btn-user-gris">Acceder</a>
                 @elseif(Session::get('admin_level')==0)
-                    <a class="btn btn-success btn-user-regular">{{Session::get('real_name')}}</a>
+                    <a class="btn btn-success btn-user-regular" href="/perfil">{{Session::get('real_name')}}</a>
                 @elseif(Session::get('admin_level')==1)
-                    <a class="btn btn-success btn-user-business">{{Session::get('real_name')}}</a>
+                    <a class="btn btn-success btn-user-business" href="/perfil">{{Session::get('real_name')}}</a>
                 @elseif(Session::get('admin_level')>1)
-                    <a class="btn btn-success btn-user-admin">{{Session::get('real_name')}}</a>
+                    <a class="btn btn-success btn-user-admin" href="/perfil">{{Session::get('real_name')}}</a>
                 @endif
 
                         @if(Session::has('logged'))

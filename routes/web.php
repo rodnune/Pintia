@@ -252,16 +252,18 @@ Route::post('/gestion_medida_subcategoria','MedidasSubcategoriaController@gestio
 
 
 //GESTION GEOGRAFIA
+Route::group(['middleware' => ['experto']], function () {
+    Route::get('/gestion_lugares','LugaresController@get_lugares');
+    Route::get('/lugar/{id}','LugaresController@get');
+    Route::post('/gestion_lugares','LugaresController@gestion_lugares');
+    Route::get('/gestion_localizaciones','LocalizacionController@get_localizaciones');
+    Route::get('/localizaciones/{id}','LocalizacionController@localizaciones_lugar');
+    Route::get('/localizacion_nueva','LocalizacionController@form_create');
+    Route::post('/localizacion_nueva','LocalizacionController@create');
+    Route::get('/localizacion/{id}','LocalizacionController@get');
+    Route::post('/gestion_localizacion','LocalizacionController@gestionar');
+});
 
-Route::get('/gestion_lugares','LugaresController@get_lugares');
-Route::get('/lugar/{id}','LugaresController@get');
-Route::post('/gestion_lugares','LugaresController@gestion_lugares');
-Route::get('/gestion_localizaciones','LocalizacionController@get_localizaciones');
-Route::get('/localizaciones/{id}','LocalizacionController@localizaciones_lugar');
-Route::get('/localizacion_nueva','LocalizacionController@form_create');
-Route::post('/localizacion_nueva','LocalizacionController@create');
-Route::get('/localizacion/{id}','LocalizacionController@get');
-Route::post('/gestion_localizacion','LocalizacionController@gestionar');
 
 //GESTION REGISTROS
 
@@ -273,12 +275,14 @@ Route::get('/registros','RegistrosController@index');
 //GESTION USUARIOS
 
 Route::get('/usuarios','UsuariosController@index');
+Route::get('/usuario/{id}','UsuariosController@get_usuario');
 Route::get('/new_usuario','UsuariosController@form_create');
 Route::post('/new_usuario','UsuariosController@create');
-Route::get('/search_usuarios','UsuariosController@search');
-Route::get('/usuario/{id}','UsuariosController@get_usuario');
-Route::post('/update_usuario','UsuariosController@update');
 Route::get('/delete_usuario/{id}','UsuariosController@delete_usuario');
+
+
+Route::get('/search_usuarios','UsuariosController@search');
+Route::post('/update_usuario','UsuariosController@update');
 Route::delete('/delete_usuario','UsuariosController@delete');
 
 
@@ -294,6 +298,11 @@ Route::get('/noveles','MensajesController@noveles');
 Route::get('/search_mensajes','MensajesController@search');
 Route::post('/delete_mensaje','MensajesController@delete');
 
+
+//Perfil
+
+Route::get('/perfil','UsuariosController@profile');
+Route::post('/delete_perfil','UsuariosController@delete_profile');
 
 
 

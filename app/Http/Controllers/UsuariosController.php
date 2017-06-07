@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use Session;
 
 class UsuariosController extends \App\Http\Controllers\Controller
 {
@@ -203,6 +204,30 @@ class UsuariosController extends \App\Http\Controllers\Controller
         return redirect('/usuarios')->with('success','Cuenta borrada con exito');
 
 
+    }
+
+    public function profile(){
+
+
+        $usuario = DB::table('site_user_info')
+            ->join('site_user', 'site_user.user_id', '=', 'site_user_info.user_id')
+            ->where('site_user.user_id','=',Session::get('user_id'))
+            ->get()
+            ->first();
+
+        return view('perfil.layout_perfil',['usuario' => $usuario]);
+
+
+    }
+
+    public function delete_profile(){
+
+        DB::table('site_user_info')->where('user_id','=',Session::get('user_id'))->delete();
+        DB::table('site_user')->where('user_id','=',Session::get('user_id'))->delete();
+
+        Session::flush();
+
+        return redirect('/index')->with('success', 'Cuenta borrada con exito');
     }
 
 }
