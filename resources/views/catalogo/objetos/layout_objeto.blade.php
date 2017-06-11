@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('catalogo.objetos.objetos')
+    @include('catalogo.objetos.objeto')
 @endsection
 
 @section('footer')
