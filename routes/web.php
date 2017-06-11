@@ -213,6 +213,7 @@ Route::get('/delete_multimedia/{id}','MultimediaController@delete');
 Route::get('/objetos','ObjetosController@index');
 Route::get('/new_objeto',function(){return view('catalogo.objetos.layout_new_objeto');});
 Route::post('/new_objeto','ObjetosController@create');
+Route::get('/objeto/{id}','ObjetosController@get_objeto');
 
 
 

@@ -57,4 +57,14 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         return redirect('/objetos')->with('success', 'Objeto creado con exito');
     }
+
+
+    public function get_objeto($id){
+
+       $objeto = DB::table('fichaobjeto')->where('ref','=',$id)->get()->first();
+
+
+
+        return view('catalogo.objetos.layout_objeto',['objeto' => $objeto]);
+    }
 }
