@@ -214,6 +214,7 @@ Route::get('/objetos','ObjetosController@index');
 Route::get('/new_objeto',function(){return view('catalogo.objetos.layout_new_objeto');});
 Route::post('/new_objeto','ObjetosController@create');
 Route::get('/objeto/{id}','ObjetosController@get_objeto');
+Route::get('/objeto_datos_generales/{id}','ObjetosController@get_datos');
 
 
 

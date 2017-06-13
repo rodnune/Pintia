@@ -19,7 +19,29 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
     public function index(){
 
-        return view('catalogo.objetos.layout_objetos');
+        $subcategorias = DB::table('categoria')->join('subcategoria', 'subcategoria.idcat', '=', 'categoria.idcat')
+            ->select('categoria.denominacion as denominacioncat','subcategoria.denominacion as denominacionsubcat' ,'categoria.idcat','subcategoria.idsubcat')
+            ->get();
+
+        $grouped = $subcategorias->groupBy('idcat');
+
+        $categorias = $grouped->toArray();
+
+        $materiales = DB::table('materiaprima')->orderBy('denominacion')->get();
+
+        $localizaciones = DB::table('localizacion')->get();
+
+
+
+        if(Session::get('admin_level') > 0 )
+        {
+            $objetos = DB::table('fichaobjeto')->orderBy('ref')->get();
+        }else{
+            $objetos = DB::table('fichaobjeto')->where('visiblecatalogo','=','Si')->orderBy('ref')->get();
+        }
+
+        return view('catalogo.objetos.layout_objetos',['categorias' => $categorias,
+            'materiales' => $materiales, 'localizaciones' => $localizaciones,'objetos' => $objetos]);
 
     }
 
@@ -66,5 +88,10 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
         return view('catalogo.objetos.layout_objeto',['objeto' => $objeto]);
+    }
+
+
+    public function get_datos($id){
+
     }
 }

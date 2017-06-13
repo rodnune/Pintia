@@ -342,7 +342,13 @@
 
                            <td colspan="5" align="center">
 
-                                    <button type="submit" name="submit" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista objetos</button>
+                                    <a href="/objetos" type="submit" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Volver a lista objetos</a>
+                               @if((Session::get('admin_level') == 3) || ($objeto->user_id == Session::get('user_id')))
+
+                                   <button class="btn btn-default" onclick="printFunction()"><i class="fa fa-print"></i> Imprimir documento</button>
+
+                                   @endif
+
                            </td>
 
 
@@ -354,3 +360,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function printFunction() {
+        window.print();
+    }
+</script>

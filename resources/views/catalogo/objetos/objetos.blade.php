@@ -34,10 +34,25 @@
                                <td align="center"><strong>Tipo: </strong></td>
 
                                 <td align="left">
-                                    <select class="form-control" name="filtro_tipo" style="width:100%">
-                                      <option value="-1" selected>--- Seleccionar Tipo ---</option>
-                                      <option value="'.$rowcat['IdCat'].'-0-'.$rowcat['Denominacion'].'">' . $rowcat['Denominacion'] . ' (Todos los tipos)</option>
-                                      <option value="'.$rowcat['IdCat'].'-'.$rowsubcat['IdSubcat'].'-'.$rowcat['Denominacion'].'">'.$rowsubcat['Denominacion'].' ('. $rowcat['Denominacion'].')</option>
+                                    <select class="form-control" name="tipo" style="width:100%">
+
+                                        @if(count($categorias) == 0)
+
+                                            <option disabled>No hay tipos</option>
+
+                                        @else
+                                            <option value="-1" selected>--- Seleccionar Tipo ---</option>
+                                            @foreach($categorias as $key => $value)
+                                                <option value="{{$categorias[$key][0]->idcat}}">{{$categorias[$key][0]->denominacioncat}}  (Todos los tipos)</option>
+                                                @foreach ($categorias[$key] as $key2 => $value2)
+                                                    <option value="">{{$categorias[$key][$key2]->denominacioncat}} ({{$categorias[$key][$key2]->denominacionsubcat}})</option>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
+
+
+
+
 
                                     </select>
                                 </td>
@@ -45,9 +60,19 @@
 
                                 <td align="center"><strong>Material: </strong></td>
                                 <td align="left">
-                                    <select class="form-control" name="filtro_material" style="width:100%">
-                                        <option value="-1" selected>--- Seleccionar material ---</option>
-                                        <option value="'.$rowmaterial['IdMat'].'-'.$rowmaterial['Denominacion'].'">' . $rowmaterial['Denominacion'] . '</option>
+                                    <select class="form-control" name="material" style="width:100%">
+                                        @if(count($materiales) == 0)
+
+                                            <option disabled>No hay materiales</option>
+
+                                        @else
+                                            <option value="-1" selected>--- Seleccionar Material ---</option>
+
+                                            @foreach($materiales as $material)
+                                                <option value="{{$material->IdMat}}">{{$material->Denominacion}}</option>
+                                            @endforeach
+                                        @endif
+
 
                                       </select>
                                 </td>
@@ -56,9 +81,20 @@
                                 <td align="center"><strong>Localización: </strong></td>
 
                                 <td align="left">
-                                    <select class="form-control" name="filtro_lugar" style="width:100%">
-                                       <option value="-1" selected>--- Seleccionar Trama - Subtrama ---</option>
-                                        <option value="'.$rowlugar['IdLocalizacion'].'-'.$rowlugar['SectorTrama'].'-'.$rowlugar['SectorSubtrama'].'">' . $rowlugar['SectorTrama'] . ' - '.$rowlugar['SectorSubtrama'].'</option>
+                                    <select class="form-control" name="lugar" style="width:100%">
+
+                                        @if(count($localizaciones) == 0)
+
+                                            <option disabled>No hay localizaciones</option>
+
+                                        @else
+                                            <option value="-1" selected>--- Seleccionar Trama - Subtrama ---</option>
+                                            @foreach($localizaciones as $localizacion)
+                                                <option value="{{$localizacion->IdLocalizacion}}">{{$localizacion->SectorTrama}} - {{$localizacion->SectorSubtrama}}</option>
+                                            @endforeach
+                                            @endif
+
+
                                         </select>
                                 </td>
                             </tr>
@@ -66,16 +102,15 @@
                             <tr id="fila_botones_filtros">
                                 <td align="center" colspan="6">
                                     <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar objetos</button>
-                                    <a class="btn btn-primary" href="ficha_objeto.php?seccion=Lista"><i class="fa fa-eye"></i> Ver todo</a>
+                                    <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
                                 </td>
                             </tr>
 
                             <tr id="fila_ref" style="display:none;">
                                 <td><strong>Buscar por referencia objeto:</strong></td>
-                                <td><input type="text" class="form-control" name="buscarRef" placeholder="Referencia"></td>
+                                <td><input type="text" id="myInput" onkeyup="filter()" class="form-control" placeholder="Referencia"></td>
 
                                 <td align="center" colspan="4">
-                                    <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar objeto</button>
                                     <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
                                 </td>
 
@@ -83,7 +118,7 @@
                        </table>
 
 
-                        <p class=" text-center text-muted"><strong>Total de resultados encontrados: '.mysql_num_rows($result).'</strong></p>
+                        <p class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($objetos)}}</strong></p>
                             <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                                 <thead>
                                     <tr class="info">
@@ -99,21 +134,29 @@
 
 
                                     <a href="/new_objeto" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo </a>
+
+                                @else
+                                            <th scope="col" align="center">
+
                            @endif
                           </tr>
                         </thead>
 
                         <tbody>
+                        @if(count($objetos) == 0)
 
+                            <h4 class=" text-center text-danger">No se encuentran resultados.</h4>
+
+                            @else
+                    @foreach($objetos as $objeto)
                         <tr>
-                            <td align="center"><a>' . $row['Ref'] . '</a></td>
-                            <td align="center">' . $row['NumeroSerie'] . '</td>
-                            <td align="center">' . $row['AnyoCampanya'] . '</td>
+                            <td align="center"><a>{{$objeto->Ref}}</a></td>
+                            <td align="center">{{$objeto->NumeroSerie}}</td>
+                            <td align="center">{{$objeto->AnyoCampanya}}</td>
                             <td align="center">
-                                <form  action="ficha_objeto.php" method="post">
 
-                                   <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-eye"></i> Ver </button>
-                                </form>
+                                   <a href="/objeto/{{$objeto->Ref}}" type="submit" class="btn btn-primary"> <i class="fa fa-eye"></i> Ver </a>
+
                             </td>
 
 
@@ -135,10 +178,12 @@
                             @endif
 
                             @if(Session::get('admin_level') > 0)
-                                    <td align="center">'. $row['VisibleCatalogo'];</td>
+                                    <td align="center">{{$objeto->VisibleCatalogo}}</td>
+
                                 @endif
 
-{{--@if((Session::get('admin_level') == 3) || ($row['user_id'] == Session::get('user_id')) || (($admin_level != NULL) AND ($admin_level < $_SESSION['admin_level'])))--}}
+
+@if((Session::get('admin_level') == 3) || ($objeto->user_id == Session::get('user_id')))
 
 
 
@@ -148,18 +193,16 @@
     <button type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar </button>
    </form>
 <br>
-<form action="imprimir_ficha.php" method="post" target="_blank">
-    <button type="submit" name="submit" class="btn btn-link" value="Imprimir"><i class="fa fa-print"></i> Imprimir </button>
-</form>
 
 </td>
-<!--mysql_free_result($resultx);
-}else{
-echo '<td colspan="2"></td>';
-mysql_free_result($resultx);
-}
-}-->
+                            @else
+
+<td colspan="2"></td>
+                            @endif
+
 </tr>
+                        @endforeach
+                        @endif
 
 
 </tbody>
