@@ -12,14 +12,16 @@
         <hr>
         <h4 class="text-center" style="color: #000;">Secciones</h4>
         <p>
-        <form action="ficha_objeto.php" method="post">
+        </p>
+            @php
+            $id = $objeto->Ref
+            @endphp
 
-
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/>
+            <a href="/objeto_datos_generales/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/></a>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Clasificación y Partes"/>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Materiales Objeto"/>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Analisis Metalografico"/>
-       </form>
+
 
         <form action="medidas_parte_objeto.php" method="post" style="margin-top: 5px;">
         <input type="hidden" name="seccion" value=2>
@@ -46,7 +48,7 @@
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/>
 
 
-            <hr><a href="ficha_objeto.php?seccion=Lista" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Objetos / Salir</a>';
+            <hr><a href="/objetos" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Objetos / Salir</a>
 
         <br/><button type="submit" name="subsec" class="btn btn-danger btn-block" value="Eliminar Ficha"><i class="fa fa-close"></i> Eliminar Ficha </button>
 

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Session;
+use Config;
 use Carbon\Carbon;
 
 class ObjetosController extends \App\Http\Controllers\Controller
@@ -92,6 +93,60 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
     public function get_datos($id){
+
+        $objeto = DB::table('fichaobjeto')->where('ref','=',$id)->get()->first();
+
+        return view('catalogo.objetos.layout_datos_gen',['objeto' => $objeto]);
+
+
+    }
+
+
+    public function update_general_data(Request $request){
+        $ref = $request->input('ref');
+        $visible = $request->input('visible');
+        $anyo = $request->input('anyo');
+        $es_tumba = $request->input('es_tumba');
+        $num_serie = $request->input('num_serie');
+        $cronologia = $request->input('cronologia');
+        $descripcion = $request->input('descripcion');
+        $forma = $request->input('forma');
+        $decoracion = $request->input('decoracion');
+        $observaciones = $request->input('observaciones');
+        $almacen = $request->input('almacen');
+
+
+        $validator = Validator::make($request->all(), [
+
+            'ref'        => 'required|exists:fichaobjeto,ref',
+            'visible'    => 'required|in:' . implode(',', Config::get('enums.bool')) ,
+            'anyo'       => 'integer|min:1970|max:' .date("Y") ,
+            'es_tumba'   => 'in:' . implode(',', Config::get('enums.bool')),
+            'num_serie'  => 'string',
+            'cronologia' => 'string',
+            'descripcion'=> 'string',
+            'forma'      => 'string',
+            'decoracion' => 'string',
+            'observaciones' => 'string',
+            'almacen'    => 'string',
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/objeto_datos_generales/'.$ref)
+                ->withErrors($validator);
+        }
+
+        DB::table('fichaobjeto')->where('ref','=',$ref)
+            ->update(['visiblecatalogo' => $visible,'anyocampanya' => $anyo,'numeroserie' => $num_serie,
+            'esTumba' => $es_tumba,'cronologia' => $cronologia,'descripcion' => $descripcion,'forma' => $forma,
+            'decoracion' => $decoracion,'observaciones' => $observaciones,'almacen' => $almacen]);
+
+
+        return redirect('/objeto_datos_generales/'.$ref)->with('success','Datos generales actualizados correctamente');
+
+
 
     }
 }

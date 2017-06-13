@@ -1,7 +1,21 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Rodrigo
- * Date: 13/06/2017
- * Time: 21:18
- */
+@extends('layouts.app')
+
+@section('header')
+    @include('layouts.header')
+@endsection
+
+@section('navbar')
+    @include('layouts.navbar')
+@endsection
+
+@section('image')
+    @include('logo')
+@endsection
+
+@section('content')
+    @include('catalogo.objetos.datos_gen')
+@endsection
+
+@section('footer')
+    @include('layouts.footer')
+@endsection

@@ -188,10 +188,10 @@
 
 
 <td align="center" colspan="1">
-<form action="ficha_objeto.php" method="post">
 
-    <button type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar </button>
-   </form>
+
+    <a href="/objeto_datos_generales/{{$objeto->Ref}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar </a>
+
 <br>
 
 </td>
