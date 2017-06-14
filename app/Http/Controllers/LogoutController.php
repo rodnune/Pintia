@@ -16,7 +16,7 @@ class LogoutController extends \App\Http\Controllers\Controller
     function logout(){
         /*Si se hace logout se elimina la sesion*/
      Session::flush();
-     return redirect('/index');
+     return redirect('/');
     }
 
 }

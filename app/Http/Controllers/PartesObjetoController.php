@@ -105,5 +105,57 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
         return redirect('/objeto_clasificacion_partes/'. $ref)->with('success','Parte de objeto eliminada correctamente');
     }
 
+    public function gestion_materiales_parte(Request $request){
+
+        $parte = $request->input('id_parte');
+        $ref = $request->input('ref');
+
+
+
+        if ($request->submit == 'Asociar'){
+                $material = $request->input('asociar');
+
+            $validator = Validator::make($request->all(), [
+                'id_parte'   => 'required|integer|min:0|exists:parteobjeto,idparte',
+                'asociar' => 'required|exists:materiaprima,idmat'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/material_parte_objeto/'.$ref.'/'.$parte)->withErrors($validator);
+            }
+
+            DB::table('materialobjeto')->insert(['idparte' => $parte, 'idmat' => $material]);
+
+            return redirect('/material_parte_objeto/'.$ref.'/'.$parte)->with('success','Material asociado al objeto correctamente');
+        }
+
+        if ($request->submit == 'Eliminar'){
+            $material = $request->input('eliminar');
+
+            $validator = Validator::make($request->all(), [
+                'id_parte'   => 'required|integer|min:0|exists:parteobjeto,idparte',
+                'eliminar' => 'required|exists:materiaprima,idmat'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/material_parte_objeto/'.$ref.'/'.$parte)->withErrors($validator);
+            }
+
+            DB::table('materialobjeto')
+                ->where('idparte','=',$parte)
+                ->where('idmat','=',$material)
+                ->delete();
+
+            return redirect('/material_parte_objeto/'.$ref.'/'.$parte)->with('success','Material eliminado del objeto correctamente');
+        }
+
+
+
+
+
+
+        }
+
+
 
 }

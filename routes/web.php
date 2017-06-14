@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Middleware\CheckIfExperto;
 
 //Rutas generales
-Route::get('/index', function () { return view('seccion_principal'); });
-Route::post('/login' , 'LoginController@is_user');
+Route::get('/', function () { return view('seccion_principal'); });
+Route::post('/index' , 'LoginController@is_user');
 Route::get('/acerca_de',function(){return view('seccion_acerca_de');});
 Route::get('/logout','LogoutController@logout');
 Route::get('/contactar',function(){return view('seccion_contactar');});
@@ -224,6 +224,11 @@ Route::get('/parte_objeto/{id}','PartesObjetoController@get_parte');
 Route::post('/gestionar_parte_objeto','PartesObjetoController@update');
 Route::delete('/delete_parte_objeto','PartesObjetoController@delete');
 
+//MaterialesObjeto
+
+Route::get('/materiales_objeto/{id}','ObjetosController@get_materiales_objeto');
+Route::post('/gestionar_material_parte','PartesObjetoController@gestion_materiales_parte');
+Route::get('/material_parte_objeto/{id}/{ref}','ObjetosController@get_material_objeto');
 
 
 
@@ -331,6 +336,8 @@ Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
 
 
+
+return $mat;
 
 return view('pruebas');
 

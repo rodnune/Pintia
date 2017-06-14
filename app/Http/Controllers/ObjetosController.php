@@ -8,6 +8,7 @@
 
 namespace app\Http\Controllers;
 
+use App\Models\ParteObjeto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -163,4 +164,41 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
     }
+
+    public function get_materiales_objeto($id){
+
+        $objeto = Objeto::find($id);
+
+
+        $partes = $objeto->partesObjeto();
+
+            return view('catalogo.objetos.layout_materiales_objeto',['objeto' => $objeto,'partes' => $partes ]);
+    }
+
+
+    public function get_material_objeto($ref,$id){
+
+
+
+
+        $parte = ParteObjeto::find($id);
+        $objeto = Objeto::find($ref);
+
+
+        $partes_objeto = $objeto->partesObjeto();
+
+        $asociados =  $parte->materialesAsociados();
+
+        $no_asociados = $parte->materialesNoAsociados();
+
+        return view('catalogo.objetos.layout_material_objeto',['objeto' => $objeto,'partes' => $partes_objeto,
+            'asociados' => $asociados,'no_asociados' => $no_asociados, 'parte' => $parte ]);
+
+
+
+
+
+    }
+
+
 }
