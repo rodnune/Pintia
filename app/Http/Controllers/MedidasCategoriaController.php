@@ -237,6 +237,13 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
 
         }
 
+        public function get_subcategorias($id){
+
+            $subcategorias =    DB::table('subcategoria')->where('idcat','=',$id)->get();
+
+            return $subcategorias;
+        }
+
 
 
 

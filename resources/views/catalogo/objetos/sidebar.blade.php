@@ -17,8 +17,9 @@
             $id = $objeto->Ref
             @endphp
 
-            <a href="/objeto_datos_generales/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/></a>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Clasificación y Partes"/>
+                <a href="/objeto_datos_generales/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/></a>
+                <br>
+                <a href="/objeto_clasificacion_partes/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Clasificación y Partes"/></a>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Materiales Objeto"/>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Analisis Metalografico"/>
 

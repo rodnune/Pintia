@@ -14,6 +14,7 @@ use Validator;
 use Session;
 use Config;
 use Carbon\Carbon;
+use App\Models\Objeto;
 
 class ObjetosController extends \App\Http\Controllers\Controller
 {
@@ -98,6 +99,19 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         return view('catalogo.objetos.layout_datos_gen',['objeto' => $objeto]);
 
+
+    }
+
+    public function get_clasificacion_partes($id){
+
+        $objeto = Objeto::find($id);
+
+
+        $partes = $objeto->partesObjeto();
+
+
+
+        return view('catalogo.objetos.layout_clasificacion_partes',['objeto' => $objeto,'partes' => $partes]);
 
     }
 

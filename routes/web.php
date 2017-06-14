@@ -217,6 +217,15 @@ Route::get('/objeto/{id}','ObjetosController@get_objeto');
 Route::get('/objeto_datos_generales/{id}','ObjetosController@get_datos');
 Route::post('/objeto_update','ObjetosController@update_general_data');
 
+//Partes Objeto
+Route::get('/objeto_clasificacion_partes/{id}','ObjetosController@get_clasificacion_partes');
+Route::post('/add_parte_objeto','PartesObjetoController@addParte');
+Route::get('/parte_objeto/{id}','PartesObjetoController@get_parte');
+Route::post('/gestionar_parte_objeto','PartesObjetoController@update');
+Route::delete('/delete_parte_objeto','PartesObjetoController@delete');
+
+
+
 
 
 //GESTION LISTAS
@@ -255,6 +264,10 @@ Route::post('/gestionar_medida_categoria','MedidasCategoriaController@gestionar_
 Route::post('/gestion_subcategorias','MedidasSubcategoriaController@gestionar_subcategoria');
 Route::get('/subcategoria/{id}','MedidasSubcategoriaController@get_subcategoria');
 Route::post('/gestion_medida_subcategoria','MedidasSubcategoriaController@gestionar_medida');
+
+//otras rutas
+
+Route::get('/subcategorias/{id}','MedidasCategoriaController@get_subcategorias');
 
 
 

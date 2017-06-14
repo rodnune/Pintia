@@ -9,14 +9,21 @@
 namespace app\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Objeto extends Model
 {
     protected $table = 'fichaobjeto';
-    protected $primaryKey = 'Ref';
+    protected $primaryKey = 'ref';
 
-    public function phone()
-    {
-        return $this->hasOne('App\Models\NotasObjeto');
+
+    public function partesObjeto(){
+
+        $partes = DB::table('parteobjeto')
+            ->where('ref','=',$this->Ref)
+            ->get();
+
+        return $partes;
     }
+
 }
