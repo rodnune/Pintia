@@ -207,6 +207,11 @@ Route::get('/edit_multimedia/{id}','MultimediaController@form_update');
 Route::post('/edit_multimedia','MultimediaController@update');
 Route::get('/delete_multimedia/{id}','MultimediaController@delete');
 
+//Analisis metalografico
+Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');
+Route::post('/new_analisis','AnalisisMetalController@nuevo_analisis');
+Route::get('/gestion_analisis/{id}','AnalisisMetalController@gestionar');
+
 
 //Objetos
 

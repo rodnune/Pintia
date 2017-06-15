@@ -1,8 +1,8 @@
 function valorAnalisis(idSelect, idInput) {
-    var tipo = document.getElementById(idSelect).value;
+    var tipo = $('#'+idSelect).val();
     if(tipo != 0){
-	    document.getElementById(idInput).style.display = 'none';
+	    $('#'+idInput).style.display = 'none';
     }else{
-	    document.getElementById(idInput).style.display = 'block';
+        $('#'+idInput).style.display = 'block';
     }
 }
