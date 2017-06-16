@@ -213,6 +213,8 @@ Route::post('/new_analisis','AnalisisMetalController@nuevo_analisis');
 Route::get('/gestion_analisis/{id}','AnalisisMetalController@gestionar');
 Route::get('/analisis_metalograficos','AnalisisMetalController@index');
 Route::get('/analisis_metalografico/{id}','AnalisisMetalController@get');
+Route::post('/update_analisis','AnalisisMetalController@update');
+Route::delete('/delete_analisis','AnalisisMetalController@delete');
 
 
 //Objetos
@@ -344,7 +346,7 @@ Route::get('/pruebas',function(){
 
 
 
-return $mat;
+
 
 return view('pruebas');
 

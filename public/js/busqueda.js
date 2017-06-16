@@ -1,5 +1,6 @@
 
 
+
 function filter() {
     // Declare variables
     var input, filter, table, tr, td,td2, i;

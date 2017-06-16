@@ -197,11 +197,12 @@
                             </td>
 
                            <td align="left" colspan="1">
-                                <form action="analisis_meta.php" method="post">
+                             {{Form::open(array('action' => 'AnalisisMetalController@delete','method' => 'delete'))}}
+                               <input type="hidden" name="id_analisis" value="{{$analisis->IdAnalisis}}"/>
                                     <button type="submit" name="submit" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Eliminar</button>
 
-                                    <input type="hidden" name="id_analisis" value="' . $row['IdAnalisis'] . '"/>
-                                   </form>
+
+                                   {{Form::close()}}
                            </td>
 
                           </tr>

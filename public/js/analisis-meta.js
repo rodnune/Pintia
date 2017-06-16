@@ -1,8 +1,8 @@
 function valorAnalisis(idSelect, idInput) {
     var tipo = $('#'+idSelect).val();
     if(tipo != 0){
-	    $('#'+idInput).style.display = 'none';
+	    $('#'+idInput).hide();
     }else{
-        $('#'+idInput).style.display = 'block';
+        $('#'+idInput).css("display","block");
     }
 }

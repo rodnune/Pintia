@@ -11,6 +11,18 @@
 
                     <h1 class="text-center">Lista de Análisis Metalográficos</h1><br>
 
+                    @if (session('success'))
+                        <div class="col-md-12">
+                            <div class="alert alert-success alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="text-center"><i class="fa fa-thumbs-up fa-1x"></i>
+
+                                    {{session('success')}}
+                                </h4>
+                            </div>
+                        </div>
+                    @endif
+
                     <table class="table table-bordered table-hover" rules="rows">
 
 
@@ -28,7 +40,7 @@
                     </table>
 
                     @if(count($analisis_metalograficos) > 0)
-                    <p class="text-center text-muted"><strong>Total de resultados encontrados: {{count($analisis_metalograficos)}}</strong></p>
+                    <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($analisis_metalograficos)}}</strong></p>
 
                         <table id="pagination_table" class="table table-bordered table-hover" rules="all">
                         <thead>
@@ -70,3 +82,4 @@
         </div>
     </div>
 </div>
+
