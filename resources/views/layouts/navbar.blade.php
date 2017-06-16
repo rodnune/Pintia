@@ -5,7 +5,7 @@
     <div class="container">
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><li><a href="/index">Presentaci&oacute;n</a></li></li>
+                <li class="active"><li><a href="/">Presentaci&oacute;n</a></li></li>
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">Consultar <b class="caret"></b></a>
                     <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -58,7 +58,7 @@
                                     </ul>
                                 </li>
 
-                                <li><a href="analisis_meta.php">Análisis metalográficos</a></li>
+                                <li><a href="/analisis_metalograficos">Análisis metalográficos</a></li>
                                 <li><a href="/analiticas_faunas">Analíticas de faunas</a></li>
 
 

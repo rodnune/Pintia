@@ -16,6 +16,19 @@ use Validator;
 class AnalisisMetalController extends \App\Http\Controllers\Controller
 {
 
+
+    public function index(){
+
+        $analisis_metalograficos = DB::table('analisismetalografico')
+            ->leftJoin('fichaobjeto', 'analisismetalografico.idanalisis', '=', 'fichaobjeto.idanalisismatalografico')
+            ->select('analisismetalografico.IdAnalisis','analisismetalografico.NumeroInventario','fichaobjeto.Ref')
+            ->get();
+
+
+
+        return view('catalogo.analisis_met.layout_analisis_index',['analisis_metalograficos' => $analisis_metalograficos]);
+    }
+
     public function nuevo($id)
     {
         $objeto = Objeto::find($id);
@@ -108,7 +121,7 @@ class AnalisisMetalController extends \App\Http\Controllers\Controller
                 'id_analisis' => 'required|unique:analisismetalografico,idanalisis',
                 'numero'      => 'required|integer',
                 'fe'          => 'numeric|min:0',
-                'ni'          => 'mnumeric|min:0',
+                'ni'          => 'numeric|min:0',
                 'cu'          => 'numeric|min:0',
                 'zn'          => 'numeric|min:0',
                 'as'          => 'numeric|min:0',
@@ -156,6 +169,20 @@ class AnalisisMetalController extends \App\Http\Controllers\Controller
             $objeto = Objeto::find($id);
 
             return view('catalogo.objetos.layout_gestion_analisis',['objeto' => $objeto]);
+        }
+
+        public function get($id){
+
+          $analisis =  DB::table('analisismetalografico')
+                ->leftJoin('fichaobjeto', 'analisismetalografico.idanalisis', '=', 'fichaobjeto.idanalisismatalografico')
+                ->select('analisismetalografico.*','fichaobjeto.Ref')
+                ->where('analisismetalografico.IdAnalisis','=',$id)
+                ->get()
+                ->first();
+
+
+
+            return view('catalogo.analisis_met.layout_analisis',['analisis' => $analisis]);
         }
 
 
