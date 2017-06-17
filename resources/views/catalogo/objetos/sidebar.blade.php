@@ -22,6 +22,7 @@
                 <a href="/objeto_clasificacion_partes/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Clasificación y Partes"/></a>
                 <br>
                 <a href="/materiales_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Materiales Objeto"/></a>
+                <br>
                 @if(is_null($objeto->IdAnalisisMatalografico))
 
                         <a href="/analisis_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Nuevo Analisis"/></a>
@@ -31,12 +32,8 @@
         <a href="/gestion_analisis/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Analisis Metalografico"/></a>
 
                         @endif
-
-
-        <form action="medidas_parte_objeto.php" method="post" style="margin-top: 5px;">
-        <input type="hidden" name="seccion" value=2>
-        <input type="hidden" name="ref" value='. $ref .'>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Medidas Objeto"/>
+                        <br>
+        <a href="/medidas_parte_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Medidas Objeto"/></a>
 
         </form>
 

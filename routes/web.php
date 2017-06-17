@@ -239,6 +239,13 @@ Route::get('/materiales_objeto/{id}','ObjetosController@get_materiales_objeto');
 Route::post('/gestionar_material_parte','PartesObjetoController@gestion_materiales_parte');
 Route::get('/material_parte_objeto/{id}/{ref}','ObjetosController@get_material_objeto');
 
+//Medidas Parte Objeto
+
+Route::get('/medidas_parte_objeto/{id}','PartesObjetoController@get_medidas_parte_objeto');
+Route::get('/medidas_parte_objeto/{ref}/{id}','PartesObjetoController@get_medida_parte_objeto');
+Route::post('/gestion_medida_parte','PartesObjetoController@gestionar_medidas_parte');
+
+
 
 
 

@@ -48,8 +48,10 @@
                               </td>
                                 <td colspan="2">
                                     <select id="mySelect" class="form-control" name="cat">
-
+                                        <option value="0">Sin categoria</option>
                                     @foreach($categorias as $categoria)
+
+
 
                                             @if($parte->idCat == $categoria->IdCat)
                                       <option value="{{$categoria->IdCat}}" selected>{{$categoria->Denominacion}}</option>
@@ -82,7 +84,7 @@
                                 <td colspan="1"><strong>Subcategoría</strong></td>
                                 <td colspan="2">
                                     <select  id="subcategorias" class="form-control" name="subcat">
-
+                                        <option value="0">Sin Subcategoria</option>
 
                                     </select>
                                 </td>
@@ -122,9 +124,6 @@
         success: function (subcategorias) {
             $('#subcategorias').find("option").remove();
             render(subcategorias);
-        },
-        error: function (data) {
-            alert('Error en la conexion');
         }
 
     });
@@ -142,9 +141,6 @@
             success: function (subcategorias) {
                 $('#subcategorias').find("option").remove();
                 render(subcategorias);
-            },
-            error: function (data) {
-                alert('Error en la conexion');
             }
 
         });
