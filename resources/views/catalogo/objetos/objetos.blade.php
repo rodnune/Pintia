@@ -118,7 +118,7 @@
                        </table>
 
 
-                        <p id="total" class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($objetos)}}</strong></p>
+                        <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($objetos)}}</strong></p>
                             <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                                 <thead>
                                     <tr class="info">

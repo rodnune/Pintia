@@ -254,6 +254,17 @@ Route::post('/asignar_localizacion_objeto','ObjetosController@asignar_localizaci
 Route::get('/articulos_objeto/{id}','ObjetosController@get_articulos');
 Route::post('/gestion_articulos_objeto','ObjetosController@gestion_articulos_objeto');
 
+//Multimedias objeto
+Route::get('/multimedias_objeto/{id}','ObjetosController@get_multimedias');
+Route::post('/gestion_multimedias_objeto','ObjetosController@gestion_multimedias_objeto');
+
+//Campos pendiente objeto
+Route::get('/pendientes_objeto/{id}','ObjetosController@get_pendientes');
+Route::post('/gestion_campos_pendientes','ObjetosController@gestion_campos_pendientes');
+
+//Notas objeto
+Route::post('/add_nota_objeto','ObjetosController@add_nota');
+
 
 
 

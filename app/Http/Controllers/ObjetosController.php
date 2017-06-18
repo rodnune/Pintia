@@ -303,7 +303,8 @@ class ObjetosController extends \App\Http\Controllers\Controller
     }
 
 
-    public function gestion_articulos_objeto(Request $request){
+    public function gestion_articulos_objeto(Request $request)
+    {
 
         $ref = $request->input('ref');
 
@@ -315,46 +316,196 @@ class ObjetosController extends \App\Http\Controllers\Controller
         ]);
 
 
-        if($request->submit =='Asociar'){
+        if ($request->submit == 'Asociar') {
 
             if ($validator->fails()) {
-                return redirect('/articulos_objeto/'.$ref)->withErrors($validator);
+                return redirect('/articulos_objeto/' . $ref)->withErrors($validator);
             }
 
             $articulo = $request->input('articulo');
 
-            DB::table('publicadoen')->insert(['ref' => $ref,'idarticulo' => $articulo]);
+            DB::table('publicadoen')->insert(['ref' => $ref, 'idarticulo' => $articulo]);
 
-            return redirect('/articulos_objeto/'.$ref)->with('success','Articulo asociado correctamente');
+            return redirect('/articulos_objeto/' . $ref)->with('success', 'Articulo asociado correctamente');
 
         }
 
-        if($request->submit == 'Eliminar'){
-
+        if ($request->submit == 'Eliminar') {
 
 
             if ($validator->fails()) {
-                return redirect('/articulos_objeto/'.$ref)->withErrors($validator);
+                return redirect('/articulos_objeto/' . $ref)->withErrors($validator);
             }
 
             $articulo = $request->input('eliminar');
 
             DB::table('publicadoen')
-                ->where('ref','=',$ref)
-                ->where('idarticulo','=',$articulo)
+                ->where('ref', '=', $ref)
+                ->where('idarticulo', '=', $articulo)
                 ->delete();
 
-            return redirect('/articulos_objeto/'.$ref)->with('success','Asociacion eliminada correctamente');
+            return redirect('/articulos_objeto/' . $ref)->with('success', 'Asociacion eliminada correctamente');
+
+
+        }
+    }
 
 
 
+        public function get_multimedias($id){
+            $objeto = Objeto::find($id);
+            $asociados = $objeto->multimediasAsociados();
+            $no_asociados = $objeto->multimediasNoAsociados();
 
-
+            return view('catalogo.objetos.layout_multimedia',['objeto' => $objeto,
+                'asociados' => $asociados,'no_asociados' => $no_asociados]);
 
         }
 
 
-    }
+        public function gestion_multimedias_objeto(Request $request){
+
+
+
+            $ref = $request->input('ref');
+
+
+            $validator = Validator::make($request->all(), [
+                'ref' => 'required|integer|min:0|exists:fichaobjeto,ref',
+                'multimedia' => 'required_without:eliminar|exists:almacenmultimedia,idmutimedia',
+                'eliminar' => 'required_without:multimedia|exists:almacenmultimedia,idmutimedia',
+                'orden'   =>  'integer|min:0'
+
+            ]);
+
+
+
+
+            if($request->submit == "Asociar"){
+
+
+                if ($validator->fails()) {
+                    return redirect('/multimedias_objeto/' . $ref)->withErrors($validator);
+                }
+
+
+                $multimedia = $request->input('multimedia');
+                $orden = $request->input('orden');
+
+                DB::table('multimediaobjeto')->insert(['ref' => $ref, 'idmutimedia' => $multimedia,'orden' => $orden]);
+
+                return redirect('/multimedias_objeto/' . $ref)->with('success', 'Multimedia asociado correctamente');
+
+
+            }
+
+
+            if($request->submit == "Eliminar"){
+
+
+                if ($validator->fails()) {
+                    return redirect('/multimedias_objeto/' . $ref)->withErrors($validator);
+                }
+
+
+                $multimedia = $request->input('eliminar');
+
+                DB::table('multimediaobjeto')
+                    ->where('ref','=',$ref)
+                    ->where('idmutimedia','=',$multimedia)
+                    ->delete();
+
+                return redirect('/multimedias_objeto/' . $ref)->with('success', 'Asociacion multimedia eliminada correctamente');
+
+
+            }
+
+        }
+
+        public function get_pendientes($id){
+
+            $objeto = Objeto::find($id);
+            $completados = $objeto->camposCompletados();
+            $pendientes = $objeto->camposPendientes();
+
+
+
+
+            return view('catalogo.objetos.layout_pendiente',['objeto' => $objeto,
+                'completados' => $completados,'pendientes' => $pendientes]);
+
+        }
+
+
+        public function gestion_campos_pendientes(Request $request){
+
+
+            $ref = $request->input('ref');
+
+
+            $validator = Validator::make($request->all(), [
+                'ref' => 'required|integer|min:0|exists:fichaobjeto,ref',
+                'pendiente' => 'required_without:hecho|exists:camposobjeto,idcampo',
+                'hecho' => 'required_without:pendiente|exists:camposobjeto,idcampo',
+
+            ]);
+
+
+
+
+            if($request->submit == "Asociar"){
+
+
+                if ($validator->fails()) {
+                    return redirect('/multimedias_objeto/' . $ref)->withErrors($validator);
+                }
+
+
+                $pendiente = $request->input('pendiente');
+
+                DB::table('pendienteobjeto')->insert(['ref' => $ref, 'idcampo' => $pendiente]);
+
+                return redirect('/pendientes_objeto/' . $ref)->with('success', 'Campo añadido a pendientes');
+
+
+            }
+
+
+            if($request->submit == "Eliminar"){
+
+
+                if ($validator->fails()) {
+                    return redirect('/multimedias_objeto/' . $ref)->withErrors($validator);
+                }
+
+
+                $hecho = $request->input('hecho');
+
+                DB::table('pendienteobjeto')
+                    ->where('ref','=',$ref)
+                    ->where('idcampo','=',$hecho)
+                    ->delete();
+
+                return redirect('/pendientes_objeto/' . $ref)->with('success', 'Campo añadido a completados');
+
+
+            }
+
+        }
+
+
+        public function add_nota(Request $request){
+
+          
+        }
+
+
+
+
+
+
+
+
 
 
 }

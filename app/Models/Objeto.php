@@ -27,6 +27,7 @@ class Objeto extends Model
     }
 
     public function articulosAsociados(){
+
         $asociados = DB::table('articulos')
             ->join('publicadoen', function ($join) {
                 $join->on('articulos.idarticulo', '=', 'publicadoen.idarticulo')
@@ -52,6 +53,53 @@ class Objeto extends Model
         return $no_asociados;
 
 
+    }
+
+
+    public function multimediasAsociados(){
+
+        $asociados = DB::table('almacenmultimedia')
+            ->join('multimediaobjeto', function ($join) {
+                $join->on('almacenmultimedia.idmutimedia', '=', 'multimediaobjeto.idmutimedia')
+                    ->where('multimediaobjeto.ref', '=', $this->Ref);
+            })
+            ->get();
+
+        return $asociados;
+    }
+
+    public function multimediasNoAsociados(){
+
+        $no_asociados = DB::table('almacenmultimedia')->whereNotIn('almacenmultimedia.idmutimedia',function($q){
+            $q->select('multimediaobjeto.idmutimedia')->from('multimediaobjeto')->where('multimediaobjeto.ref','=',$this->Ref);
+        })
+            ->get();
+
+
+        return $no_asociados;
+
+    }
+
+    public function camposCompletados(){
+
+        $pendientes = DB::table('camposobjeto')->whereNotIn('camposobjeto.idcampo',function($q){
+            $q->select('pendienteobjeto.idcampo')->from('pendienteobjeto')->where('pendienteobjeto.ref','=',$this->Ref);
+        })
+            ->get();
+
+        return $pendientes;
+    }
+
+    public function camposPendientes(){
+
+        $pendientes = DB::table('camposobjeto')
+            ->join('pendienteobjeto', function ($join) {
+                $join->on('camposobjeto.idcampo', '=', 'pendienteobjeto.idcampo')
+                    ->where('pendienteobjeto.ref', '=', $this->Ref);
+            })
+            ->get();
+
+        return $pendientes;
     }
 
 }

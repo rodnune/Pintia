@@ -2,6 +2,7 @@
         <div class="post" style="padding-right: 10px; padding-left: 0px;">
 
         <h4 class="text-center" style="color: #000;">Notas</h4>
+            {{Form::open(array('action' => 'ObjetosController@add_nota','method' => 'post'))}}
         <textarea class="noresize notas" style="background: url(/images/lined_paper.png);background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" name="contenido-nota">
 
             </textarea>
@@ -11,6 +12,8 @@
 
         <br><br><button type="submit" name="accion" class="btn btn-sm btn-success" value="guardar-nota"><i class="fa fa-check"></i> Guardar nota</button></center>
                         </div>
+
+            {{Form::close()}}
 
         <hr>
         <h4 class="text-center" style="color: #000;">Secciones</h4>
@@ -43,8 +46,13 @@
 
         <br>
             <a href="/articulos_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Articulos"/></a>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"/>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/>
+        <br>
+
+            <a href="/multimedias_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"/></a>
+
+        <br>
+            <a href="/pendientes_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/></a>
+
 
 
             <hr><a href="/objetos" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Objetos / Salir</a>
