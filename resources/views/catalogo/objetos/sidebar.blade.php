@@ -44,9 +44,6 @@
         <form action="ficha_objeto.php" method="post" style="margin-top: 5px;">
         <input type="hidden" name="seccion" value="Formulario">
         <input type="hidden" name="ref" value='. $ref .'>
-
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="UE"/>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Tumba"/>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Articulos"/>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"/>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/>

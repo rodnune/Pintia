@@ -118,7 +118,7 @@
                        </table>
 
 
-                        <p class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($objetos)}}</strong></p>
+                        <p id="total" class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($objetos)}}</strong></p>
                             <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                                 <thead>
                                     <tr class="info">
@@ -160,22 +160,7 @@
                             </td>
 
 
-                            @if (Session::get('admin_level') > 0)
 
-
-                            @if('a')
-                                    <!--$row['user_id'] != NULL)-->
-                            <!--$queryx1 = 'SELECT admin_level FROM site_user WHERE user_id = '.$row['user_id'];
-                            $resultx1 = mysql_query($queryx1, $db) or die(mysql_error($db));
-                            $rowx1 = mysql_fetch_assoc($resultx1);
-                            $admin_level = $rowx1['admin_level'];
-                            mysql_free_result($resultx1);-->
-
-                            @else
-                            <!--$admin_level = 1;-->
-                            @endif
-
-                            @endif
 
                             @if(Session::get('admin_level') > 0)
                                     <td align="center">{{$objeto->VisibleCatalogo}}</td>
@@ -218,3 +203,4 @@ echo '<br/><p style="text-align:center">';-->
 </div>
 </div>
 </div>
+<script src="/js/results.js"></script>

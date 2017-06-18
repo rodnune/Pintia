@@ -98,7 +98,12 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         $objeto = DB::table('fichaobjeto')->where('ref','=',$id)->get()->first();
 
-        return view('catalogo.objetos.layout_datos_gen',['objeto' => $objeto]);
+        $ues = DB::table('unidadestratigrafica')->orderBy('ue')->get();
+        $tumbas = DB::table('tumba')->orderBy('idtumba')->get();
+
+
+
+        return view('catalogo.objetos.layout_datos_gen',['objeto' => $objeto,'uds_estratigraficas' => $ues,'tumbas' => $tumbas]);
 
 
     }
@@ -131,6 +136,54 @@ class ObjetosController extends \App\Http\Controllers\Controller
         $almacen = $request->input('almacen');
 
 
+
+        if($request->has('ue')){
+
+            $validator = Validator::make($request->all(), [
+                'ue' => 'exists:unidadestratigrafica,ue'
+                ]);
+
+            if ($validator->fails()) {
+                return redirect('/objeto_datos_generales/'.$ref)
+                    ->withErrors($validator);
+            }
+
+            $ue = $request->input('ue');
+
+
+        }else{
+
+           $ue = NULL;
+
+        }
+
+        if($request->input('es_tumba') == 'No') {
+            $tumba = NULL;
+
+        }else{
+
+
+
+            $validator = Validator::make($request->all(), [
+                'tumba' => 'exists:tumba,idtumba'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/objeto_datos_generales/' . $ref)
+                    ->withErrors($validator);
+            }
+
+            $tumba = $request->input('tumba');
+
+
+            }
+
+
+
+
+
+
+
         $validator = Validator::make($request->all(), [
 
             'ref'        => 'required|exists:fichaobjeto,ref',
@@ -153,10 +206,12 @@ class ObjetosController extends \App\Http\Controllers\Controller
                 ->withErrors($validator);
         }
 
+
+
         DB::table('fichaobjeto')->where('ref','=',$ref)
             ->update(['visiblecatalogo' => $visible,'anyocampanya' => $anyo,'numeroserie' => $num_serie,
             'esTumba' => $es_tumba,'cronologia' => $cronologia,'descripcion' => $descripcion,'forma' => $forma,
-            'decoracion' => $decoracion,'observaciones' => $observaciones,'almacen' => $almacen]);
+            'decoracion' => $decoracion,'observaciones' => $observaciones,'almacen' => $almacen,'ue' => $ue,'idtumba' => $tumba]);
 
 
         return redirect('/objeto_datos_generales/'.$ref)->with('success','Datos generales actualizados correctamente');

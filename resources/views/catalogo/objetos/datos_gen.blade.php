@@ -71,6 +71,7 @@
                             <tr>
                                 <td><strong>Nº de Serie </strong></td>
                                 <td><input class="form-control" type="text" name="num_serie" size="20" maxlength="255" value="{{$objeto->NumeroSerie}}"/></td>
+
                                 <td><strong>Es Tumba </strong></td>
                                 <td>
                                     @if($objeto->esTumba =='Si'){
@@ -82,6 +83,49 @@
                                     @endif
                                 </td>
                              </tr>
+
+                        <tr>
+
+                            <td><strong>UE</strong></td>
+                            <td>
+
+                            <select name="ue" style="width:60%">
+                                @if(count($uds_estratigraficas) > 0)
+                                    <option value="">Seleccione ue</option>
+                                    @foreach($uds_estratigraficas as $ud_estratigrafica)
+                                        @if($objeto->UE == $ud_estratigrafica->UE)
+                                    <option value="{{$ud_estratigrafica->UE}}" selected>{{$ud_estratigrafica->UE}}</option>
+                                        @else
+                                            <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                                        @endif
+                                    @endforeach
+                                    @else
+                                    <option selected disabled>No hay UE</option>
+                                @endif
+
+                            </select>
+                            </td>
+
+
+                            <td id="tumba"><strong>Tumba</strong></td>
+                            <td id="select_tumba">
+                                <select name="tumba" style="width:60%">
+                                    @if(count($tumbas) > 0)
+                                        @foreach($tumbas as $tumba)
+                                            <option value="{{$tumba->IdTumba}}">{{$tumba->IdTumba}}</option>
+                                        @endforeach
+                                    @else
+                                        <option selected disabled>No hay tumbas</option>
+                                    @endif
+
+
+                                </select>
+                            </td>
+
+
+
+
+                        </tr>
 
                             <tr>
                                 <td align="left"><strong>Cronolog&iacute;a</strong></td>
@@ -164,3 +208,4 @@
         </div>
     </div>
 </div>
+<script src="/js/objetos.js"></script>
