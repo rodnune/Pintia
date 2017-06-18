@@ -286,6 +286,72 @@ class ObjetosController extends \App\Http\Controllers\Controller
         return redirect('/localizacion_objeto/'.$ref)->with('success','Localizacion asignada con exito');
 
 
+    }
+
+
+    public function get_articulos($id){
+
+        $objeto = Objeto::find($id);
+
+        $asociados = $objeto->articulosAsociados();
+        $no_asociados = $objeto->articulosNoAsociados();
+
+
+
+        return view('catalogo.objetos.layout_articulos_objeto',['objeto' => $objeto,'asociados' => $asociados,
+            'no_asociados' => $no_asociados]);
+    }
+
+
+    public function gestion_articulos_objeto(Request $request){
+
+        $ref = $request->input('ref');
+
+        $validator = Validator::make($request->all(), [
+            'ref' => 'required|integer|min:0|exists:fichaobjeto,ref',
+            'articulo' => 'required_without:eliminar|exists:articulos,idarticulo',
+            'eliminar' => 'required_without:articulo|exists:articulos,idarticulo'
+
+        ]);
+
+
+        if($request->submit =='Asociar'){
+
+            if ($validator->fails()) {
+                return redirect('/articulos_objeto/'.$ref)->withErrors($validator);
+            }
+
+            $articulo = $request->input('articulo');
+
+            DB::table('publicadoen')->insert(['ref' => $ref,'idarticulo' => $articulo]);
+
+            return redirect('/articulos_objeto/'.$ref)->with('success','Articulo asociado correctamente');
+
+        }
+
+        if($request->submit == 'Eliminar'){
+
+
+
+            if ($validator->fails()) {
+                return redirect('/articulos_objeto/'.$ref)->withErrors($validator);
+            }
+
+            $articulo = $request->input('eliminar');
+
+            DB::table('publicadoen')
+                ->where('ref','=',$ref)
+                ->where('idarticulo','=',$articulo)
+                ->delete();
+
+            return redirect('/articulos_objeto/'.$ref)->with('success','Asociacion eliminada correctamente');
+
+
+
+
+
+
+        }
 
 
     }

@@ -37,18 +37,17 @@
                                        @endif
                            </td>
                           <td><strong>Tumba </strong></td>
-                            <!--<td>
-                                if($row['IdTumba'] != NULL){
-                                echo '<form  action="tumba.php" method="post">';
-                                    echo '<input type="hidden" name="seccion" value="Info">';
-                                    echo '<input type="hidden" name="anterior" value="objeto">';
-                                    echo '<input type="hidden" name="tumba" value="'. $row['IdTumba'] .'">';	//variable control
-                                    echo '<button type="submit" name="submit" class="btn btn-link" value="Ver">'. $row['IdTumba'] .'</button> ';
-                                    echo '</form>';
-                                }else{
-                                echo '<p>No existe tumba asociada.</p>';
-                                }
-                                echo '</td>';-->
+                            <td>
+                                @if($objeto->IdTumba != NULL)
+
+
+                             <a href="/tumba/{{$objeto->IdTumba}}" class="btn btn-link" value="Ver">{{$objeto->IdTumba}}</a>
+
+                                @else
+                                <p>No existe tumba asociada.</p>
+
+                                    @endif
+                                </td>
                            </tr>
                         <tr>
                            <td colspan="4" align="center" class="info"><h3>Partes objeto</h3></td>

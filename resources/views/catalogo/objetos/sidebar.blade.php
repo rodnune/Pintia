@@ -41,10 +41,8 @@
                 <a href="/localizacion_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"/></a>
 
 
-        <form action="ficha_objeto.php" method="post" style="margin-top: 5px;">
-        <input type="hidden" name="seccion" value="Formulario">
-        <input type="hidden" name="ref" value='. $ref .'>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Articulos"/>
+        <br>
+            <a href="/articulos_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Articulos"/></a>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"/>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/>
 

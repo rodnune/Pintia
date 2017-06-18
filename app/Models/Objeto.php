@@ -26,4 +26,32 @@ class Objeto extends Model
         return $partes;
     }
 
+    public function articulosAsociados(){
+        $asociados = DB::table('articulos')
+            ->join('publicadoen', function ($join) {
+                $join->on('articulos.idarticulo', '=', 'publicadoen.idarticulo')
+                    ->where('publicadoen.ref', '=', $this->Ref);
+            })
+            ->select('articulos.IdArticulo','articulos.Titulo')
+            ->get();
+
+        return $asociados;
+
+    }
+
+
+    public function articulosNoAsociados(){
+
+        $no_asociados = DB::table('articulos')->whereNotIn('articulos.idarticulo',function($q){
+            $q->select('publicadoen.idarticulo')->from('publicadoen')->where('publicadoen.ref','=',$this->Ref);
+        })
+            ->select('articulos.IdArticulo','articulos.Titulo')
+            ->get();
+
+
+        return $no_asociados;
+
+
+    }
+
 }

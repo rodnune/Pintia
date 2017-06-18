@@ -74,7 +74,7 @@
 
                                 <td><strong>Es Tumba </strong></td>
                                 <td>
-                                    @if($objeto->esTumba =='Si'){
+                                    @if($objeto->esTumba =='Si')
                                     <input type="radio" name="es_tumba" value="Si" checked="checked"/> Si &nbsp;&nbsp;&nbsp;
                                     <input type="radio" name="es_tumba" value="No" /> No
                                     @else

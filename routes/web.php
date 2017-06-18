@@ -250,6 +250,10 @@ Route::get('/localizacion_objeto/{id}','ObjetosController@get_localizacion');
 Route::post('/asignar_localizacion_objeto','ObjetosController@asignar_localizacion');
 
 
+//Articulos objeto
+Route::get('/articulos_objeto/{id}','ObjetosController@get_articulos');
+Route::post('/gestion_articulos_objeto','ObjetosController@gestion_articulos_objeto');
+
 
 
 
