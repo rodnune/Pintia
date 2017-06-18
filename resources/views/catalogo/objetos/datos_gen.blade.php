@@ -6,38 +6,21 @@
             <div id="content-edit" style="margin-top:20px;">
                 <div class="post">
                     <h1 class="text-center">Ficha Objeto Ref ({{$objeto->Ref}})</h1>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if (session('success'))
-                        <div class="col-md-12">
-                            <div class="alert alert-success alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="text-center"><i class="fa fa-thumbs-up fa-1x"></i>
-
-                                    {{session('success')}}
-                                </h4>
-                            </div>
-                        </div>
-                    @endif
+                    @include('errors.errores')
+                    @include('messages.success')
 
                     <br>
                     <br>
 
                    <table class="table table-hover table-bordered" rules="all">
+                       <form action="{{url('/objeto_update')}}" method="post">
+                       {{csrf_field()}}
                         <tbody>
                         <tr>
                            <td class="info" colspan="4" align="center" style="border: above"><h3>Datos Generales</h3></td>
                         </tr>
 
-                        {{Form::open(array('action' => 'ObjetosController@update_general_data','method' => 'post'))}}
+
                             <input type="hidden" name="ref" value='{{$objeto->Ref}}'>
 
 
@@ -52,7 +35,13 @@
                                     <input type="radio" name="visible" value="No" checked="checked"/> No
                                     @endif
                                 </td>
-                                <td><strong>A&ntilde;o Campa&ntilde;a </strong></td>
+
+                                @if($pendientes->has('Anyo'))
+                                    <td style="background-color: #F9F9E1;"><strong>Año Campaña </strong></td>
+                                @else
+                                    <td><strong>A&ntilde;o Campa&ntilde;a </strong></td>
+                                @endif
+
 
                                     <td>
                                 <select name="anyo" style="width:60%">
@@ -72,7 +61,12 @@
                                 <td><strong>Nº de Serie </strong></td>
                                 <td><input class="form-control" type="text" name="num_serie" size="20" maxlength="255" value="{{$objeto->NumeroSerie}}"/></td>
 
-                                <td><strong>Es Tumba </strong></td>
+                                @if($pendientes->has('Tumba'))
+                                    <td style="background-color: #F9F9E1;"><strong>Es Tumba </strong></td>
+                                @else
+                                    <td><strong>Es Tumba </strong></td>
+                                @endif
+
                                 <td>
                                     @if($objeto->esTumba =='Si')
                                     <input type="radio" name="es_tumba" value="Si" checked="checked"/> Si &nbsp;&nbsp;&nbsp;
@@ -86,7 +80,12 @@
 
                         <tr>
 
-                            <td><strong>UE</strong></td>
+                            @if($pendientes->has('UE'))
+                                <td style="background-color: #F9F9E1;"><strong>UE</strong></td>
+                            @else
+                                <td><strong>UE</strong></td>
+                            @endif
+
                             <td>
 
                             <select name="ue" style="width:60%">
@@ -128,7 +127,12 @@
                         </tr>
 
                             <tr>
-                                <td align="left"><strong>Cronolog&iacute;a</strong></td>
+
+                                @if($pendientes->has('Cronologia'))
+                                    <td align="left"style="background-color: #F9F9E1;"><strong>Cronolog&iacute;a</strong></td>
+                                @else
+                                    <td align="left"><strong>Cronolog&iacute;a</strong></td>
+                                @endif
                                 <td colspan="3">
 
 
@@ -139,7 +143,13 @@
                             </tr>
 
                             <tr>
-                                <td align="left"><strong>Descripci&oacute;n</strong></td>
+
+                                @if($pendientes->has('Descripcion'))
+                                    <td align="left"style="background-color: #F9F9E1;"><strong>Descripcion</strong></td>
+                                @else
+                                    <td align="left"><strong>Descripcion</strong></td>
+                                @endif
+
                                 <td colspan="3">
 
                                     <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" placeholder="Nueva descripcion" >{{$objeto->Descripcion}}</textarea>
@@ -148,7 +158,12 @@
                             </tr>
 
                             <tr>
-                                <td align="left"><strong>Forma</strong></td>
+                                @if($pendientes->has('Forma'))
+                                    <td align="left"style="background-color: #F9F9E1;"><strong>Forma</strong></td>
+                                @else
+                                    <td align="left"><strong>Forma</strong></td>
+                                @endif
+
                                 <td colspan="3">
 
 
@@ -158,7 +173,11 @@
                             </tr>
 
                             <tr>
-                                <td align="left"><strong>Decoraci&oacute;n</strong></td>
+                                @if($pendientes->has('Decoracion'))
+                                    <td align="left"style="background-color: #F9F9E1;"><strong>Decoracion</strong></td>
+                                @else
+                                    <td align="left"><strong>Decoracion</strong></td>
+                                @endif
                                 <td colspan="3">
 
 
@@ -169,7 +188,15 @@
                             </tr>
 
                             <tr>
-                                <td align="left"><strong>Observaciones</strong></td>
+                                @if($pendientes->has('Observaciones'))
+                                    <td align="left"style="background-color: #F9F9E1;"><strong>Observaciones</strong></td>
+                                @else
+                                    <td align="left"><strong>Observaciones</strong></td>
+                                @endif
+
+
+
+
                                 <td colspan="3">
 
 
@@ -180,7 +207,11 @@
                             </tr>
 
                             <tr>
-                                <td align="left"><strong>Almacen</strong></td>
+                                @if($pendientes->has('Almacen'))
+                                <td align="left"style="background-color: #F9F9E1;"><strong>Almacen</strong></td>
+                                @else
+                                    <td align="left"><strong>Almacen</strong></td>
+                                @endif
                                 <td colspan="3">
 
 
@@ -194,18 +225,22 @@
                         <tr>
                             <td colspan="4" align="center">
                                 <button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar cambios </button>
+
 							</td>
                         </tr>
 
-                   {{Form::close()}}
+
 
                         </tbody>
-            </table>
+                       </form>
+                   </table>
+
+                </div>
 
 
 </div>
             </div>
         </div>
     </div>
-</div>
+
 <script src="/js/objetos.js"></script>

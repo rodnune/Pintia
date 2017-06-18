@@ -102,4 +102,16 @@ class Objeto extends Model
         return $pendientes;
     }
 
+    public function notaSeccion($seccion){
+
+
+        $nota_seccion = DB::table('notasobjeto')
+            ->where('ref','=',$this->Ref)
+            ->where('seccion','=',$seccion)
+            ->get()
+            ->first();
+    }
+
+
+
 }

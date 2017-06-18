@@ -263,6 +263,7 @@ Route::get('/pendientes_objeto/{id}','ObjetosController@get_pendientes');
 Route::post('/gestion_campos_pendientes','ObjetosController@gestion_campos_pendientes');
 
 //Notas objeto
+Route::get('/notas_objeto/{id}','ObjetosController@get_notas');
 Route::post('/add_nota_objeto','ObjetosController@add_nota');
 
 

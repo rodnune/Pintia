@@ -7,6 +7,10 @@
                 <div class="post">
                     @include('errors.errores')
                     @include('messages.success')
+                    @if($pendientes->isNotEmpty())
+                        @include('messages.pendiente')
+                    @endif
+
                     <h1 class="text-center">Ficha Objeto Ref({{$objeto->Ref}})</h1><br><br>
 
                     <table class="table table-hover table-bordered" rules="all">

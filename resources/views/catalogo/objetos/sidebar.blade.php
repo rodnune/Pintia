@@ -1,27 +1,23 @@
 <div id="sidebar" style="float:left; margin:20px 35px 0 0;">
         <div class="post" style="padding-right: 10px; padding-left: 0px;">
+            @php
+                $id = $objeto->Ref
+            @endphp
 
         <h4 class="text-center" style="color: #000;">Notas</h4>
-            {{Form::open(array('action' => 'ObjetosController@add_nota','method' => 'post'))}}
-        <textarea class="noresize notas" style="background: url(/images/lined_paper.png);background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" name="contenido-nota">
 
+
+        <textarea class="noresize notas" style="background: url(/images/lined_paper.png);background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" disabled name="nota">
+Aqui la nota
             </textarea>
 
-                <div style="text-align:center">
 
-
-        <br><br><button type="submit" name="accion" class="btn btn-sm btn-success" value="guardar-nota"><i class="fa fa-check"></i> Guardar nota</button></center>
-                        </div>
-
-            {{Form::close()}}
 
         <hr>
         <h4 class="text-center" style="color: #000;">Secciones</h4>
         <p>
         </p>
-            @php
-            $id = $objeto->Ref
-            @endphp
+
 
                 <a href="/objeto_datos_generales/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/></a>
                 <br>
@@ -52,6 +48,9 @@
 
         <br>
             <a href="/pendientes_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/></a>
+        <br>
+            <a href="/notas_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Notas objeto"/></a>
+
 
 
 
@@ -68,3 +67,15 @@
       </p>
    </div>
 </div>
+<script>
+    /*$("button").click(function(){
+        $.post("/add_nota_objeto",
+            {
+                'ref': "Donald Duck",
+                city: "Duckburg"
+            },
+            function(data, status){
+                console.log('Success');
+            });
+    });*/
+</script>

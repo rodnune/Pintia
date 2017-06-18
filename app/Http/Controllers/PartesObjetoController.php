@@ -88,7 +88,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
 
 
         return view('catalogo.objetos.layout_parte_objeto',['objeto' => $objeto,'parte' => $parte,
-            'categorias' => $categorias]);
+            'categorias' => $categorias,'seccion' => 'ClasificacionYPartes']);
     }
 
     public function delete(Request $request){
@@ -171,7 +171,11 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
 
             $partes = $objeto->partesObjeto();
 
-            return view('catalogo.objetos.layout_medidas_partes',['objeto' => $objeto,'partes' => $partes ]);
+            $pendientes = $objeto->camposPendientes()->keyBy('NombreCampo')->only(['MedidasObjeto'])->all();
+            $pendiente = collect($pendientes);
+
+            return view('catalogo.objetos.layout_medidas_partes',['objeto' => $objeto,'partes' => $partes,
+            'pendientes' => $pendiente]);
 
         }
 
@@ -203,7 +207,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
 
 
             return view('catalogo.objetos.layout_medidas_parte',['objeto' => $objeto,'parte' => $parte,
-                'medidas' => $medidas,'asociadas' => $medidas_parte_objeto]);
+                'medidas' => $medidas,'asociadas' => $medidas_parte_objeto,'seccion' => 'MedidasObjeto']);
         }
 
 

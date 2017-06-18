@@ -5,17 +5,12 @@
             @include('catalogo.objetos.sidebar')
             <div id="content-edit" style="margin-top:20px;">
                 <div class="post">
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                    @include('errors.errores')
+
+
+                    @if($pendientes->isNotEmpty())
+                        @include('messages.pendiente')
                     @endif
-
-
 
                     <h1 class="text-center">Ficha Objeto Ref({{$objeto->Ref}})</h1><br><br>
 

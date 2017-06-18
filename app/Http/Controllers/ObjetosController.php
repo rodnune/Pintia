@@ -96,14 +96,18 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
     public function get_datos($id){
 
-        $objeto = DB::table('fichaobjeto')->where('ref','=',$id)->get()->first();
+
+
+        $objeto = Objeto::find($id);
 
         $ues = DB::table('unidadestratigrafica')->orderBy('ue')->get();
         $tumbas = DB::table('tumba')->orderBy('idtumba')->get();
 
+        $pendientes = $objeto->camposPendientes()->keyBy('NombreCampo')->all();
+        $pendientes = collect($pendientes);
 
-
-        return view('catalogo.objetos.layout_datos_gen',['objeto' => $objeto,'uds_estratigraficas' => $ues,'tumbas' => $tumbas]);
+        return view('catalogo.objetos.layout_datos_gen',['objeto' => $objeto,'uds_estratigraficas' => $ues,'tumbas' => $tumbas,
+            'seccion' => 'DatosGenerales','pendientes' => $pendientes]);
 
 
     }
@@ -115,9 +119,15 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         $partes = $objeto->partesObjeto();
 
+        $pendientes = $objeto->camposPendientes()->keyBy('NombreCampo')->only(['Clasificacion'])->all();
+        $pendiente = collect($pendientes);
 
 
-        return view('catalogo.objetos.layout_clasificacion_partes',['objeto' => $objeto,'partes' => $partes]);
+
+
+
+
+        return view('catalogo.objetos.layout_clasificacion_partes',['objeto' => $objeto,'partes' => $partes,'pendientes' => $pendiente]);
 
     }
 
@@ -227,7 +237,11 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         $partes = $objeto->partesObjeto();
 
-            return view('catalogo.objetos.layout_materiales_objeto',['objeto' => $objeto,'partes' => $partes ]);
+        $pendientes = $objeto->camposPendientes()->keyBy('NombreCampo')->only(['MaterialesObjeto'])->all();
+        $pendiente = collect($pendientes);
+
+            return view('catalogo.objetos.layout_materiales_objeto',['objeto' => $objeto,
+                'partes' => $partes,'pendientes' => $pendiente]);
     }
 
 
@@ -247,7 +261,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
         $no_asociados = $parte->materialesNoAsociados();
 
         return view('catalogo.objetos.layout_material_objeto',['objeto' => $objeto,'partes' => $partes_objeto,
-            'asociados' => $asociados,'no_asociados' => $no_asociados, 'parte' => $parte ]);
+            'asociados' => $asociados,'no_asociados' => $no_asociados, 'parte' => $parte,'seccion' => 'MaterialesObjeto' ]);
 
 
 
@@ -261,7 +275,11 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         $localizaciones = DB::table('localizacion')->get();
 
-        return view('catalogo.objetos.layout_localizacion',['objeto' => $objeto, 'localizaciones' => $localizaciones]);
+        $pendientes = $objeto->camposPendientes()->keyBy('NombreCampo')->only(['Localizacion'])->all();
+        $pendiente = collect($pendientes);
+
+        return view('catalogo.objetos.layout_localizacion',['objeto' => $objeto, 'localizaciones' => $localizaciones,
+        'pendientes' => $pendiente]);
     }
 
     public function asignar_localizacion(Request $request){
@@ -296,10 +314,13 @@ class ObjetosController extends \App\Http\Controllers\Controller
         $asociados = $objeto->articulosAsociados();
         $no_asociados = $objeto->articulosNoAsociados();
 
+        $pendientes = $objeto->camposPendientes()->keyBy('NombreCampo')->only(['Articulos'])->all();
+        $pendiente = collect($pendientes);
+
 
 
         return view('catalogo.objetos.layout_articulos_objeto',['objeto' => $objeto,'asociados' => $asociados,
-            'no_asociados' => $no_asociados]);
+            'no_asociados' => $no_asociados,'pendientes' => $pendiente]);
     }
 
 
@@ -357,8 +378,11 @@ class ObjetosController extends \App\Http\Controllers\Controller
             $asociados = $objeto->multimediasAsociados();
             $no_asociados = $objeto->multimediasNoAsociados();
 
+            $pendientes = $objeto->camposPendientes()->keyBy('NombreCampo')->only(['Multimedia'])->all();
+            $pendiente = collect($pendientes);
+
             return view('catalogo.objetos.layout_multimedia',['objeto' => $objeto,
-                'asociados' => $asociados,'no_asociados' => $no_asociados]);
+                'asociados' => $asociados,'no_asociados' => $no_asociados,'pendientes' => $pendiente]);
 
         }
 
@@ -495,9 +519,48 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
         public function add_nota(Request $request){
+                   $ref = $request->input('ref');
+                   $seccion = $request->input('seccion');
+                   $nota = $request->input('nota');
 
-          
+            $validator = Validator::make($request->all(), [
+                'ref' => 'required|integer|min:0|exists:fichaobjeto,ref',
+                'seccion' => 'required|string',
+                'nota' => 'required|string',
+
+            ]);
+
+            if ($validator->fails()) {
+                return redirect('/objeto_datos_generales/' . $ref)->withErrors($validator);
+            }
+
+            $objeto = Objeto::find($ref);
+
+
+            switch ($seccion) {
+                case "DatosGenerales":
+
+                    if(count($objeto->notaSeccion($seccion)) == 0){
+                        return 'Insertar';
+                    }
+                   break;
+                case "se corresponde con":
+
+                    break;
+
+
+            }
+
+
+
+            //DB::table('notasobjeto')->
+
+
+
         }
+
+
+
 
 
 
