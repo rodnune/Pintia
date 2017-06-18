@@ -53,7 +53,7 @@
                                             <option value="{{$medida->SiglasMedida}}">{{$medida->Denominacion}} ({{$medida->SiglasMedida}}/{{$medida->Unidades}})</option>
                                            @endforeach
                                            @else
-                                               <option value="" disabled>No hay medidas asociadas a la categoria del objeto</option>
+                                               <option value="" disabled>Todas las medidas asociadas</option>
                                                @endif
 
                                        </select>
@@ -83,39 +83,35 @@
                                  </tr>
 
 
+                            <tr>
+                                <td colspan="4" align="center"><strong>Medidas asociadas</strong></td></tr>
+                            <tr>
+                                <td colspan="3">
+                                    <select class="form-control" name="eliminar" size=7 style="width:100%">
+                                        @if(count($asociadas) > 0)
+                                            @foreach($asociadas as $asociada)
+                                                <option value="{{$asociada->SiglasMedida}}">{{$asociada->Denominacion}} ({{$asociada->SiglasMedida}}/{{$asociada->Unidades}}): {{$asociada->Valor}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </td>
+
+                                <td colspan="1" align="center">
+                                    <br><br>
+                                    <button class="btn btn-danger" type="submit" name="submit" value="Eliminar"><i class="fa fa-plus"></i> Eliminar medida </button>
+                                </td>
+                            </tr>
+
+                            {{Form::close()}}
+
+
 
                             @else
-                            <center><h4 class="text-center text-danger">El objeto aún no está clasificado.<br><br>Para añadir materiales al objeto clasificarlo en la sección <i>Clasificación y Partes</i>.</h4></center>
+                            <h4 class="text-center text-danger">Esta parte aun no esta clasificada.<br><br>Para clasificarla en la sección <i>Clasificación y Partes</i>.</h4>
                             @endif
 
 
 
-
-
-
-                                <!--$query4 = 'SELECT DISTINCT * FROM MedidasObjeto o, Medidas m WHERE o.SiglasMedida = m.SiglasMedida AND IdParte = '.$row['IdParte'];
-                                $result4 = mysql_query($query4, $db) or die(mysql_error());-->
-
-                                <tr>
-                                    <td colspan="4" align="center"><strong>Medidas asociadas</strong></td></tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <select class="form-control" name="medida_asoc" size=7 style="width:100%">
-                                            @if(count($asociadas) > 0)
-                                                @foreach($asociadas as $asociada)
-                                           <option value="{{$asociada->SiglasMedida}}">{{$asociada->Denominacion}} ({{$asociada->SiglasMedida}}/{{$asociada->Unidades}}): {{$asociada->Valor}}</option>
-                                                @endforeach
-                                                @endif
-                                        </select>
-                                    </td>
-
-                                    <td colspan="1" align="center">
-                                       <br><br>
-                                        <button class="btn btn-danger" type="submit" name="accion" value="eliminar_medida"><i class="fa fa-plus"></i> Eliminar medida </button>
-                                    </td>
-                                </tr>
-
-                            {{Form::close()}}
 
 
 

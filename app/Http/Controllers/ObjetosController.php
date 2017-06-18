@@ -200,5 +200,40 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
     }
 
+    public function get_localizacion($id){
+
+        $objeto = Objeto::find($id);
+
+        $localizaciones = DB::table('localizacion')->get();
+
+        return view('catalogo.objetos.layout_localizacion',['objeto' => $objeto, 'localizaciones' => $localizaciones]);
+    }
+
+    public function asignar_localizacion(Request $request){
+                $ref = $request->input('ref');
+                $localizacion = $request->input('localizacion');
+
+        $validator = Validator::make($request->all(), [
+            'ref' => 'required|integer|min:0|exists:fichaobjeto,ref',
+            'localizacion' => 'required|min:0|exists:localizacion,idlocalizacion',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/localizacion_objeto/'.$ref)->withErrors($validator);
+        }
+
+
+        DB::table('fichaobjeto')
+            ->where('ref','=',$ref)
+            ->update(['localizacion' => $localizacion]);
+
+        return redirect('/localizacion_objeto/'.$ref)->with('success','Localizacion asignada con exito');
+
+
+
+
+    }
+
 
 }

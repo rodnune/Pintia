@@ -6,8 +6,11 @@
 
             </textarea>
 
-        <center><br><br><button type="submit" name="accion" class="btn btn-sm btn-success" value="guardar-nota"><i class="fa fa-check"></i> Guardar nota</button></center>
+                <div style="text-align:center">
 
+
+        <br><br><button type="submit" name="accion" class="btn btn-sm btn-success" value="guardar-nota"><i class="fa fa-check"></i> Guardar nota</button></center>
+                        </div>
 
         <hr>
         <h4 class="text-center" style="color: #000;">Secciones</h4>
@@ -34,15 +37,9 @@
                         @endif
                         <br>
         <a href="/medidas_parte_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Medidas Objeto"/></a>
+                    <br>
+                <a href="/localizacion_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"/></a>
 
-        </form>
-
-        <form action="ficha_objeto.php" method="post" style="margin-top: 5px;">
-        <input type="hidden" name="seccion" value="Formulario">
-        <input type="hidden" name="ref" value='. $ref .'>
-
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"/>
-        </form>
 
         <form action="ficha_objeto.php" method="post" style="margin-top: 5px;">
         <input type="hidden" name="seccion" value="Formulario">

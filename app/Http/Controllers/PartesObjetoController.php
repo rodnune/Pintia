@@ -189,7 +189,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
            $medidas_categoria = collect($medidas_categoria);
            $medidas_subcategoria = collect($medidas_subcategoria);
 
-            
+
            $medidas = collect($medidas_categoria->union($medidas_subcategoria)->all());
 
            $medidas = $medidas->diffKeys($medidas_parte_objeto);
@@ -245,6 +245,33 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
 
 
 
+            }
+
+            if($request->submit == 'Eliminar'){
+                $ref = $request->input('ref');
+                $parte = $request->input('parte');
+                $medida = $request->input('eliminar');
+
+                $validator = Validator::make($request->all(), [
+                    'ref'     => 'required|integer|min:0|exists:fichaobjeto,ref',
+                    'parte'   => 'required|integer|min:0|exists:parteobjeto,idparte',
+                    'eliminar'  => 'required|min:0|exists:medidas,siglasmedida',
+
+
+
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect('/medidas_parte_objeto/'.$ref.'/'.$parte)->withErrors($validator);
+                }
+
+
+                DB::table('medidasobjeto')
+                    ->where('idparte','=',$parte)
+                    ->where('siglasmedida','=',$medida)
+                    ->delete();
+
+                return redirect('/medidas_parte_objeto/'.$ref.'/'.$parte)->with('success','Medida eliminada de la parte del objeto');
 
             }
 

@@ -245,6 +245,10 @@ Route::get('/medidas_parte_objeto/{id}','PartesObjetoController@get_medidas_part
 Route::get('/medidas_parte_objeto/{ref}/{id}','PartesObjetoController@get_medida_parte_objeto');
 Route::post('/gestion_medida_parte','PartesObjetoController@gestionar_medidas_parte');
 
+//Localizacion Objeto
+Route::get('/localizacion_objeto/{id}','ObjetosController@get_localizacion');
+Route::post('/asignar_localizacion_objeto','ObjetosController@asignar_localizacion');
+
 
 
 
