@@ -7,7 +7,7 @@ use App\Http\Middleware\CheckIfExperto;
 
 //Rutas generales
 Route::get('/', function () { return view('seccion_principal'); });
-Route::post('/index' , 'LoginController@is_user');
+Route::post('/' , 'LoginController@is_user');
 Route::get('/acerca_de',function(){return view('seccion_acerca_de');});
 Route::get('/logout','LogoutController@logout');
 Route::get('/contactar',function(){return view('seccion_contactar');});
@@ -265,6 +265,7 @@ Route::post('/gestion_campos_pendientes','ObjetosController@gestion_campos_pendi
 //Notas objeto
 Route::get('/notas_objeto/{id}','ObjetosController@get_notas');
 Route::post('/add_nota_objeto','ObjetosController@add_nota');
+Route::get('/notas_objeto_seccion/{id}/{seccion}','ObjetosController@get_nota_seccion');
 
 
 

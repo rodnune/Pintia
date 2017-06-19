@@ -110,6 +110,8 @@ class Objeto extends Model
             ->where('seccion','=',$seccion)
             ->get()
             ->first();
+
+        return $nota_seccion;
     }
 
 

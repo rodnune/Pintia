@@ -7,8 +7,10 @@
         <h4 class="text-center" style="color: #000;">Notas</h4>
 
 
-        <textarea class="noresize notas" style="background: url(/images/lined_paper.png);background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" disabled name="nota">
-Aqui la nota
+        <textarea class="noresize notas" style="background: url(/images/lined_paper.png);background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" disabled>
+            @if(isset($nota))
+                {{$nota->Contenido}}
+                @endif
             </textarea>
 
 
@@ -58,7 +60,6 @@ Aqui la nota
 
         <br/><button type="submit" name="subsec" class="btn btn-danger btn-block" value="Eliminar Ficha"><i class="fa fa-close"></i> Eliminar Ficha </button>
 
-       </form>
 
 
 
@@ -67,15 +68,3 @@ Aqui la nota
       </p>
    </div>
 </div>
-<script>
-    /*$("button").click(function(){
-        $.post("/add_nota_objeto",
-            {
-                'ref': "Donald Duck",
-                city: "Duckburg"
-            },
-            function(data, status){
-                console.log('Success');
-            });
-    });*/
-</script>

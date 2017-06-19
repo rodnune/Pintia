@@ -127,10 +127,7 @@ return [
         'viajes'       => 'Viajes',
         'otros'        => 'Otros'
 
-    ]
-
-
-
+    ],
 
 
 

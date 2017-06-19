@@ -82,13 +82,16 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
 
 
         $parte = DB::table('parteobjeto')->where('idparte','=',$id)->get()->first();
-        $objeto = DB::table('fichaobjeto')->where('ref','=',$parte->Ref)->get()->first();
 
+        $objeto = Objeto::find($parte->Ref);
         $categorias = DB::table('categoria')->get();
+
+        $nota = $objeto->notaSeccion('Clasificacion y Partes');
+
 
 
         return view('catalogo.objetos.layout_parte_objeto',['objeto' => $objeto,'parte' => $parte,
-            'categorias' => $categorias,'seccion' => 'ClasificacionYPartes']);
+            'categorias' => $categorias,'nota' => $nota]);
     }
 
     public function delete(Request $request){
@@ -174,8 +177,10 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
             $pendientes = $objeto->camposPendientes()->keyBy('NombreCampo')->only(['MedidasObjeto'])->all();
             $pendiente = collect($pendientes);
 
+            $nota = $objeto->notaSeccion('Medidas Objeto');
+
             return view('catalogo.objetos.layout_medidas_partes',['objeto' => $objeto,'partes' => $partes,
-            'pendientes' => $pendiente]);
+            'pendientes' => $pendiente,'nota' => $nota]);
 
         }
 
@@ -199,15 +204,11 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
            $medidas = $medidas->diffKeys($medidas_parte_objeto);
 
 
-
-
-
-
-
+            $nota = $objeto->notaSeccion('Medidas Objeto');
 
 
             return view('catalogo.objetos.layout_medidas_parte',['objeto' => $objeto,'parte' => $parte,
-                'medidas' => $medidas,'asociadas' => $medidas_parte_objeto,'seccion' => 'MedidasObjeto']);
+                'medidas' => $medidas,'asociadas' => $medidas_parte_objeto,'nota' => $nota]);
         }
 
 
