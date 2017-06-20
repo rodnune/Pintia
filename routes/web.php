@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Middleware\CheckIfExperto;
+use App\Models\Objeto;
 
 //Rutas generales
 Route::get('/', function () { return view('seccion_principal'); });
@@ -225,6 +226,7 @@ Route::post('/new_objeto','ObjetosController@create');
 Route::get('/objeto/{id}','ObjetosController@get_objeto');
 Route::get('/objeto_datos_generales/{id}','ObjetosController@get_datos');
 Route::post('/objeto_update','ObjetosController@update_general_data');
+Route::get('/search_objetos','ObjetosController@search');
 
 //Partes Objeto
 Route::get('/objeto_clasificacion_partes/{id}','ObjetosController@get_clasificacion_partes');
@@ -371,9 +373,6 @@ Route::post('/delete_perfil','UsuariosController@delete_profile');
 //otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');
 Route::get('/pruebas',function(){
-
-
-
 
 
 return view('pruebas');

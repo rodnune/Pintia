@@ -25,7 +25,122 @@ class ObjetosController extends \App\Http\Controllers\Controller
     public function index()
     {
 
-        $subcategorias = DB::table('categoria')->join('subcategoria', 'subcategoria.idcat', '=', 'categoria.idcat')
+        $subcategorias = DB::table('categoria')->leftJoin('subcategoria', 'subcategoria.idcat', '=', 'categoria.idcat')
+            ->select('categoria.denominacion as denominacioncat', 'subcategoria.denominacion as denominacionsubcat', 'categoria.idcat', 'subcategoria.idsubcat')
+            ->get();
+
+
+        $grouped = $subcategorias->groupBy('idcat');
+
+        $categorias = $grouped->toArray();
+
+
+        $materiales = DB::table('materiaprima')->orderBy('denominacion')->get();
+
+        $localizaciones = DB::table('localizacion')->get();
+
+        $materiales_grouped = DB::table('materialobjeto')
+            ->join('parteobjeto', 'materialobjeto.idparte', '=', 'parteobjeto.idparte')
+            ->join('materiaprima', 'materialobjeto.idmat', '=', 'materiaprima.idmat')
+            ->select(DB::raw('DISTINCT(materialobjeto.IdMat)'), 'materiaprima.Denominacion', 'parteobjeto.IdParte', 'parteobjeto.Ref as Ref')
+            ->get();
+
+
+        $materiales_objeto = $materiales_grouped->groupBy('Ref');
+
+
+        if (Session::get('admin_level') > 0) {
+            $objetos = DB::table('fichaobjeto')->orderBy('ref')->get();
+        } else {
+            $objetos = DB::table('fichaobjeto')->where('visiblecatalogo', '=', 'Si')->orderBy('ref')->get();
+        }
+
+
+        return view('catalogo.objetos.layout_objetos', ['categorias' => $categorias,
+            'materiales' => $materiales, 'localizaciones' => $localizaciones, 'objetos' => $objetos, 'materiales_objeto' => $materiales_objeto]);
+
+    }
+
+    public function search(Request $request,Objeto $objeto)
+    {
+
+
+        $_REQUEST['tipo'] = explode("-", $request->input('tipo'));
+
+        $datos_consulta = collect();
+
+        $objetos = $objeto->newQuery();
+
+        if ($request->has('tipo')) {
+
+
+            if (count($_REQUEST['tipo']) == 1) {
+                $objetos->whereIn('ref', function ($q) {
+                    $q->select('parteobjeto.ref')->from('parteobjeto')
+                        ->where('parteobjeto.idcat', '=', $_REQUEST['tipo'][0]);
+
+                });
+
+                $categoria = DB::table('categoria')->where('idcat','=', $_REQUEST['tipo'][0])->get()->first();
+                $datos_consulta->put('categoria', $categoria->Denominacion);
+            } else {
+
+                $objetos->whereIn('ref', function ($q) {
+                    $q->select('parteobjeto.ref')->from('parteobjeto')
+                        ->where('parteobjeto.idcat', '=', $_REQUEST['tipo'][0])
+                         ->where('parteobjeto.idsubcat', '=',$_REQUEST['tipo'][1]);
+
+                });
+
+                $categoria = DB::table('categoria')->where('idcat','=', $_REQUEST['tipo'][0])->get()->first();
+                $subcategoria = DB::table('subcategoria')
+                    ->where('idcat','=', $_REQUEST['tipo'][0])
+                    ->where('idsubcat','=',$_REQUEST['tipo'][1])
+                    ->get()->first();
+
+                $datos_consulta->put('categoria', $categoria->Denominacion);
+                $datos_consulta->put('subcategoria', $subcategoria->Denominacion);
+            }
+        }
+
+
+        if ($request->has('lugar')) {
+
+                $objetos->where('localizacion','=',$request->input('lugar'));
+
+            $localizacion = DB::table('localizacion')->where('idlocalizacion','=',$_REQUEST['lugar'])->get()->first();
+
+            $datos_consulta->put('sectortrama',$localizacion->SectorTrama);
+            $datos_consulta->put('sectorsubtrama',$localizacion->SectorSubtrama);
+            }
+
+            if($request->has('material')){
+
+
+
+                $objetos->whereIn('ref',function($q) {
+                    $q->select('parteobjeto.ref')->from('parteobjeto')
+                        ->whereIn('parteobjeto.idparte', function ($q2) {
+                            $q2->select('materialobjeto.idparte')->from('materialobjeto')
+                                ->where('materialobjeto.idmat', '=', $_REQUEST['material']);
+
+
+
+
+                        });
+                });
+
+
+                $material = DB::table('materiaprima')->where('idmat','=',$_REQUEST['material'])->first();
+                $datos_consulta->put('material',$material->Denominacion);
+
+
+                }
+
+
+
+
+        $subcategorias = DB::table('categoria')->leftJoin('subcategoria', 'subcategoria.idcat', '=', 'categoria.idcat')
             ->select('categoria.denominacion as denominacioncat', 'subcategoria.denominacion as denominacionsubcat', 'categoria.idcat', 'subcategoria.idsubcat')
             ->get();
 
@@ -47,26 +162,22 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         $materiales_objeto = $materiales_grouped->groupBy('Ref');
 
-        $materiales_filtrados = collect();
-        /*foreach ($materiales_objeto as $material) {
-
-            $unique = $material->unique('Denominacion')->groupBy('Ref');
-
-            $materiales_filtrados->push($unique);
-
-        }*/
 
         if (Session::get('admin_level') > 0) {
-            $objetos = DB::table('fichaobjeto')->orderBy('ref')->get();
+            $objetos = $objetos->get();
         } else {
-            $objetos = DB::table('fichaobjeto')->where('visiblecatalogo', '=', 'Si')->orderBy('ref')->get();
+            $objetos = $objetos->where('visiblecatalogo','=','Si')->get();
+        }
+
+        return view('catalogo.objetos.layout_objetos', ['categorias' => $categorias,
+            'materiales' => $materiales, 'localizaciones' => $localizaciones,
+            'objetos' => $objetos, 'materiales_objeto' => $materiales_objeto,'datos' => $datos_consulta]);
+
+
         }
 
 
-        return view('catalogo.objetos.layout_objetos', ['categorias' => $categorias,
-            'materiales' => $materiales, 'localizaciones' => $localizaciones, 'objetos' => $objetos, 'materiales_objeto' => $materiales_objeto]);
 
-    }
 
 
     public function create(Request $request)

@@ -18,6 +18,8 @@
                     <table class="table table-bordered table-hover" rules="rows">
 
 
+                        {{Form::open(array('action' => 'ObjetosController@search','method' => 'get'))}}
+
                             <tr id="fila_filtros">
 
                                <td align="center"><strong>Tipo: </strong></td>
@@ -30,11 +32,14 @@
                                             <option disabled>No hay tipos</option>
 
                                         @else
-                                            <option value="-1" selected>--- Seleccionar Tipo ---</option>
+                                            <option value="">--- Seleccionar Tipo ---</option>
                                             @foreach($categorias as $key => $value)
                                                 <option value="{{$categorias[$key][0]->idcat}}">{{$categorias[$key][0]->denominacioncat}}  (Todos los tipos)</option>
                                                 @foreach ($categorias[$key] as $key2 => $value2)
-                                                    <option value="">{{$categorias[$key][$key2]->denominacioncat}} ({{$categorias[$key][$key2]->denominacionsubcat}})</option>
+                                                    @if($categorias[$key][$key2]->idsubcat!=null)
+                                                       <option value="{{$categorias[$key][$key2]->idcat}}-{{$categorias[$key][$key2]->idsubcat}}">{{$categorias[$key][$key2]->denominacionsubcat}} ({{$categorias[$key][$key2]->denominacioncat}})</option>
+
+                                                        @endif
                                                 @endforeach
                                             @endforeach
                                         @endif
@@ -55,8 +60,8 @@
                                             <option disabled>No hay materiales</option>
 
                                         @else
-                                            <option value="-1" selected>--- Seleccionar Material ---</option>
 
+                                                 <option value="">--- Seleccionar Material ---</option>
                                             @foreach($materiales as $material)
                                                 <option value="{{$material->IdMat}}">{{$material->Denominacion}}</option>
                                             @endforeach
@@ -77,7 +82,7 @@
                                             <option disabled>No hay localizaciones</option>
 
                                         @else
-                                            <option value="-1" selected>--- Seleccionar Trama - Subtrama ---</option>
+                                                  <option value="">--- Seleccionar Localizacion ---</option>
                                             @foreach($localizaciones as $localizacion)
                                                 <option value="{{$localizacion->IdLocalizacion}}">{{$localizacion->SectorTrama}} - {{$localizacion->SectorSubtrama}}</option>
                                             @endforeach
@@ -88,12 +93,17 @@
                                 </td>
                             </tr>
 
+
+
+
+
                             <tr id="fila_botones_filtros">
                                 <td align="center" colspan="6">
                                     <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar objetos</button>
                                     <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
                                 </td>
                             </tr>
+                           {{Form::close()}}
 
                             <tr id="fila_ref" style="display:none;">
                                 <td><strong>Buscar por referencia objeto:</strong></td>
@@ -109,7 +119,27 @@
 
                         <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($objetos)}}</strong></p>
                             <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
-                                <thead>
+                                <p class="text-muted text-center">
+                                    @if(isset($datos))
+                                        @if($datos->has('categoria'))
+                                                  <strong>Categoria:</strong> {{$datos->get('categoria')}}
+                                           @endif
+                                        @if($datos->has('subcategoria'))
+                                                 <strong>Subcategoria:</strong> {{$datos->get('subcategoria')}}
+                                        @endif
+
+                                        @if($datos->has('material'))
+                                                <strong>Material:</strong> {{$datos->get('material')}}
+                                            @endif
+                                        @if($datos->has('sectortrama'))
+                                             <strong>Localizacion:</strong> {{$datos->get('sectortrama')}}-{{$datos->get('sectorsubtrama')}}
+                                        @endif
+
+                                        @endif
+
+
+                                </p>
+                                    <thead>
                                     <tr class="info">
                             <th scope="col" align="center"><strong>Ref</strong></th>
                             <th scope="col" align="center"><strong>Nº de Serie</strong></th>
@@ -200,62 +230,67 @@
 
 <script>
 
-
-
-
-
-
-
-
-
-
     var materiales_objeto = "{{ json_encode($materiales_objeto) }}";
 
     var fixedString = materiales_objeto.replace(/&quot;/g, '\"');
     var materiales_objeto = JSON.parse(fixedString);
 
-    console.log(materiales_objeto);
 
-
+     var madera = '#8B4513';
+     var hierro = '#B0E0E6';
+     var bronce = '#228B22';
+     var ceramica = '#FF8C00';
+     var vidrio  =  '#00FFFF';
+     var hueso   = '#F5F5DC';
 
 
 
     $.each(materiales_objeto, function(key, data) {
-        console.log(key);
-
-
-
-
-
 
 
         for (i = 0; i < data.length; i++) {
 
-            if(data[i].Denominacion == 'Madera'){
+            if (data[i].Denominacion == 'Madera') {
+                appendColor(key, madera);
+            }
 
+            if (data[i].Denominacion == 'Hierro') {
+
+                appendColor(key, hierro);
 
             }
 
-            if(data[i].Denominacion == 'Hierro'){
-
+            if (data[i].Denominacion == 'Bronce') {
+                appendColor(key, bronce);
             }
 
+            if (data[i].Denominacion == 'Cerámica') {
+                appendColor(key, ceramica);
+            }
 
+            if (data[i].Denominacion == 'Vidrio') {
 
+                appendColor(key, vidrio);
+            }
 
+            if (data[i].Denominacion == 'Hueso') {
+
+                appendColor(key, hueso);
+            }
         }
 
+    });
+
+
         function appendColor(key,color) {
-            $('#materialObjeto_' + key).append('<hr>')
-            $('#materialObjeto_' + key).find('hr').css("color", color)
-            $('#materialObjeto_' + key).find('hr').css("background-color", color)
+
+
+            $('#materialObjeto_' + key).append('<hr style>')
+            $('#materialObjeto_' + key).find('hr:last').css("color", color)
+            $('#materialObjeto_' + key).find('hr:last').css("background-color", color)
         }
         /*color: red;
         background-color: red;*/
-
-
-
-    });
 
 
 
