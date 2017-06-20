@@ -214,9 +214,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $tumbas = $tumbas->get();
 
-
-
-
+        
         $campanyas =  DB::table('tumba')->select('anyocampanya')->distinct()->orderBy('anyocampanya')->get();
 
         $tipos = DB::table('tipostumbas')->orderBy('denominacion')->get();

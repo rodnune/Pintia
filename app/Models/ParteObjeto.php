@@ -4,6 +4,7 @@ namespace app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\Categoria;
 
 class ParteObjeto extends Model
 {
@@ -72,5 +73,8 @@ class ParteObjeto extends Model
             return $medidas;
 
     }
+
+
+
 
 }

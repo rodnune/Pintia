@@ -53,7 +53,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
                 'titulo' => 'required|unique:almacenmultimedia,titulo',
                 'tipo' => 'required|in:' . implode(',', Config::get('enums.multimedia')),
-                'uploadfile' => 'mimes:png,jpg,gif,bmp'
+                'uploadfile' => 'mimes:png,jpg,gif,bmp,jpeg'
             ]);
 
             if ($validator->fails()) {

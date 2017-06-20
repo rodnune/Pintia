@@ -114,6 +114,35 @@ class Objeto extends Model
         return $nota_seccion;
     }
 
+    public function localizacion(){
+
+        $localizacion =DB::table('localizacion')
+            ->where('idlocalizacion','=',$this->Localizacion)
+            ->get()
+            ->first();
+
+        return $localizacion;
+
+
+    }
+
+    public function medidasObjeto(){
+
+        //$parte;
+
+
+        $medidas = DB::table('medidas')
+            ->join('medidasobjeto', function ($join) {
+                $join->on('medidasobjeto.siglasmedida', '=', 'medidas.siglasmedida')
+                    ->where('medidasobjeto.ref', '=', $this->Ref);
+            })
+            ->get();
+
+        return $medidas;
+
+
+    }
+
 
 
 }

@@ -9,6 +9,8 @@
 namespace app\Http\Controllers;
 
 use App\Models\ParteObjeto;
+use App\Models\Categoria;
+use App\Models\Subcategoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -42,6 +44,8 @@ class ObjetosController extends \App\Http\Controllers\Controller
         }else{
             $objetos = DB::table('fichaobjeto')->where('visiblecatalogo','=','Si')->orderBy('ref')->get();
         }
+
+
 
         return view('catalogo.objetos.layout_objetos',['categorias' => $categorias,
             'materiales' => $materiales, 'localizaciones' => $localizaciones,'objetos' => $objetos]);
@@ -86,11 +90,45 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
     public function get_objeto($id){
 
-       $objeto = DB::table('fichaobjeto')->where('ref','=',$id)->get()->first();
+       $objeto = Objeto::find($id);
 
 
 
-        return view('catalogo.objetos.layout_objeto',['objeto' => $objeto]);
+        $partes = collect($objeto->partesobjeto()->keyBy('IdParte')->all());
+
+        $multimedias = $objeto->multimediasAsociados();
+        $articulos    = $objeto->articulosAsociados();
+        $localizacion = $objeto->localizacion();
+        $medidas = $objeto->medidasObjeto();
+        $categorias = collect();
+        $subcategorias = collect();
+
+
+
+       foreach($partes as $parte) {
+
+
+           if (is_null($parte->idCat)) {
+               $categorias->put($parte->IdParte, null);
+
+           } else {
+               $categorias->put($parte->IdParte, Categoria::find($parte->idCat));
+           }
+
+           if (is_null($parte->IdSubcat)) {
+               $subcategorias->put($parte->IdParte, null);
+
+           } else {
+               $subcategorias->put($parte->IdParte, Subcategoria::find($parte->IdSubcat));
+           }
+
+       }
+
+
+
+        return view('catalogo.objetos.layout_objeto',['objeto' => $objeto,'partes' => $partes,
+            'categorias' => $categorias,'subcategorias' => $subcategorias,'multimedias' => $multimedias,
+            'articulos' => $articulos,'localizacion' => $localizacion,'medidas' => $medidas]);
     }
 
 
@@ -567,7 +605,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
        $nota_seccion = ObjetosController::get_nota_seccion($ref,$seccion,$request);
 
-        
+
         if(count($nota_seccion) == 0){
             DB::table('notasobjeto')->insert(['ref' => $ref,'seccion' => $seccion,'contenido' => $contenido]);
         }else {

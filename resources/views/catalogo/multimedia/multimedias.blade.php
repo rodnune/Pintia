@@ -7,12 +7,11 @@
                 <div class="post">
 <h1 class="text-center">Lista de Elementos Multimedia</h1><br><br>
 
-<!--TABLA DE FILTROS -->
 
                         <table class="table table-bordered table-hover" rules="all">
                             <tbody valign="top">
 
-                            <!-- FILTRAR POR TIPO MULTIMEDIA: FOTO, PLANIMETRIA... -->
+
                             <tr>
                                 <td align="center"><strong>Tipo Multimedia</strong></td>
                                 <td align="right">
