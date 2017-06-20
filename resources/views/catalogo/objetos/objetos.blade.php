@@ -8,17 +8,7 @@
 
                     <h1 class="text-center">Lista de Objetos</h1><br><br>
 
-                    @if (session('success'))
-                        <div class="col-md-12">
-                            <div class="alert alert-success alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="text-center"><i class="fa fa-thumbs-up fa-1x"></i>
-
-                                    {{session('success')}}
-                                </h4>
-                            </div>
-                        </div>
-                    @endif
+                @include('messages.success')
 
                     <div class="form-group">
                         <input id="verfiltro" type="radio" name="filtro" value="Si" checked> Buscar por filtro(s) &nbsp;&nbsp;&nbsp;
@@ -26,7 +16,6 @@
                     </div>
 
                     <table class="table table-bordered table-hover" rules="rows">
-
 
 
                             <tr id="fila_filtros">
@@ -124,6 +113,7 @@
                                     <tr class="info">
                             <th scope="col" align="center"><strong>Ref</strong></th>
                             <th scope="col" align="center"><strong>Nº de Serie</strong></th>
+                                        <th scope="col" align="center">Materiales<strong></strong></th>
                             <th scope="col" align="center"><strong>A&ntilde;o Campa&ntilde;a</strong></th>
                             <th scope="col" align="center"></th>
 
@@ -152,6 +142,10 @@
                         <tr>
                             <td align="center"><a>{{$objeto->Ref}}</a></td>
                             <td align="center">{{$objeto->NumeroSerie}}</td>
+                            <td id="materialObjeto_{{$objeto->Ref}}" align="center">
+
+                            </td>
+
                             <td align="center">{{$objeto->AnyoCampanya}}</td>
                             <td align="center">
 
@@ -192,10 +186,7 @@
 
 </tbody>
 </table>
-<!--if(mysql_num_rows($result) == 0){
-echo '<center><h4 class="text-danger">No se encuentran resultados.</h4></center>';
-}
-echo '<br/><p style="text-align:center">';-->
+
 
 
 </div>
@@ -204,3 +195,68 @@ echo '<br/><p style="text-align:center">';-->
 </div>
 </div>
 <script src="/js/results.js"></script>
+<link href="/css/materiales.css" rel="stylesheet">
+
+
+<script>
+
+
+
+
+
+
+
+
+
+
+    var materiales_objeto = "{{ json_encode($materiales_objeto) }}";
+
+    var fixedString = materiales_objeto.replace(/&quot;/g, '\"');
+    var materiales_objeto = JSON.parse(fixedString);
+
+    console.log(materiales_objeto);
+
+
+
+
+
+    $.each(materiales_objeto, function(key, data) {
+        console.log(key);
+
+
+
+
+
+
+
+        for (i = 0; i < data.length; i++) {
+
+            if(data[i].Denominacion == 'Madera'){
+
+
+            }
+
+            if(data[i].Denominacion == 'Hierro'){
+
+            }
+
+
+
+
+        }
+
+        function appendColor(key,color) {
+            $('#materialObjeto_' + key).append('<hr>')
+            $('#materialObjeto_' + key).find('hr').css("color", color)
+            $('#materialObjeto_' + key).find('hr').css("background-color", color)
+        }
+        /*color: red;
+        background-color: red;*/
+
+
+
+    });
+
+
+
+           </script>

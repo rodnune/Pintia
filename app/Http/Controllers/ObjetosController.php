@@ -22,11 +22,13 @@ use App\Models\Objeto;
 class ObjetosController extends \App\Http\Controllers\Controller
 {
 
-    public function index(){
+    public function index()
+    {
 
         $subcategorias = DB::table('categoria')->join('subcategoria', 'subcategoria.idcat', '=', 'categoria.idcat')
-            ->select('categoria.denominacion as denominacioncat','subcategoria.denominacion as denominacionsubcat' ,'categoria.idcat','subcategoria.idsubcat')
+            ->select('categoria.denominacion as denominacioncat', 'subcategoria.denominacion as denominacionsubcat', 'categoria.idcat', 'subcategoria.idsubcat')
             ->get();
+
 
         $grouped = $subcategorias->groupBy('idcat');
 
@@ -36,19 +38,33 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         $localizaciones = DB::table('localizacion')->get();
 
+        $materiales_grouped = DB::table('materialobjeto')
+            ->join('parteobjeto', 'materialobjeto.idparte', '=', 'parteobjeto.idparte')
+            ->join('materiaprima', 'materialobjeto.idmat', '=', 'materiaprima.idmat')
+            ->select(DB::raw('DISTINCT(materialobjeto.IdMat)'), 'materiaprima.Denominacion', 'parteobjeto.IdParte', 'parteobjeto.Ref as Ref')
+            ->get();
 
 
-        if(Session::get('admin_level') > 0 )
-        {
+        $materiales_objeto = $materiales_grouped->groupBy('Ref');
+
+        $materiales_filtrados = collect();
+        /*foreach ($materiales_objeto as $material) {
+
+            $unique = $material->unique('Denominacion')->groupBy('Ref');
+
+            $materiales_filtrados->push($unique);
+
+        }*/
+
+        if (Session::get('admin_level') > 0) {
             $objetos = DB::table('fichaobjeto')->orderBy('ref')->get();
-        }else{
-            $objetos = DB::table('fichaobjeto')->where('visiblecatalogo','=','Si')->orderBy('ref')->get();
+        } else {
+            $objetos = DB::table('fichaobjeto')->where('visiblecatalogo', '=', 'Si')->orderBy('ref')->get();
         }
 
 
-
-        return view('catalogo.objetos.layout_objetos',['categorias' => $categorias,
-            'materiales' => $materiales, 'localizaciones' => $localizaciones,'objetos' => $objetos]);
+        return view('catalogo.objetos.layout_objetos', ['categorias' => $categorias,
+            'materiales' => $materiales, 'localizaciones' => $localizaciones, 'objetos' => $objetos, 'materiales_objeto' => $materiales_objeto]);
 
     }
 
@@ -100,8 +116,10 @@ class ObjetosController extends \App\Http\Controllers\Controller
         $articulos    = $objeto->articulosAsociados();
         $localizacion = $objeto->localizacion();
         $medidas = $objeto->medidasObjeto();
+        $materiales = $objeto->materialesObjeto();
         $categorias = collect();
         $subcategorias = collect();
+
 
 
 
@@ -128,7 +146,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         return view('catalogo.objetos.layout_objeto',['objeto' => $objeto,'partes' => $partes,
             'categorias' => $categorias,'subcategorias' => $subcategorias,'multimedias' => $multimedias,
-            'articulos' => $articulos,'localizacion' => $localizacion,'medidas' => $medidas]);
+            'articulos' => $articulos,'localizacion' => $localizacion,'medidas' => $medidas,'materiales' => $materiales]);
     }
 
 

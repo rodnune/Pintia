@@ -293,16 +293,23 @@
                            <td colspan="4" align="center" class="info"><h3>Materiales Objeto</h3>
                        </tr>
 
-                       <!-- echo '<tr><tr><td colspan="4" align="center"><select class="form-control" name="id_mat_eli" size="6" style="width:100%" disabled="disabled">';
-                                    while($row3 = mysql_fetch_assoc($result3))
-                                    {
-                                    echo '<option value="' . $row3['IdMat'] . '">Material: ' . $row3['Denominacion'] . '</option>';
-                                    }
-                                    mysql_free_result($result3);
-                                    echo '</select>';
-                                echo '</td>';
-                            echo '</tr>';
-                        }//Materiales Objeto-->
+                       <tr>
+
+                       <td colspan="4" align="center">
+
+                               @if(count($materiales) > 0)
+                                   <select class="form-control" disabled size="7">
+                                       @foreach($materiales as $material)
+                                           <option>Material: {{$material->Denominacion}}</option>
+                                       @endforeach
+                                   </select>
+
+                               @else
+                                   No hay materiales asociados
+                               @endif
+                           </td>
+                       </tr>
+
 
                         <tr>
                             <td colspan="5" align="center" class="info"><h3>Medidas Asociadas al Objeto</h3></td>

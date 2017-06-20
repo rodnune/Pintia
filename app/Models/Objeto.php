@@ -128,8 +128,6 @@ class Objeto extends Model
 
     public function medidasObjeto(){
 
-        //$parte;
-
 
         $medidas = DB::table('medidas')
             ->join('medidasobjeto', function ($join) {
@@ -141,6 +139,21 @@ class Objeto extends Model
         return $medidas;
 
 
+    }
+
+    public function materialesObjeto(){
+
+
+        $materiales = DB::table('materialobjeto')
+            ->join('materiaprima', 'materialobjeto.idmat', '=', 'materiaprima.idmat')
+            ->whereIn('materialobjeto.idparte',function($q){
+                $q->select('parteobjeto.idparte')->from('parteobjeto')->where('parteobjeto.ref','=',$this->Ref);
+            })
+            ->distinct()->select('materiaprima.Denominacion','materialobjeto.IdMat')
+
+            ->get();
+
+        return $materiales;
     }
 
 
