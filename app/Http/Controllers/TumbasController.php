@@ -78,11 +78,13 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $tumba = Tumba::where('IdTumba','=',$id)->get()->first();
 
+        $ud_estratigraficas = DB::table('unidadestratigrafica')->orderBy('ue')->get(['UE']);
 
 
 
 
-        return view('catalogo.tumbas.layout_update',['tumba' => $tumba]);
+
+        return view('catalogo.tumbas.layout_update',['tumba' => $tumba,'uds_estratigraficas' => $ud_estratigraficas]);
     }
 
 
@@ -96,10 +98,11 @@ class TumbasController extends \App\Http\Controllers\Controller
                 $organizacion = $request->input('organizacion');
                 $restos_humanos   = $request->input('restos');
                 $ofrendas         = $request->input('ofrendas');
+                $ue = $request->input('ue');
 
 
         $validator = Validator::make($request->all(), [
-
+            'id_tumba' => 'required|exists:tumba,idtumba',
             'anyo' => 'numeric|min:1970|max:' . date("Y") ,
             'neonato' => 'in:' . implode(',', Config::get('enums.bool')),
             'conservacion' => 'string',
@@ -107,22 +110,27 @@ class TumbasController extends \App\Http\Controllers\Controller
             'composicion' => 'string',
             'organizacion' => 'string',
             'restos' => 'string',
-            'ofrendas' => 'string'
+            'ofrendas' => 'string',
+            'ue'    => 'nullable|exists:unidadestratigrafica,ue'
 
 
         ]);
 
         if ($validator->fails()) {
-            return TumbasController::form_update($request)->withErrors($validator);
+            return redirect('/tumba/'.$id.'/datos_generales')->withErrors($validator);
+        }
+        if(!$request->has('ue')){
+            
+         $ue = NULL;
         }
 
 
         DB::table('tumba')->where('IdTumba','=',$id)->update(['NeonatoCasa' => $neonato,
             'AnyoCampanya' => $anyo,'Conservacion' => $conservacion,'Estructura' => $estructura,
         'Composicion' => $composicion,'OrganizacionYJerarquia' => $organizacion,'RestosHumanos' => $restos_humanos,
-        'OfrendasAnimales' => $ofrendas]);
+        'OfrendasAnimales' => $ofrendas,'UE' => $ue]);
 
-        return redirect('/tumba/'.$id);
+        return redirect('/tumba/'.$id.'/datos_generales')->with('success','Datos modificados correctamente');
 
 
 
@@ -160,13 +168,13 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     public function search(Request $request,Tumba $tumba){
 
-        $datos_consulta = array();
+        $datos_consulta = collect();
         $tumbas =  $tumba->newQuery();
 
         if($request->has('anio')){
             $tumbas->where('AnyoCampanya', $request->input('anio'));
 
-                array_push($datos_consulta,$request->input('anio'));
+                $datos_consulta->put('anio',$request->input('anio'));
         }
 
         if($request->has('tipo_tumba')){
@@ -181,19 +189,19 @@ class TumbasController extends \App\Http\Controllers\Controller
 
             });
 
-            $tipo_tumba = DB::table('tipostumbas')->where('idtipotumba','=',$_REQUEST['tipo_tumba'])->get(['Denominacion']);
+            $tipo_tumba = DB::table('tipostumbas')->where('idtipotumba','=',$_REQUEST['tipo_tumba'])->get()->first();
 
 
-            array_push($datos_consulta,$tipo_tumba);
-
+            $datos_consulta->put('tipo',$tipo_tumba->Denominacion);
             }
 
         if($request->has('lugar')){
             $tumbas->where('localizacion', $request->input('lugar'));
 
-            $lugar = DB::table('localizacion')->where('IdLocalizacion','=',$request->input('lugar'))->get();
+            $lugar = DB::table('localizacion')->where('IdLocalizacion','=',$request->input('lugar'))->get()->first();
 
-            array_push($datos_consulta,$lugar);
+            $datos_consulta->put('sector_trama',$lugar->SectorTrama);
+            $datos_consulta->put('sector_subtrama',$lugar->SectorSubtrama);
 
 
 
@@ -249,13 +257,13 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba_tipos/'.$id)->withErrors($validator);
+            return redirect('/tumba/'.$id.'/tipos')->withErrors($validator);
         }
 
         DB::table('tumbaesdetipo')->insert(['IdTumba' => $id,'IdTipoTumba'=> $tipo]);
 
 
-        return redirect('/tumba_tipos/'.$id);
+        return redirect('/tumba/'.$id.'/tipos')->with('success','Tipo de tumba asociado correctamente');
     }
 
     public function eliminar_asoc_tipo_tumba(Request $request){
@@ -272,7 +280,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba_tipos/'.$id)->withErrors($validator);
+            return redirect('/tumba/'.$id.'/tipos')->withErrors($validator);
         }
 
 
@@ -282,7 +290,7 @@ class TumbasController extends \App\Http\Controllers\Controller
             ->delete();
 
 
-        return redirect('/tumba_tipos/'.$id);
+        return redirect('/tumba/'.$id.'/tipos')->with('success','Asociacion eliminada correctamente');
     }
 
     public function cremaciones_tumba($id){
@@ -314,12 +322,12 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba_cremaciones/'.$id)->withErrors($validator);
+            return redirect('/tumba/'.$id .'/cremaciones')->withErrors($validator);
         }
 
         DB::table('cremacionestumba')->insert(['IdTumba' => $id,'IdCremacion'=> $cremacion]);
 
-        return redirect('/tumba_cremaciones/'.$id);
+        return redirect('/tumba/'.$id .'/cremaciones')->with('success','Cremacion asociada correctamente');
     }
 
     public function eliminar_asoc_cremacion(Request $request){
@@ -335,7 +343,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba_cremaciones/'.$id)->withErrors($validator);
+            return redirect('/tumba/'.$id .'/cremaciones')->withErrors($validator);
         }
 
 
@@ -347,7 +355,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        return redirect('/tumba_cremaciones/'.$id);
+        return redirect('/tumba/'.$id .'/cremaciones')->with('success','Asociacion eliminada correctamente');
     }
 
 
@@ -380,12 +388,13 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba_inhumaciones/'.$id)->withErrors($validator);
+
+            return redirect('/tumba/'.$id.'/inhumaciones')->withErrors($validator);
         }
 
         DB::table('inhumacionestumba')->insert(['IdTumba' => $id,'IdEnterramiento'=> $inhumacion]);
 
-        return redirect('/tumba_inhumaciones/'.$id);
+        return redirect('/tumba/'.$id.'/inhumaciones')->with('success','Inhumacion asociada correctamente');
     }
 
     public function eliminar_asoc_inhumacion(Request $request){
@@ -401,7 +410,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba_inhumaciones/'.$id)->withErrors($validator);
+            return redirect('/tumba/'.$id.'/inhumaciones')->withErrors($validator);
         }
 
         DB::table('inhumacionestumba')
@@ -409,7 +418,7 @@ class TumbasController extends \App\Http\Controllers\Controller
             ->where('IdEnterramiento','=',$inhumacion)
             ->delete();
 
-        return redirect('/tumba_inhumaciones/'.$id);
+        return redirect('/tumba/'.$id.'/inhumaciones')->with('success','Asociacion eliminada correctamente');
     }
 
     public function localizacion_tumba($id){
@@ -464,52 +473,8 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     }
 
-    public function ue_tumba($id){
-        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
-
-        $tumba = Tumba::where('IdTumba','=',$id)->first();
-
-        $ue = $tumba->ue();
-        $no_asociadas = $tumba->ueNoAsociadas();
 
 
-
-
-        return view('catalogo.tumbas.layout_ue_tumba',['tumba'=> $tumba_sidebar[0] ,'ue' => $ue->first(),'no_asociadas' => $no_asociadas]);
-
-    }
-
-    public function asociar_ue(Request $request){
-
-        $id = $request->input('id');
-        $ue = $request->input('ue');
-
-        $validator = Validator::make($request->all(), [
-            'ue' => 'required|exists:unidadestratigrafica,ue',
-        ]);
-
-
-        if ($validator->fails()) {
-            return redirect('/tumba_ue/'.$id)->withErrors($validator);
-        }
-
-
-
-        DB::table('tumba')->where('IdTumba','=',$id)
-            ->update(['UE' => $ue]);
-
-        return redirect('/tumba_ue/'.$id)->with('update','Actualizado');
-    }
-
-    public function eliminar_asoc_ue(Request $request){
-        $id = $request->input('id');
-
-
-        DB::table('tumba')->where('IdTumba','=',$id)
-            ->update(['UE' => NULL]);
-
-        return redirect('/tumba_ue/'.$id);
-    }
 
     public function ofrendas_tumba($id){
 

@@ -7,6 +7,7 @@
                 <div class="post">
 
                     @include('errors.errores')
+                    @include('messages.success')
 
 
                     <h1 class="text-center">Ficha Tumba ({{$tumba->IdTumba}})</h1>
@@ -35,6 +36,8 @@
 
 
 
+
+
                                 <td align="right"><strong>A&ntilde;o Campa&ntilde;a:</strong></td>
 
                                 <td>
@@ -51,6 +54,27 @@
 
                                 </td>
                          </tr>
+
+                        <td align="left"><strong>UE</strong></td>
+
+                        <td>
+                            <select name="ue" style="width:60%">
+                                <option value="">Seleccionar UE</option>
+                                @foreach($uds_estratigraficas as $ud_estratigrafica)
+
+                                    @if($tumba->UE == $ud_estratigrafica->UE)
+                                        <option value="{{$ud_estratigrafica->UE}}" selected="selected">{{$ud_estratigrafica->UE}}</option>
+                                    @else
+                                        <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+
+                        </td>
+
+                        <tr>
+
+                        </tr>
                             <tr>
                                <td align="center"><strong>Conservaci&oacute;n</strong></td>
                                 <td colspan="3">

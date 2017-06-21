@@ -76,17 +76,22 @@
 
                             </table>
                         <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
-                               <p class="text-muted text-center"><strong>Total de resultados encontrados: {{count($tumbas)}}</strong></p>
+                               <p id="total" class="text-muted text-center"><strong>Total de resultados encontrados: {{count($tumbas)}}</strong></p>
                             <p class="text-muted text-center">
-                            @if(isset($datos[0]))
-                                <strong>Año: </strong>{{$datos[0]}}
-                             @if(isset($datos[1]))
-                                <strong>Tipo tumba:  </strong>{{$datos[1][0]->Denominacion}}
-                                 @endif
-                                    @if(isset($datos[2]))
-                                        <strong>Lugar:  </strong>{{$datos[2][0]->SectorTrama}}
+                                @if(isset($datos))
+                                    @if($datos->has('anio'))
+                                        <strong>Año campaña:</strong> {{$datos->get('anio')}}
                                     @endif
-                            @endif
+                                    @if($datos->has('tipo'))
+                                        <strong>Tipo Tumba:</strong> {{$datos->get('tipo')}}
+                                    @endif
+
+                                    @if($datos->has('sector_trama'))
+                                        <strong>Localizacion:</strong> {{$datos->get('sector_trama')}}-{{$datos->get('sector_subtrama')}}
+                                    @endif
+
+
+                                @endif
                             </p>
                         <thead>
                         <tr class="info">
@@ -107,6 +112,7 @@
                     </thead>
                             <tbody>
 
+                            @if(count($tumbas) > 0)
                         @foreach($tumbas as $tumba)
                        <tr>
                             <td align="center">{{$tumba->IdTumba}}</td>
@@ -127,7 +133,7 @@
 
 
 
-                                    <a href="/tumba_datos_generales/{{$tumba->IdTumba}}" type="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
+                                    <a href="/tumba/{{$tumba->IdTumba}}/datos_generales" type="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
 
                            </td>
 
@@ -136,15 +142,20 @@
 
                        </tr>
                             @endforeach
+                                @else
+                                <h4 class="text-danger text-center">No se encuentran resultados.</h4>
+                                @endif
+
+
+
+
                             </tbody>
                    </table>
-                        <!--if(mysql_num_rows($result)==0){
-                        echo '<center><h4 class="text-danger">No se encuentran resultados.</h4></center>';
-                        }
-                        echo '<br/>';-->
+
 
                     </div>
                     </div>
                 </div>
             </div>
         </div>
+<script src="/js/results.js"></script>

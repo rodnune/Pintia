@@ -160,23 +160,23 @@ Route::get('/search_cremaciones','CremacionesController@search');
 Route::get('/tumbas','TumbasController@index');
 Route::get('/new_tumba',function(){return view('catalogo.tumbas.layout_new_tumba');});
 Route::post('/new_tumba','TumbasController@create');
-Route::get('/tumba_datos_generales/{id}','TumbasController@get_datos');
+Route::get('/tumba/{id}/datos_generales','TumbasController@get_datos');
 Route::post('/edit_tumba','TumbasController@update');
 Route::get('/tumba/{id}','TumbasController@get');
 Route::get('/search_tumba','TumbasController@search');
 
 //tipos de tumbas de una tumba
-Route::get('/tumba_tipos/{id}','TumbasController@index_tipos');
+Route::get('/tumba/{id}/tipos','TumbasController@index_tipos');
 Route::post('/tumba_tipos/asociar','TumbasController@asociar_tipo_tumba');
 Route::post('/tumba_tipos/delete','TumbasController@eliminar_asoc_tipo_tumba');
 
 //cremaciones de una tumba
-Route::get('/tumba_cremaciones/{id}','TumbasController@cremaciones_tumba');
+Route::get('/tumba/{id}/cremaciones','TumbasController@cremaciones_tumba');
 Route::post('/tumba_cremaciones/asociar','TumbasController@asociar_cremacion');
 Route::post('/tumba_cremaciones/delete','TumbasController@eliminar_asoc_cremacion');
 
 //inhumaciones de una tumba
-Route::get('/tumba_inhumaciones/{id}','TumbasController@inhumaciones_tumba');
+Route::get('/tumba/{id}/inhumaciones','TumbasController@inhumaciones_tumba');
 Route::post('/tumba_inhumaciones/asociar','TumbasController@asociar_inhumacion');
 Route::post('/tumba_inhumaciones/delete','TumbasController@eliminar_asoc_inhumacion');
 
