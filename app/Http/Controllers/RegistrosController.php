@@ -18,7 +18,9 @@ class RegistrosController extends \App\Http\Controllers\Controller
 
     public function index(){
 
-        return view('gestion.registros.layout_registros');
+      $registros =   DB::table('registro')->get();
+
+        return view('gestion.registros.layout_registros',['registros' => $registros]);
     }
 
 }

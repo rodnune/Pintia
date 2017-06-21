@@ -37,22 +37,12 @@ class TumbasController extends \App\Http\Controllers\Controller
             'campanyas' => $campanyas, 'tipos' => $tipos,'localizaciones' => $localizaciones]);
     }
 
-    public function form_create(){
-
-            return view('catalogo.tumbas.layout_new_tumba');
-    }
 
     public function create(Request $request){
 
         $id = $request ->input('id_tumba');
 
-
-
-
-
         $validator = Validator::make($request->all(), [
-
-
 
             'id_tumba' => 'required|unique:tumba,IdTumba',
         ]);
@@ -64,7 +54,7 @@ class TumbasController extends \App\Http\Controllers\Controller
                 ->withErrors($validator);
         }
 
-        DB::table('tumba')->insert(['IdTumba' => $id]);
+        DB::table('tumba')->insert(['idtumba' => $id,'user_id' => Session::get('user_id') ]);
 
 //REGISTRAR ENTRADA por Arqueólogo Novel Y Experto
         if ((Session::get('admin_level') == 1) || (Session::get('admin_level') == 2)) {
@@ -74,28 +64,25 @@ class TumbasController extends \App\Http\Controllers\Controller
                 ->insert(['user_id' => Session::get('user_id'), 'Fecha' => $fecha,
                     'IdTumba' => $id, 'admin_level' => Session::get('admin_level')]);
 
-
         }
 
 
 
 
-        return redirect('/tumbas');
+        return redirect('/tumbas')->with('success', 'Tumba creada con exito');
     }
 
 
-    public function form_update(Request $request){
-
-        $id = $request->input('id');
+    public function get_datos($id){
 
 
-        $tumba = DB::table('tumba')->where('IdTumba','=',$id)->get();
+        $tumba = Tumba::where('IdTumba','=',$id)->get()->first();
 
 
 
 
 
-        return view('catalogo.tumbas.layout_update',['tumba' => $tumba[0]]);
+        return view('catalogo.tumbas.layout_update',['tumba' => $tumba]);
     }
 
 

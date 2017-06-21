@@ -329,7 +329,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
                 ]);
 
             if ($validator->fails()) {
-                return redirect('/objeto_datos_generales/'.$ref)
+                return redirect('/objeto/'.$ref.'/datos_generales')
                     ->withErrors($validator);
             }
 
@@ -354,7 +354,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('/objeto_datos_generales/' . $ref)
+                return redirect('/objeto/' . $ref .'/datos_generales')
                     ->withErrors($validator);
             }
 
@@ -387,7 +387,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/objeto_datos_generales/'.$ref)
+            return redirect('/objeto/'.$ref.'/datos_generales')
                 ->withErrors($validator);
         }
 
@@ -399,7 +399,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
             'decoracion' => $decoracion,'observaciones' => $observaciones,'almacen' => $almacen,'ue' => $ue,'idtumba' => $tumba]);
 
 
-        return redirect('/objeto_datos_generales/'.$ref)->with('success','Datos generales actualizados correctamente');
+        return redirect('/objeto/'.$ref.'/datos_generales')->with('success','Datos generales actualizados correctamente');
 
 
 
@@ -475,7 +475,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/localizacion_objeto/'.$ref)->withErrors($validator);
+            return redirect('/objeto/'.$ref.'/localizacion')->withErrors($validator);
         }
 
 
@@ -483,7 +483,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
             ->where('ref','=',$ref)
             ->update(['localizacion' => $localizacion]);
 
-        return redirect('/localizacion_objeto/'.$ref)->with('success','Localizacion asignada con exito');
+        return redirect('/objeto/'.$ref.'/localizacion')->with('success','Localizacion asignada con exito');
 
 
     }
@@ -524,14 +524,14 @@ class ObjetosController extends \App\Http\Controllers\Controller
         if ($request->submit == 'Asociar') {
 
             if ($validator->fails()) {
-                return redirect('/articulos_objeto/' . $ref)->withErrors($validator);
+                return redirect('/objeto/' . $ref .'/articulos')->withErrors($validator);
             }
 
             $articulo = $request->input('articulo');
 
             DB::table('publicadoen')->insert(['ref' => $ref, 'idarticulo' => $articulo]);
 
-            return redirect('/articulos_objeto/' . $ref)->with('success', 'Articulo asociado correctamente');
+            return redirect('/objeto/' . $ref .'/articulos')->with('success', 'Articulo asociado correctamente');
 
         }
 
@@ -539,7 +539,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
             if ($validator->fails()) {
-                return redirect('/articulos_objeto/' . $ref)->withErrors($validator);
+                return redirect('/objeto/' . $ref .'/articulos')->withErrors($validator);
             }
 
             $articulo = $request->input('eliminar');
@@ -549,7 +549,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
                 ->where('idarticulo', '=', $articulo)
                 ->delete();
 
-            return redirect('/articulos_objeto/' . $ref)->with('success', 'Asociacion eliminada correctamente');
+            return redirect('/objeto/' . $ref .'/articulos')->with('success', 'Asociacion eliminada correctamente');
 
 
         }
@@ -593,9 +593,8 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
             if($request->submit == "Asociar"){
 
-
                 if ($validator->fails()) {
-                    return redirect('/multimedias_objeto/' . $ref)->withErrors($validator);
+                    return redirect('/objeto/'.$ref.'/multimedias')->withErrors($validator);
                 }
 
 
@@ -604,7 +603,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
                 DB::table('multimediaobjeto')->insert(['ref' => $ref, 'idmutimedia' => $multimedia,'orden' => $orden]);
 
-                return redirect('/multimedias_objeto/' . $ref)->with('success', 'Multimedia asociado correctamente');
+                return redirect('/objeto/'.$ref.'/multimedias')->with('success', 'Multimedia asociado correctamente');
 
 
             }
@@ -625,7 +624,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
                     ->where('idmutimedia','=',$multimedia)
                     ->delete();
 
-                return redirect('/multimedias_objeto/' . $ref)->with('success', 'Asociacion multimedia eliminada correctamente');
+                return redirect('/objeto/'.$ref.'/multimedias')->with('success', 'Asociacion multimedia eliminada correctamente');
 
 
             }
@@ -667,7 +666,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
                 if ($validator->fails()) {
-                    return redirect('/multimedias_objeto/' . $ref)->withErrors($validator);
+                    return redirect('/objeto/'.$ref.'/pendientes')->withErrors($validator);
                 }
 
 
@@ -675,7 +674,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
                 DB::table('pendienteobjeto')->insert(['ref' => $ref, 'idcampo' => $pendiente]);
 
-                return redirect('/pendientes_objeto/' . $ref)->with('success', 'Campo añadido a pendientes');
+                return redirect('/objeto/'.$ref.'/pendientes')->with('success', 'Campo añadido a pendientes');
 
 
             }
@@ -685,7 +684,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
                 if ($validator->fails()) {
-                    return redirect('/multimedias_objeto/' . $ref)->withErrors($validator);
+                    return redirect('/objeto/'.$ref.'/pendientes')->withErrors($validator);
                 }
 
 
@@ -696,7 +695,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
                     ->where('idcampo','=',$hecho)
                     ->delete();
 
-                return redirect('/pendientes_objeto/' . $ref)->with('success', 'Campo añadido a completados');
+                return redirect('/objeto/'.$ref.'/pendientes')->with('success', 'Campo añadido a completados');
 
 
             }
@@ -729,7 +728,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/notas_objeto/' . $ref)->withErrors($validator);
+            return redirect('/objeto/' . $ref. '/notas')->withErrors($validator);
         }
 
        $nota_seccion = ObjetosController::get_nota_seccion($ref,$seccion,$request);
@@ -744,7 +743,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
                 ->update(['contenido' => $contenido]);
         }
 
-        return redirect('/notas_objeto/'.$ref)->with('success','Notada guardada correctamente');
+        return redirect('/objeto/' . $ref. '/notas')->with('success','Notada guardada correctamente');
 
 
 

@@ -6,16 +6,7 @@
                 <div class="post">
 
                     <h1 class="text-center">Nueva Tumba</h1><br>
-
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                            @include('errors.errores')
 
                     <table class="table table-bordered" rules="none">
                        <tbody>
@@ -35,7 +26,9 @@
                         {{Form::close()}}
                        </tbody>
                     </table>
-                    <center><a href="/tumbas" class="btn btn-danger"><i class="fa fa-times"></i> Cancelar/Lista Tumbas</a></center>
+                    <div style="text-align:center">
+                    <a href="/tumbas" class="btn btn-danger"><i class="fa fa-times"></i> Cancelar/Lista Tumbas</a>
+                </div>
 
                 </div>
             </div>

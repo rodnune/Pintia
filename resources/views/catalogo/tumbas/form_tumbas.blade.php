@@ -7,7 +7,7 @@
 
 
                     <h1 class="text-center">Lista de Tumbas</h1><br><br>
-
+                        @include('messages.success')
 
                         <div class="form-group">
                             <input id="verfiltro" type="radio" name="filtro" value="Si" checked> Buscar por filtro(s) &nbsp;&nbsp;&nbsp;
@@ -90,7 +90,7 @@
                             </p>
                         <thead>
                         <tr class="info">
-                            <th scope="col" align="center"><center><strong>Id Tumba</strong></center></th>
+                            <th scope="col" align="center"><p class="text-center"></p><strong>Id Tumba</strong></th>
                             <th scope="col" align="center"><center><strong>A&ntilde;o Campa&ntilde;a</strong></center></th>
 
                             <th scope="col" align="center"><strong></strong></th>
@@ -124,11 +124,11 @@
 
 
                            <td align="center">
-                               {{Form::open(array('action' => 'TumbasController@form_update', 'method' => 'get'))}}
 
-                               <input type="hidden" name="id" value="{{$tumba->IdTumba}}">
-                                    <button type="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
-                                {{Form::close()}}
+
+
+                                    <a href="/tumba_datos_generales/{{$tumba->IdTumba}}" type="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
+
                            </td>
 
 

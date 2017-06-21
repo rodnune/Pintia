@@ -21,7 +21,6 @@
 
 
                                     <select class="form-control" name="selec_orden" style="width:100%">
-                                        <option value="-1" selected="selected">Mostrar todos los registros</option>
                                         <option value="Ref">Mostrar Objetos</option>
                                         <option value="IdTumba">Mostrar Tumbas</option>
                                         <option value="IdEnterramiento">Mostrar Inhumaciones</option>
@@ -66,8 +65,45 @@
                            </tr>
                        </thead>
                         <tbody>
-                        </tbody>
+                        <tr>
+                           <td align="center">
+
+                                Objeto ('. $row['Ref'] .')
+
+                           </td>
+
+                            <td align="center">' . $row2['first_name'] . '</td>
+                            <td align="center">' . $row2['last_name'] . '</td>
+
+
+                           <td align="center">' . $fecha . '</td>
+                            <td align="center">
+                              <button type="submit" name="submit" class="btn btn-info" value="Ver"><i class="fa fa-eye"></i> Ver</button>
+                                </td>
+
+                            <td align="center">
+
+                                <form action="ficha_objeto.php" method="post">
+                                    <input type="hidden" name="seccion" value="Formulario">
+                                   <input type="hidden" name="subsec" value="Datos Generales">
+                                    <input type="hidden" name="ref" value=' . $row['Ref'] . '>
+                                    <input type="hidden" name="anterior" value="registro"/>
+                                    <button type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
+                                </form>
+
+
+                              </td>
+
+
+                           </tr>
+
+                       </tbody>
                     </table>
+
+
+                    <div style="text-align:center">
+                    <h4 class="text-danger">No hay registros pendientes.</h4>
+                    </div>
 
                 </div>
             </div>

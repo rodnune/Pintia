@@ -64,7 +64,7 @@
                                 </td>
 
                                 <td colspan="1" align="center">
-                                    <a href="/parte_objeto/{{$parte->IdParte}}" class="btn btn-primary"  type="submit"><i class="fa fa-pencil-square-o"></i> Gestionar </a>
+                                    <a href="/objeto/{{$objeto->Ref}}/parte/{{$parte->IdParte}}" class="btn btn-primary"  type="submit"><i class="fa fa-pencil-square-o"></i> Gestionar </a>
                                 </td>
                                {{Form::open(array('action' => 'PartesObjetoController@delete','method' => 'delete'))}}
                                              <input type="hidden" name="parte" value="{{$parte->IdParte}}">

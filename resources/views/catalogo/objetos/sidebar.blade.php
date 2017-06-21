@@ -21,11 +21,11 @@
         </p>
 
 
-                <a href="/objeto_datos_generales/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/></a>
+                <a href="/objeto/{{$id}}/datos_generales"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/></a>
                 <br>
-                <a href="/objeto_clasificacion_partes/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Clasificación y Partes"/></a>
+                <a href="/objeto/{{$id}}/clasificacion_partes"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Clasificación y Partes"/></a>
                 <br>
-                <a href="/materiales_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Materiales Objeto"/></a>
+                <a href="/objeto/{{$id}}/materiales"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Materiales Objeto"/></a>
                 <br>
                 @if(is_null($objeto->IdAnalisisMatalografico))
 
@@ -37,21 +37,21 @@
 
                         @endif
                         <br>
-        <a href="/medidas_parte_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Medidas Objeto"/></a>
+        <a href="/objeto/{{$id}}/medidas"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Medidas Objeto"/></a>
                     <br>
-                <a href="/localizacion_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"/></a>
+                <a href="/objeto/{{$id}}/localizacion"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"/></a>
 
 
         <br>
-            <a href="/articulos_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Articulos"/></a>
+            <a href="/objeto/{{$id}}/articulos"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Articulos"/></a>
         <br>
 
-            <a href="/multimedias_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"/></a>
+            <a href="/objeto/{{$id}}/multimedias"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"/></a>
 
         <br>
-            <a href="/pendientes_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/></a>
+            <a href="/objeto/{{$id}}/pendientes"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/></a>
         <br>
-            <a href="/notas_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Notas objeto"/></a>
+            <a href="/objeto/{{$id}}/notas"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Notas objeto"/></a>
 
 
 

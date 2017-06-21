@@ -30,14 +30,12 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/objeto_clasificacion_partes/'. $ref)->withErrors($validator);
+            return redirect('/objeto/'. $ref.'/clasificacion_partes')->withErrors($validator);
         }
 
         DB::table('parteobjeto')->insert(['ref' => $ref , 'denominacion' => $parte]);
 
-        return redirect('/objeto_clasificacion_partes/'. $ref)->with('success','Parte objeto creada correctamente');
-
-
+        return redirect('/objeto/'. $ref.'/clasificacion_partes')->with('success','Parte objeto creada correctamente');
 
 
     }
@@ -56,7 +54,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/parte_objeto/'. $ref)->withErrors($validator);
+            return redirect('/objeto/'.$ref.'/parte/'.$parte)->withErrors($validator);
         }
 
         if($cat == 0){
@@ -75,7 +73,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
             ->where('idparte','=',$parte)
             ->update(['idcat' => $cat,'idsubcat' => $subcat]);
 
-        return redirect('/parte_objeto/'. $parte)->with('success','Cambios guardados correctamente');
+        return redirect('/objeto/'.$ref.'/parte/'.$parte)->with('success','Cambios guardados correctamente');
     }
 
     public function get_parte($id){
@@ -105,7 +103,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return redirect('/objeto_clasificacion_partes/'. $ref)->withErrors($validator);
+            return redirect('/objeto/'. $ref.'/clasificacion_partes')->withErrors($validator);
         }
 
 
@@ -113,7 +111,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
             ->where('idparte','=',$parte)
             ->delete();
 
-        return redirect('/objeto_clasificacion_partes/'. $ref)->with('success','Parte de objeto eliminada correctamente');
+        return redirect('/objeto/'. $ref.'/clasificacion_partes')->with('success','Parte de objeto eliminada correctamente');
     }
 
     public function gestion_materiales_parte(Request $request){
@@ -132,12 +130,11 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('/material_parte_objeto/'.$ref.'/'.$parte)->withErrors($validator);
+                return redirect('/objeto/'.$ref.'/parte/'.$parte.'/material')->withErrors($validator);
             }
 
             DB::table('materialobjeto')->insert(['idparte' => $parte, 'idmat' => $material]);
-
-            return redirect('/material_parte_objeto/'.$ref.'/'.$parte)->with('success','Material asociado al objeto correctamente');
+            return redirect('/objeto/'.$ref.'/parte/'.$parte.'/material')->with('success','Material asociado al objeto correctamente');
         }
 
         if ($request->submit == 'Eliminar'){
@@ -149,7 +146,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('/material_parte_objeto/'.$ref.'/'.$parte)->withErrors($validator);
+                return redirect('/objeto/'.$ref.'/parte/'.$parte.'/material')->withErrors($validator);
             }
 
             DB::table('materialobjeto')
@@ -157,7 +154,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                 ->where('idmat','=',$material)
                 ->delete();
 
-            return redirect('/material_parte_objeto/'.$ref.'/'.$parte)->with('success','Material eliminado del objeto correctamente');
+            return redirect('/objeto/'.$ref.'/parte/'.$parte.'/material')->with('success','Material eliminado del objeto correctamente');
         }
 
 
@@ -237,7 +234,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                  ]);
 
                 if ($validator->fails()) {
-                    return redirect('/medidas_parte_objeto/'.$ref.'/'.$parte)->withErrors($validator);
+                    return redirect('/objeto/'.$ref.'/parte/'.$parte.'/medidas')->withErrors($validator);
                 }
 
 
@@ -246,7 +243,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                     'ref' => $ref,'idparte' => $parte,'siglasmedida' => $medida
                     ,'valor' => $valor,'esposible' => $posible]);
 
-                return redirect('/medidas_parte_objeto/'.$ref.'/'.$parte)->with('success','Medida añadida a la parte del objeto');
+                return redirect('/objeto/'.$ref.'/parte/'.$parte.'/medidas')->with('success','Medida añadida a la parte del objeto');
 
 
 
@@ -267,7 +264,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/medidas_parte_objeto/'.$ref.'/'.$parte)->withErrors($validator);
+                    return redirect('/objeto/'.$ref.'/parte/'.$parte.'/medidas')->withErrors($validator);
                 }
 
 
@@ -276,7 +273,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                     ->where('siglasmedida','=',$medida)
                     ->delete();
 
-                return redirect('/medidas_parte_objeto/'.$ref.'/'.$parte)->with('success','Medida eliminada de la parte del objeto');
+                return redirect('/objeto/'.$ref.'/parte/'.$parte.'/medidas')->with('success','Medida eliminada de la parte del objeto');
 
             }
 

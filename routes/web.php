@@ -158,9 +158,9 @@ Route::get('/search_cremaciones','CremacionesController@search');
 
 //tumbas
 Route::get('/tumbas','TumbasController@index');
-Route::get('/new_tumba','TumbasController@form_create');
+Route::get('/new_tumba',function(){return view('catalogo.tumbas.layout_new_tumba');});
 Route::post('/new_tumba','TumbasController@create');
-Route::get('/edit_tumba','TumbasController@form_update');
+Route::get('/tumba_datos_generales/{id}','TumbasController@get_datos');
 Route::post('/edit_tumba','TumbasController@update');
 Route::get('/tumba/{id}','TumbasController@get');
 Route::get('/search_tumba','TumbasController@search');
@@ -224,48 +224,48 @@ Route::get('/objetos','ObjetosController@index');
 Route::get('/new_objeto',function(){return view('catalogo.objetos.layout_new_objeto');});
 Route::post('/new_objeto','ObjetosController@create');
 Route::get('/objeto/{id}','ObjetosController@get_objeto');
-Route::get('/objeto_datos_generales/{id}','ObjetosController@get_datos');
+Route::get('/objeto/{id}/datos_generales','ObjetosController@get_datos');
 Route::post('/objeto_update','ObjetosController@update_general_data');
 Route::get('/search_objetos','ObjetosController@search');
 
 //Partes Objeto
-Route::get('/objeto_clasificacion_partes/{id}','ObjetosController@get_clasificacion_partes');
+Route::get('/objeto/{id}/clasificacion_partes','ObjetosController@get_clasificacion_partes');
 Route::post('/add_parte_objeto','PartesObjetoController@addParte');
-Route::get('/parte_objeto/{id}','PartesObjetoController@get_parte');
+Route::get('/objeto/{ref}/parte/{id}','PartesObjetoController@get_parte');
 Route::post('/gestionar_parte_objeto','PartesObjetoController@update');
 Route::delete('/delete_parte_objeto','PartesObjetoController@delete');
 
 //MaterialesObjeto
 
-Route::get('/materiales_objeto/{id}','ObjetosController@get_materiales_objeto');
+Route::get('/objeto/{id}/materiales','ObjetosController@get_materiales_objeto');
 Route::post('/gestionar_material_parte','PartesObjetoController@gestion_materiales_parte');
-Route::get('/material_parte_objeto/{id}/{ref}','ObjetosController@get_material_objeto');
+Route::get('/objeto/{ref}/parte/{id}/material','ObjetosController@get_material_objeto');
 
 //Medidas Parte Objeto
 
-Route::get('/medidas_parte_objeto/{id}','PartesObjetoController@get_medidas_parte_objeto');
-Route::get('/medidas_parte_objeto/{ref}/{id}','PartesObjetoController@get_medida_parte_objeto');
+Route::get('/objeto/{ref}/medidas','PartesObjetoController@get_medidas_parte_objeto');
+Route::get('/objeto/{ref}/parte/{id}/medidas','PartesObjetoController@get_medida_parte_objeto');
 Route::post('/gestion_medida_parte','PartesObjetoController@gestionar_medidas_parte');
 
 //Localizacion Objeto
-Route::get('/localizacion_objeto/{id}','ObjetosController@get_localizacion');
+Route::get('/objeto/{id}/localizacion','ObjetosController@get_localizacion');
 Route::post('/asignar_localizacion_objeto','ObjetosController@asignar_localizacion');
 
 
 //Articulos objeto
-Route::get('/articulos_objeto/{id}','ObjetosController@get_articulos');
+Route::get('/objeto/{id}/articulos','ObjetosController@get_articulos');
 Route::post('/gestion_articulos_objeto','ObjetosController@gestion_articulos_objeto');
 
 //Multimedias objeto
-Route::get('/multimedias_objeto/{id}','ObjetosController@get_multimedias');
+Route::get('/objeto/{id}/multimedias','ObjetosController@get_multimedias');
 Route::post('/gestion_multimedias_objeto','ObjetosController@gestion_multimedias_objeto');
 
 //Campos pendiente objeto
-Route::get('/pendientes_objeto/{id}','ObjetosController@get_pendientes');
+Route::get('/objeto/{id}/pendientes','ObjetosController@get_pendientes');
 Route::post('/gestion_campos_pendientes','ObjetosController@gestion_campos_pendientes');
 
 //Notas objeto
-Route::get('/notas_objeto/{id}','ObjetosController@get_notas');
+Route::get('/objeto/{id}/notas','ObjetosController@get_notas');
 Route::post('/add_nota_objeto','ObjetosController@add_nota');
 Route::get('/notas_objeto_seccion/{id}/{seccion}','ObjetosController@get_nota_seccion');
 

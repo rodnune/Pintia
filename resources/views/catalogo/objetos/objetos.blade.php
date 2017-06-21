@@ -199,7 +199,7 @@
 <td align="center" colspan="1">
 
 
-    <a href="/objeto_datos_generales/{{$objeto->Ref}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar </a>
+    <a href="/objeto/{{$objeto->Ref}}/datos_generales" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar </a>
 
 <br>
 

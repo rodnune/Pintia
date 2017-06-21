@@ -6,15 +6,7 @@
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
 
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    @include('errors.errores')
 
 
                     <h1 class="text-center">Ficha Tumba ({{$tumba->IdTumba}})</h1>
@@ -179,7 +171,7 @@
                                     <tr>
                                     <td colspan="4" align="center"><button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar cambios </button>
                                         {{Form::close()}}
-                                        <a href="tumbas" class="btn btn-danger" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista de tumbas </a>
+                                        <a href="/tumbas" class="btn btn-danger" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista de tumbas </a>
                                                                 </td>
                                     </tr>
 

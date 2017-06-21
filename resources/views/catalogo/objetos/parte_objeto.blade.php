@@ -100,7 +100,7 @@
                     <center>
                         <button class="btn btn-success" name="submit" type="submit"><i class="fa fa-check"></i> Guardar cambios </button>
                     {{Form::close()}}
-                        <a href="/objeto_clasificacion_partes/{{$objeto->Ref}}" class="btn btn-primary" type="submit"><i class="fa fa-arrow-left"></i> Volver atrás </a>
+                        <a href="/objeto/{{$objeto->Ref}}/clasificacion_partes" class="btn btn-primary" type="submit"><i class="fa fa-arrow-left"></i> Volver atrás </a>
 
                     </center>
 

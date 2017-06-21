@@ -37,7 +37,7 @@
                                     </td>
 
                                     <td colspan="1" align="center">
-                                        <a href="/medidas_parte_objeto/{{$objeto->Ref}}/{{$parte->IdParte}}" class="btn btn-primary"  type="submit"><i class="fa fa-pencil-square-o"></i> Gestionar </a>
+                                        <a href="/objeto/{{$objeto->Ref}}/parte/{{$parte->IdParte}}/medidas" class="btn btn-primary"  type="submit"><i class="fa fa-pencil-square-o"></i> Gestionar </a>
                                     </td>
 
                                 </tr>
