@@ -73,18 +73,37 @@
                             </tr>
 
                            <tr>
-                                <td colspan="2" align="left"><strong>Tipos de Tumba Asociados</strong></td><td colspan="2">
+                                <td colspan="2" align="left"><strong>Tipos de Tumba Asociados</strong></td>
+                               @if(count($tipos_tumba) > 0)
+                               <td colspan="2">
                                     <select class="form-control" name="" size="8" style="width:100%" disabled="disabled">
+
                                                 @foreach($tipos_tumba as $tipo_tumba)
                                         <option value="">{{$tipo_tumba->Denominacion}}</option>
                                                 @endforeach
+
+
+
                                     </select>
 
                                </td>
+                                   @else
+                                   <td colspan="2" align="center">
+                                       <p class="text-danger">No hay tipos de tumba asociados</p>
+                                   </td>
+                                   @endif
+
+                           </tr>
+
+                            <tr>
+
+                            </tr>
                            </tr>
                             <tr>
 
-                                <td colspan="2" align="left"><strong>Cremaciones Asociadas</strong></td><td colspan="2">
+                                <td colspan="2" align="left"><strong>Cremaciones Asociadas</strong></td>
+                                @if(count($cremaciones) > 0)
+                                <td colspan="2">
                                     <select class="form-control" name="" size="8" style="width:100%" disabled="disabled">
                                             @foreach($cremaciones as $cremacion)
                                         <option value=""> IdCremacion: {{$cremacion->IdCremacion}} ----- CodigoPropio: {{$cremacion->CodigoPropio}}</option>
@@ -92,10 +111,17 @@
                                     </select>
 
                                  </td>
+                                    @else
+                                    <td colspan="2" align="center">
+                                        <p class="text-danger">No hay cremaciones asociadas</p>
+                                    </td>
+                                @endif
                             </tr>
 
                             <tr>
-                                <td colspan="2" align="left"><strong>Inhumaciones Asociadas</strong></td><td colspan="2">
+                                <td colspan="2" align="left"><strong>Inhumaciones Asociadas</strong></td>
+                                @if(count($inhumaciones) > 0)
+                                <td colspan="2">
                                     <select class="form-control" name="" size="8" style="width:100%" disabled="disabled">
 
                                         @foreach($inhumaciones as $inhumacion)
@@ -104,25 +130,32 @@
                                             @endforeach
                                     </select>
                                 </td>
+                                    @else
+                                    <td colspan="2" align="center">
+                                        <p class="text-danger">No hay inhumaciones asociadas</p>
+                                    </td>
+                                @endif
                             </tr>
                             <tr>
                                <td colspan="2" align="left"><strong>Objetos Asociados</strong></td>
                                 <td colspan="2">
 
-                                    <form  action="ficha_objeto.php" method="post">
 
-                                   <p class="text-danger">No hay objetos asociados</p>
+                                    @if(count($objetos) == 0 ){
+                                    <p class="text-danger">No hay objetos asociados</p>
+                                    @else
 
+                                    @foreach($objetos as $objeto)
 
+                                    @if(($objeto->VisibleCatalogo == "Si") || Session::get('admin_level') > 1)
 
-                                    <!--if(($row7['VisibleCatalogo'] == "Si") OR ($_SESSION['admin_level'] > 1)){-->
-                                    <form  action="ficha_objeto.php" method="post">
-                                        <input type="hidden" name="seccion" value="Info">
-                                        <input type="hidden" name="anterior" value="tumba">
-                                        <input type="hidden" name="id_ref">
-                                        <button type="submit" name="submit" class="btn btn-link" value="Ver">
-                                            Ref: ' . $row7['Ref'] . ' ----- Nombre: ' . $row7['NumeroSerie'] . '</button>
-                                    </form>
+                                        <a href="/objeto/{{$objeto->Ref}}" class="btn btn-link" value="Ver">
+                                            Ref: {{$objeto->Ref}} ----- Nombre: {{$objeto->NumeroSerie}}</a>
+
+                                        @endif
+                                        @endforeach
+
+                                        @endif
 
 
                                     </td>
@@ -130,90 +163,95 @@
 
 
                             <tr>
-                             <td class="info" colspan="4" align="center"><h3>Multimedia Asociado</h3></td></tr>
-                            <!--if(mysql_num_rows($result4) == 0 ){-->
-                           <tr><td colspan="4" align="center">
-                                   <p class="text-danger">No existe multimedia</p>
-                               </td>
-                           </tr>
+                             <td class="info" colspan="4" align="center">
+                                 <h3>Multimedia Asociado</h3>
+                             </td>
+                            </tr>
 
-
-                            <tr>
-                                <!--}
-                                $result = mysql_query($query, $db) or die(mysql_error($db));
-                                $row = mysql_fetch_assoc($result);
-                                mysql_free_result($result);
-                                $ext = explode (".",$row['NombreArchivo']);
-                                $extension = end($ext);
-
-                                switch ($row4['Tipo'])
-                                {//SWITCH TIPO DOCUMENTO
-                                case 'Fotografia':
-                                {
-                                echo '<td align="center" style="width: 25%;">';
-                                    echo '<a href="./images/fotos/Foto_' . $row4['IdMutimedia'] . '.jpg" target="_blank"><img class="img-thumbnail" width="100" src="./images/fotos/thumb/thumb_'. $row4['IdMutimedia'] .'.jpg" /></a>&nbsp;&nbsp;&nbsp;';
-                                    echo '<br><strong>'.$row4['Titulo'].'</strong>';
-                                    echo '<br><span class="text-danger"><strong>'.$row4['Tipo'].'</strong></span>';
-                                    echo '</td>';
-
-                                break;
-                                }
-                                case 'Documento':
-                                {
-                                echo '<td align="center" style="width: 25%;">';
-                                    echo '<i class="fa fa-file-text-o fa-5x"></i>';
-                                    echo '<br><br>';
-                                    echo '<a href="./images/doc/Doc_' . $row4['IdMutimedia'] . '.' . $extension.' ">'. $row1['Titulo'];
-                                        echo '</a>';
-                                    echo '<br><span class="text-danger"><strong>'.$row4['Tipo'].'</strong></span>';
-                                    echo '</td>';
-                                break;
-                                }
-                                case 'Planimetria':
-                                {
-                                echo '<td align="center" style="width: 25%;">';
-                                    echo '<i class="fa fa-file-powerpoint-o fa-5x"></i>';
-                                    echo '<br><br>';
-                                    echo '<a href="./images/planimetria/Plan_' . $row4['IdMutimedia'] . '.' . $extension.' ">' . $row1['Titulo'];
-                                        echo '</a>';
-                                    echo '<br><span class="text-danger"><strong>'.$row4['Tipo'].'</strong></span>';
-                                    echo '</td>';
-                                break;
-                                }
-                                case 'Dibujo':
-                                {
-                                echo '<td align="center" style="width: 25%;">';
-                                    echo '<a href="./images/dibujos/Dib_' . $row4['IdMutimedia'] . '.' . $extension.' "></br>Orden ('. $row4['Orden'] .') ' . str_pad($row4['Tipo'], 20, "-") . '  T&iacute;tulo:  ' . $row4['Titulo'];
-                                        echo '</a>';
-                                    echo '</td>';
-                                break;
-                                }
-                                }//SWITCH TIPO DOCUMENTO
-                                $linea++;
-                                if($linea == 4){
+                            @php
                                 $linea = 0;
-                                echo '</tr>';
-                            }
-                            }//LISTADO ELEMENTOS MULTIMEDIA
-                            if($linea == 2){
-                            echo '<td style="width: 25%"></td>';
-                            echo '<td style="width: 25%"></td>';
+                            @endphp
+                            @if(count($multimedias) > 0)
+                                @foreach($multimedias as $multimedia)
 
-                            }else if($linea == 1){
-                            echo '<td style="width: 25%"></td>';
-                            echo '<td style="width: 25%"></td>';
-                            echo '<td style="width: 25%"></td>';
-
-                            }else if($linea == 3){
-                            echo '<td style="width: 25%"></td>';
-
-                            }-->
+                                    @if($linea == 0)
+                                        <tr>
+                                            @endif
 
 
-                            <!--</br>
-                           </td>-->
-                         </tr>
+                                            @if ($multimedia->Tipo == 'Fotografia')
 
+                                                <td align="center" style="width: 25%;">
+                                                    <a href="/archivo/{{$multimedia->IdMutimedia}}" target="_blank"><img class="img-thumbnail" width="100" src="/images/fotos/thumb/thumb_{{$multimedia->IdMutimedia}}.jpg" /></a>&nbsp;&nbsp;&nbsp;
+                                                    <br><strong>{{$multimedia->Titulo}}</strong>
+                                                    <br><span class="text-danger"><strong>{{$multimedia->Tipo}}</strong></span>
+                                                </td>
+                                            @endif
+
+                                            @if($multimedia->Tipo == 'Documento')
+
+                                                <td align="center" style="width: 25%;">
+                                                    <i class="fa fa-file-text-o fa-5x"></i>
+                                                    <br><br>
+                                                    <a href="/archivo/{{$multimedia->IdMutimedia}}" download>{{$multimedia->Titulo}}</a>
+                                                    <br><span class="text-danger"><strong>{{$multimedia->Tipo}}</strong></span>
+                                                </td>
+                                            @endif
+
+                                            @if($multimedia->Tipo == 'Planimetria')
+
+                                                <td align="center" style="width: 25%;">
+                                                    <i class="fa fa-file-powerpoint-o fa-5x"></i>
+                                                    <br><br>
+
+                                                    <a href="/archivo/{{$multimedia->IdMutimedia}}">{{$multimedia->Titulo}}
+                                                    </a>
+                                                    <br><span class="text-danger"><strong>{{$multimedia->Tipo}}</strong></span>
+                                                </td>
+                                            @endif
+
+
+                                            @if($multimedia->Tipo == 'Dibujo')
+                                                <td align="center" style="width: 25%;">
+                                                    <a href="/archivo/{{$multimedia->IdMutimedia}}"></br>Orden ({{$multimedia->Orden}}) {{str_pad($multimedia->Tipo, 20, "-")}}  T&iacute;tulo: {{$multimedia->Titulo}}
+                                                    </a>
+                                                </td>
+                                            @endif
+                                            @php
+                                                $linea++;
+                                            @endphp
+
+                                            @if($linea == 4)
+                                                @php
+                                                    $linea = 0;
+                                                @endphp
+                                        </tr>
+                                    @endif
+                                @endforeach
+
+                                @if($linea == 2)
+                                    <td style="width: 25%"></td>
+                                    <td style="width: 25%"></td>
+
+                                @elseif($linea == 1)
+                                    <td style="width: 25%"></td>
+                                    <td style="width: 25%"></td>
+                                    <td style="width: 25%"></td>
+
+                                @elseif($linea == 3)
+                                <td style="width: 25%"></td>
+
+                                @endif
+
+                            @else
+
+
+                                <tr><td colspan="4" align="center">
+                                        <p class="text-danger">No hay multimedia asociado</p>
+                                    </td>
+                                </tr>
+
+                            @endif
 
                            <tr>
                                 <td class="info" colspan="4" align="center"><h3>Localizaci&oacute;n</h3></td>
@@ -264,72 +302,20 @@
 
                             @endif
 
+
+
                             <tr>
-                                <td colspan="1" align="right">
+                                <td colspan="2" align="center">
                                     <a href="/tumbas" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista de tumbas</a>
                                 </td>
 
-                                <td colspan="3" align="left">
+                                <td colspan="2" align="center">
 
                                       <button type="submit" name="accion" class="btn btn-success" value="OK"><i class="fa fa-check"></i> Validar</button>
 
                                 </td>
                             </tr>
 
-                            <!--if( isset($_SESSION['logged']) AND $_SESSION['admin_level'] > 2 ){
-                            $query = 'SELECT NumControl FROM Registro WHERE IdTumba = "' . $tumba . '"';
-                            $result = mysql_query($query, $db) or die(mysql_error($db));
-                            $rowvalidar = mysql_fetch_assoc($result);
-                            }
-
-
-
-                            if($registro != NULL){
-                            echo '</form>';
-                        echo '<tr>';
-                            echo '<form action="registro.php" method="post">';
-                                echo '<input type="hidden" name="form" value="1">';
-                                echo '<td colspan="1" align="right"><button type="submit" name="submit" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista registros</button>';
-                                    echo '</form></td>';
-
-                            }else if ((isset($_REQUEST['anterior'])) AND ($_REQUEST['anterior'] == 'objeto')){
-                            echo '<tr>';
-                            if($rowvalidar!= NULL){
-                            echo '<tr><td colspan="1" align="right">';
-                                }else{
-                                echo '<tr><td colspan="4" align="center">';
-                                }
-                                echo '<form action="ficha_objeto.php" method="post">';
-                                    echo '<input type="hidden" name="seccion" value="Lista">';
-                                    echo '<button type="submit" name="submit" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista objetos</button></td>';
-                            echo '</form>';
-
-                            }else{
-
-                            if($rowvalidar!= NULL){
-                            echo '<tr><td colspan="1" align="right">';
-                                }else{
-                                echo '<tr><td colspan="4" align="center">';
-                                }
-                                echo '<form action="tumba.php?seccion=Lista" method="post">';
-                                    echo '<input type="hidden" name="filtro_anio" value='. $filtro_anio .'>';
-                                    echo '<input type="hidden" name="filtro_tipo" value='. $filtro_tipo .'>';
-                                    echo '<input type="hidden" name="filtro_lugar" value='. $filtro_lugar .'>';
-                                    echo '<button type="submit" name="submit" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista tumbas</button></td>';
-                            echo '</form>';
-                            }
-
-
-                            if($rowvalidar!= NULL){
-
-                            echo '<td colspan="3" align="left">';
-                                echo '<form action="registro.php" method="post">';
-                                    echo '<button type="submit" name="accion" class="btn btn-success" value="OK"><i class="fa fa-check"></i> Validar</button>';
-                                    echo '<input type="hidden" name="form" value=2>';
-                                    echo '<input type="hidden" name="num_control" value="' . $rowvalidar['NumControl'] . '">';
-                                    echo '</form>';
-                                echo '</td>';
-                            }-->
 
                         </tbody>
                         </table>

@@ -23,9 +23,11 @@
                                 <strong>Seleccione inhumación para asociar:</strong><br><br>
                                 <select class="form-control" name="inhumacion" size="10" style="width:100%" />
 
+                                @if(count($no_asociadas) > 0)
                             @foreach($no_asociadas as $no_asociada)
                                     <option value="{{$no_asociada->IdEnterramiento}}">Id Inhumación: {{$no_asociada->IdEnterramiento}} --- Observaciones: {{substr($no_asociada->Observaciones,0,25)}}</option>
                                     @endforeach
+                                            @endif
                                     </select></br>
                                     <button type="submit" name="accion" class="btn btn-primary" value="Asociar"><i class="fa fa-arrows-h"></i> Asociar inhumación</button>
                                     {{Form::close()}}
@@ -36,9 +38,11 @@
                                 {{Form::open(array('action' => 'TumbasController@eliminar_asoc_inhumacion','method' => 'post'))}}
                                 <input type="hidden" name="id" value="{{$tumba->IdTumba}}">
                                 <select class="form-control" name="inhumacion" size="10" style="width:100%">
+                                    @if(count($asociadas)>0)
                                     @foreach($asociadas as $asociada)
                                         <option value="{{$asociada->IdEnterramiento}}">Id Inhumación: {{$asociada->IdEnterramiento}} --- Observaciones: {{substr($asociada->Observaciones,0,25)}}</option>
                                     @endforeach
+                                        @endif
                                 </select></br>
                                 <button type="submit" name="accion" class="btn btn-danger" value="Eliminar"><i class="fa fa-close"></i> Eliminar asociaci&oacute;n </button>
 

@@ -124,25 +124,6 @@ class Tumba extends Model
        }
 
 
-       public function ue(){
-           $ue = DB::table('unidadestratigrafica')
-               ->join('tumba', function ($join) {
-                   $join->on('unidadestratigrafica.ue', '=', 'tumba.ue')
-                       ->where('tumba.idtumba', '=', $this->IdTumba);
-               })
-               ->get();
-
-           return $ue;
-       }
-
-       public function ueNoAsociadas(){
-         $no_asociadas =  DB::select(DB::raw(
-               'SELECT UE FROM UnidadEstratigrafica ORDER BY UE ASC'
-           ));
-
-        return  $no_asociadas;
-       }
-
        public function ofrendasAsociadas(){
            $ofrendas = DB::table('analiticafaunas')
                ->join('ofrendasfauna', function ($join) {
@@ -167,6 +148,43 @@ class Tumba extends Model
 
         return $no_asociadas;
 
+    }
+
+
+    public function multimediaAsociado(){
+
+        $multimedias = DB::table('almacenmultimedia')
+            ->join('multimediatumba', function ($join) {
+                $join->on('almacenmultimedia.idmutimedia', '=', 'multimediatumba.idmultimedia')
+                    ->where('multimediatumba.idtumba', '=', $this->IdTumba);
+            })
+            ->get();
+
+        return $multimedias;
+    }
+
+    public function multimediaNoAsociado(){
+
+        $no_asociados = DB::table('almacenmultimedia')->whereNotIn('almacenmultimedia.idmutimedia',function($q){
+            $q->select('multimediatumba.idmultimedia')->from('multimediatumba')
+                ->where('multimediatumba.idtumba','=',$this->IdTumba);
+        })->get();
+
+
+
+        return $no_asociados;
+    }
+
+
+    public function objetosAsociados(){
+
+
+
+        $objetos = DB::table('fichaobjeto')
+            ->where('idtumba','=',$this->IdTumba)
+            ->get(['Ref','NumeroSerie','VisibleCatalogo']);
+
+        return $objetos;
     }
 
 }

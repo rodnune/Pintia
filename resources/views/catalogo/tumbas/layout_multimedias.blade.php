@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('catalogo.tumbas.form_tumbas')
+    @include('catalogo.tumbas.form_multimedias')
 @endsection
 
 @section('footer')

@@ -181,22 +181,22 @@ Route::post('/tumba_inhumaciones/asociar','TumbasController@asociar_inhumacion')
 Route::post('/tumba_inhumaciones/delete','TumbasController@eliminar_asoc_inhumacion');
 
 //localizacion tumba
-Route::get('/tumba_localizacion/{id}','TumbasController@localizacion_tumba');
+Route::get('/tumba/{id}/localizacion','TumbasController@localizacion_tumba');
 Route::post('/tumba_localizacion/asociar','TumbasController@asociar_localizacion');
 Route::delete('/tumba_localizacion/delete','TumbasController@eliminar_asoc_localizacion');
-
-//UE tumba
-Route::get('/tumba_ue/{id}','TumbasController@ue_tumba');
-Route::post('/tumba_ue/asociar','TumbasController@asociar_ue');
-Route::delete('/tumba_ue/delete','TumbasController@eliminar_asoc_ue');
 
 
 //Ofrendas tumba
 
-Route::get('/tumba_ofrendas/{id}','TumbasController@ofrendas_tumba');
+Route::get('/tumba/{id}/ofrendas','TumbasController@ofrendas_tumba');
 Route::post('/tumba_ofrendas/asociar','TumbasController@asociar_ofrenda');
 Route::delete('/tumba_ofrendas/delete','TumbasController@eliminar_asoc_ofrenda');
 
+
+//Multimedias tumba
+Route::get('/tumba/{id}/multimedias','TumbasController@multimedias_tumba');
+Route::post('/tumba_multimedias/asociar','TumbasController@asociar_multimedia');
+Route::post('/tumba_multimedias/delete','TumbasController@eliminar_asoc_multimedia');
 
 //Multimedia
 

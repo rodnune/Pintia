@@ -6,21 +6,8 @@
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
                     <h1 class="text-center">Ficha Tumba ({{$tumba->IdTumba}})</h1><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    @if (session('update'))
-                        <div class="alert alert-success">
-                            {{ session('update') }}
-                        </div>
-                    @endif
+                   @include('errors.errores')
+                    @include('messages.success')
 
 
                     <table class="table table-hover table-bordered" rules="rows">
@@ -88,7 +75,7 @@
 
                             <tr>
 
-                                           <p class="text-center">No hay localizacion asignada</p>
+                                           <p class="text-center text-danger">No hay localizacion asignada</p>
                                 <td colspan="3" align="center">
                                     <strong>Seleccionar localizacion:</strong><br><br>
                                     {{Form::open(array('action' => 'TumbasController@asociar_localizacion','method' => 'post'))}}

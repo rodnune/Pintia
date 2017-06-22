@@ -17,11 +17,11 @@
         <br>
         <a href="/tumba/{{$id}}/inhumaciones"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Inhumaciones"></a>
         <br>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion">
+        <a href="/tumba/{{$id}}/localizacion"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"></a>
         <br>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Ofrendas Fauna">
+        <a href="/tumba/{{$id}}/ofrendas"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Ofrendas Fauna"></a>
         <br>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia">
+        <a href="/tumba/{{$id}}/multimedias"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"></a>
         <br>
         <input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes">
         <br>

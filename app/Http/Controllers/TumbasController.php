@@ -76,7 +76,7 @@ class TumbasController extends \App\Http\Controllers\Controller
     public function get_datos($id){
 
 
-        $tumba = Tumba::where('IdTumba','=',$id)->get()->first();
+        $tumba = Tumba::find($id);
 
         $ud_estratigraficas = DB::table('unidadestratigrafica')->orderBy('ue')->get(['UE']);
 
@@ -120,7 +120,7 @@ class TumbasController extends \App\Http\Controllers\Controller
             return redirect('/tumba/'.$id.'/datos_generales')->withErrors($validator);
         }
         if(!$request->has('ue')){
-            
+
          $ue = NULL;
         }
 
@@ -143,7 +143,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        $tumba = Tumba::where('IdTumba','=',$id)->first();
+        $tumba = Tumba::find($id);
 
         //Objetos asociados a la tumba
 
@@ -152,6 +152,8 @@ class TumbasController extends \App\Http\Controllers\Controller
         $inhumaciones = $tumba->inhumacionesAsociadas();
         $localizacion = $tumba->localizacion();
         $ofrendas     = $tumba->ofrendasAsociadas();
+        $multimedias  = $tumba->multimediaAsociado();
+        $objetos      = $tumba->objetosAsociados();
 
 
 
@@ -161,7 +163,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         return view('catalogo.tumbas.layout_tumba',['tumba' => $tumba,'tipos_tumba' => $tipos_tumba,
             'cremaciones' => $cremaciones,'inhumaciones' => $inhumaciones,'localizacion' => $localizacion,
-        'ofrendas' => $ofrendas]);
+        'ofrendas' => $ofrendas,'multimedias' => $multimedias,'objetos' => $objetos]);
 
     }
 
@@ -227,7 +229,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        $tumba = Tumba::where('IdTumba','=',$id)->first();
+        $tumba = Tumba::find($id);
 
 
         $asociadas = $tumba->tiposTumbaAsociados();
@@ -253,6 +255,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
+            'id'        => 'required|exists:tumba,idtumba',
             'tipo' => 'required|exists:tipostumbas,idtipotumba',
         ]);
 
@@ -276,6 +279,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
+            'id'        => 'required|exists:tumba,idtumba',
             'tipo' => 'required|exists:tipostumbas,idtipotumba',
         ]);
 
@@ -296,7 +300,7 @@ class TumbasController extends \App\Http\Controllers\Controller
     public function cremaciones_tumba($id){
 
 
-        $tumba = Tumba::where('IdTumba','=',$id)->first();
+        $tumba = Tumba::find($id);
 
 
         $asociadas = $tumba->cremacionesAsociadas();
@@ -318,6 +322,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
+            'id'        => 'required|exists:tumba,idtumba',
             'cremacion' => 'required|exists:cremacion,idcremacion',
         ]);
 
@@ -339,6 +344,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
+            'id'        => 'required|exists:tumba,idtumba',
             'cremacion' => 'required|exists:cremacion,idcremacion',
         ]);
 
@@ -362,7 +368,7 @@ class TumbasController extends \App\Http\Controllers\Controller
     public function inhumaciones_tumba($id){
 
 
-        $tumba = Tumba::where('IdTumba','=',$id)->first();
+        $tumba = Tumba::find($id);
 
 
         $asociadas = $tumba->inhumacionesAsociadas();
@@ -384,6 +390,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
+            'id'        => 'required|exists:tumba,idtumba',
             'inhumacion' => 'required|exists:inhumacion,identerramiento',
         ]);
 
@@ -406,6 +413,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
+            'id'        => 'required|exists:tumba,idtumba',
             'inhumacion' => 'required|exists:inhumacion,identerramiento',
         ]);
 
@@ -424,7 +432,7 @@ class TumbasController extends \App\Http\Controllers\Controller
     public function localizacion_tumba($id){
 
 
-        $tumba = Tumba::where('IdTumba','=',$id)->first();
+        $tumba = Tumba::find($id);
 
 
         $localizacion = $tumba->localizacion();
@@ -443,12 +451,12 @@ class TumbasController extends \App\Http\Controllers\Controller
         $localizacion = $request->input('localizacion');
 
         $validator = Validator::make($request->all(), [
+            'id'           => 'required|exists:tumba,idtumba',
             'localizacion' => 'required|exists:localizacion,idlocalizacion',
         ]);
 
-
         if ($validator->fails()) {
-            return redirect('/tumba_localizacion/'.$id)->withErrors($validator);
+            return redirect('/tumba/'.$id.'/localizacion')->withErrors($validator);
         }
 
 
@@ -456,7 +464,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         DB::table('tumba')->where('IdTumba','=',$id)
             ->update(['Localizacion' => $localizacion]);
 
-            return redirect('/tumba_localizacion/'.$id)->with('update','Actualizado');
+            return redirect('/tumba/'.$id.'/localizacion')->with('success','Localizacion de la tumba actualizada');
 
     }
 
@@ -469,7 +477,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         DB::table('tumba')->where('IdTumba','=',$id)
             ->update(['Localizacion' => NULL]);
 
-        return redirect('/tumba_localizacion/'.$id);
+        return redirect('/tumba/'.$id.'/localizacion')->with('success','Localizacion eliminada de la tumba');
 
     }
 
@@ -478,9 +486,8 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     public function ofrendas_tumba($id){
 
-        $tumba_sidebar = DB::table('tumba')->where('IdTumba','=',$id)->get();
 
-        $tumba = Tumba::where('IdTumba','=',$id)->first();
+        $tumba = Tumba::find($id);
 
 
         $asociadas = $tumba->ofrendasAsociadas();
@@ -489,7 +496,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        return view('catalogo.tumbas.layout_ofrendas_tumba',['tumba'=> $tumba_sidebar[0] ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+        return view('catalogo.tumbas.layout_ofrendas_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
 
 
     }
@@ -503,16 +510,17 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
+            'id'           => 'required|exists:tumba,idtumba',
             'ofrenda' => 'required|exists:analiticafaunas,idanalitica',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba_ofrendas/'.$id)->withErrors($validator);
+            return redirect('/tumba/'.$id.'/ofrendas')->withErrors($validator);
         }
 
         DB::table('ofrendasfauna')->insert(['IdTumba' => $id,'IdAnalitica'=> $ofrenda]);
 
-        return redirect('/tumba_ofrendas/'.$id);
+        return redirect('/tumba/'.$id.'/ofrendas')->with('success','Ofrenda asociada correctamente');
     }
 
     public function eliminar_asoc_ofrenda(Request $request){
@@ -523,11 +531,13 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
+            'id'           => 'required|exists:tumba,idtumba',
             'ofrenda' => 'required|exists:analiticafaunas,idanalitica',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba_ofrendas/'.$id)->withErrors($validator);
+
+            return redirect('/tumba/'.$id.'/ofrendas')->withErrors($validator);
         }
 
 
@@ -539,7 +549,66 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        return redirect('/tumba_ofrendas/'.$id);
+        return redirect('/tumba/'.$id.'/ofrendas')->with('success','Asociacion eliminada correctamente');
+    }
+
+
+    public function multimedias_tumba($id){
+
+        $tumba = Tumba::find($id);
+        $asociados = $tumba->multimediaAsociado();
+        $no_asociados = $tumba->multimediaNoAsociado();
+
+
+
+        return view('catalogo.tumbas.layout_multimedias',['tumba' => $tumba,'asociados' => $asociados,'no_asociados' => $no_asociados]);
+
+
+    }
+
+    public function asociar_multimedia(Request $request){
+
+        $id = $request->input('id');
+        $multimedia = $request->input('multimedia');
+        $orden = $request->input('orden');
+
+
+        $validator = Validator::make($request->all(), [
+            'id'           => 'required|exists:tumba,idtumba',
+            'multimedia' => 'required|exists:almacenmultimedia,idmutimedia',
+            'orden'       => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tumba/'.$id.'/multimedias')->withErrors($validator);
+        }
+
+        DB::table('multimediatumba')->insert(['idTumba' => $id,'idmultimedia'=> $multimedia,'orden' => $orden]);
+
+        return redirect('/tumba/'.$id.'/multimedias')->with('success','Multimedia asociado correctamente');
+    }
+
+    public function eliminar_asoc_multimedia(Request $request){
+
+        $id = $request->input('id');
+        $multimedia = $request->input('multimedia');
+
+
+        $validator = Validator::make($request->all(), [
+            'id'           => 'required|exists:tumba,idtumba',
+            'multimedia' => 'required|exists:almacenmultimedia,idmutimedia',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tumba/'.$id.'/multimedias')->withErrors($validator);
+        }
+
+        DB::table('multimediatumba')
+            ->where('idtumba','=',$id)
+            ->where('idmultimedia','=',$multimedia)
+            ->delete();
+
+        return redirect('/tumba/'.$id.'/multimedias')->with('success','Asociacion eliminada correctamente');
     }
 
 }
