@@ -23,8 +23,13 @@
                             </tr>
 
                             <tr>
+                                @if($pendientes->has('Neonato'))
+                                    <td align="right" style="background-color: #F9F9E1;"><strong>Neonato Casa:</strong></td>
+                                @else
                                 <td align="right"><strong>Neonato Casa:</strong></td>
+                                @endif
                                 <td>
+
                                     @if($tumba->NeonatoCasa == "Si")
                                    <input type="radio" name="neonato" value="Si" checked="checked"/> Si &nbsp;&nbsp;&nbsp;
                                    <input type="radio" name="neonato" value="No" /> No
@@ -38,7 +43,11 @@
 
 
 
-                                <td align="right"><strong>A&ntilde;o Campa&ntilde;a:</strong></td>
+                                    @if($pendientes->has('Anyo'))
+                                        <td align="right" style="background-color: #F9F9E1;"><strong>Año campaña</strong></td>
+                                    @else
+                                        <td align="right"><strong>Año campaña</strong></td>
+                                    @endif
 
                                 <td>
                                    <select name="anyo" style="width:60%">
@@ -55,7 +64,12 @@
                                 </td>
                          </tr>
 
-                        <td align="left"><strong>UE</strong></td>
+                        @if($pendientes->has('UE'))
+                            <td align="left" style="background-color: #F9F9E1;"><strong>UE</strong></td>
+                        @else
+                            <td align="left"><strong>UE</strong></td>
+                        @endif
+
 
                         <td>
                             <select name="ue" style="width:60%">
@@ -76,7 +90,11 @@
 
                         </tr>
                             <tr>
-                               <td align="center"><strong>Conservaci&oacute;n</strong></td>
+                                @if($pendientes->has('Conservacion'))
+                                    <td align="center" style="background-color: #F9F9E1;"><strong>Conservaci&oacute;n</strong></td>
+                                @else
+                                    <td align="center"><strong>Conservaci&oacute;n</strong></td>
+                                @endif
                                 <td colspan="3">
 
                                     <div onclick="displayHtml('source1','display1');">
@@ -94,7 +112,11 @@
 
                                   </tr>
                                    <tr>
-                                    <td align="center"><strong>Estructura</strong></td>
+                                       @if($pendientes->has('Estructura'))
+                                           <td align="center" style="background-color: #F9F9E1;"><strong>Estructura</strong></td>
+                                       @else
+                                           <td align="center"><strong>Estructura</strong></td>
+                                       @endif
                                     <td colspan="3">
 
                                     <div onclick="displayHtml('source2','display2');">
@@ -113,7 +135,11 @@
                                     </tr>
 
                                     <tr>
-                                        <td align="center"><strong>Composici&oacute;n</strong></td>
+                                        @if($pendientes->has('Composicion'))
+                                            <td align="center" style="background-color: #F9F9E1;"><strong>Composici&oacute;n</strong></td>
+                                        @else
+                                            <td align="center"><strong>Composici&oacute;n</strong></td>
+                                        @endif
                                         <td colspan="3">
 
                                     <div onclick="displayHtml('source3','display3');">
@@ -132,7 +158,11 @@
                                    </tr>
 
                                     <tr>
-                                    <td align="center"><strong>Sintaxis</strong></td>
+                                        @if($pendientes->has('Sintaxis'))
+                                            <td align="center" style="background-color: #F9F9E1;"><strong>Sintaxis</strong></td>
+                                        @else
+                                            <td align="center"><strong>Sintaxis</strong></td>
+                                        @endif
                                     <td colspan="3">
 
                                     <div onclick="displayHtml('source4','display4');">
@@ -152,7 +182,11 @@
                                    </tr>
 
                                     <tr>
-                                    <td align="center"><strong>Restos Humanos</strong></td>
+                                        @if($pendientes->has('RestosHumanos'))
+                                            <td align="center" style="background-color: #F9F9E1;"><strong>Restos Humanos</strong></td>
+                                        @else
+                                            <td align="center"><strong>Restos Humanos</strong></td>
+                                        @endif
                                     <td colspan="3">
 
                                     <div onclick="displayHtml('source5','display5');">
@@ -175,7 +209,11 @@
                                     </tr>
 
                                     <tr>
-                                    <td align="center"><strong>Ofrendas Animales</strong></td>
+                                        @if($pendientes->has('OfrendasAnimales'))
+                                            <td align="center" style="background-color: #F9F9E1;"><strong>Ofrendas Animales</strong></td>
+                                        @else
+                                            <td align="center"><strong>Ofrendas Animales</strong></td>
+                                        @endif
                                     <td colspan="3">
 
                                     <div onclick="displayHtml('source6','display6');">

@@ -82,12 +82,13 @@ class Objeto extends Model
 
     public function camposCompletados(){
 
-        $pendientes = DB::table('camposobjeto')->whereNotIn('camposobjeto.idcampo',function($q){
+        $completados = DB::table('camposobjeto')->whereNotIn('camposobjeto.idcampo',function($q){
             $q->select('pendienteobjeto.idcampo')->from('pendienteobjeto')->where('pendienteobjeto.ref','=',$this->Ref);
         })
+            ->orderBy('camposobjeto.nombrecampo')
             ->get();
 
-        return $pendientes;
+        return $completados;
     }
 
     public function camposPendientes(){
@@ -97,6 +98,7 @@ class Objeto extends Model
                 $join->on('camposobjeto.idcampo', '=', 'pendienteobjeto.idcampo')
                     ->where('pendienteobjeto.ref', '=', $this->Ref);
             })
+            ->orderBy('camposobjeto.nombrecampo')
             ->get();
 
         return $pendientes;

@@ -198,6 +198,11 @@ Route::get('/tumba/{id}/multimedias','TumbasController@multimedias_tumba');
 Route::post('/tumba_multimedias/asociar','TumbasController@asociar_multimedia');
 Route::post('/tumba_multimedias/delete','TumbasController@eliminar_asoc_multimedia');
 
+//Pendientes tumba
+Route::get('/tumba/{id}/pendientes','TumbasController@pendientes_tumba');
+Route::post('/tumba_pendientes/asociar','TumbasController@marcar_pendiente');
+Route::post('/tumba_pendientes/delete','TumbasController@marcar_completado');
+
 //Multimedia
 
 Route::get('/multimedias', 'MultimediaController@index');

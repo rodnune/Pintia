@@ -23,7 +23,7 @@
         <br>
         <a href="/tumba/{{$id}}/multimedias"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"></a>
         <br>
-        <input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes">
+        <a href="/tumba/{{$id}}/pendientes"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"></a>
         <br>
         <br><center><a href="/tumbas" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Tumbas / Salir</a></center><br><center><button type="submit" name="subsec" class="btn btn-danger btn-block" value="Eliminar Tumba"><i class="fa fa-close"></i> Eliminar Tumba</button></center></form>
         <br>

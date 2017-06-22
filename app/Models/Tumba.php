@@ -187,4 +187,29 @@ class Tumba extends Model
         return $objetos;
     }
 
+
+    public function camposCompletados(){
+
+        $completados = DB::table('campostumba')->whereNotIn('campostumba.idcampo',function($q){
+            $q->select('pendientetumba.idcampo')->from('pendientetumba')->where('pendientetumba.idtumba','=',$this->IdTumba);
+        })
+            ->orderBy('campostumba.nombrecampo')
+            ->get();
+
+        return $completados;
+    }
+
+    public function camposPendientes(){
+
+        $pendientes = DB::table('campostumba')
+            ->join('pendientetumba', function ($join) {
+                $join->on('campostumba.idcampo', '=', 'pendientetumba.idcampo')
+                    ->where('pendientetumba.idtumba', '=', $this->IdTumba);
+            })
+            ->orderBy('campostumba.nombrecampo')
+            ->get();
+
+        return $pendientes;
+    }
+
 }

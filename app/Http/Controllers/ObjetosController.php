@@ -140,28 +140,6 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
 
-        $subcategorias = DB::table('categoria')->leftJoin('subcategoria', 'subcategoria.idcat', '=', 'categoria.idcat')
-            ->select('categoria.denominacion as denominacioncat', 'subcategoria.denominacion as denominacionsubcat', 'categoria.idcat', 'subcategoria.idsubcat')
-            ->get();
-
-
-        $grouped = $subcategorias->groupBy('idcat');
-
-        $categorias = $grouped->toArray();
-
-        $materiales = DB::table('materiaprima')->orderBy('denominacion')->get();
-
-        $localizaciones = DB::table('localizacion')->get();
-
-        $materiales_grouped = DB::table('materialobjeto')
-            ->join('parteobjeto', 'materialobjeto.idparte', '=', 'parteobjeto.idparte')
-            ->join('materiaprima', 'materialobjeto.idmat', '=', 'materiaprima.idmat')
-            ->select(DB::raw('DISTINCT(materialobjeto.IdMat)'), 'materiaprima.Denominacion', 'parteobjeto.IdParte', 'parteobjeto.Ref as Ref')
-            ->get();
-
-
-        $materiales_objeto = $materiales_grouped->groupBy('Ref');
-
 
         if (Session::get('admin_level') > 0) {
             $objetos = $objetos->get();
@@ -169,9 +147,8 @@ class ObjetosController extends \App\Http\Controllers\Controller
             $objetos = $objetos->where('visiblecatalogo','=','Si')->get();
         }
 
-        return view('catalogo.objetos.layout_objetos', ['categorias' => $categorias,
-            'materiales' => $materiales, 'localizaciones' => $localizaciones,
-            'objetos' => $objetos, 'materiales_objeto' => $materiales_objeto,'datos' => $datos_consulta]);
+
+      return  ObjetosController::index()->with(['datos' => $datos_consulta,'objetos' => $objetos]);
 
 
         }

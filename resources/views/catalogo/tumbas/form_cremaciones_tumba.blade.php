@@ -8,6 +8,11 @@
                     <h1 class="text-center">Ficha Tumba ({{$tumba->IdTumba}})</h1><br>
                     @include('errors.errores')
                     @include('messages.success')
+
+                    @if($pendiente->isNotEmpty())
+                        @include('messages.pendiente')
+                    @endif
+
                     <table class="table table-hover table-bordered" rules="rows">
                         <tbody>
 

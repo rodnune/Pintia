@@ -76,7 +76,12 @@ class TumbasController extends \App\Http\Controllers\Controller
     public function get_datos($id){
 
 
+
+
         $tumba = Tumba::find($id);
+
+        $pendientes = $tumba->camposPendientes()->keyBy('NombreCampo')->all();
+        $pendientes = collect($pendientes);
 
         $ud_estratigraficas = DB::table('unidadestratigrafica')->orderBy('ue')->get(['UE']);
 
@@ -84,7 +89,8 @@ class TumbasController extends \App\Http\Controllers\Controller
 
 
 
-        return view('catalogo.tumbas.layout_update',['tumba' => $tumba,'uds_estratigraficas' => $ud_estratigraficas]);
+        return view('catalogo.tumbas.layout_update',['tumba' => $tumba,'uds_estratigraficas' => $ud_estratigraficas,
+            'pendientes' => $pendientes]);
     }
 
 
@@ -209,18 +215,10 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         }
 
-        $tumbas = $tumbas->get();
+        $tumbas_busqueda = $tumbas->get();
 
 
-        $campanyas =  DB::table('tumba')->select('anyocampanya')->distinct()->orderBy('anyocampanya')->get();
-
-        $tipos = DB::table('tipostumbas')->orderBy('denominacion')->get();
-
-        $localizaciones = DB::table('localizacion')->get(['IdLocalizacion','SectorTrama','SectorSubtrama']);
-
-        return view('catalogo.tumbas.layout_tumbas',['tumbas' => $tumbas,
-            'campanyas' => $campanyas, 'tipos' => $tipos,'localizaciones' => $localizaciones,'datos' => $datos_consulta]);
-
+        return TumbasController::index()->with(['datos' => $datos_consulta,'tumbas' => $tumbas_busqueda]);
 
 
     }
@@ -237,10 +235,11 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $no_asociadas = $tumba->tiposTumbaSinAsociar();
 
+        $pendientes = $tumba->camposPendientes()->keyBy('NombreCampo')->only(['TipoTumba'])->all();
+        $pendiente = collect($pendientes);
 
 
-
-        return view('catalogo.tumbas.layout_tipos_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+        return view('catalogo.tumbas.layout_tipos_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas,'pendiente' => $pendiente]);
 
     }
 
@@ -305,10 +304,14 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $asociadas = $tumba->cremacionesAsociadas();
         $no_asociadas = $tumba->cremacionesSinAsociar();
+        $pendientes = $tumba->camposPendientes()->keyBy('NombreCampo')->only(['Cremaciones'])->all();
+        $pendiente = collect($pendientes);
 
 
 
-        return view('catalogo.tumbas.layout_cremaciones_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+
+        return view('catalogo.tumbas.layout_cremaciones_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,
+            'no_asociadas' => $no_asociadas,'pendiente' => $pendiente]);
 
 
     }
@@ -373,10 +376,12 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $asociadas = $tumba->inhumacionesAsociadas();
         $no_asociadas = $tumba->inhumacionesSinAsociar();
+        $pendientes = $tumba->camposPendientes()->keyBy('NombreCampo')->only(['Inhumaciones'])->all();
+        $pendiente = collect($pendientes);
 
 
 
-        return view('catalogo.tumbas.layout_inhumaciones_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+        return view('catalogo.tumbas.layout_inhumaciones_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas,'pendiente' => $pendiente]);
 
 
     }
@@ -437,11 +442,14 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $localizacion = $tumba->localizacion();
         $no_asociadas = $tumba->localizacionesNoAsociadas();
+        $pendientes = $tumba->camposPendientes()->keyBy('NombreCampo')->only(['Localizacion'])->all();
+        $pendiente = collect($pendientes);
+
 
 
 
         return view('catalogo.tumbas.layout_localizacion_tumba',['tumba'=> $tumba
-            ,'localizacion' => $localizacion,'no_asociadas' => $no_asociadas]);
+            ,'localizacion' => $localizacion,'no_asociadas' => $no_asociadas,'pendiente' => $pendiente]);
     }
 
 
@@ -492,11 +500,14 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $asociadas = $tumba->ofrendasAsociadas();
         $no_asociadas = $tumba->ofrendasNoAsociadas();
+        $pendientes = $tumba->camposPendientes()->keyBy('NombreCampo')->only(['OfrendasAnimales'])->all();
+        $pendiente = collect($pendientes);
 
 
 
 
-        return view('catalogo.tumbas.layout_ofrendas_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
+        return view('catalogo.tumbas.layout_ofrendas_tumba',['tumba'=> $tumba ,'asociadas' => $asociadas,
+            'no_asociadas' => $no_asociadas,'pendiente' => $pendiente]);
 
 
     }
@@ -558,10 +569,13 @@ class TumbasController extends \App\Http\Controllers\Controller
         $tumba = Tumba::find($id);
         $asociados = $tumba->multimediaAsociado();
         $no_asociados = $tumba->multimediaNoAsociado();
+        $pendientes = $tumba->camposPendientes()->keyBy('NombreCampo')->only(['Multimedia'])->all();
+        $pendiente = collect($pendientes);
 
 
 
-        return view('catalogo.tumbas.layout_multimedias',['tumba' => $tumba,'asociados' => $asociados,'no_asociados' => $no_asociados]);
+        return view('catalogo.tumbas.layout_multimedias',['tumba' => $tumba,'asociados' => $asociados,'no_asociados' => $no_asociados,
+        'pendiente' => $pendiente]);
 
 
     }
@@ -609,6 +623,66 @@ class TumbasController extends \App\Http\Controllers\Controller
             ->delete();
 
         return redirect('/tumba/'.$id.'/multimedias')->with('success','Asociacion eliminada correctamente');
+    }
+
+
+    public function pendientes_tumba($id){
+
+        $tumba = Tumba::find($id);
+
+        $completados = $tumba->camposCompletados();
+
+        $pendientes = $tumba->camposPendientes();
+
+
+            return view('catalogo.tumbas.layout_pendientes',['tumba' => $tumba,'completados' => $completados,'pendientes' => $pendientes]);
+    }
+
+
+    public function marcar_pendiente(Request $request){
+
+        $id = $request->input('id');
+        $campo = $request->input('campo');
+
+        $validator = Validator::make($request->all(), [
+            'id'           => 'required|exists:tumba,idtumba',
+            'campo' => 'required|exists:campostumba,idcampo',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tumba/'.$id.'/pendientes')->withErrors($validator);
+        }
+
+        DB::table('pendientetumba')
+            ->insert(['idtumba' => $id,'idcampo' => $campo]);
+
+        return redirect('/tumba/'.$id.'/pendientes')->with('success','Campo añadido a pendientes');
+
+
+
+    }
+
+    public function marcar_completado(Request $request){
+        $id = $request->input('id');
+        $campo = $request->input('hecho');
+
+        $validator = Validator::make($request->all(), [
+            'id'           => 'required|exists:tumba,idtumba',
+            'hecho' => 'required|exists:campostumba,idcampo',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tumba/'.$id.'/pendientes')->withErrors($validator);
+        }
+
+
+        DB::table('pendientetumba')
+            ->where('idtumba','=',$id)
+            ->where('idcampo','=',$campo)
+            ->delete();
+
+        return redirect('/tumba/'.$id.'/pendientes')->with('success','Campo añadido a completados');
+
     }
 
 }

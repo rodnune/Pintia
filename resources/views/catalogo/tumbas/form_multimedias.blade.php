@@ -7,6 +7,9 @@
                 <div class="post">
                     @include('errors.errores')
                     @include('messages.success')
+                    @if($pendiente->isNotEmpty())
+                        @include('messages.pendiente')
+                    @endif
 
 
                     <h1 class="text-center">Ficha Tumba Ref({{$tumba->IdTumba}})</h1><br><br>
