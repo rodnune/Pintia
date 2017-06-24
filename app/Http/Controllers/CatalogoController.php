@@ -14,4 +14,15 @@ class CatalogoController extends \App\Http\Controllers\Controller
         return response($file, 200)->header('Content-Type', 'image/png');
 
     }
+
+    public function retrieveIcono(){
+
+        $file = File::get('images/icono.png');
+
+
+        return response($file, 200)->header('Content-Type', 'image/png');
+
+    }
+
+
 }

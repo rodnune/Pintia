@@ -3,9 +3,9 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 
-<link rel="icon" href="/images/icono.png">
 
 <title>PINTIADATA - CATÁLOGO DEL SITIO ARQUEOLÓGICO DE PINTIA</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 <!--
 <link href="http://fonts.googleapis.com/css?family=Kreon" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
@@ -18,9 +18,9 @@
 <link href='http://fonts.googleapis.com/css?family=Caesar+Dressing' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
 
-<!-- CSS -->
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
 
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
 
 <!-- Bootstrap core CSS -->
 <link href="/css/bootstrap.css" rel="stylesheet">
@@ -32,6 +32,8 @@
 <link href="/css/custom-well.css" rel="stylesheet">
 <link href="/css/fake-textarea.css" rel="stylesheet">
 <link href="/css/textarea-notas.css" rel="stylesheet">
+
+
 
 
 <!-- Font Awesome icons --->

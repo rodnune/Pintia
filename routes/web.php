@@ -378,6 +378,7 @@ Route::post('/delete_perfil','UsuariosController@delete_profile');
 
 //otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');
+Route::get('/icono','CatalogoController@retrieveIcono');
 Route::get('/pruebas',function(){
 
 

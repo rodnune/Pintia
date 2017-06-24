@@ -1,16 +1,11 @@
-/*
- * PintiaData Style Sheet
- *
- * Version 1.0
- */
 
 /*
  * Elementos generales
  */
  
  @font-face {
-   font-family: roman-sd;
-   src: url(/app/fonts/roman-sd.ttf);
+   font-family: 'roman-sd';
+   src: url("/fonts/romansd.ttf");
 }
 
 .justified-text{
