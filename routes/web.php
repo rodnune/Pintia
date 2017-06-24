@@ -164,6 +164,7 @@ Route::get('/tumba/{id}/datos_generales','TumbasController@get_datos');
 Route::post('/edit_tumba','TumbasController@update');
 Route::get('/tumba/{id}','TumbasController@get');
 Route::get('/search_tumba','TumbasController@search');
+Route::post('/tumba_delete','TumbasController@delete');
 
 //tipos de tumbas de una tumba
 Route::get('/tumba/{id}/tipos','TumbasController@index_tipos');

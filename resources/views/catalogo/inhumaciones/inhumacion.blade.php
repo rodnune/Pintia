@@ -7,7 +7,7 @@
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
 <h1 class="text-center">Informaci&oacute;n Inhumaci&oacute;n ({{$inhumacion->IdEnterramiento}})</h1>
-
+                    @include('messages.success')
 <table class="table table-bordered table-hover" rules="all">
     <tbody>
 
@@ -123,3 +123,4 @@
         </div>
     </div>
 </div>
+<script src="/js/format.js"></script>

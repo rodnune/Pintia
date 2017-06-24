@@ -51,8 +51,6 @@
     <!--Para buscar por identificador-->
     <script src="/js/busqueda.js"></script>
 
-    <!--Mostrar resultados de busqueda-->
-    <script src="/js/results.js"></script>
 
 
     <script src="/js/jquery.simplePagination.js"></script>

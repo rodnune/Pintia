@@ -30,39 +30,62 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
         $ud_estratigraficas = UnidadEstratigrafica::all();
 
+        $tumbas = DB::table('tumba')->get(['IdTumba']);
+
         return view('catalogo.inhumaciones.layout_inhumaciones',['inhumaciones' => $inhumaciones,
-            'ud_estratigraficas' => $ud_estratigraficas ]);
+            'ud_estratigraficas' => $ud_estratigraficas,'tumbas' => $tumbas ]);
     }
 
     public function search(Request $request,Inhumacion $inhumacion){
 
               $inhumaciones =  $inhumacion->newQuery();
+              $datos_consulta = collect();
 
         if($request->has('filtro_cadaver')){
            $inhumaciones->where('UECadaver', $request->input('filtro_cadaver'));
+
+           $datos_consulta->put('UECadaver',$request->input('filtro_cadaver'));
         }
 
         if($request->has('filtro_fosa')){
           $inhumaciones->where('UEFosa', $request->input('filtro_fosa'));
+
+            $datos_consulta->put('UEFosa',$request->input('filtro_fosa'));
         }
 
         if($request->has('filtro_estructura')){
             $inhumaciones->where('UEEstructura', $request->input('filtro_estructura'));
+
+            $datos_consulta->put('UEEstructura',$request->input('filtro_estructura'));
         }
 
         if($request->has('filtro_estructura')){
             $inhumaciones->where('UERelleno', $request->input('filtro_relleno'));
+
+
+
+            $datos_consulta->put('UERelleno',$request->input('filtro_relleno'));
+
+        }
+
+        if($request->has('filtro_tumba')){
+
+            $inhumaciones->whereIn('identerramiento', function ($q) {
+                $q->select('inhumacionestumba.identerramiento')->from('inhumacionestumba')
+                    ->where('inhumacionestumba.idtumba', '=', $_REQUEST['filtro_tumba']);
+
+
+
+        });
+
+           $datos_consulta->put('Tumba',$request->input('filtro_tumba'));
         }
 
         $inhumaciones = $inhumaciones->get();
 
 
 
-
-        $ud_estratigraficas = UnidadEstratigrafica::all();
-
-        return view('catalogo.inhumaciones.layout_inhumaciones',['inhumaciones' => $inhumaciones,
-            'ud_estratigraficas' => $ud_estratigraficas ]);
+        return InhumacionesController::index()->with(['datos' => $datos_consulta,'inhumaciones' => $inhumaciones]);
     }
 
 
@@ -98,7 +121,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
                 'edad' => 'string',
                 'adscripcion' => 'string',
                 'tiene_ajuar' => 'required|in:Si,No',
-                'ajuar' => 'string',
+                'ajuar' => 'required_if:tiene_ajuar,Si|string',
                 'conservacion' => 'in:Completa,Parcial',
                 'conexion' => 'in:Articulado,Desarticulado',
                 'posicion' => 'in:' . implode(',', Config::get('enums.inhumacion_posicion')),
@@ -132,7 +155,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
 
             }
-            return redirect('/inhumaciones');
+            return redirect('/inhumaciones')->with('success','Inhumacion creada correctamente');
         }
 
     public function delete(Request $request){
@@ -141,9 +164,9 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
         DB::table('inhumacion')->where('IdEnterramiento', '=', $id)->delete();
 
-        //DB::table('inhumacionestumba')->where('IdEnterramiento', '=', $id)->delete();
+        DB::table('inhumacionestumba')->where('IdEnterramiento', '=', $id)->delete();
 
-        return redirect('/inhumaciones');
+        return redirect('/inhumaciones')->with('success','Inhumacion borrada correctamente');
 
     }
 
@@ -208,7 +231,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
             'edad' => 'string',
             'adscripcion' => 'string',
             'tiene_ajuar' => 'required|in:Si,No',
-            'ajuar' => 'string',
+            'ajuar' => 'required_if:tiene_ajuar,si|string',
             'conservacion' => 'in:Completa,Parcial',
             'conexion' => 'in:Articulado,Desarticulado',
             'posicion' => 'in:' . implode(',', Config::get('enums.inhumacion_posicion')),
@@ -239,7 +262,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
 
 
-        return redirect('/inhumacion/'.$id);
+        return redirect('/inhumacion/'.$id)->with('success','Inhumacion modificada correctamente');
     }
 
 

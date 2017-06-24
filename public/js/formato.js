@@ -2,7 +2,7 @@
 function displayHtml(source, display) {
 	/* Obtener texto del div en formato html */
 	HTMLCode = document.getElementById(source).innerHTML;
-	
+
 	/* Añadir texto del div en formato html al textarea */
 	document.getElementById(display).textContent = HTMLCode;
 	return HTMLCode;

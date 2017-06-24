@@ -173,6 +173,29 @@ class TumbasController extends \App\Http\Controllers\Controller
 
     }
 
+    public function delete(Request $request){
+                $tumba = $request->input('tumba');
+
+        $validator = Validator::make($request->all(), [
+            'tumba' => 'required|exists:tumba,idtumba',
+
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/tumbas')->withErrors($validator);
+        }
+
+        DB::table('tumba')
+            ->where('idtumba','=',$tumba)
+            ->delete();
+
+        return redirect('/tumbas')->with('success','Tumba Borrada Correctamente');
+
+
+    }
+
 
     public function search(Request $request,Tumba $tumba){
 

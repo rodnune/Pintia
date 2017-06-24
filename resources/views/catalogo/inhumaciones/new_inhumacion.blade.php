@@ -9,15 +9,7 @@ use Carbon\Carbon;
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
                     <h1 class="text-center">Nueva Inhumaci&oacute;n </h1><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                   @include('errors.errores')
                         <table class="table table-bordered table-hover" rules="all">
                            <tbody>
 
@@ -250,19 +242,6 @@ use Carbon\Carbon;
 </td>
 </tr>
 </tr>
-
-
-                            <tr>
-
-
-
-    <tr><td colspan="3" align="right">
-
-        <button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar </button>
-
-
-    </td>  <tr>
-
 
 
                            <tr><td colspan="3" align="right">

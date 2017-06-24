@@ -65,9 +65,12 @@
            <td align="center"><strong>Tumba: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_tumba" style="width:100%">
-                    <option value="-1" selected>--- Seleccionar Tumba ---</option>
-
-                    <option value="">' . $rowtumba['IdTumba'] . '</option>
+                    <option value="" selected>--- Seleccionar Tumba ---</option>
+                    @if(count($tumbas) > 0)
+                        @foreach($tumbas as $tumba)
+                            <option value="{{$tumba->IdTumba}}">{{$tumba->IdTumba}}</option>
+                            @endforeach
+                        @endif
 
                    </select>
             </td>
@@ -91,10 +94,35 @@
         </tr>
 
     </table>
+                    @include('messages.success')
 
-                  <p class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($inhumaciones)}}</strong></p>
+                  <p id="total" class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($inhumaciones)}}</strong></p>
                     @if(count($inhumaciones)>0)
                     <table id="pagination_table" class="table table-hover table-bordered" rules="rows">
+
+                        <p class="text-muted text-center">
+                        @if(isset($datos))
+                            @if($datos->has('UECadaver'))
+                                <strong>UE Cadaver:</strong> {{$datos->get('UECadaver')}}
+                            @endif
+                            @if($datos->has('UEFosa'))
+                                <strong>UE Fosa:</strong> {{$datos->get('UEFosa')}}
+                            @endif
+
+                            @if($datos->has('UEEstructura'))
+                                <strong>UE Estructura:</strong> {{$datos->get('UEEstructura')}}
+                            @endif
+                            @if($datos->has('UERelleno'))
+                                <strong>UE Relleno:</strong> {{$datos->get('UERelleno')}}
+                                @endif
+                            @if($datos->has('Tumba'))
+                                    <strong>UE Relleno:</strong> {{$datos->get('Tumba')}}
+                                    @endif
+
+                                @endif
+
+
+                                </p>
                         <thead>
 
                         <tr class="info">
@@ -126,7 +154,9 @@
                             <td colspan="1" align="left">{{$inhumacion->UEFosa}}</td>
                             <td colspan="1" align="left">{{$inhumacion->UEEstructura}}</td>
                             <td colspan="1" align="left">{{$inhumacion->UERelleno}}</td>
-                            <td colspan="1" align="left"><div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">{{$inhumacion->Descripcion}}</div></td>
+                            <td colspan="1" align="left">
+                                <div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">{{$inhumacion->Descripcion}}</div>
+                            </td>
 
                                 <td colspan="1" align="center"><a href="/inhumacion/{{$inhumacion ->IdEnterramiento}}" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</a></td>
 
@@ -165,29 +195,5 @@
     </div>
 </div>
 
-<script>
-
-    function filter() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
-
-        input = $("#myInput");
-        filter = input.val();
-        table = $("#pagination_table");
-        tr = table.find("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            /*Busqueda por ID*/
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-</script>
+<script src="/js/results.js"></script>
+<script src="/js/format.js"></script>

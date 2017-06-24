@@ -10,15 +10,7 @@
                 <div class="post">
 
  <h1 class="text-center">Modificar Inhumaci&oacute;n  ({{$inhumacion->IdEnterramiento}})</h1><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                   @include('errors.errores')
                     <table class="table table-bordered table-hover" rules="all">
                         <tbody>
 
@@ -234,18 +226,19 @@
                             <td align="left"><strong>Medidas Esqueleto</strong></td>
                             <td colspan="5">
 
-                                <!--<div onclick="displayHtml('source1','display1');">
+                                <div onclick="displayHtml('source2','display2');">
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
-                                </div>-->
+                                </div>
                                 <br>
 
-                                <div class="form-control fake-textarea" disabled="disabled">
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source2','display2');" contenteditable id="source2">
+
                                    {{$inhumacion->MedidasEsqueleto}}
                                 </div>
+                                    <textarea class="form-control vresize" rows="6" cols="60" name="medidas" id="display2" style="display:none;">{{$inhumacion->MedidasEsqueleto}}</textarea>
 
-                                <textarea class="form-control vresize" rows="6" cols="60" name="medidas" id="display1" placeholder="Nuevas medidas esqueleto" value="{{$inhumacion->MedidasEsqueleto}}"></textarea>
                             </td>
 
                         </tr>
@@ -254,18 +247,19 @@
                             <td align="left"><img src="/images/required.gif" height="16" width="16"><strong>Descripci&oacute;n</strong></td>
                             <td colspan="5">
 
-                                <!--<div onclick="displayHtml('source1','display1');">
+                                <div onclick="displayHtml('source3','display3');">
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
-                                </div>-->
+                                </div>
                                 <br>
 
-                                <div class="form-control fake-textarea" disabled="disabled">
-                                    {{$inhumacion->Descripcion}}
-                                </div>
+                                <div class="form-control fake-textarea" onkeyup="displayHtml('source3','display3');" contenteditable id="source3">
 
-                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" placeholder="Nueva descripcion" value="{{$inhumacion->Descripcion}}" ></textarea>
+                                     {{$inhumacion->Descripcion}}
+                                </div>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display3" style="display:none;" value="{{$inhumacion->Descripcion}}">{{$inhumacion->Descripcion}}</textarea>
+
                             </td>
 
                         </tr>
@@ -274,18 +268,19 @@
                             <td align="left"><strong>Observaciones</strong></td>
                             <td colspan="5">
 
-                                <!--<div onclick="displayHtml('source1','display1');">
+                                <div onclick="displayHtml('source4','display4');">
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
-                                </div>-->
+                                </div>
                                 <br>
 
-                                <div class="form-control fake-textarea" disabled="disabled">
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source4','display4');" contenteditable id="source4">
+
                                     {{$inhumacion->Observaciones}}
                                 </div>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="observaciones" id="display4" style="display:none;" value="{{$inhumacion->Observaciones}}">{{$inhumacion->Observaciones}}</textarea>
 
-                                <textarea class="form-control vresize" rows="6" cols="60" name="observaciones" placeholder="Nuevas observaciones" value="{{$inhumacion->Observaciones}}"></textarea>
                             </td>
 
                         </tr>
@@ -328,20 +323,5 @@
     </div>
 </div>
 
-<script>
-
-    $('#ajuar_select').change(function() {
-
-        var valor = $("#ajuar_select option:selected").val();
-
-        if (valor == "No") {
-            $('#ajuar').css('display','none');
-            $('#ajuar2').css('display', 'none');
-
-        } else {
-            $('#ajuar').show();
-            $('#ajuar2').show();
-        }
-
-    });
-</script>
+<script src="/js/inhumacion.js"></script>
+<script src="/js/format.js"></script>

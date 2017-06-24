@@ -25,7 +25,18 @@
         <br>
         <a href="/tumba/{{$id}}/pendientes"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"></a>
         <br>
-        <br><center><a href="/tumbas" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Tumbas / Salir</a></center><br><center><button type="submit" name="subsec" class="btn btn-danger btn-block" value="Eliminar Tumba"><i class="fa fa-close"></i> Eliminar Tumba</button></center></form>
+        <br>
+        <div style="text-align:center">
+            <a href="/tumbas" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Tumbas / Salir</a>
+        </div>
+
+        <br>
+        <div style="text-align:center">
+            {{Form::open(array('action' => 'TumbasController@delete','method' => 'post'))}}
+                        <input type="hidden" name="tumba" value="{{$id}}">
+        <button type="submit" name="subsec" class="btn btn-danger btn-block" value="Eliminar Tumba"><i class="fa fa-close"></i> Eliminar Tumba</button>
+            {{Form::close()}}
+        </div>
         <br>
 
         <br/><br/>

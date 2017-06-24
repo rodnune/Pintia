@@ -8,6 +8,7 @@
 
                     <h1 class="text-center">Lista de Tumbas</h1><br><br>
                         @include('messages.success')
+                        @include('errors.errores')
 
                         <div class="form-group">
                             <input id="verfiltro" type="radio" name="filtro" value="Si" checked> Buscar por filtro(s) &nbsp;&nbsp;&nbsp;
