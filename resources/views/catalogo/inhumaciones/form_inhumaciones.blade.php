@@ -97,7 +97,7 @@
                     @include('messages.success')
 
                   <p id="total" class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($inhumaciones)}}</strong></p>
-                    @if(count($inhumaciones)>0)
+
                     <table id="pagination_table" class="table table-hover table-bordered" rules="rows">
 
                         <p class="text-muted text-center">
@@ -147,6 +147,7 @@
                         </thead>
 
                         <tbody>
+                        @if(count($inhumaciones) > 0)
                     @foreach($inhumaciones as $inhumacion)
                         <tr>
                             <td colspan="1" align="left">{{$inhumacion ->IdEnterramiento}}</td>
@@ -182,9 +183,17 @@
 
                         @endforeach
 
+                            @else
+
+
+                                <p class="text-center text-danger">No hay resultados</p>
+
+                            @endif
+
+
                         </tbody>
                       </table>
-                    @endif
+
 
 
 

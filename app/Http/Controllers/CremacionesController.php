@@ -23,9 +23,14 @@ class CremacionesController extends \App\Http\Controllers\Controller
         $cremaciones = DB::table('cremacion')->get(['IdCremacion','UE','CodigoPropio'
             ,'Observaciones','Sexo']);
 
+        $tumbas = DB::table('tumba')->get(['IdTumba']);
 
-        return view('catalogo.cremaciones.layout_cremaciones',['cremaciones' => $cremaciones,'ud_estratigraficas' => $ud_estratigraficas]);
+
+        return view('catalogo.cremaciones.layout_cremaciones',['cremaciones' => $cremaciones,'ud_estratigraficas' => $ud_estratigraficas
+            ,'tumbas' => $tumbas]);
     }
+
+
 
     public function form_create(){
         $ud_estratigraficas =  DB::table('unidadestratigrafica')->get(['UE']);
@@ -49,14 +54,14 @@ class CremacionesController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
-            'ue' => 'required|numeric',
+            'ue' => 'required|numeric|exists:unidadestratigrafica,ue',
             'codigo' => 'required|alpha_num|unique:cremacion,CodigoPropio',
             'presentacion' => 'string',
-            'peso' => 'numeric|min:0',
+            'peso' => 'required|numeric|min:0',
             'sexo' => 'in:' . implode(',', Config::get('enums.sexo')),
             'edad' => 'string',
             'calidad' => 'string',
-            'analisis' => 'integer',
+            'analisis' => 'required|integer',
             'descripcion' => 'string',
             'observaciones' => 'string'
 
@@ -77,16 +82,16 @@ class CremacionesController extends \App\Http\Controllers\Controller
 
 
 
-        return redirect('/cremaciones');
+        return redirect('/cremaciones')->with('success','Cremacion creada con exito');
 
     }
 
 
     public function get($id){
-           $cremacion =    DB::table('cremacion')->where('IdCremacion','=',$id)->get();
+           $cremacion =    DB::table('cremacion')->where('IdCremacion','=',$id)->get()->first();
 
 
-           return view('catalogo.cremaciones.layout_cremacion',['cremacion' => $cremacion[0] ]);
+           return view('catalogo.cremaciones.layout_cremacion',['cremacion' => $cremacion ]);
 
     }
 
@@ -130,7 +135,7 @@ class CremacionesController extends \App\Http\Controllers\Controller
 
         $validator = Validator::make($request->all(), [
             'ue' => 'required|numeric',
-            'codigo' => 'required|alpha_num|unique:cremacion,CodigoPropio',
+            'codigo' => 'required|alpha_num|unique:cremacion,codigopropio,'.$codigo.',CodigoPropio',
             'presentacion' => 'string',
             'peso' => 'numeric|min:0',
             'sexo' => 'in:' . implode(',', Config::get('enums.sexo')),
@@ -164,28 +169,35 @@ class CremacionesController extends \App\Http\Controllers\Controller
 
         $cremaciones =  $cremacion->newQuery();
 
+        $datos = collect();
+
         if($request->has('filtro_ue')){
             $cremaciones->where('UE', $request->input('filtro_ue'));
+
+            $datos->put('UE',$request->input('filtro_ue'));
         }
 
 
         if($request->has('filtro_sexo')){
             $cremaciones->where('Sexo', $request->input('filtro_sexo'));
+
+            $datos->put('sexo',$request->input('filtro_sexo'));
         }
 
-        if($request->has('filtro_tumba')){
-            //$inhumaciones->where('UERelleno', $request->input('filtro_tumba'));
+        if($request->has('filtro_tumba')) {
+            $cremaciones->whereIn('idcremacion', function ($q) {
+                $q->select('cremacionestumba.idcremacion')->from('cremacionestumba')
+                    ->where('cremacionestumba.idtumba', '=', $_REQUEST['filtro_tumba']);
+
+            });
+
+            $datos->put('tumba',$request->input('filtro_tumba'));
         }
 
         $cremaciones = $cremaciones->get();
 
 
-
-
-        $ud_estratigraficas = DB::table('unidadestratigrafica')->get(['UE']);
-
-        return view('catalogo.cremaciones.layout_cremaciones',['cremaciones' => $cremaciones,
-            'ud_estratigraficas' => $ud_estratigraficas ]);
+        return CremacionesController::index()->with(['cremaciones' => $cremaciones,'datos' => $datos]);
 
     }
 

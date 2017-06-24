@@ -23,6 +23,7 @@
                 <td align="center"><strong>UE: </strong></td>
                 <td align="left">
                     <select class="form-control" name="filtro_ue" style="width:100%">
+                        <option value="" selected> --- Seleccionar UE --- </option>
                         @foreach($ud_estratigraficas as $ud_estratigrafica)
                             <option value="{{$ud_estratigrafica->UE}}">{{$ud_estratigrafica->UE}}</option>
                             @endforeach
@@ -33,6 +34,7 @@
             <td align="center"><strong>Sexo: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_sexo" style="width:100%">
+                    <option value="" selected> --- Seleccionar Sexo --- </option>
                     @foreach(Config::get('enums.sexo') as $sexo)
                         <option value="{{$sexo}}">{{$sexo}}</option>
                     @endforeach
@@ -42,7 +44,12 @@
             <td align="center"><strong>Tumba: </strong></td>
             <td align="left">
                 <select class="form-control" name="filtro_tumba" style="width:100%">
-                    <option value="-1" selected> Seleccionar Tumba </option>
+                    <option value="" selected> --- Seleccionar Tumba --- </option>
+                    @if(count($tumbas) > 0)
+                        @foreach($tumbas as $tumba)
+                            <option value="{{$tumba->IdTumba}}">{{$tumba->IdTumba}}</option>
+                            @endforeach
+                        @endif
                 </select>
             </td>
         </tr>
@@ -67,7 +74,30 @@
 
 </table>
 
-                    <p  class="text-center text-muted"><strong>Total de resultados encontrados: {{count($cremaciones)}}</strong></p>
+                    @include('messages.success')
+
+                    <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($cremaciones)}}</strong></p>
+
+                    <p class="text-muted text-center">
+                        @if(isset($datos))
+                            @if($datos->has('UE'))
+                                <strong>UE: </strong> {{$datos->get('UE')}}
+                            @endif
+                            @if($datos->has('sexo'))
+                                <strong>Sexo: </strong> {{$datos->get('sexo')}}
+                            @endif
+
+                            @if($datos->has('tumba'))
+                                <strong>Tumba: </strong> {{$datos->get('tumba')}}
+                            @endif
+
+
+                        @endif
+
+
+                    </p>
+
+
 
                        <table id="pagination_table" class="table table-hover table-bordered" rules="rows">
 
@@ -89,6 +119,7 @@
                   </thead>
 
                        <tbody>
+                       @if(count($cremaciones) > 0)
                         @foreach($cremaciones as $cremacion)
                        <tr>
                             <td align="left">{{$cremacion->UE}}</td>
@@ -120,6 +151,12 @@
                        </tr>
                             @endforeach
 
+                           @else
+
+                           <p class="text-center text-danger">No hay resultados</p>
+
+                       @endif
+
                     </tbody>
                 </table>
 
@@ -128,4 +165,5 @@
         </div>
     </div>
 </div>
+<script src="/js/results.js"></script>
 

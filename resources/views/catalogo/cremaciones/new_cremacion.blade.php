@@ -6,7 +6,7 @@
                 <div class="post">
 
 <h1 class="text-center"> Nueva Cremaci&oacute;n </h1><br><br>
-
+                        @include('errors.errores')
 
                     {{Form::open(array('action' => 'CremacionesController@create', 'method' => 'post'))}}
                         <table class="table table-bordered table-hover" rules="all">

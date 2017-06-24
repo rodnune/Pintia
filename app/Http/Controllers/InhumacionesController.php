@@ -59,9 +59,8 @@ class InhumacionesController extends \App\Http\Controllers\Controller
             $datos_consulta->put('UEEstructura',$request->input('filtro_estructura'));
         }
 
-        if($request->has('filtro_estructura')){
+        if($request->has('filtro_relleno')){
             $inhumaciones->where('UERelleno', $request->input('filtro_relleno'));
-
 
 
             $datos_consulta->put('UERelleno',$request->input('filtro_relleno'));
