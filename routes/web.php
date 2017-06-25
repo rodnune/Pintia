@@ -15,10 +15,10 @@ Route::get('/contactar',function(){return view('seccion_contactar');});
 
 //Rutas de analiticas de faunas
 Route::get('/analiticas_faunas', 'AnaliticaFaunasController@index');
-Route::get('/analiticas_faunas/new',function(){return view('catalogo.analiticas_faunas.new_analitica');});
+Route::get('/new_analitica',function(){return view('catalogo.analiticas_faunas.new_analitica');});
 Route::post('/analiticas_faunas/new', 'AnaliticaFaunasController@create');
 Route::post('/analiticas_faunas/delete','AnaliticaFaunasController@delete');
-Route::get('/analiticas_faunas/{id}','AnaliticaFaunasController@get_analitica');
+Route::get('/analitica_fauna/{id}','AnaliticaFaunasController@get_analitica');
 Route::post('/analiticas_faunas/update','AnaliticaFaunasController@update');
 
 //UE

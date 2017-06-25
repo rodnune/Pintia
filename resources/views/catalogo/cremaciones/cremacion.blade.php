@@ -4,6 +4,7 @@
         <div id="page" style="margin: 0px 0 20px 0;">
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
+                    @include('messages.success')
 
 <h1 class="text-center">Informaci&oacute;n Cremacion con C&oacute;digo Propio ({{$cremacion->CodigoPropio}})</h1>
 
@@ -60,14 +61,15 @@
  </table>
 <br/>
 
-<center>
+<div style="text-align:center">
 
        <a style="margin-right: 7%;" href="/cremaciones" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista cremaciones</a>
 
 
-</center>
+</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="/js/format.js"></script>

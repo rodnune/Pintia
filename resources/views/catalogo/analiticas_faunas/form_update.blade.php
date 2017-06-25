@@ -6,39 +6,71 @@
         <div id="page" style="margin: 0px 0 20px 0;">
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
-                    <h1 align="center">Modificar analítica fauna con id: <strong>{{$id}}</strong></h1>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    <h1 align="center">Modificar analítica fauna con id: <strong>{{$analitica->IdAnalitica}}</strong></h1>
+                    @include('errors.errores')
+                    @include('messages.success')
                     <table class="table table-hover table-bordered">
                         <tbody valign="top">
                         {{Form::open(array('method' => 'post', 'action' => 'AnaliticaFaunasController@update' ))}}
+                        <input name="id" type="hidden" value="{{$analitica->IdAnalitica}}">
                         <tr>
-                            <div class="form-group">
-                                <label for="descripcion">Nueva Descripcion:</label>
-                                <textarea class="form-control" name="descripcion" rows="4" cols="30" id="comment"></textarea>
-                            </div>
+                            <td colspan="1"><img src="/images/required.gif" height="16" width="16"><strong><label for="descripcion"> Descripci&oacute;n: </label></strong></td>
+                            <td colspan="4">
+
+                                <div onclick="displayHtml('source1','display1');">
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
+                                </div>
+                                <br>
+
+                                <div class="form-control fake-textarea-lg" onkeyup="JavaScript:displayHtml('source1','display1');" contenteditable id="source1">
+                                    {{$analitica->Descripcion}}
+                                </div>
+
+                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display1" value="{{$analitica->Descripcion}}" style="display:none;">{{$analitica->Descripcion}}</textarea>
+
+                            </td>
                         </tr>
+
                         <tr>
-                            <div class="form-group">
-                                <label for="partesoseas">Nueva Partes Óseas,Especie,Edad:</label>
-                                <textarea class="form-control" name="partes_oseas" rows="4" cols="30" id="comment"></textarea>
-                            </div>
-                        </tr>
-                        <input name="id" type="hidden" value="{{$id}}">
-                        <div align="center">
-                            <button type="submit" class="btn btn-primary" value="Aceptar"><i class="fa fa-check"></i> Guardar cambios</button>
-                            <a class="btn btn-danger" href="/analiticas_faunas" value="Volver"><i class="fa fa-times"></i>Volver a la lista</a>
-
-                        </div>
+                            <td colspan="1"><img src="/images/required.gif" height="16" width="16"><strong><label for="partes"> Partes Oseas, Especie, Edad:</label></strong></td>
+                            <td colspan="4">
 
 
+                                <div onclick="displayHtml('source2','display2');">
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
+                                </div>
+                                <br>
+
+                                <div class="form-control fake-textarea-lg" onkeyup="JavaScript:displayHtml('source2','display2');" contenteditable id="source2">
+                                    {{$analitica->PartesOseasEspecieEdad}}
+
+                                </div>
+
+
+                                <textarea class="form-control vresize" rows="6" cols="60" name="partes" id="display2" style="display:none;" value="{{$analitica->PartesOseasEspecieEdad}}">{{$analitica->PartesOseasEspecieEdad}}</textarea>
+
+                            </td>
+                     </tr>
+
+                       <tr>
+                          <td colspan="2"></td>
+
+                            <td colspan="1" align="right">
+
+                                <button type="submit" name="submit" class="btn btn-primary" value="Aceptar"><i class="fa fa-check"></i> Guardar cambios</button>
+                            </td>
+
+
+                            <td colspan="1" align="left">
+
+                                   <a href="/analiticas_faunas" type="submit" name="submit" class="btn btn-danger" value="Cancelar / Volver"><i class="fa fa-times"></i> Cancelar/Volver a la lista</a>
+
+
+                             </td>
                         </tr>
 
                         {{Form::close()}}
@@ -53,3 +85,4 @@
         </div>
     </div>
 </div>
+<script src="/js/format.js"></script>

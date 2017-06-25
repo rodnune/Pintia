@@ -75,6 +75,7 @@
 </table>
 
                     @include('messages.success')
+                    @include('errors.errores')
 
                     <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($cremaciones)}}</strong></p>
 

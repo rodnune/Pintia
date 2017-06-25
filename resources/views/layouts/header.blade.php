@@ -5,7 +5,7 @@
 
 
 <title>PINTIADATA - CATÁLOGO DEL SITIO ARQUEOLÓGICO DE PINTIA</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 <!--
 <link href="http://fonts.googleapis.com/css?family=Kreon" rel="stylesheet" type="text/css" />
 <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />

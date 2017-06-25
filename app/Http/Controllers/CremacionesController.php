@@ -97,12 +97,29 @@ class CremacionesController extends \App\Http\Controllers\Controller
 
 
     public function delete(Request $request){
+
                 $id = $request->input('id');
+
+                $cremacion = Cremacion::find($id);
+
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:cremacion,idcremacion',
+
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/cremaciones')
+                ->withErrors($validator);
+        }
+
 
         DB::table('cremacion')->where('IdCremacion', '=', $id)->delete();
 
 
-        return redirect('/cremaciones');
+        return redirect('/cremaciones')->with('success','Cremacion con codigo propio:' .$cremacion->CodigoPropio. ' borrada correctamente');
 
     }
 
@@ -160,7 +177,7 @@ class CremacionesController extends \App\Http\Controllers\Controller
                 'Edad' => $edad, 'CalidadCombustion' => $calidad_combustion, 'AnalisisPosdeposicional' => $analisis,
                 'Observaciones' => $observaciones ]);
 
-        return redirect('/cremacion/'.$id);
+        return redirect('/cremacion/'.$id)->with('success','Cremacion modificada correctamente');
 
     }
 

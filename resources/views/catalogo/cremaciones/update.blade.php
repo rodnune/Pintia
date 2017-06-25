@@ -7,15 +7,7 @@
 
                     <h1 class="text-center"> Modificar cremacion con código propio ({{$cremacion->CodigoPropio}}) </h1><br><br>
 
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                   @include('errors.errores')
 
                     {{Form::open(array('action' => 'CremacionesController@update', 'method' => 'post'))}}
 
@@ -90,20 +82,18 @@
                             <td colspan="1"><strong>Descripci&oacute;n</strong></td>
                             <td colspan="3">
 
-                                <!--<div onclick="displayHtml('source1','display1');">
+                                <div onclick="displayHtml('source1','display1');">
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
                                 </div>
                                 <br>
 
-                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source1','display1');" contenteditable id="source1">-->
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source1','display1');" contenteditable id="source1">
 
-                                <div class="form-control fake-textarea" disabled="disabled">
                                     {{$cremacion->Descripcion}}
                                 </div>
-
-                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display1" value="{{$cremacion->Descripcion}}" placeholder="Nueva descripcion" ></textarea>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display1" value="{{$cremacion->Descripcion}}" style="display:none" >{{$cremacion->Descripcion}}</textarea>
                             </td>
 
                         </tr>
@@ -112,23 +102,19 @@
                             <td colspan="1"><strong>Observaciones</strong></td>
                             <td colspan="3">
 
-                                <!--<div onclick="displayHtml('source2','display2');">
+                                <div onclick="displayHtml('source2','display2');">
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
                                 </div>
-                                <br>-->
+                                <br>
 
-                                <!--<div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source2','display2');" contenteditable id="source2">
-
-                                </div>-->
-
-                                <div class="form-control fake-textarea" disabled="disabled">
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source2','display2');" contenteditable id="source2">
                                     {{$cremacion->Observaciones}}
                                 </div>
 
 
-                                <textarea class="form-control vresize" rows="6" cols="60" name="observaciones" id="display2" placeholder="Nuevas Observaciones" value="{{$cremacion->Observaciones}}"></textarea>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="observaciones" id="display2" style="display:none" value="{{$cremacion->Observaciones}}">{{$cremacion->Observaciones}}</textarea>
 
                             </td>
 
@@ -160,3 +146,4 @@
         </div>
     </div>
 </div>
+<script src="/js/format.js"></script>

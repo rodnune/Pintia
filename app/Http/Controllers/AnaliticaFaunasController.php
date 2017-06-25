@@ -21,7 +21,9 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
 
     public function get_analitica($id){
 
-        return view('catalogo.analiticas_faunas.update_analitica',['id' => $id]);
+       $analitica = AnaliticaFauna::find($id);
+
+        return view('catalogo.analiticas_faunas.update_analitica',['analitica' => $analitica]);
     }
 
     public function create(Request $request){
@@ -32,14 +34,12 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
 
         $validator = Validator::make($request->all(), [
 
-
-
-            'descripcion' => 'required|unique:analiticafaunas,descripcion',
-            'partes_oseas' => 'required'
+            'descripcion' => 'required|string',
+            'partes_oseas' => 'required|string'
         ]);
 
         if ($validator->fails()) {
-            return redirect('/analiticas_faunas/new')
+            return redirect('/new_analitica')
                 ->withErrors($validator);
         }
 
@@ -48,24 +48,25 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
 
         $new_analitica->save();
 
-        return redirect('/analiticas_faunas');
+        return redirect('/analiticas_faunas')->with('success','Analitica de faunas creada correctamente');
     }
 
     public function update(Request $request){
         $id = $request ->input('id');
         $new_descripcion = $request ->input('descripcion');
-        $new_partes_oseas = $request->input('partes_oseas');
+        $new_partes_oseas = $request->input('partes');
 
 
 
 
         $validator = Validator::make($request->all(), [
-            'descripcion' => 'required|unique:analiticafaunas,descripcion',
-            'partes_oseas' => 'required'
+            'id' => 'required|exists:analiticafaunas,idanalitica',
+            'descripcion' => 'required',
+            'partes' => 'required'
         ]);
 
         if ($validator->fails()) {
-            return redirect('/analiticas_faunas/'.$id)
+            return redirect('/analitica_fauna/'.$id)
                 ->withErrors($validator);
         }
         $analitica_fauna = AnaliticaFauna::find($id);
@@ -74,16 +75,25 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
 
         $analitica_fauna->save();
 
-        return redirect('/analiticas_faunas');
+        return redirect('/analitica_fauna/'.$id)->with('success','Analitica ' .$id. ' modificada con exito');
 
     }
 
     public function delete(Request $request){
          $id = $request ->input('id');
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:analiticafaunas,idanalitica',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/analitica_fauna/'.$id)
+                ->withErrors($validator);
+        }
         $analitica_fauna = AnaliticaFauna::find($id);
+
         $analitica_fauna->delete();
 
-        return redirect('/analiticas_faunas');
+        return redirect('/analiticas_faunas')->with('success','Analitica: ' .$id. ' ,borrada correctamente');
     }
 
     public function indexUE($id){

@@ -163,7 +163,6 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
         DB::table('inhumacion')->where('IdEnterramiento', '=', $id)->delete();
 
-        DB::table('inhumacionestumba')->where('IdEnterramiento', '=', $id)->delete();
 
         return redirect('/inhumaciones')->with('success','Inhumacion borrada correctamente');
 
