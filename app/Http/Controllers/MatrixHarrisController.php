@@ -24,6 +24,8 @@ class MatrixHarrisController extends \App\Http\Controllers\Controller
     }
 
     public function delete(Request $request){
+
+
                 $id = $request -> input('id');
 
                 DB::table('matrixharris')->where('IdElementoHarris','=',$id)->delete();
@@ -84,37 +86,41 @@ public function asociarMatrixHarris(Request $request){
     $z = $request->input('posz');
 
     $validator = Validator::make($request->all(), [
-        'relacionar' => 'required|numeric',
+        'id' => 'required|exists:unidadestratigrafica,ue',
+        'relacionar' => 'required|exists:unidadestratigrafica,ue',
         'posx'       => 'required|numeric',
-        'posy' => 'required|numeric',
+        'posy'       => 'required|numeric',
         'posz'       => 'required|numeric',
     ]);
 
     if ($validator->fails()) {
-        return redirect('ud_estratigrafica_matrixharris/'.$id)->withErrors($validator);
+        return redirect('/ud_estratigrafica/'.$id.'/matrix_harris')->withErrors($validator);
     }
     DB::table('matrixharris')->insert(
         ['UE' => $id, 'RelacionadaConUE' => $relacionada,'PosX' => $x, 'PosY' => $y, 'PosZ' => $z]);
 
-    return redirect('/ud_estratigrafica_matrixharris/'.$id);
+    return redirect('/ud_estratigrafica/'.$id.'/matrix_harris')
+        ->with('success','Matriz Harris entre UE: '.$id.' y UE: '.$relacionada.' añadida correctamente');
 }
 
 public function eliminarMatrixHarris(Request $request){
     $matrix = $request -> input('id_matrix');
     $id = $request -> input('id');
 
-    DB::table('matrixharris')->where('IdElementoHarris', '=', $matrix)->delete();
 
     $validator = Validator::make($request->all(), [
-        'id_matrix' => 'required|numeric',
+        'id'        => 'required|exists:unidadestratigrafica,ue',
+        'id_matrix' => 'required|exists:matrixharris,idelementoharris',
 
     ]);
 
     if ($validator->fails()) {
-        return redirect('ud_estratigrafica_matrixharris/'.$id)->withErrors($validator);
+        return redirect('/ud_estratigrafica/'.$id.'/matrix_harris')->withErrors($validator);
     }
 
-    return redirect('ud_estratigrafica_matrixharris/'.$id);
+    DB::table('matrixharris')->where('IdElementoHarris', '=', $matrix)->delete();
+
+    return redirect('/ud_estratigrafica/'.$id.'/matrix_harris')->with('success','Matriz de Harris con id '.$matrix.' eliminada correctamente');
 }
 
 }

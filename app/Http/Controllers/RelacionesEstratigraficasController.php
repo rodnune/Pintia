@@ -5,6 +5,8 @@ use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use Lang;
+use Config;
 
 class RelacionesEstratigraficasController extends \App\Http\Controllers\Controller
 
@@ -16,8 +18,22 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
     }
 
     public function delete(Request $request){
+
         $ue = $request -> input('ue');
         $relacionada = $request -> input('relacionada');
+
+
+        $validator = Validator::make($request->all(), [
+
+            'ue' => 'required|exists:unidadestratigrafica,ue',
+            'relacionada'  => 'required|exists:unidadestratigrafica,ue',
+
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/' . $ue .'/relaciones')->withErrors($validator);
+        }
 
                 DB::table('relacionesestratigraficas')
                     ->where('UE', '=', $ue)
@@ -32,12 +48,8 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
             ->where('RelacionadaConUE','=',$ue)
             ->delete();
 
-        return redirect('/relaciones_estratigraficas');
+        return redirect('/ud_estratigrafica/' . $ue .'/relaciones')->with('success',Lang::get('relacion_eliminada'));
 
-    }
-
-    public function update(){
-        //actualizar, operacion en el aire
     }
 
     public function indexUE($id)
@@ -59,11 +71,13 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
         $tipo = $request->input('tipo');
 
         $validator = Validator::make($request->all(), [
-            'relacionada' => 'required'
+            'relacionada' => 'required|exists:unidadestratigrafica,ue',
+            'actual'      => 'required|exists:unidadestratigrafica,ue',
+            'tipo'        => 'in:'  . implode(',', Config::get('enums.relaciones_estratigraficas')),
         ]);
 
         if ($validator->fails()) {
-            return redirect('ud_estratigrafica_relaciones/'.$actual)->withErrors($validator);
+            return redirect('/ud_estratigrafica/' . $actual .'/relaciones')->withErrors($validator);
         }
 
 
@@ -124,35 +138,45 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
 
         }
 
-        return redirect('ud_estratigrafica_relaciones/'.$actual);
+        return redirect('/ud_estratigrafica/' . $actual .'/relaciones')
+            ->with('success','Relacion UE: '.$actual.' '.$tipo.' UE: '.$relacionada.' añadida correctamente' );
     }
 
     public function eliminarAsociacionUE(Request $request)
     {
-        $id = $request -> input('id_relacion');
+        $id_relacion = $request -> input('id_relacion');
+        $ue = $request->input('id');
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'id_relacion'      => 'required|exists:relacionesestratigraficas,idrelacion',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/' . $ue .'/relaciones')->withErrors($validator);
+        }
 
 
-        $relacion = DB::table('relacionesestratigraficas')->where('IdRelacion', '=', $id)->get();
+        $relacion = DB::table('relacionesestratigraficas')->where('IdRelacion', '=', $id_relacion)->get()->first();
 
         DB::table('relacionesestratigraficas')
-            ->where('UE', '=', $relacion[0]->RelacionadaConUE)
-            ->where('RelacionadaConUE','=',$relacion[0]->UE)
+            ->where('UE', '=', $relacion->RelacionadaConUE)
+            ->where('RelacionadaConUE','=',$relacion->UE)
             ->delete();
 
-        DB::table('relacionesestratigraficas')->where('IdRelacion', '=', $id)->delete();
+
+        DB::table('relacionesestratigraficas')->where('IdRelacion', '=', $id_relacion)->delete();
 
 
 
-        return redirect('ud_estratigrafica_relaciones/'.$relacion[0]->UE);
+        return redirect('ud_estratigrafica/'.$ue.'/relaciones')->with('success',Lang::get('messages.relacion_eliminada'));
 
 
 
     }
 
     public  function insertRelacion($actual,$relacionada,$relacionAB, $relacionBA){
-        /**
-         * No es posible hacer la insercion en conjunto
-         */
+
         DB::table('relacionesestratigraficas')->insert(
             ['UE' => $actual, 'RelacionadaConUE' => $relacionada,'TipoRelacion' => $relacionAB]
 

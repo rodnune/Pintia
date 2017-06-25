@@ -19,7 +19,12 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
             public function index(){
                 $uds_estratigraficas = UnidadEstratigrafica::all();
 
-                return view('catalogo.uds_estratigraficas.layout_uds_estratigraficas',['uds_estratigraficas' => $uds_estratigraficas]);
+                $geologicos = DB::table('componentesgeologicos')->orderBy('denominacion')->get();
+                $artificiales = DB::table('componentesartificiales')->orderBy('denominacion')->get();
+                $organicos = DB::table('componentesorganicos')->orderBy('denominacion')->get();
+
+                return view('catalogo.uds_estratigraficas.layout_uds_estratigraficas',['uds_estratigraficas' => $uds_estratigraficas,
+                'geologicos' => $geologicos,'organicos' => $organicos,'artificiales' => $artificiales]);
             }
 
             public function create(Request $request){
@@ -29,12 +34,11 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                 $validator = Validator::make($request->all(), [
 
 
-
                     'id_ue' => 'required|min:0|unique:unidadestratigrafica,UE',
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/uds_estratigraficas/new')
+                    return redirect('/new_ud_estratigrafica')
                         ->withErrors($validator);
                 }
 
@@ -42,7 +46,7 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
 
                 $new_ud_estratigrafica->save();
 
-                return redirect('/uds_estratigraficas');
+                return redirect('/uds_estratigraficas')->with('success','Unidad estratigrafica con id: '.$id.' creada correctamente');
             }
 
             public function get_ud_estratigrafica($id){
@@ -79,60 +83,39 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
             }
 
             public function update(Request $request){
+
                 $id = $request ->input('id');
-                $ud_estratigrafica = UnidadEstratigrafica::find($id);
-                /*
-               * Si no se introduce nada, en los campos de texto
-               * se dejan los antiguos valores
-               */
-                        $new_descripcion = $request ->input('descripcion');
 
-                        if($new_descripcion != ""){
-
-                            $ud_estratigrafica->Descripcion = $new_descripcion;
-                        }
-
-                        $new_observaciones = $request ->input('observaciones');
-
-                        if($new_observaciones !=  ""){
-                            $ud_estratigrafica->EstratigrafiaObservaciones = $new_observaciones;
-                        }
-
-                $new_interpretacion = $request ->input('interpretacion');
-
-                if($new_interpretacion !=  ""){
-                    $ud_estratigrafica->Interpretacion = $new_interpretacion;
-                }
-
-                $new_estrato_color = $request -> input('ecolor');
-                $new_tecnica = $request -> input('tecnica');
-
-                /*
-                 * Validacion de Enums
-                 */
                 $validator = Validator::make($request->all(), [
 
 
-
-                    'unidad'      => 'in:Natural,Zoologica,Antropica,Indeterminado',
-                    'tipo_unidad' => 'in:Estrato,Superficie',
-                    'estratoc1'   => 'in:Compacta,Suelta',
-                    'estratoc2'   => 'in:Homogenea,Heterogenea',
-                    'excavada'    => 'in:No excavada,Parcialmente,Totalmente',
-                    'alzada'      => 'in:Alzada unica,Varias alzadas',
-                    'fiabilidad'  => 'in:Completa,Problematica',
+                    'id'                        => 'required|exists:unidadestratigrafica,ue',
+                    'descripcion'               => 'string',
+                    'interpretacion'            => 'string',
+                    'observaciones'             => 'string',
+                    'unidad'                    => 'in:Natural,Zoologica,Antropica,Indeterminado',
+                    'tipo_unidad'               => 'in:Estrato,Superficie',
+                    'estratoc1'                 => 'in:Compacta,Suelta',
+                    'estratoc2'                 => 'in:Homogenea,Heterogenea',
+                    'excavada'                  => 'in:No excavada,Parcialmente,Totalmente',
+                    'alzada'                    => 'in:Alzada unica,Varias alzadas',
+                    'fiabilidad'                => 'in:Completa,Problematica',
 
 
 
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/ud_estratigrafica/'.$id)
+                    return redirect('/ud_estratigrafica/'.$id.'/datos_generales')
                         ->withErrors($validator);
                 }
+                $ud_estratigrafica = UnidadEstratigrafica::find($id);
 
-
-
+                        $new_descripcion = $request ->input('descripcion');
+                        $new_observaciones = $request ->input('observaciones');
+                        $new_interpretacion = $request ->input('interpretacion');
+                        $new_estrato_color = $request -> input('ecolor');
+                        $new_tecnica = $request -> input('tecnica');
                         $new_unidad_accion = $request -> input('unidad_accion');
                         $new_tipo_unidad = $request -> input('tipo_unidad');
                         $new_estrato_constitucion1 = $request -> input('estratoc1');
@@ -141,22 +124,25 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                         $new_alzada = $request -> input('alzada');
                         $new_fiabilidad = $request -> input('fiabilidad');
 
-                $ud_estratigrafica->EstratoColor = $new_estrato_color;
-                $ud_estratigrafica->TecnicaExcavacion = $new_tecnica;
-                $ud_estratigrafica->UnidadAccion = $new_unidad_accion;
-                $ud_estratigrafica->TipoUnidad = $new_tipo_unidad;
-                $ud_estratigrafica->EstratoConstitucion1 = $new_estrato_constitucion1;
-                $ud_estratigrafica->EstratoConstitucion2 = $new_estrato_constitucion2;
-                $ud_estratigrafica->Excavada = $new_excavada;
-                $ud_estratigrafica->Alzada = $new_alzada;
-                $ud_estratigrafica->EstratigrafiaFiabilidad = $new_fiabilidad;
-
+                        $ud_estratigrafica->EstratoColor = $new_estrato_color;
+                        $ud_estratigrafica->TecnicaExcavacion = $new_tecnica;
+                        $ud_estratigrafica->UnidadAccion = $new_unidad_accion;
+                        $ud_estratigrafica->TipoUnidad = $new_tipo_unidad;
+                        $ud_estratigrafica->EstratoConstitucion1 = $new_estrato_constitucion1;
+                        $ud_estratigrafica->EstratoConstitucion2 = $new_estrato_constitucion2;
+                        $ud_estratigrafica->Excavada = $new_excavada;
+                        $ud_estratigrafica->Alzada = $new_alzada;
+                        $ud_estratigrafica->EstratigrafiaFiabilidad = $new_fiabilidad;
+                        $ud_estratigrafica->Interpretacion = $new_interpretacion;
+                        $ud_estratigrafica->EstratigrafiaObservaciones = $new_observaciones;
+                        $ud_estratigrafica->Descripcion = $new_descripcion;
 
 
                 $ud_estratigrafica->save();
 
 
-                return redirect('/uds_estratigraficas/'.$id);
+                return redirect('/ud_estratigrafica/'.$id.'/datos_generales')
+                    ->with('success','Unidad estratigrafica con: '.$id.' modificada correctamente');
 
 
             }

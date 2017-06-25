@@ -8,6 +8,7 @@ use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use Lang;
 
 class AnaliticaFaunasController extends \App\Http\Controllers\Controller
 {
@@ -109,27 +110,47 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
     {
         $id_ue = $request->input('id');
         $id_analitica = $request->input('add');
+
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'add'  => 'required|exists:analiticafaunas,idanalitica',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/' . $id_ue .'/dietas')->withErrors($validator);
+        }
+
         DB::table('dietasfauna')->insert(['IdAnalitica' => $id_analitica, 'UE' => $id_ue]);
 
-        return redirect('/ud_estratigrafica_dietas/' . $id_ue);
+        return redirect('/ud_estratigrafica/' . $id_ue .'/dietas')
+            ->with('success','Dieta fauna asociada correctamente');
     }
 
     public function eliminarAsociacionUE(Request $request)
     {
         $id_ue = $request->input('id');
         $id_analitica = $request->input('delete');
- 
+
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'delete'  => 'required|exists:analiticafaunas,idanalitica',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/' . $id_ue .'/dietas')->withErrors($validator);
+        }
 
 
-        /*
-         * Doble condicion where
-         */
         DB::table('dietasfauna')->where(
             'IdAnalitica', '=', $id_analitica)
             ->where('UE', '=', $id_ue)
             ->delete();
 
-        return redirect('/ud_estratigrafica_dietas/' . $id_ue);
+        return redirect('/ud_estratigrafica/' . $id_ue .'/dietas')->with('success',Lang::get('messages.asociacion_eliminada'));
     }
 
 

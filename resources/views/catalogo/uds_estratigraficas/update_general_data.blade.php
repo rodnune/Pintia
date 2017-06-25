@@ -4,15 +4,8 @@
         <div id="content-edit" style="margin-top:0px;">
             <div class="post">
                 <h1 class="text-center">Ficha UE {{$ud_estratigrafica->UE}}</h1>
-                @if($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+               @include('errors.errores')
+                @include('messages.success')
                 <table class="table table-hover table-bordered" rules="all">
                     <tbody>
 
@@ -156,18 +149,17 @@
                             <td align="left"><strong>Descripci&oacute;n</strong></td>
                             <td colspan="3">
 
-                                <!--<div onclick="displayHtml('source1','display1');">
+                                <div onclick="displayHtml('source1','display1');">
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
-                                </div>-->
+                                </div>
                                 <br>
 
-                                <div class="form-control fake-textarea" disabled="disabled">
-                                        {{$ud_estratigrafica->Descripcion}}
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source1','display1');" contenteditable id="source1";>
+                                    {{$ud_estratigrafica->Descripcion}}
                                 </div>
-
-                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display1" placeholder="Nueva descripcion" ></textarea>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display1" style="display:none" value="{{$ud_estratigrafica->Descripcion}}">{{$ud_estratigrafica->Descripcion}}</textarea>
                                </td>
 
                                 </tr>
@@ -176,18 +168,18 @@
                                     <td align="left"><strong>Estratigraf&iacute;a Observaciones</strong></td>
                                     <td colspan="3">
 
-                                <!--<div onclick="displayHtml('source2','display2');">
+                                <div onclick="displayHtml('source2','display2');">
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
-                                </div>-->
+                                </div>
                                 <br>
 
-                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source2','display2');" disabled="disabled">
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source2','display2');" contenteditable id="source2";>
                                     {{$ud_estratigrafica->EstratigrafiaObservaciones}}
                                 </div>
 
-                                        <textarea class="form-control vresize" rows="6" cols="60" name="observaciones" id="display2" placeholder="Nuevas observaciones de la estratigrafia"></textarea>
+                                        <textarea class="form-control vresize" rows="6" cols="60" name="observaciones" id="display2" style="display:none" value="{{$ud_estratigrafica->EstratigrafiaObservaciones}}">{{$ud_estratigrafica->EstratigrafiaObservaciones}}</textarea>
 
                                 </td>
                                 </tr>
@@ -196,17 +188,17 @@
                                 <td align="left"><strong>Interpretaci&oacute;n</strong></td>
                                 <td colspan="3">
 
-                                <!--<div onclick="displayHtml('source3','display3');">
+                                <div onclick="displayHtml('source3','display3');">
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
                                     <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
-                                </div>-->
+                                </div>
                                 <br>
 
-                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source3','display3');" disabled="disabled">
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source3','display3');" contenteditable id="source3";>
                                 {{$ud_estratigrafica->Interpretacion}}
                                 </div>
-<textarea class="form-control vresize" rows="6" cols="60" name="interpretacion" id="display3" placeholder="Nuevas interpretaciones de la estratigrafia"></textarea>
+<textarea class="form-control vresize" rows="6" cols="60" name="interpretacion" id="display3" style="display:none" value="{{$ud_estratigrafica->Interpretacion}}">{{$ud_estratigrafica->Interpretacion}}</textarea>
 </td>
                                 </tr>
 <tr>
@@ -224,3 +216,4 @@
 
 </div>
 </div>
+<script src="/js/format.js"></script>

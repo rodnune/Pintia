@@ -12,6 +12,7 @@ use App\Models\Muestra;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use Lang;
 
 class MuestrasController extends \App\Http\Controllers\Controller
 {
@@ -170,38 +171,52 @@ class MuestrasController extends \App\Http\Controllers\Controller
 
     public function indexUE($id){
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
-
         $no_asociadas = $ud_estratigrafica->muestrasNoAsociadas();
-
-
         $asociadas = $ud_estratigrafica->muestrasAsociadas();
 
         return view('catalogo.uds_estratigraficas.layout_muestras', ['ud_estratigrafica' => $ud_estratigrafica, 'asociadas' => $asociadas,'no_asociadas' => $no_asociadas]);
     }
 
     public function asociarUE(Request $request){
+
+
         $id_ue = $request ->input('id');
         $id_muestra = $request ->input('add');
+
+        $validator = Validator::make($request->all(), [
+            'id'        => 'required|exists:unidadestratigrafica,ue',
+            'add' => 'required|exists:muestras,numeroregistro',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/'.$id_ue.'/muestras')->withErrors($validator);
+        }
+
         DB::table('muestrasue')->insert(['NumeroRegistro' => $id_muestra,'UE' => $id_ue]);
 
-        return redirect('/ud_estratigrafica_muestras/'.$id_ue);
+        return redirect('/ud_estratigrafica/'.$id_ue.'/muestras')->with('success','Muestra asociada correctamente');
     }
 
     public function eliminarAsociacionUE(Request $request){
         $id_ue = $request ->input('id');
         $id_componente = $request ->input('delete');
 
-        /*
-         * Doble condicion where
-         */
+        $validator = Validator::make($request->all(), [
+            'id'        => 'required|exists:unidadestratigrafica,ue',
+            'delete' => 'required|exists:muestras,numeroregistro',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/'.$id_ue.'/muestras')->withErrors($validator);
+        }
         DB::table('muestrasue')->where(
             'NumeroRegistro','=',$id_componente)
             ->where('UE', '=', $id_ue)
-
-
             ->delete();
 
-        return redirect('/ud_estratigrafica_muestras/'.$id_ue);
+        return redirect('/ud_estratigrafica/'.$id_ue.'/muestras')->with('success',Lang::get('messages.asociacion_eliminada'));
     }
 
     public function get_tipos(){

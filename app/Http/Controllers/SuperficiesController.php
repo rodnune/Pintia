@@ -5,6 +5,7 @@ use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use Lang;
 
 class SuperficiesController extends \App\Http\Controllers\Controller
 
@@ -25,9 +26,22 @@ class SuperficiesController extends \App\Http\Controllers\Controller
     {
         $id_ue = $request->input('id');
         $id_superficie = $request->input('add');
+
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'add'  => 'required|exists:superficies,idsuperficie',
+
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/' . $id_ue .'/superficies')->withErrors($validator);
+        }
+
         DB::table('superficiesue')->insert(['IdSuperficie' => $id_superficie, 'UE' => $id_ue]);
 
-        return redirect('/ud_estratigrafica_superficies/' . $id_ue);
+        return redirect('/ud_estratigrafica/' . $id_ue .'/superficies')->with('success','Superficie asociada correctamente');
     }
 
     public function eliminarAsociacionUE(Request $request)
@@ -35,15 +49,27 @@ class SuperficiesController extends \App\Http\Controllers\Controller
         $id_ue = $request->input('id');
         $id_superficie = $request->input('delete');
 
-        /*
-         * Doble condicion where
-         */
+
+
+
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'delete'  => 'required|exists:superficies,idsuperficie',
+
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/' . $id_ue .'/superficies')->withErrors($validator);
+        }
+
         DB::table('superficiesue')->where(
             'IdSuperficie', '=', $id_superficie)
             ->where('UE', '=', $id_ue)
             ->delete();
 
-        return redirect('/ud_estratigrafica_superficies/' . $id_ue);
+        return redirect('/ud_estratigrafica/' . $id_ue.'/superficies')->with('success',Lang::get('messages.asociacion_eliminada'));
     }
 
     public function get(){

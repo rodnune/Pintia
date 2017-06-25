@@ -8,23 +8,15 @@
         <p>
         </p>
 
+        <button onclick="window.location.href='/tumba/{{$id}}/datos_generales'" class="btn btn-default btn-block">Datos Generales</button>
+        <button onclick="window.location.href='/tumba/{{$id}}/tipos'" class="btn btn-default btn-block">Tipos de tumba</button>
+        <button onclick="window.location.href='/tumba/{{$id}}/cremaciones'" class="btn btn-default btn-block">Cremaciones</button>
+        <button onclick="window.location.href='/tumba/{{$id}}/inhumaciones'" class="btn btn-default btn-block">Inhumaciones</button>
+        <button onclick="window.location.href='/tumba/{{$id}}/localizacion'" class="btn btn-default btn-block">Localizacion</button>
+        <button onclick="window.location.href='/tumba/{{$id}}/ofrendas'" class="btn btn-default btn-block">Ofrendas fauna</button>
+        <button onclick="window.location.href='/tumba/{{$id}}/multimedias'" class="btn btn-default btn-block">Multimedia</button>
+        <button onclick="window.location.href='/tumba/{{$id}}/pendientes'" class="btn btn-default btn-block">Campos pendientes</button>
 
-        <a href="/tumba/{{$id}}/datos_generales"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/></a>
-        <br>
-        <a href="/tumba/{{$id}}/tipos"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Tipo de Tumba"></a>
-        <br>
-        <a href="/tumba/{{$id}}/cremaciones"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Cremaciones"></a>
-        <br>
-        <a href="/tumba/{{$id}}/inhumaciones"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Inhumaciones"></a>
-        <br>
-        <a href="/tumba/{{$id}}/localizacion"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"></a>
-        <br>
-        <a href="/tumba/{{$id}}/ofrendas"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Ofrendas Fauna"></a>
-        <br>
-        <a href="/tumba/{{$id}}/multimedias"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"></a>
-        <br>
-        <a href="/tumba/{{$id}}/pendientes"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"></a>
-        <br>
         <br>
         <div style="text-align:center">
             <a href="/tumbas" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Tumbas / Salir</a>

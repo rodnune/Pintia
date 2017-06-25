@@ -4,7 +4,8 @@
         <div id="content-edit" style="margin-top:0px;">
             <div class="post">
                 <h1 class="text-center">Ficha UE({{$ud_estratigrafica->UE}}) </h1>
-
+                @include('errors.errores')
+                @include('messages.success')
                 <table class="table table-hover table-bordered" rules="none">
                     <tbody>
 
@@ -33,7 +34,7 @@
 
                         <td colspan="2" align="center">
                             <strong>Seleccione componente para eliminar asociaci&oacuten:</strong><br><br>
-                            {{Form::open(array('action' => 'CGeologicosController@eliminarAsociacionUE','method' => 'post'))}}
+                            {{Form::open(array('action' => 'COrganicosController@eliminarAsociacionUE','method' => 'post'))}}
                             <input type="hidden" name="id" value="{{$ud_estratigrafica->UE}}">
                             <select class="form-control" name="delete" size="10" style="width:100%">
 

@@ -12,6 +12,7 @@
                 <div class="post">
 
                     <h1 class="text-center">Lista de Uds Estratigráficas</h1><br>
+                    @include('messages.success')
                     <div class="form-group">
                         <input id="verfiltro" type="radio" name="filtro" value="Si" checked> Buscar por filtro(s) &nbsp;&nbsp;&nbsp;
                         <input id="ocultarfiltro" type="radio" name="filtro" value="No"> Buscar por identificador
@@ -24,23 +25,31 @@
                             <tr id="fila_filtros">
                                 <!--FILTRAR POR COMPONENTE GEOLÓGICO-->
 
-                                <!--No he visto componentes geologicos asociados -->
+
                                 <td align="center"><strong>Componente Geológico: </strong></td>
                                     <td align="left"><select class="form-control" name="filtro_geologico" style="width:100%">
-                                        <option value="-1" selected> Seleccionar componente </option>
+                                        <option value="" selected> --- Seleccionar componente --- </option>
+                                            @foreach($geologicos as $geologico)
+                                                <option value="{{$geologico->IdCGeologico}}">{{$geologico->Denominacion}}</option>
+                                                @endforeach
                                             </select>
                                         </td>
 
                                 <td align="center"><strong>Componente Artificial: </strong></td>
                                <td align="left"><select class="form-control" name="filtro_artificial" style="width:100%">
-                                        <option value="-1" selected> Seleccionar componente </option>
+                                        <option value="" selected> --- Seleccionar componente --- </option>
+                                       @foreach($artificiales as $artificial)
+                                           <option value="{{$artificial->IdCArtificial}}">{{$artificial->Denominacion}}</option>
+                                       @endforeach
                                    </select>
                                </td>
 
                                 <td align="center"><strong>Componente Orgánico: </strong></td>
                                 <td align="left"><select class="form-control" name="filtro_organico" style="width:100%">
-                                        <option value="-1" selected> Seleccionar componente </option>
-
+                                        <option value="" selected> --- Seleccionar componente --- </option>
+                                        @foreach($organicos as $organico)
+                                            <option value="{{$organico->IdCOrganico}}">{{$organico->Denominacion}}</option>
+                                        @endforeach
                                     </select>
                                 </td>
 
@@ -66,6 +75,8 @@
                     </table>
 
                     <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
+                        <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($uds_estratigraficas)}}</strong></p>
+
                         <thead>
 
                         <tr class="info">
@@ -79,7 +90,7 @@
 
                                     <input type="hidden" name="seccion" value="Formulario">
                                     <input type="hidden" name="subsec" value="Datos Generales">
-                                    <center><button onclick="window.location.href='/uds_estratigraficas/new'" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo</button></center>
+                                    <center><button onclick="window.location.href='/new_ud_estratigrafica'" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo</button></center>
                                    </th>
                             @endif
                         </tr>
@@ -88,22 +99,25 @@
                       @foreach($uds_estratigraficas as $uds_estratigrafica)
                         <tr id="data">
                             <td  align="left">{{$uds_estratigrafica->UE}}</td>
-                            <td align="center">{{$uds_estratigrafica->Descripcion}}</td>
+                            <td align="center">
+                                <div class="form-control fake-textarea-lg" disabled="disabled">
+                                    {{$uds_estratigrafica->Descripcion}}
+                                </div>
+                            </td>
 
                             <td colspan="2" align="center">
 
                                     <input type="hidden" name="seccion" value="Info">
                                     <input type="hidden" name="ue">
-                                <a id="queryLink" href="/uds_estratigraficas/{{$uds_estratigrafica->UE}}"><button id="queryButton" type="submit" name="submit" class="btn btn-primary" value="{{$uds_estratigrafica->UE}}"><i class="fa fa-eye"></i> Ver</button></a>
+                                <a href="/ud_estratigrafica/{{$uds_estratigrafica->UE}}" class="btn btn-primary"><i class="fa fa-eye"></i> Ver</a>
                                     </td>
 
                             @if(Session::get('admin_level') > 1 )
 
                             <td align="center">
-                                    <input type="hidden" name="seccion" value="Formulario">
-                                    <input type="hidden" name="subsec" value="Datos Generales">
-                                    <input type="hidden" name="id_ue">
-                                <a id="updateLink" href="/ud_estratigrafica/{{$uds_estratigrafica->UE}}"> <button id="updateButton" type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button></a>
+
+                                <a href="/ud_estratigrafica/{{$uds_estratigrafica->UE}}/datos_generales" class="btn btn-primary">
+                                    <i class="fa fa-pencil-square-o"></i> Gestionar</a>
                             </td>
                             </tr>
                         @endif
@@ -116,31 +130,5 @@
         </div>
     </div>
 </div>
-<script>
-
-    function filter() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
-
-        input = $("#myInput");
-        filter = input.val();
-
-        table = $("#pagination_table");
-
-        tr = table.find('#data');
-        console.log(tr.length);
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            /*Busqueda por ID*/
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-
+<script src="/js/results.js"></script>
+<script src="/js/format.js"></script>

@@ -4,6 +4,7 @@ namespace app\Http\Controllers;
 use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Lang;
 use Validator;
 
 class CGeologicosController extends \App\Http\Controllers\Controller
@@ -23,26 +24,43 @@ class CGeologicosController extends \App\Http\Controllers\Controller
     public function asociarUE(Request $request){
         $id_ue = $request ->input('id');
         $id_componente = $request ->input('add');
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'add' => 'required|exists:componentesgeologicos,idcgeologico',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/'.$id_ue.'/geologicos')->withErrors($validator);
+        }
+
+
         DB::table('cgeologicosue')->insert(['IdCGeologico' => $id_componente,'UE' => $id_ue]);
 
-        return redirect('/ud_estratigrafica_cgeologicos/'.$id_ue);
+        return redirect('/ud_estratigrafica/'.$id_ue.'/geologicos')->with('success','Componente geologico asociado correctamente');
+
         }
 
     public function eliminarAsociacionUE(Request $request){
         $id_ue = $request ->input('id');
         $id_componente = $request ->input('id_geo_delete');
 
-        /*
-         * Doble condicion where
-         */
+           $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'id_geo_delete' => 'required|exists:componentesgeologicos,idcgeologico',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/'.$id_ue.'/geologicos')->withErrors($validator);
+        }
+
+
         DB::table('cgeologicosue')->where(
             'IdCGeologico','=',$id_componente)
             ->where('UE', '=', $id_ue)
+            ->delete();
 
-
-        ->delete();
-
-        return redirect('/ud_estratigrafica_cgeologicos/'.$id_ue);
+        return redirect('/ud_estratigrafica/'.$id_ue.'/geologicos')->with('success',Lang::get('messages.asociacion_eliminada'));
     }
 
     public function get(){

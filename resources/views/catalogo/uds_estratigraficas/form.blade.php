@@ -3,13 +3,7 @@
         <div id="content-wide" style="margin-top:20px;">
             <div class="post">
                 <h1 class="text-center">Nueva UE</h1>
-                @if($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                @endif
+              @include('errors.errores')
                 <table class="table table-bordered" rules="all">
                     <tbody>
                     {{Form::open(array('action' => 'UdsEstratigraficasController@create' , 'method' => 'post'))}}
@@ -26,7 +20,10 @@
                    {{Form::close()}}
                     </tbody>
                 </table>
-                <center><a href="/uds_estratigraficas" class="btn btn-danger"><i class="fa fa-times"></i> Cancelar/Volver a lista</a></center>
+                                <div style="text-align:center">
+                                    <a href="/uds_estratigraficas" class="btn btn-danger"><i class="fa fa-times"></i> Cancelar/Volver a lista</a>
+                                </div>
+
             </div>
         </div>
         </div>

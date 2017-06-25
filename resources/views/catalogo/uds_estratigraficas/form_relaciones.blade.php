@@ -4,15 +4,8 @@
         <div id="content-edit" style="margin-top:0px;">
             <div class="post">
                 <h1 class="text-center">Ficha UE({{$ud_estratigrafica->UE}}) </h1>
-                @if($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                @include('errors.errores')
+                @include('messages.success')
                 <table class="table table-hover table-bordered" rules="none">
                     <tbody>
 
@@ -65,6 +58,7 @@
                             <td align="center"><strong>Seleccione para eliminar</strong></td>
                             <td colspan="2">
                                 {{Form::open(array('action' => 'RelacionesEstratigraficasController@eliminarAsociacionUE', 'method' => 'post'))}}
+                                <input type="hidden" name="id" value="{{$ud_estratigrafica->UE}}">
                                 <select class="form-control" name="id_relacion" size=5 style="width:100%" />
 
                                 @foreach($asociados as $asociado)

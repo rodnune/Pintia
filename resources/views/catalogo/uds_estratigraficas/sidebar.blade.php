@@ -1,6 +1,6 @@
 <div id="sidebar" style="float:left; margin:20px 35px 0 0;">
-    <a class="post" style="padding-right: 0px; padding-left: 0px;">
-        <form action="unidad_e.php" method="post"><input type="hidden" name="seccion" value="Formulario">
+    <div class="post" style="padding-right: 0px; padding-left: 0px;">
+
             <h4 class="text-center" style="color: #000;">Notas</h4>
             <textarea class="noresize notas" style="background: url('/images/lined_paper.png');
                     background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" name="contenido-nota">
@@ -19,27 +19,28 @@
             @php
             $id = $ud_estratigrafica->UE;
             @endphp
-        <a href="/ud_estratigrafica/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"></a>
-        <a href="/ud_estratigrafica_cgeologicos/{{$id}}"><input type="submit" class="btn btn-default btn-block" value="Componentes Geologicos"></a>
-        <a href="/ud_estratigrafica_corganicos/{{$id}}"><input type="submit" class="btn btn-default btn-block" value="Componentes Organicos"></a>
-        <a href="/ud_estratigrafica_cartificiales/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Componentes Artificiales"></a>
-        <a href="/ud_estratigrafica_superficies/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Superficies"></a>
-        <a href="/ud_estratigrafica_artefactos/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Artefactos"></a>
-        <a href="/ud_estratigrafica_dietas/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Dietas Fauna"></a>
-        <a href="/ud_estratigrafica_relaciones/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Relaciones Estratigraficas"></a>
-        <a href="/ud_estratigrafica_matrixharris/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Matriz Harris"></a>
-        <a href="/ud_estratigrafica_muestras/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Muestras"></a>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/datos_generales'" class="btn btn-default btn-block">Datos Generales</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/geologicos'" class="btn btn-default btn-block">Componentes Geologicos</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/organicos'" class="btn btn-default btn-block">Componentes Organicos</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/artificiales'" class="btn btn-default btn-block">Componentes artificiales</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/superficies'" class="btn btn-default btn-block">Superficies</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/artefactos'" class="btn btn-default btn-block">Artefactos</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/dietas'" class="btn btn-default btn-block">Dietas fauna</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/relaciones'" class="btn btn-default btn-block">Relaciones Estratigraficas</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/matrix_harris'" class="btn btn-default btn-block">Matriz Harris</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/muestras'" class="btn btn-default btn-block">Muestras</button>
         <a href="/ud_estratigrafica_localizacion/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"></a>
-            <!--<input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos Pendientes">-->
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/pendientes'" class="btn btn-default btn-block">Campos pendientes</button>
+
             <hr>
-        <form>
-            <center>
+
+            <div style="text-align:center">
                 <a href="/uds_estratigraficas" class="btn btn-primary btn-block">
                     <i class="fa fa-arrow-left"></i> Lista UE / Salir</a>
-            </center>
+            </div>
             <br>
 
-        </form>
+
         <p></p>
 
     </div>

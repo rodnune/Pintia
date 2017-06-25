@@ -145,7 +145,10 @@
                         </tr>
 
                         <tr>
-                            <td colspan="col" align="left">{{$analitica->Descripcion}}</td>
+                            <td colspan="col" align="left">
+                                <div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">{{$analitica->Descripcion}}</div>
+
+                                </td>
                             <td colspan="3">
                                 <div class="form-control fake-textarea-lg" disabled="disabled" name="descripcion">{{$analitica->PartesOseasEspecieEdad}}</div>
                             </td>
@@ -225,4 +228,6 @@
         </div>
     </div>
 </div>
+
+<script src="/js/format.js"></script>
 

@@ -24,62 +24,62 @@ Route::post('/analiticas_faunas/update','AnaliticaFaunasController@update');
 //UE
 
 Route::get('/uds_estratigraficas','UdsEstratigraficasController@index');
-Route::get('/uds_estratigraficas/new',function(){return view('catalogo.uds_estratigraficas.new_uds_estratigrafica');});
+Route::get('/new_ud_estratigrafica',function(){return view('catalogo.uds_estratigraficas.new_uds_estratigrafica');});
 Route::post('/uds_estratigraficas/new','UdsEstratigraficasController@create');
-Route::get('/uds_estratigraficas/{id}','UdsEstratigraficasController@get_ud_estratigrafica');
-Route::get('/ud_estratigrafica/{id}','UdsEstratigraficasController@get_update_ud_estratigrafica');
+Route::get('/ud_estratigrafica/{id}','UdsEstratigraficasController@get_ud_estratigrafica');
+Route::get('/ud_estratigrafica/{id}/datos_generales','UdsEstratigraficasController@get_update_ud_estratigrafica');
 Route::post('/ud_estratigrafica/update','UdsEstratigraficasController@update');
 
 //componentes geologicos de una UE
-Route::get('/ud_estratigrafica_cgeologicos/{id}','CGeologicosController@indexUE');
+Route::get('/ud_estratigrafica/{id}/geologicos','CGeologicosController@indexUE');
 Route::post('/ud_estratigrafica_cgeologicos/asociar','CGeologicosController@asociarUE');
 Route::post('/ud_estratigrafica_cgeologicos/delete','CGeologicosController@eliminarAsociacionUE');
 
 //componentes organicos de una UE
-Route::get('/ud_estratigrafica_corganicos/{id}','COrganicosController@indexUE');
+Route::get('/ud_estratigrafica/{id}/organicos','COrganicosController@indexUE');
 Route::post('/ud_estratigrafica_corganicos/asociar','COrganicosController@asociarUE');
 Route::post('/ud_estratigrafica_corganicos/delete','COrganicosController@eliminarAsociacionUE');
 
 //componentes artificiales de una UE
-Route::get('/ud_estratigrafica_cartificiales/{id}','CArtificialesController@indexUE');
+Route::get('/ud_estratigrafica/{id}/artificiales','CArtificialesController@indexUE');
 Route::post('/ud_estratigrafica_cartificiales/asociar','CArtificialesController@asociarUE');
 Route::post('/ud_estratigrafica_cartificiales/delete','CArtificialesController@eliminarAsociacionUE');
 
 //superficies de una UE
-Route::get('/ud_estratigrafica_superficies/{id}','SuperficiesController@indexUE');
+Route::get('/ud_estratigrafica/{id}/superficies','SuperficiesController@indexUE');
 Route::post('/ud_estratigrafica_superficies/asociar','SuperficiesController@asociarUE');
 Route::post('/ud_estratigrafica_superficies/delete','SuperficiesController@eliminarAsociacionUE');
 
 //artefactos de una UE
-Route::get('/ud_estratigrafica_artefactos/{id}','ArtefactosController@indexUE');
+Route::get('/ud_estratigrafica/{id}/artefactos','ArtefactosController@indexUE');
 Route::post('/ud_estratigrafica_artefactos/asociar','ArtefactosController@asociarUE');
 Route::post('/ud_estratigrafica_artefactos/delete','ArtefactosController@eliminarAsociacionUE');
 
 //dietas de fauna de una UE
 
-Route::get('/ud_estratigrafica_dietas/{id}','AnaliticaFaunasController@indexUE');
+Route::get('/ud_estratigrafica/{id}/dietas','AnaliticaFaunasController@indexUE');
 Route::post('/ud_estratigrafica_dietas/asociar','AnaliticaFaunasController@asociarUE');
 Route::post('/ud_estratigrafica_dietas/delete','AnaliticaFaunasController@eliminarAsociacionUE');
 
 //relaciones estratigraficas de una UE
-Route::get('/ud_estratigrafica_relaciones/{id}','RelacionesEstratigraficasController@indexUE');
+Route::get('/ud_estratigrafica/{id}/relaciones','RelacionesEstratigraficasController@indexUE');
 Route::post('/ud_estratigrafica_relaciones/asociar','RelacionesEstratigraficasController@asociarUE');
 Route::post('/ud_estratigrafica_relaciones/delete','RelacionesEstratigraficasController@eliminarAsociacionUE');
 
 //matrices de Harris de una UE
-Route::get('/ud_estratigrafica_matrixharris/{id}','MatrixHarrisController@indexUE');
+Route::get('/ud_estratigrafica/{id}/matrix_harris','MatrixHarrisController@indexUE');
 Route::post('/ud_estratigrafica_matrixharris/asociar','MatrixHarrisController@asociarMatrixHarris');
 Route::post('/ud_estratigrafica_matrixharris/delete','MatrixHarrisController@eliminarMatrixHarris');
 
 //muestras de una UE
-Route::get('/ud_estratigrafica_muestras/{id}','MuestrasController@indexUE');
+Route::get('/ud_estratigrafica/{id}/muestras','MuestrasController@indexUE');
 Route::post('/ud_estratigrafica_muestras/asociar','MuestrasController@asociarUE');
 Route::post('/ud_estratigrafica_muestras/delete','MuestrasController@eliminarAsociacionUE');
 
 //localizacion de una ue
 Route::get('/ud_estratigrafica_localizacion/{id}','LocalizacionController@indexUE');
 Route::post('/ud_estratigrafica_localizacion/asociar','LocalizacionController@asociarUE');
-Route::post('/ud_estratigrafica_localizacion/delete','MuestrasController@eliminarAsociacionUE');
+Route::post('/ud_estratigrafica_localizacion/delete','LocalizacionController@eliminarAsociacionUE');
 
 //relaciones estratigraficas
 

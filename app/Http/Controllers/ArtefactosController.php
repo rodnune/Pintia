@@ -5,6 +5,7 @@ use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use Lang;
 
 class ArtefactosController extends \App\Http\Controllers\Controller
 
@@ -24,9 +25,22 @@ class ArtefactosController extends \App\Http\Controllers\Controller
     {
         $id_ue = $request->input('id');
         $id_superficie = $request->input('add');
+
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'add'  => 'required|exists:fosiles,idfosil',
+
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/' . $id_ue .'/artefactos')->withErrors($validator);
+        }
+
         DB::table('fosilesue')->insert(['IdFosil' => $id_superficie, 'UE' => $id_ue]);
 
-        return redirect('/ud_estratigrafica_artefactos/' . $id_ue);
+        return redirect('/ud_estratigrafica/' . $id_ue .'/artefactos')->with('success','Artefacto asociado correctamente');
     }
 
     public function eliminarAsociacionUE(Request $request)
@@ -34,15 +48,24 @@ class ArtefactosController extends \App\Http\Controllers\Controller
         $id_ue = $request->input('id');
         $id_superficie = $request->input('delete');
 
-        /*
-         * Doble condicion where
-         */
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'delete'  => 'required|exists:fosiles,idfosil',
+
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/' . $id_ue .'/artefactos')->withErrors($validator);
+        }
         DB::table('fosilesue')->where(
             'IdFosil', '=', $id_superficie)
             ->where('UE', '=', $id_ue)
             ->delete();
 
-        return redirect('/ud_estratigrafica_artefactos/' . $id_ue);
+        return redirect('/ud_estratigrafica/' . $id_ue.'/artefactos')
+            ->with('success',Lang::get('messages.asociacion_eliminada'));
     }
 
 

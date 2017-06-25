@@ -5,6 +5,7 @@ use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use Lang;
 
 class COrganicosController extends \App\Http\Controllers\Controller
 
@@ -25,24 +26,39 @@ class COrganicosController extends \App\Http\Controllers\Controller
         $id_ue = $request ->input('id');
         $id_componente = $request ->input('add');
 
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'add' => 'required|exists:componentesorganicos,idcorganico',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/'.$id_ue.'/organicos')->withErrors($validator);
+        }
+
         DB::table('corganicosue')->insert(['IdCOrganico' => $id_componente,'UE' => $id_ue]);
 
-        return redirect('/ud_estratigrafica_corganicos/'.$id_ue);
+        return redirect('/ud_estratigrafica/'.$id_ue.'/organicos')->with('success','Componente organico asociado correctamente');
     }
 
     public function eliminarAsociacionUE(Request $request){
         $id_ue = $request ->input('id');
         $id_componente = $request ->input('delete');
 
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'delete' => 'required|exists:componentesorganicos,idcorganico',
+        ]);
 
-
+        if ($validator->fails()) {
+            return redirect('/ud_estratigrafica/'.$id_ue.'/organicos')->withErrors($validator);
+        }
 
         DB::table('corganicosue')->where(
             'IdCOrganico','=',$id_componente)
             ->where('UE', '=', $id_ue)
             ->delete();
 
-        return redirect('/ud_estratigrafica_corganicos/'.$id_ue);
+        return redirect('/ud_estratigrafica/'.$id_ue.'/organicos')->with('success',Lang::get('messages.asociacion_eliminada'));
     }
 
     public function  get(){
