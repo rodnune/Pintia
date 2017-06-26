@@ -83,8 +83,10 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                 $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->all();
                 $pendientes = collect($pendientes);
 
+                $nota = $ud_estratigrafica->notaSeccion('Datos Generales');
+
                 return view('catalogo.uds_estratigraficas.layout_form_update',
-                    ['ud_estratigrafica' => $ud_estratigrafica,'pendientes' => $pendientes]);
+                    ['ud_estratigrafica' => $ud_estratigrafica,'pendientes' => $pendientes,'nota' => $nota]);
             }
 
             public function update(Request $request){
@@ -264,7 +266,7 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
         if(count($nota_seccion) == 0){
             DB::table('notasue')->insert(['ue' => $ue,'seccion' => $seccion,'contenido' => $contenido]);
         }else {
-            DB::table('notasobjeto')
+            DB::table('notasue')
                 ->where('ue','=',$ue)
                 ->where('seccion','=',$seccion)
                 ->update(['contenido' => $contenido]);

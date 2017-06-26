@@ -175,9 +175,10 @@ class MuestrasController extends \App\Http\Controllers\Controller
         $asociadas = $ud_estratigrafica->muestrasAsociadas();
         $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['Muestras'])->all();
         $pendiente = collect($pendientes);
+        $nota = $ud_estratigrafica->notaSeccion('Muestras');
 
         return view('catalogo.uds_estratigraficas.layout_muestras', ['ud_estratigrafica' => $ud_estratigrafica,
-            'asociadas' => $asociadas,'no_asociadas' => $no_asociadas,'pendiente' => $pendiente]);
+            'asociadas' => $asociadas,'no_asociadas' => $no_asociadas,'pendiente' => $pendiente,'nota' => $nota]);
     }
 
     public function asociarUE(Request $request){

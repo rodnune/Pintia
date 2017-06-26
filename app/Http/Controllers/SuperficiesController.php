@@ -18,11 +18,12 @@ class SuperficiesController extends \App\Http\Controllers\Controller
         $no_asociados = $ud_estratigrafica->superficiesNoAsociadas();
         $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['Superficies'])->all();
         $pendiente = collect($pendientes);
+        $nota = $ud_estratigrafica->notaSeccion('Superficies');
 
 
         return view('catalogo.uds_estratigraficas.layout_superficies',
             ['ud_estratigrafica' => $ud_estratigrafica,
-                'asociados' => $asociados, 'no_asociados' => $no_asociados,'pendiente' => $pendiente]);
+                'asociados' => $asociados, 'no_asociados' => $no_asociados,'pendiente' => $pendiente,'nota' => $nota]);
 
     }
 

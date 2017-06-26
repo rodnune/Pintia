@@ -29,12 +29,13 @@ class LocalizacionController extends \App\Http\Controllers\Controller
 
         $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['Localizacion'])->all();
         $pendiente = collect($pendientes);
+        $nota = $ud_estratigrafica->notaSeccion('Localizacion');
 
 
 
 
         return view('catalogo.uds_estratigraficas.layout_localizacion',['ud_estratigrafica' => $ud_estratigrafica,
-            'localizacion' => $localizacion, 'localizaciones' => $localizaciones,'pendiente' => $pendiente]);
+            'localizacion' => $localizacion, 'localizaciones' => $localizaciones,'pendiente' => $pendiente,'nota' => $nota]);
 
 
     }

@@ -101,8 +101,10 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
            $asociados = $ud_estratigrafica-> analiticasAsociadasUE();
        $no_asociados = $ud_estratigrafica-> analiticasNoAsociadasUE();
+        $nota = $ud_estratigrafica->notaSeccion('Dietas Fauna');
 
-        return view('catalogo.uds_estratigraficas.layout_dietas_fauna', ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados, 'no_asociados' => $no_asociados]);
+        return view('catalogo.uds_estratigraficas.layout_dietas_fauna', ['ud_estratigrafica' => $ud_estratigrafica,
+            'asociados' => $asociados, 'no_asociados' => $no_asociados,'nota' => $nota]);
 
     }
 

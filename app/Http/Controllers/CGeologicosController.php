@@ -18,11 +18,12 @@ class CGeologicosController extends \App\Http\Controllers\Controller
 
         $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['CompGeologicos'])->all();
         $pendiente = collect($pendientes);
+        $nota = $ud_estratigrafica->notaSeccion('Componentes Geologicos');
 
 
         return view('catalogo.uds_estratigraficas.layout_cgeologicos',
             ['ud_estratigrafica' => $ud_estratigrafica,
-                'asociados' => $asociados,'no_asociados' => $no_asociados,'pendiente' => $pendiente]);
+                'asociados' => $asociados,'no_asociados' => $no_asociados,'pendiente' => $pendiente,'nota' => $nota]);
 
     }
 

@@ -72,11 +72,12 @@ public function indexUE($id){
 
     $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['MatrizHarris'])->all();
     $pendiente = collect($pendientes);
+    $nota = $ud_estratigrafica->notaSeccion('Matriz Harris');
     
 
 
     return view('catalogo.uds_estratigraficas.layout_matrix_harris',array('ud_estratigrafica' => $ud_estratigrafica,
-        'matrix_harris' => $matrix_harris,'ud_asociadas' => $ud_asociadas,'pendiente' => $pendiente));
+        'matrix_harris' => $matrix_harris,'ud_asociadas' => $ud_asociadas,'pendiente' => $pendiente,'nota' => $nota));
 }
 
 public function asociarMatrixHarris(Request $request){

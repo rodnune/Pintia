@@ -2,8 +2,8 @@
     <div class="post" style="padding-right: 0px; padding-left: 0px;">
 
             <h4 class="text-center" style="color: #000;">Notas</h4>
-            <textarea class="noresize notas" style="background: url('/images/lined_paper.png');
-                    background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" name="contenido-nota">
+            <textarea class="notas" style="background: url('/images/lined_paper.png');
+                    background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" name="contenido-nota" disabled>
                 @if(isset($nota))
                     {{$nota->Contenido}}
                 @endif
@@ -22,7 +22,7 @@
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/artificiales'" class="btn btn-default btn-block">Componentes Artificiales</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/superficies'" class="btn btn-default btn-block">Superficies</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/artefactos'" class="btn btn-default btn-block">Artefactos</button>
-        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/dietas'" class="btn btn-default btn-block">Dietas fauna</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/dietas'" class="btn btn-default btn-block">Dietas Fauna</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/relaciones'" class="btn btn-default btn-block">Relaciones Estratigraficas</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/matrix_harris'" class="btn btn-default btn-block">Matriz Harris</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/muestras'" class="btn btn-default btn-block">Muestras</button>
