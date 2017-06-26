@@ -67,15 +67,16 @@ class MatrixHarrisController extends \App\Http\Controllers\Controller
 
 public function indexUE($id){
     $ud_estratigrafica = UnidadEstratigrafica::find($id);
-
-
-
             $ud_asociadas  = $ud_estratigrafica->matrixHarrisAsociar();
             $matrix_harris = $ud_estratigrafica->matrixHarris();
+
+    $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['MatrizHarris'])->all();
+    $pendiente = collect($pendientes);
     
 
 
-    return view('catalogo.uds_estratigraficas.layout_matrix_harris',array('ud_estratigrafica' => $ud_estratigrafica,'matrix_harris' => $matrix_harris,'ud_asociadas' => $ud_asociadas));
+    return view('catalogo.uds_estratigraficas.layout_matrix_harris',array('ud_estratigrafica' => $ud_estratigrafica,
+        'matrix_harris' => $matrix_harris,'ud_asociadas' => $ud_asociadas,'pendiente' => $pendiente));
 }
 
 public function asociarMatrixHarris(Request $request){

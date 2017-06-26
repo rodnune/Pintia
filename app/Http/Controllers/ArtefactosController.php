@@ -16,8 +16,12 @@ class ArtefactosController extends \App\Http\Controllers\Controller
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
         $asociados = $ud_estratigrafica->artefactosAsociados();
         $no_asociados = $ud_estratigrafica->artefactosNoAsociados();
+        $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['Artefactos'])->all();
+        $pendiente = collect($pendientes);
 
-        return view('catalogo.uds_estratigraficas.layout_artefactos', ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados, 'no_asociados' => $no_asociados]);
+        return view('catalogo.uds_estratigraficas.layout_artefactos',
+            ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados,
+                'no_asociados' => $no_asociados,'pendiente' => $pendiente]);
 
     }
 

@@ -11,13 +11,13 @@ use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use Lang;
 
 
 class LocalizacionController extends \App\Http\Controllers\Controller
 {
     public function indexUE($id){
 
-        $localizaciones = DB::table('localizacion')->get();
 
 
 
@@ -25,8 +25,16 @@ class LocalizacionController extends \App\Http\Controllers\Controller
 
         $localizacion = $ud_estratigrafica->localizacion();
 
+        $localizaciones = $ud_estratigrafica->localizacionesNoAsociadas();
 
-        return view('catalogo.uds_estratigraficas.layout_localizacion',['ud_estratigrafica' => $ud_estratigrafica, 'localizacion' => $localizacion, 'localizaciones' => $localizaciones]);
+        $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['Localizacion'])->all();
+        $pendiente = collect($pendientes);
+
+
+
+
+        return view('catalogo.uds_estratigraficas.layout_localizacion',['ud_estratigrafica' => $ud_estratigrafica,
+            'localizacion' => $localizacion, 'localizaciones' => $localizaciones,'pendiente' => $pendiente]);
 
 
     }
@@ -35,9 +43,45 @@ class LocalizacionController extends \App\Http\Controllers\Controller
         $id_ue = $request->input('id');
         $localizacion = $request->input('localizacion');
 
+
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+            'localizacion' => 'required|exists:localizacion,idlocalizacion'
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return redirect('/ud_estratigrafica/'.$id_ue.'/localizacion')->withErrors($validator);
+        }
+
+
         UnidadEstratigrafica::where('UE',$id_ue)->update(['IdLocalizacion' => $localizacion]);
 
-        return redirect('/ud_estratigrafica_localizacion/'.$id_ue);
+        return redirect('/ud_estratigrafica/'.$id_ue.'/localizacion')->with('success','Localizacion actualizada con exito');
+    }
+
+    public function eliminar_asoc_ue(Request $request){
+        $id = $request->input('id');
+
+        $validator = Validator::make($request->all(), [
+
+            'id' => 'required|exists:unidadestratigrafica,ue',
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return redirect('/ud_estratigrafica/'.$id.'/localizacion')->withErrors($validator);
+        }
+
+        DB::table('unidadestratigrafica')->where('ue','=',$id)
+            ->update(['idlocalizacion' => NULL]);
+
+        return redirect('/ud_estratigrafica/'.$id.'/localizacion')->with('success',Lang::get('messages.asociacion_eliminada'));
+
+
     }
 
 

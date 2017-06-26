@@ -691,7 +691,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $validator = Validator::make($request->all(), [
             'id'           => 'required|exists:tumba,idtumba',
-            'hecho' => 'required|exists:campostumba,idcampo',
+            'hecho'        => 'required|exists:campostumba,idcampo',
         ]);
 
         if ($validator->fails()) {

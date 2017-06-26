@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    @include('catalogo.uds_estratigraficas.form_relaciones')
+    @include('catalogo.uds_estratigraficas.form_pendientes')
 @endsection
 
 @section('footer')

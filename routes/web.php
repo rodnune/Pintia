@@ -77,9 +77,18 @@ Route::post('/ud_estratigrafica_muestras/asociar','MuestrasController@asociarUE'
 Route::post('/ud_estratigrafica_muestras/delete','MuestrasController@eliminarAsociacionUE');
 
 //localizacion de una ue
-Route::get('/ud_estratigrafica_localizacion/{id}','LocalizacionController@indexUE');
+Route::get('/ud_estratigrafica/{id}/localizacion','LocalizacionController@indexUE');
 Route::post('/ud_estratigrafica_localizacion/asociar','LocalizacionController@asociarUE');
-Route::post('/ud_estratigrafica_localizacion/delete','LocalizacionController@eliminarAsociacionUE');
+Route::post('/ud_estratigrafica_localizacion/delete','LocalizacionController@eliminar_asoc_ue');
+
+//campos pendientes ue
+Route::get('/ud_estratigrafica/{id}/pendientes','UdsEstratigraficasController@get_pendientes');
+Route::post('/ud_estratigrafica_pendientes/asociar','UdsEstratigraficasController@marcar_pendiente');
+Route::post('/ud_estratigrafica_pendientes/delete','UdsEstratigraficasController@marcar_completado');
+
+
+
+
 
 //relaciones estratigraficas
 

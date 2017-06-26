@@ -16,19 +16,28 @@
                             <td class="info" colspan="4" align="center"><h3>Datos Generales</h3></td>
                         </tr>
 
-
                         <tr>
-                           <td colspan="1" align="left"><strong>Estrato Color</strong></td>
+                            @if($pendientes->has('EstratoColor'))
+                           <td colspan="1" align="left" style="background-color: #F9F9E1;"><strong>Estrato Color</strong></td>
+                            @else
+                                <td colspan="1" align="left"><strong>Estrato Color</strong></td>
+                            @endif
                             <td colspan="3"><input class="form-control" type="text" name="ecolor"  maxlength="255" value="{{$ud_estratigrafica->EstratoColor}}">
                             </td>
                         </tr>
 
                         <tr>
-                            <td colspan="1" align="left"><strong>T&eacute;cnica Excavaci&oacute;n</strong></td>
+
+                            @if($pendientes->has('TecnicaExcavacion'))
+                                <td colspan="1" align="left" style="background-color: #F9F9E1;"><strong>Técnica Excavación</strong></td>
+                            @else
+                                <td colspan="1" align="left"><strong>Técnica Excavación</strong></td>
+                            @endif
+
                            <td colspan="3"><input class="form-control" type="text" name="tecnica" style="width:100%" maxlength="255" value="{{$ud_estratigrafica->TecnicaExcavacion}}"></td>
                         </tr>
 
-                        <!--FORMULARIO OPCIONES ENUM!!!!-->
+
                         <tr>
                             <td colspan="1"><strong>Unidad Acci&oacute;n</strong></td>
                             <td colspan="1">
@@ -146,7 +155,13 @@
                             </tr>
 
                         <tr>
-                            <td align="left"><strong>Descripci&oacute;n</strong></td>
+
+                            @if($pendientes->has('Descripcion'))
+                                <td align="left" style="background-color: #F9F9E1;"><strong>Descripci&oacute;n</strong></td>
+                            @else
+                                <td align="left"><strong>Descripci&oacute;n</strong></td>
+                            @endif
+
                             <td colspan="3">
 
                                 <div onclick="displayHtml('source1','display1');">
@@ -165,7 +180,11 @@
                                 </tr>
 
                                 <tr>
-                                    <td align="left"><strong>Estratigraf&iacute;a Observaciones</strong></td>
+                                    @if($pendientes->has('Observaciones'))
+                                        <td align="left" style="background-color: #F9F9E1;"><strong>Observaciones</strong></td>
+                                    @else
+                                        <td align="left"><strong>Observaciones</strong></td>
+                                    @endif
                                     <td colspan="3">
 
                                 <div onclick="displayHtml('source2','display2');">
@@ -185,7 +204,13 @@
                                 </tr>
                                 <tr>
 
-                                <td align="left"><strong>Interpretaci&oacute;n</strong></td>
+                                    @if($pendientes->has('Interpretacion'))
+                                        <td align="left" style="background-color: #F9F9E1;"><strong>Interpretaci&oacute;n</strong></td>
+                                    @else
+                                        <td align="left"><strong>Interpretaci&oacute;n</strong></td>
+                                    @endif
+
+
                                 <td colspan="3">
 
                                 <div onclick="displayHtml('source3','display3');">

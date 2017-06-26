@@ -16,9 +16,14 @@ class COrganicosController extends \App\Http\Controllers\Controller
         $asociados = $ud_estratigrafica->componentesOrganicosAsociados();
         $no_asociados = $ud_estratigrafica -> componentesOrganicosNoAsociados();
 
+        $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['CompOrganicos'])->all();
+        $pendiente = collect($pendientes);
 
 
-        return view('catalogo.uds_estratigraficas.layout_corganicos',['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados,'no_asociados' => $no_asociados]);
+
+        return view('catalogo.uds_estratigraficas.layout_corganicos',
+            ['ud_estratigrafica' => $ud_estratigrafica,
+                'asociados' => $asociados,'no_asociados' => $no_asociados,'pendiente' => $pendiente]);
 
     }
 

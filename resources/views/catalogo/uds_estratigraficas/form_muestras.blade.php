@@ -6,6 +6,9 @@
                 <h1 class="text-center">Ficha UE({{$ud_estratigrafica->UE}}) </h1>
                 @include('messages.success')
                 @include('errors.errores')
+                @if($pendiente->isNotEmpty())
+                    @include('messages.pendiente')
+                @endif
                 <table class="table table-hover table-bordered" rules="none">
                     <tbody>
 

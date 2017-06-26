@@ -19,8 +19,12 @@ class CArtificialesController extends \App\Http\Controllers\Controller
         $asociados = $ud_estratigrafica->componentesArtificialesAsociados();
         $no_asociados = $ud_estratigrafica->componentesArtificialesNoAsociados();
 
+        $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['CompArtificiales'])->all();
+        $pendiente = collect($pendientes);
 
-        return view('catalogo.uds_estratigraficas.layout_cartificiales', ['ud_estratigrafica' => $ud_estratigrafica, 'asociados' => $asociados, 'no_asociados' => $no_asociados]);
+
+        return view('catalogo.uds_estratigraficas.layout_cartificiales', ['ud_estratigrafica' => $ud_estratigrafica,
+            'asociados' => $asociados, 'no_asociados' => $no_asociados,'pendiente' => $pendiente]);
 
     }
 

@@ -212,11 +212,22 @@ public function localizacion(){
             $join->on('unidadestratigrafica.idlocalizacion', '=', 'localizacion.idlocalizacion')
                 ->where('unidadestratigrafica.ue', '=', $this->UE);
         })
-        ->get();
+        ->get()
+        ->first();
 
 
     return $localizacion;
 }
+
+    public function localizacionesNoAsociadas(){
+
+        $localizaciones = DB::table('localizacion')
+            ->where('idlocalizacion', '<>', $this->IdLocalizacion)
+            ->get();
+
+        return $localizaciones;
+
+    }
 
 
 
@@ -307,6 +318,32 @@ public function muestrasNoAsociadas(){
 								'));
 
     return $no_asociadas;
+}
+
+
+public function camposPendientes(){
+
+    $pendientes = DB::table('camposue')
+        ->join('pendienteue', function ($join) {
+            $join->on('camposue.idcampo', '=', 'pendienteue.idcampo')
+                ->where('pendienteue.ue', '=', $this->UE);
+        })
+        ->orderBy('camposue.nombrecampo')
+        ->get();
+
+    return $pendientes;
+}
+
+
+public function camposCompletados(){
+
+    $completados = DB::table('camposue')->whereNotIn('camposue.idcampo',function($q){
+        $q->select('pendienteue.idcampo')->from('pendienteue')->where('pendienteue.ue','=',$this->UE);
+    })
+        ->orderBy('camposue.nombrecampo')
+        ->get();
+
+    return $completados;
 }
 
 

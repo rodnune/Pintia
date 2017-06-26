@@ -57,9 +57,13 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
         $ud_estratigrafica = UnidadEstratigrafica::find($id);
         $asociados = $ud_estratigrafica->relacionesEstratigraficas();
         $no_asociados = $ud_estratigrafica->ueSinAsociar();
+        $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->only(['RelacionesEstratigraficas'])->all();
+        $pendiente = collect($pendientes);
 
 
-        return view('catalogo.uds_estratigraficas.layout_relaciones',['ud_estratigrafica' => $ud_estratigrafica,'asociados' => $asociados,'no_asociados' => $no_asociados]);
+        return view('catalogo.uds_estratigraficas.layout_relaciones',
+            ['ud_estratigrafica' => $ud_estratigrafica,'asociados' => $asociados,
+                'no_asociados' => $no_asociados,'pendiente' => $pendiente]);
 
     }
 

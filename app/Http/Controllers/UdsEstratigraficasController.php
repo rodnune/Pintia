@@ -79,7 +79,12 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
 
             public function get_update_ud_estratigrafica($id){
                $ud_estratigrafica = UnidadEstratigrafica::find($id);
-                return view('catalogo.uds_estratigraficas.layout_form_update',['ud_estratigrafica' => $ud_estratigrafica]);
+
+                $pendientes = $ud_estratigrafica->camposPendientes()->keyBy('NombreCampo')->all();
+                $pendientes = collect($pendientes);
+
+                return view('catalogo.uds_estratigraficas.layout_form_update',
+                    ['ud_estratigrafica' => $ud_estratigrafica,'pendientes' => $pendientes]);
             }
 
             public function update(Request $request){
@@ -145,6 +150,63 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                     ->with('success','Unidad estratigrafica con: '.$id.' modificada correctamente');
 
 
+            }
+
+
+            public function get_pendientes($id){
+                    $ud_estratigrafica = UnidadEstratigrafica::find($id);
+
+                    $pendientes = $ud_estratigrafica->camposPendientes();
+                    $completados = $ud_estratigrafica->camposCompletados();
+
+
+                    return view('catalogo.uds_estratigraficas.layout_pendientes',
+                        ['ud_estratigrafica' => $ud_estratigrafica,'pendientes' => $pendientes,'completados' => $completados]);
+
+
+            }
+
+            public function marcar_pendiente(Request $request){
+                $id = $request->input('id');
+                $campo = $request->input('campo');
+
+                $validator = Validator::make($request->all(), [
+                    'id'           => 'required|exists:unidadestratigrafica,ue',
+                    'campo' => 'required|exists:camposue,idcampo',
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect('/ud_estratigrafica/'.$id.'/pendientes')->withErrors($validator);
+                }
+
+                DB::table('pendienteue')
+                    ->insert(['ue' => $id,'idcampo' => $campo]);
+
+                return redirect('/ud_estratigrafica/'.$id.'/pendientes')->with('success','Campo añadido a pendientes');
+
+            }
+
+            public function marcar_completado(Request $request){
+
+                $id = $request->input('id');
+                $campo = $request->input('hecho');
+
+                $validator = Validator::make($request->all(), [
+                    'id'           => 'required|exists:unidadestratigrafica,ue',
+                    'hecho'        => 'required|exists:camposue,idcampo',
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect('/ud_estratigrafica/'.$id.'/pendientes')->withErrors($validator);
+                }
+
+
+                DB::table('pendienteue')
+                    ->where('ue','=',$id)
+                    ->where('idcampo','=',$campo)
+                    ->delete();
+
+                return redirect('/ud_estratigrafica/'.$id.'/pendientes')->with('success','Campo añadido a completados');
             }
 
 
