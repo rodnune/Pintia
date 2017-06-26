@@ -4,15 +4,12 @@
             <h4 class="text-center" style="color: #000;">Notas</h4>
             <textarea class="noresize notas" style="background: url('/images/lined_paper.png');
                     background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" name="contenido-nota">
-
+                @if(isset($nota))
+                    {{$nota->Contenido}}
+                @endif
                     </textarea>
            <p></p>
-            <center>
-                <button type="submit" name="accion" class="btn btn-sm btn-success" value="guardar-nota">
-                    <i class="fa fa-check"></i> Guardar nota
-                </button>
-            </center>
-        </form>
+
         <hr>
         <h4 class="text-center" style="color: #000;">Secciones</h4>
         <p></p>
@@ -31,8 +28,9 @@
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/muestras'" class="btn btn-default btn-block">Muestras</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/localizacion'" class="btn btn-default btn-block">Localizacion</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/pendientes'" class="btn btn-default btn-block">Campos pendientes</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/notas'" class="btn btn-default btn-block">Notas UE</button>
 
-            <hr>
+        <hr>
 
             <div style="text-align:center">
                 <a href="/uds_estratigraficas" class="btn btn-primary btn-block">

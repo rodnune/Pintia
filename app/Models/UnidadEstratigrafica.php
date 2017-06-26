@@ -347,6 +347,19 @@ public function camposCompletados(){
 }
 
 
+    public function notaSeccion($seccion){
+
+
+        $nota_seccion = DB::table('notasue')
+            ->where('ue','=',$this->UE)
+            ->where('seccion','=',$seccion)
+            ->get()
+            ->first();
+
+        return $nota_seccion;
+    }
+
+
 
 
 

@@ -87,6 +87,12 @@ Route::post('/ud_estratigrafica_pendientes/asociar','UdsEstratigraficasControlle
 Route::post('/ud_estratigrafica_pendientes/delete','UdsEstratigraficasController@marcar_completado');
 
 
+//notas UE
+Route::get('/ud_estratigrafica/{id}/notas','UdsEstratigraficasController@get_notas');
+Route::get('/notas_ue_seccion/{id}/{seccion}','UdsEstratigraficasController@get_nota_seccion');
+Route::post('/add_nota_ue','UdsEstratigraficasController@add_nota');
+
+
 
 
 

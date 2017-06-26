@@ -211,4 +211,71 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
 
 
 
+
+
+
+    public function get_notas($id){
+
+        $ud_estratigrafica = UnidadEstratigrafica::find($id);
+
+
+
+        return view('catalogo.uds_estratigraficas.layout_notas',['ud_estratigrafica' => $ud_estratigrafica]);
+
+    }
+
+    public function get_nota_seccion($id,$seccion,Request $request){
+
+
+        $ud_estratigrafica = UnidadEstratigrafica::find($id);
+
+        $nota_seccion = $ud_estratigrafica->notaSeccion($seccion);
+
+
+
+        if($request->ajax()){
+            return json_encode($nota_seccion);
+        }else{
+            return $nota_seccion;
+        }
+
+    }
+
+    public function add_nota(Request $request){
+
+        $ue = $request->input('ue');
+        $seccion = $request->input('seccion');
+        $contenido = $request->input('nota');
+
+        $validator = Validator::make($request->all(), [
+            'ue' => 'required|integer|min:0|exists:unidadestratigrafica,ue',
+            'seccion' => 'required',
+            'nota' => 'required|string',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/objeto/' . $ue. '/notas')->withErrors($validator);
+        }
+
+        $nota_seccion = UdsEstratigraficasController::get_nota_seccion($ue,$seccion,$request);
+
+
+        if(count($nota_seccion) == 0){
+            DB::table('notasue')->insert(['ue' => $ue,'seccion' => $seccion,'contenido' => $contenido]);
+        }else {
+            DB::table('notasobjeto')
+                ->where('ue','=',$ue)
+                ->where('seccion','=',$seccion)
+                ->update(['contenido' => $contenido]);
+        }
+
+        return redirect('/ud_estratigrafica/' . $ue. '/notas')
+            ->with('success','Notada guardada correctamente en la seccion: '.$seccion);
+    }
+
+
+
+
+
 }
