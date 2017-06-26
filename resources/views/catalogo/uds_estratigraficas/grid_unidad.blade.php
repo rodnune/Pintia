@@ -168,15 +168,15 @@
                             </tr>
 
                         <tr>
-                            <td align="center">{{$localizacion[0]->SiglaZona}}</td>
-                            <td align="center">{{$localizacion[0]->SectorTrama}}</td>
-                            <td align="center">{{$localizacion[0]->SectorSubtrama}}</td>
+                            <td align="center">{{$localizacion->SiglaZona}}</td>
+                            <td align="center">{{$localizacion->SectorTrama}}</td>
+                            <td align="center">{{$localizacion->SectorSubtrama}}</td>
                             <td></td>
                         </tr>
 
                         <tr>
                             <td colspan="1" align="left"><strong>Notas Localizaci&oacute;n</strong></td>
-                            <td colspan="3">{{$localizacion[0]->Notas}}</td>
+                            <td colspan="3">{{$localizacion->Notas}}</td>
                         </tr>
 
                                 @else

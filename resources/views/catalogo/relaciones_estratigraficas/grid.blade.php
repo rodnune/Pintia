@@ -9,7 +9,8 @@
                 <div class="post">
 
                     <h1 class="text-center">Lista de Relaciones Estratigr&aacute;ficas<br></h1>
-
+                    @include('errors.errores')
+                    @include('messages.success')
 
 
                     <p class="text-center text-muted"><strong>Total de relaciones: {{$relaciones->count()}} </strong></p>
@@ -35,15 +36,13 @@
                            <td align="left">{{$relacion->RelacionadaConUE}}</td>
 
 
-                                <td align="center"><button type="submit" name="submit" class="btn btn-primary" value="Modificar"><i class="fa fa-pencil-square-o"></i> Gestionar</button></th></td>
-                                <input type="hidden" name="form" value=4 />
-                                <input type="hidden" name="id_relacion" value=""/>
-                                <input type="hidden" name="id_ue" value=""/>
+                                <td align="center"><button onclick="window.location.href='/relacion_estratigrafica/{{$relacion->IdRelacion}}'" type="submit" name="submit" class="btn btn-primary" value="Modificar"><i class="fa fa-pencil-square-o"></i> Gestionar</button></th></td>
                             </td>
 
-                        @if(Session::get('admin_level')>1 )
-                           {{Form::open(array('action' => 'RelacionesEstratigraficasController@delete' , 'method' => 'post'))}}
+                        @if(Session::get('admin_level') > 1 )
+
                                 <td align="center">
+                                    {{Form::open(array('action' => 'RelacionesEstratigraficasController@delete' , 'method' => 'post'))}}
                                     <button type="submit" name="submit" class="btn btn-danger" value="Eliminar"><i class="fa fa-trash"></i> Eliminar</button></th></td>
                                 <input type="hidden" name="ue" value="{{$relacion->UE}}"/>
                                 <input type="hidden" name="relacionada" value="{{$relacion->RelacionadaConUE}}"/>

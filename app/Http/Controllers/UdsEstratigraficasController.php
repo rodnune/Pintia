@@ -13,6 +13,8 @@ use App\Models\UnidadEstratigrafica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Input;
+
 
 class UdsEstratigraficasController extends \App\Http\Controllers\Controller
 {
@@ -47,6 +49,64 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                 $new_ud_estratigrafica->save();
 
                 return redirect('/uds_estratigraficas')->with('success','Unidad estratigrafica con id: '.$id.' creada correctamente');
+            }
+
+            public function search(Request $request,UnidadEstratigrafica $ud_estratigrafica){
+
+                $datos_consulta = collect();
+
+                $ud_estratigraficas = $ud_estratigrafica->newQuery();
+
+
+
+                if($request->has('filtro_geologico')){
+                    $ud_estratigraficas->whereIn('ue', function ($q) {
+                        $q->select('cgeologicosue.ue')->from('cgeologicosue')
+                            ->where('cgeologicosue.idcgeologico', '=',  Input::get('filtro_geologico'));
+
+                    });
+
+                    $geologico =  DB::table('componentesgeologicos')
+                        ->where('idcgeologico','=',Input::get('filtro_geologico'))->get()->first();
+
+
+                    $datos_consulta->put('geologico',$geologico->Denominacion);
+            }
+
+                if($request->has('filtro_artificial')){
+                    $ud_estratigraficas->whereIn('ue', function ($q) {
+                        $q->select('cartificialesue.ue')->from('cartificialesue')
+                            ->where('cartificialesue.idcartificial', '=',  Input::get('filtro_artificial'));
+
+                    });
+                    $artificial =  DB::table('componentesartificiales')
+                        ->where('idcartificial','=',Input::get('filtro_artificial'))->get()->first();
+
+                    $datos_consulta->put('artificial',$artificial->Denominacion);
+                }
+
+                if($request->has('filtro_organico')){
+                    $ud_estratigraficas->whereIn('ue', function ($q) {
+                        $q->select('corganicosue.ue')->from('corganicosue')
+                            ->where('corganicosue.idcorganico', '=',  Input::get('filtro_organico'));
+
+                    });
+
+                  $organico =  DB::table('componentesorganicos')
+                      ->where('idcorganico','=',Input::get('filtro_organico'))->get()->first();
+
+                    $datos_consulta->put('organico',$organico->Denominacion);
+                }
+
+                $uds_estratigraficas = $ud_estratigraficas->get();
+
+                return  UdsEstratigraficasController::index()
+                    ->with(['datos' => $datos_consulta,'uds_estratigraficas' => $uds_estratigraficas]);
+
+
+
+
+
             }
 
             public function get_ud_estratigrafica($id){
@@ -150,6 +210,32 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
 
                 return redirect('/ud_estratigrafica/'.$id.'/datos_generales')
                     ->with('success','Unidad estratigrafica con: '.$id.' modificada correctamente');
+
+
+            }
+
+
+            public function delete(Request $request){
+
+                $ue = $request->input('ue');
+
+                $validator = Validator::make($request->all(), [
+
+                    'ue'                        => 'required|exists:unidadestratigrafica,ue',
+
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect('/uds_estratigraficas')
+                        ->withErrors($validator);
+                }
+
+                DB::table('unidadestratigrafica')
+                    ->where('ue','=',$ue)
+                    ->delete();
+
+               return redirect('/uds_estratigraficas')->with('success','Unidad estratigrafica con id: '.$ue.' borrada correctamente');
+
 
 
             }

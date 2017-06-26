@@ -14,7 +14,7 @@
                     <table class="table table-bordered table-hover" rules="rows">
 
                         <tr>
-                            <td><strong>Buscar por Unidad estratigrafica:</strong></td>
+                            <td><strong>Buscar por UE o UE relacionada:</strong></td>
                             <td><input id="myInput" type="text" class="form-control" onkeyup="filter()" name="id" placeholder="Identificador"></td>
                             <td align="center" colspan="4">
 
@@ -29,7 +29,7 @@
 
                     </table>
 
-                    <p class="text-center text-muted"><strong>Total de resultados encontrados: {{$matrices->count()}}</strong></p>
+                    <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{$matrices->count()}}</strong></p>
                     <p>
                     <table id="pagination_table" class="table table-hover table-bordered" rules="all">
                         <thead>
@@ -87,39 +87,5 @@
         </div>
     </div>
 </div>
-<script>
-
-    function filter() {
-        // Declare variables
-        var input, filter, table, tr, td,td2, i;
-
-        input = $("#myInput");
-        filter = input.val();
-
-        table = $("#pagination_table");
-
-        tr = table.find('#data');
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            /*Busqueda por ID*/
-            td = tr[i].getElementsByTagName("td")[0];
-            td2 = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                if (td.innerHTML.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-
-            if (td2) {
-                if (td2.innerHTML.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
+<script src="/js/results.js"></script>
 

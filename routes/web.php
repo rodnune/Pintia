@@ -29,6 +29,8 @@ Route::post('/uds_estratigraficas/new','UdsEstratigraficasController@create');
 Route::get('/ud_estratigrafica/{id}','UdsEstratigraficasController@get_ud_estratigrafica');
 Route::get('/ud_estratigrafica/{id}/datos_generales','UdsEstratigraficasController@get_update_ud_estratigrafica');
 Route::post('/ud_estratigrafica/update','UdsEstratigraficasController@update');
+Route::get('/search_ud_estratigrafica','UdsEstratigraficasController@search');
+Route::post('/delete_ud_estratigrafica','UdsEstratigraficasController@delete');
 
 //componentes geologicos de una UE
 Route::get('/ud_estratigrafica/{id}/geologicos','CGeologicosController@indexUE');
@@ -99,7 +101,9 @@ Route::post('/add_nota_ue','UdsEstratigraficasController@add_nota');
 //relaciones estratigraficas
 
 Route::get('/relaciones_estratigraficas','RelacionesEstratigraficasController@index');
+Route::get('/relacion_estratigrafica/{id}','RelacionesEstratigraficasController@get');
 Route::post('/relaciones_estratigraficas/delete','RelacionesEstratigraficasController@delete');
+Route::post('/update_relacion_estratigrafica','RelacionesEstratigraficasController@update');
 
 //matrices de Harris
 

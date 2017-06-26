@@ -35,7 +35,15 @@
             <div style="text-align:center">
                 <a href="/uds_estratigraficas" class="btn btn-primary btn-block">
                     <i class="fa fa-arrow-left"></i> Lista UE / Salir</a>
+
             </div>
+        <br>
+        <div style="text-align:center">
+            {{Form::open(array('action' => 'UdsEstratigraficasController@delete','method' => 'post'))}}
+            <input type="hidden" name="ue" value="{{$id}}">
+            <button type="submit" name="subsec" class="btn btn-danger btn-block"><i class="fa fa-trash"></i> Eliminar UE</button>
+            {{Form::close()}}
+        </div>
             <br>
 
 

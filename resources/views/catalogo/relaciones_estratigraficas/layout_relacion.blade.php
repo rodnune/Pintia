@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('layouts.app')
 
 @section('header')
     @include('layouts.header')
@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('catalogo.matrix_harris.grid')
+    @include('catalogo.relaciones_estratigraficas.relacion')
 @endsection
 
 @section('footer')

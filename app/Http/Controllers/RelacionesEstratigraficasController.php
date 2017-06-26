@@ -32,7 +32,7 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
 
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $ue .'/relaciones')->withErrors($validator);
+            return redirect('/relaciones_estratigraficas')->withErrors($validator);
         }
 
                 DB::table('relacionesestratigraficas')
@@ -48,7 +48,7 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
             ->where('RelacionadaConUE','=',$ue)
             ->delete();
 
-        return redirect('/ud_estratigrafica/' . $ue .'/relaciones')->with('success',Lang::get('relacion_eliminada'));
+        return redirect('/relaciones_estratigraficas')->with('success',Lang::get('relacion_eliminada'));
 
     }
 
@@ -143,6 +143,9 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
 
         }
 
+
+
+
         return redirect('/ud_estratigrafica/' . $actual .'/relaciones')
             ->with('success','Relacion UE: '.$actual.' '.$tipo.' UE: '.$relacionada.' añadida correctamente' );
     }
@@ -174,7 +177,7 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
 
 
 
-        return redirect('ud_estratigrafica/'.$ue.'/relaciones')->with('success',Lang::get('messages.relacion_eliminada'));
+        return redirect('/ud_estratigrafica/'.$ue.'/relaciones')->with('success',Lang::get('messages.relacion_eliminada'));
 
 
 
@@ -192,6 +195,120 @@ class RelacionesEstratigraficasController extends \App\Http\Controllers\Controll
 
             ['UE' => $relacionada, 'RelacionadaConUE' => $actual,'TipoRelacion' => $relacionBA]
         );
+
+
+    }
+
+    public function get($id){
+
+       $relacion = DB::table('relacionesestratigraficas')->where('idrelacion','=',$id)->get()->first();
+
+        return view('catalogo.relaciones_estratigraficas.layout_relacion',['relacion' => $relacion]);
+
+
+    }
+
+
+    public function updateRelacion($actual,$relacionada,$relacionAB, $relacionBA){
+
+        DB::table('relacionesestratigraficas')
+            ->where('UE','=',$actual)
+            ->where('RelacionadaConUE','=', $relacionada)
+        ->update(
+            ['TipoRelacion' => $relacionAB]
+
+
+        );
+
+        DB::table('relacionesestratigraficas')
+            ->where('UE','=',$relacionada)
+            ->where('RelacionadaConUE','=', $actual)
+            ->update(
+                ['TipoRelacion' => $relacionBA]
+
+
+            );
+
+    }
+
+
+    public function update(Request $request){
+
+        $id_rel = $request->input('relacion');
+        $actual = $request->input('actual');
+        $relacionada = $request->input('relacionada');
+        $tipo = $request->input('tipo');
+
+        $validator = Validator::make($request->all(), [
+            'relacion'    => 'required|exists:relacionesestratigraficas,idrelacion',
+            'relacionada' => 'required|exists:unidadestratigrafica,ue',
+            'actual'      => 'required|exists:unidadestratigrafica,ue',
+            'tipo'        => 'in:'  . implode(',', Config::get('enums.relaciones_estratigraficas')),
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/relacion_estratigrafica/' .$id_rel)->withErrors($validator);
+        }
+
+
+        switch ($tipo) {
+            case "igual a":
+                self::updateRelacion($actual,$relacionada,$tipo,"se corresponde con");
+                break;
+            case "se corresponde con":
+                self::updateRelacion($actual,$relacionada,$tipo,"igual a");
+                break;
+            case "cubre a":
+                self::updateRelacion($actual,$relacionada,$tipo,"cubierta por");
+                break;
+            case "cubierta por":
+                self::updateRelacion($actual,$relacionada,$tipo,"cubre a");
+                break;
+
+            case "rellena a":
+                self::updateRelacion($actual,$relacionada,$tipo,"rellena por");
+                break;
+
+            case "rellena por":
+                self::updateRelacion($actual,$relacionada,$tipo,"rellena a");
+                break;
+
+            case "corta a":
+                self::updateRelacion($actual,$relacionada,$tipo,"cortada por");
+                break;
+
+            case "cortada por":
+                self::updateRelacion($actual,$relacionada,$tipo,"corta a");
+                break;
+
+            case "se yuxtapone a":
+                self::updateRelacion($actual,$relacionada,$tipo,"se le yuxtapone");
+                break;
+
+            case "se le yuxtapone":
+                self::updateRelacion($actual,$relacionada,$tipo,"se yuxtapone a");
+                break;
+
+            case "se apoya en":
+                self::updateRelacion($actual,$relacionada,$tipo,"se le apoya");
+                break;
+
+            case "se le apoya":
+                self::updateRelacion($actual,$relacionada,$tipo,"se apoya en");
+                break;
+
+            case "contiene a":
+                self::updateRelacion($actual,$relacionada,$tipo,"contenida en");
+                break;
+
+            case "contenida en":
+                self::updateRelacion($actual,$relacionada,$tipo,"contiene a");
+                break;
+
+        }
+
+        return redirect('/relacion_estratigrafica/' . $id_rel)
+            ->with('success','Relacion con id: '.$id_rel.' modificada correctamente a tipo: '.$tipo);
 
 
     }

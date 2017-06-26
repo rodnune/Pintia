@@ -13,6 +13,7 @@
 
                     <h1 class="text-center">Lista de Uds Estratigráficas</h1><br>
                     @include('messages.success')
+                    @include('errors.errores')
                     <div class="form-group">
                         <input id="verfiltro" type="radio" name="filtro" value="Si" checked> Buscar por filtro(s) &nbsp;&nbsp;&nbsp;
                         <input id="ocultarfiltro" type="radio" name="filtro" value="No"> Buscar por identificador
@@ -25,7 +26,7 @@
                             <tr id="fila_filtros">
                                 <!--FILTRAR POR COMPONENTE GEOLÓGICO-->
 
-
+                        {{Form::open(array('action' => 'UdsEstratigraficasController@search','method' => 'get'))}}
                                 <td align="center"><strong>Componente Geológico: </strong></td>
                                     <td align="left"><select class="form-control" name="filtro_geologico" style="width:100%">
                                         <option value="" selected> --- Seleccionar componente --- </option>
@@ -61,6 +62,7 @@
                                         <a class="btn btn-primary" href="/uds_estratigraficas"><i class="fa fa-eye"></i> Ver todo</a>
                                </td>
                            </tr>
+                        {{Form::close()}}
 
                             <input type="hidden" name="seccion" value="Lista">
                                 <tr id="fila_ref" style="display:none;">
@@ -76,7 +78,23 @@
 
                     <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                         <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($uds_estratigraficas)}}</strong></p>
+                        <p class="text-muted text-center">
+                            @if(isset($datos))
+                                @if($datos->has('geologico'))
+                                    <strong>Componente geologico:</strong> {{$datos->get('geologico')}}
+                                @endif
+                                @if($datos->has('artificial'))
+                                    <strong>Componente artificial:</strong> {{$datos->get('artificial')}}
+                                @endif
 
+                                @if($datos->has('organico'))
+                                    <strong>Material:</strong> {{$datos->get('organico')}}
+                                @endif
+
+                            @endif
+
+
+                        </p>
                         <thead>
 
                         <tr class="info">
@@ -95,6 +113,7 @@
                             @endif
                         </tr>
                      </thead>
+                        @if(count($uds_estratigraficas) > 0)
                         <tbody>
                       @foreach($uds_estratigraficas as $uds_estratigrafica)
                         <tr id="data">
@@ -123,6 +142,9 @@
                         @endif
                           @endforeach
                        </tbody>
+                        @else
+                            <h4 class=" text-center text-danger">No se encuentran resultados</h4>
+                            @endif
                     </table>
                 </div>
             </div>
