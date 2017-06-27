@@ -4,7 +4,8 @@
         <div id="content-edit" style="margin-top:0px;">
             <div class="post">
                 <h1 class="text-center">Articulo ({{$articulo->Titulo}}) </h1>
-
+                    @include('errors.errores')
+                    @include('messages.success')
                 <table class="table table-hover table-bordered" rules="none">
                     <tbody>
 

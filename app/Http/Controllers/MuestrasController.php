@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 use Lang;
+use URL;
 
 class MuestrasController extends \App\Http\Controllers\Controller
 {
@@ -111,7 +112,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/muestra/'.$registro)
+            return redirect(URL::previous())
                 ->withErrors($validator);
         }
 
@@ -134,7 +135,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/muestra/'.$id)
+            return redirect(URL::previous())
                 ->withErrors($validator);
         }
 
@@ -194,7 +195,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/'.$id_ue.'/muestras')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('muestrasue')->insert(['NumeroRegistro' => $id_muestra,'UE' => $id_ue]);
@@ -213,7 +214,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/'.$id_ue.'/muestras')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
         DB::table('muestrasue')->where(
             'NumeroRegistro','=',$id_componente)

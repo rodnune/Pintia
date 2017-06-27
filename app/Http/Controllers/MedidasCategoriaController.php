@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use Validator;
+use URL;
 
 class MedidasCategoriaController extends \App\Http\Controllers\Controller
 {
@@ -145,7 +146,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/categoria/'.$idcat)->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
                 DB::table('categoria')->where('idcat','=',$idcat)->update(['denominacion' => $denominacion]);
@@ -163,7 +164,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/categoria/'.$idcat)->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
                 DB::table('categoria')
@@ -207,7 +208,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/categoria/' . $id)->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
 

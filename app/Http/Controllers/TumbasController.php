@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Config;
 use App\Models\Tumba;
 use Illuminate\Support\Facades\Session;
+use URL;
 
 
 class TumbasController extends \App\Http\Controllers\Controller
@@ -123,7 +124,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/datos_generales')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
         if(!$request->has('ue')){
 
@@ -282,7 +283,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/tipos')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('tumbaesdetipo')->insert(['IdTumba' => $id,'IdTipoTumba'=> $tipo]);
@@ -306,7 +307,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/tipos')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -353,7 +354,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id .'/cremaciones')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('cremacionestumba')->insert(['IdTumba' => $id,'IdCremacion'=> $cremacion]);
@@ -375,7 +376,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id .'/cremaciones')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -424,7 +425,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         if ($validator->fails()) {
 
-            return redirect('/tumba/'.$id.'/inhumaciones')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('inhumacionestumba')->insert(['IdTumba' => $id,'IdEnterramiento'=> $inhumacion]);
@@ -446,7 +447,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/inhumaciones')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('inhumacionestumba')
@@ -487,7 +488,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/localizacion')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -549,7 +550,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/ofrendas')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('ofrendasfauna')->insert(['IdTumba' => $id,'IdAnalitica'=> $ofrenda]);
@@ -571,7 +572,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         if ($validator->fails()) {
 
-            return redirect('/tumba/'.$id.'/ofrendas')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -617,7 +618,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/multimedias')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('multimediatumba')->insert(['idTumba' => $id,'idmultimedia'=> $multimedia,'orden' => $orden]);
@@ -637,7 +638,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/multimedias')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('multimediatumba')
@@ -673,7 +674,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/pendientes')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('pendientetumba')
@@ -695,7 +696,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/tumba/'.$id.'/pendientes')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 

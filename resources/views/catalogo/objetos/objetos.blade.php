@@ -101,6 +101,10 @@
                                 <td align="center" colspan="6">
                                     <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar objetos</button>
                                     <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
+                                                    @if(Session::get('admin_level') > 0)
+                                    <a href="/new_objeto" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo </a>
+                                                        @endif
+
                                 </td>
                             </tr>
                            {{Form::close()}}
@@ -109,113 +113,81 @@
                                 <td><strong>Buscar por referencia objeto:</strong></td>
                                 <td><input type="text" id="myInput" onkeyup="filter()" class="form-control" placeholder="Referencia"></td>
 
-                                <td align="center" colspan="4">
+                                <td align="center" colspan="2">
                                     <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
+                                    @if(Session::get('admin_level') > 0)
+                                        <a href="/new_objeto" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo </a>
+                                    @endif
                                 </td>
 
                             </tr>
+
+
+
+
+
                        </table>
 
-
-                        <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($objetos)}}</strong></p>
-                            <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
-                                <p class="text-muted text-center">
-                                    @if(isset($datos))
-                                        @if($datos->has('categoria'))
-                                                  <strong>Categoria:</strong> {{$datos->get('categoria')}}
-                                           @endif
-                                        @if($datos->has('subcategoria'))
-                                                 <strong>Subcategoria:</strong> {{$datos->get('subcategoria')}}
-                                        @endif
-
-                                        @if($datos->has('material'))
-                                                <strong>Material:</strong> {{$datos->get('material')}}
-                                            @endif
-                                        @if($datos->has('sectortrama'))
-                                             <strong>Localizacion:</strong> {{$datos->get('sectortrama')}}-{{$datos->get('sectorsubtrama')}}
-                                        @endif
-
-                                        @endif
-
-
-                                </p>
-                                    <thead>
-                                    <tr class="info">
-                            <th scope="col" align="center"><strong>Ref</strong></th>
-                            <th scope="col" align="center"><strong>Nº de Serie</strong></th>
-                                        <th scope="col" align="center">Materiales<strong></strong></th>
-                            <th scope="col" align="center"><strong>A&ntilde;o Campa&ntilde;a</strong></th>
-                            <th scope="col" align="center"></th>
-
-                            @if(Session::get('admin_level') > 0 )
-                                            <th scope="col" align="center"><strong>Visible</strong></th>
-
-                            <th scope="col" align="center">
-
-
-                                    <a href="/new_objeto" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo </a>
-
-                                @else
-                                            <th scope="col" align="center">
-
-                           @endif
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                        @if(count($objetos) == 0)
-
-                            <h4 class=" text-center text-danger">No se encuentran resultados.</h4>
-
-                            @else
-                    @foreach($objetos as $objeto)
-                        <tr>
-                            <td align="center"><a>{{$objeto->Ref}}</a></td>
-                            <td align="center">{{$objeto->NumeroSerie}}</td>
-                            <td id="materialObjeto_{{$objeto->Ref}}" align="center">
-
-                            </td>
-
-                            <td align="center">{{$objeto->AnyoCampanya}}</td>
-                            <td align="center">
-
-                                   <a href="/objeto/{{$objeto->Ref}}" type="submit" class="btn btn-primary"> <i class="fa fa-eye"></i> Ver </a>
-
-                            </td>
+                    <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($objetos)}}</strong></p>
 
 
 
-
-                            @if(Session::get('admin_level') > 0)
-                                    <td align="center">{{$objeto->VisibleCatalogo}}</td>
-
-                                @endif
-
-
-@if((Session::get('admin_level') == 3) || ($objeto->user_id == Session::get('user_id')))
-
-
-
-<td align="center" colspan="1">
-
-
-    <a href="/objeto/{{$objeto->Ref}}/datos_generales" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar </a>
-
-<br>
-
-</td>
-                            @else
-
-<td colspan="2"></td>
+                    <p class="text-muted text-center">
+                        @if(isset($datos))
+                            @if($datos->has('categoria'))
+                                <strong>Categoria:</strong> {{$datos->get('categoria')}}
+                            @endif
+                            @if($datos->has('subcategoria'))
+                                <strong>Subcategoria:</strong> {{$datos->get('subcategoria')}}
                             @endif
 
-</tr>
-                        @endforeach
+                            @if($datos->has('material'))
+                                <strong>Material:</strong> {{$datos->get('material')}}
+                            @endif
+                            @if($datos->has('sectortrama'))
+                                <strong>Localizacion:</strong> {{$datos->get('sectortrama')}}-{{$datos->get('sectorsubtrama')}}
+                            @endif
+
                         @endif
 
 
-</tbody>
-</table>
+                    </p>
+
+                    <div class="container" id="tourpackages-carousel">
+
+                    <div class="row">
+                    @foreach($objetos as $objeto)
+                        <div class="col-xs-18 col-sm-6 col-md-3">
+                            <div class="thumbnail">
+                                <img src="http://placehold.it/500x300" alt="">
+                                <div id="materialObjeto_{{$objeto->Ref}}"class="caption">
+                                    <h5>Referencia: {{$objeto->Ref}} <i class="fa fa-calendar" aria-hidden="true"></i>  {{$objeto->AnyoCampanya}}</h5>
+                                    @if(is_null($objeto->Descripcion))
+                                        <p>Sin descripcion</p>
+                                        @else
+                                    <p>{{$objeto->Descripcion}}</p>
+                                        @endif
+                                    <p>@if((Session::get('admin_level') == 3) || ($objeto->user_id == Session::get('user_id')))
+
+                                        <a href="#" class="btn btn-info btn-xs" role="button">Button</a>
+                                        @endif
+
+                                            <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        @endforeach
+
+
+
+                    </div>
+                    </div>
+                        <!-- End row -->
+
+                    <div style="text-align:center" class="easyPaginateNav" style="width: 300px;">
+
+                    </div>
 
 
 
@@ -295,3 +267,18 @@
 
 
            </script>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/js/jquery.easyPaginate.js"></script>
+
+<script>
+
+    $('#tourpackages-carousel').easyPaginate({
+        paginateElement: '.col-xs-18.col-sm-6.col-md-3',
+        elementsPerPage: 4,
+    });
+</script>
+<style>
+    .easyPaginateNav a {padding:5px;}
+    .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
+</style>

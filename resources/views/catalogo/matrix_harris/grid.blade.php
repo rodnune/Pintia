@@ -10,7 +10,8 @@
                 <div class="post">
 
                     <h1 class="text-center">Lista de Matrices de Harris</h1><br>
-
+                    @include('errors.errores')
+                    @include('messages.success')
                     <table class="table table-bordered table-hover" rules="rows">
 
                         <tr>
@@ -59,11 +60,11 @@
                             <td align="left">{{$matriz->PosZ}}</td>
 
                             @if(Session::get('admin_level') > 1 )
-                                {{Form::open(array('action' => 'MatrixHarrisController@get','method' => 'get'))}}
-                                <input type="hidden" name="id" value="{{$matriz->IdElementoHarris}}"/>
-                                <td align="center"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar</button></th></td>
 
-                                {{Form::close()}}
+                                <td align="center">
+                                    <a href="/matriz_harris/{{$matriz->IdElementoHarris}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar</a></th></td>
+
+
                                </td>
 
                             {{Form::open(array('action' => 'MatrixHarrisController@delete', 'method' => 'post'))}}

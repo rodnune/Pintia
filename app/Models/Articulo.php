@@ -10,46 +10,13 @@ use Illuminate\Support\Facades\DB;
 class Articulo extends Model
 {
     protected $table = 'articulos';
-    protected $primaryKey = 'IdArticulo';
+    protected $primaryKey = 'idarticulo';
     public $timestamps = false;
 
-    public static function queryArticulos($autor,$clave){
 
 
-$articulos =    DB::table('articulos')
-            ->join('keywordsarticulo','articulos.IdArticulo', '=', 'keywordsarticulo.IdArticulo')
-            ->join('autoria','articulos.IdArticulo', '=', 'autoria.IdArticulo')
-            -> where('autoria.IdAutor', '=', $autor)
-            -> where('keywordsarticulo.IdPalabraClave','=',$clave)
-            ->orderBy('articulos.Titulo')
-            ->get();
-
-        return $articulos;
 
 
-    }
-
-
-    public static function queryAutor($autor){
-        $articulos =    DB::table('articulos')
-            ->join('autoria','articulos.IdArticulo', '=', 'autoria.IdArticulo')
-            -> where('autoria.IdAutor','=',$autor)
-            ->orderBy('articulos.Titulo')
-            ->get();
-
-        return $articulos;
-
-    }
-
-    public static function queryClave($clave){
-        $articulos =    DB::table('articulos')
-            ->join('keywordsarticulo','articulos.IdArticulo', '=', 'keywordsarticulo.IdArticulo')
-            -> where('keywordsarticulo.IdPalabraClave','=',$clave)
-            ->orderBy('articulos.Titulo')
-            ->get();
-
-        return $articulos;
-    }
 
 
     public function autoresArticulo(){
@@ -136,6 +103,16 @@ public function multimediaAsociado(){
 
     return $asociados;
     
+}
+
+public function notaArticulo(){
+
+    $nota = DB::table('notasarticulo')
+        ->where('idarticulo','=',$this->IdArticulo)
+        ->get()
+        ->first();
+
+    return $nota;
 }
 
 }

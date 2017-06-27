@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 use Lang;
+use URL;
 
 
 class LocalizacionController extends \App\Http\Controllers\Controller
@@ -54,7 +55,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
 
         if ($validator->fails()) {
 
-            return redirect('/ud_estratigrafica/'.$id_ue.'/localizacion')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -74,7 +75,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
 
         if ($validator->fails()) {
 
-            return redirect('/ud_estratigrafica/'.$id.'/localizacion')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('unidadestratigrafica')->where('ue','=',$id)
@@ -196,7 +197,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
 
             if ($validator->fails()) {
 
-                return redirect('/localizacion/' . $idlocal)->withErrors($validator);
+                return redirect(URL::previous())->withErrors($validator);
             }
 
 
@@ -218,7 +219,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
 
             if ($validator->fails()) {
 
-                return redirect('/localizacion/' . $idlocal)->withErrors($validator);
+                return redirect(URL::previous())->withErrors($validator);
             }
 
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Lang;
 use Config;
+use URL;
 
 class RelacionesEstratigraficasController extends \App\Http\Controllers\Controller
 

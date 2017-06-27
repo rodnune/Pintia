@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 use Lang;
+use URL;
 
 class ArtefactosController extends \App\Http\Controllers\Controller
 
@@ -40,7 +41,7 @@ class ArtefactosController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $id_ue .'/artefactos')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('fosilesue')->insert(['IdFosil' => $id_superficie, 'UE' => $id_ue]);
@@ -62,7 +63,7 @@ class ArtefactosController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $id_ue .'/artefactos')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
         DB::table('fosilesue')->where(
             'IdFosil', '=', $id_superficie)

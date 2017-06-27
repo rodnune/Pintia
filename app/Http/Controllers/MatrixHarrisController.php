@@ -25,17 +25,23 @@ class MatrixHarrisController extends \App\Http\Controllers\Controller
 
     public function delete(Request $request){
 
-
                 $id = $request -> input('id');
+
+        $validator = Validator::make($request->all(), [
+            'id'       => 'required|exists:matrixharris,idelementoharris',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/matrices_harris')->withErrors($validator);
+        }
 
                 DB::table('matrixharris')->where('IdElementoHarris','=',$id)->delete();
 
-        return redirect('/matrices_harris');
+        return redirect('/matrices_harris')->with('success','Matriz de Harris con id '.$id.' eliminada correctamente');
 
     }
 
-    public function get(Request $request){
-        $id = $request -> input('id');
+    public function get($id){
 
         $matriz = DB::table('matrixharris')->where('IdElementoHarris','=',$id)->first();
 
@@ -49,20 +55,21 @@ class MatrixHarrisController extends \App\Http\Controllers\Controller
         $z = $request->input('posz');
 
         $validator = Validator::make($request->all(), [
+            'id'         => 'required|exists:matrixharris,idelementoharris',
             'posx'       => 'required|numeric',
-            'posy' => 'required|numeric',
+            'posy'       => 'required|numeric',
             'posz'       => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/matriz_harris?id='.$id)->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('matrixHarris')
             ->where('IdElementoHarris', $id)
             ->update(['PosX' => $x, 'PosY' => $y , 'PosZ' => $z]);
 
-        return redirect('matrices_harris');
+        return redirect('/matriz_harris/'.$id)->with('success','Matriz Harris con id: '.$id.' modificada correctamente');
     }
 
 public function indexUE($id){
@@ -96,7 +103,7 @@ public function asociarMatrixHarris(Request $request){
     ]);
 
     if ($validator->fails()) {
-        return redirect('/ud_estratigrafica/'.$id.'/matrix_harris')->withErrors($validator);
+        return redirect(URL::previous())->withErrors($validator);
     }
     DB::table('matrixharris')->insert(
         ['UE' => $id, 'RelacionadaConUE' => $relacionada,'PosX' => $x, 'PosY' => $y, 'PosZ' => $z]);
@@ -117,7 +124,7 @@ public function eliminarMatrixHarris(Request $request){
     ]);
 
     if ($validator->fails()) {
-        return redirect('/ud_estratigrafica/'.$id.'/matrix_harris')->withErrors($validator);
+        return redirect(URL::previous())->withErrors($validator);
     }
 
     DB::table('matrixharris')->where('IdElementoHarris', '=', $matrix)->delete();

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 use Lang;
+use URL;
 
 class COrganicosController extends \App\Http\Controllers\Controller
 
@@ -38,7 +39,7 @@ class COrganicosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/'.$id_ue.'/organicos')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('corganicosue')->insert(['IdCOrganico' => $id_componente,'UE' => $id_ue]);
@@ -56,7 +57,7 @@ class COrganicosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/'.$id_ue.'/organicos')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('corganicosue')->where(

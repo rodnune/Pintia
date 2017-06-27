@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Subcategoria;
 use Validator;
+use URL;
 
 class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
 {
@@ -31,7 +32,7 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/categoria/' . $categoria)->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -107,7 +108,7 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/subcategoria/' . $subcat)->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         if($request->submit == 'Asociar'){

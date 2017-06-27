@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Lang;
 use Validator;
+use URL;
 
 
 class CArtificialesController extends \App\Http\Controllers\Controller
@@ -43,7 +44,7 @@ class CArtificialesController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $id_ue .'/artificiales')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -67,7 +68,7 @@ class CArtificialesController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $id_ue .'/artificiales')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 

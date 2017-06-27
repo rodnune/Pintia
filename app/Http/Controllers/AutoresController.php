@@ -13,6 +13,8 @@ use App\Models\Autor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Lang;
+use URL;
 
 class AutoresController extends \App\Http\Controllers\Controller
 {
@@ -130,14 +132,25 @@ class AutoresController extends \App\Http\Controllers\Controller
     public function asociarArticulo(Request $request){
         $id = $request ->input('id');
         $autor = $request ->input('add');
-        $orden_firma = 0;
+        $orden_firma = $request->input('orden');
 
-        /**
-         * Insertamos el autor con orden de firma 0
-         */
+        $validator = Validator::make($request->all(), [
+
+
+            'id'       => 'required|exists:articulos,idarticulo',
+            'add'      => 'required|exists:autor,idautor',
+            'orden' => 'required|numeric',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect(URL::previous())
+                ->withErrors($validator);
+        }
+
         DB::table('autoria')->insert(['IdAutor' => $autor,'IdArticulo' => $id,'OrdenFirma' => $orden_firma]);
 
-        return redirect('/articulo/'.$id.'/autores');
+        return redirect('/articulo/'.$id.'/autores')->with('success','Autor asociado al articulo correctamente');
     }
 
     public function eliminarAsociacionArticulo(Request $request){
@@ -145,7 +158,18 @@ class AutoresController extends \App\Http\Controllers\Controller
         $id = $request ->input('id');
         $autor = $request ->input('delete');
 
+        $validator = Validator::make($request->all(), [
 
+
+            'id'       => 'required|exists:articulos,idarticulo',
+            'delete'      => 'required|exists:autor,idautor',
+        ]);
+
+
+        if ($validator->fails()) {
+            return redirect(URL::previous())
+                ->withErrors($validator);
+        }
 
 
         DB::table('autoria')->where(
@@ -153,7 +177,7 @@ class AutoresController extends \App\Http\Controllers\Controller
             ->where('IdArticulo', '=', $id)
             ->delete();
 
-        return redirect('/articulo/'.$id.'/autores');
+        return redirect('/articulo/'.$id.'/autores')->with('success',Lang::get('messages.asociacion_eliminada'));
 
 
 

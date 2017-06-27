@@ -103,16 +103,12 @@ class MultimediaController extends \App\Http\Controllers\Controller
                 {
 
 
-                    $height = $real->height();
-                    $width = $real->width();
 
 
-                    //Obtenemos relación de aspecto
-                    $ratio = $width / $height;
 
                     //Calculamos nuevas dimensiones
                     $new_width = 200;
-                    $new_height = round($new_width / $ratio);
+                    $new_height = 200;
 
                     $thumb = Image::make($file)->resize($new_width, $new_height);
 

@@ -16,6 +16,7 @@ use Config;
 use Carbon\Carbon;
 use App\Models\Objeto;
 use App\Models\ParteObjeto;
+use URL;
 
 class PartesObjetoController extends \App\Http\Controllers\Controller
 {
@@ -30,7 +31,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/objeto/'. $ref.'/clasificacion_partes')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('parteobjeto')->insert(['ref' => $ref , 'denominacion' => $parte]);
@@ -54,7 +55,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/objeto/'.$ref.'/parte/'.$parte)->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         if($cat == 0){
@@ -103,7 +104,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return redirect('/objeto/'. $ref.'/clasificacion_partes')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -130,7 +131,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('/objeto/'.$ref.'/parte/'.$parte.'/material')->withErrors($validator);
+                return redirect(URL::previous())->withErrors($validator);
             }
 
             DB::table('materialobjeto')->insert(['idparte' => $parte, 'idmat' => $material]);
@@ -146,7 +147,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('/objeto/'.$ref.'/parte/'.$parte.'/material')->withErrors($validator);
+                return redirect(URL::previous())->withErrors($validator);
             }
 
             DB::table('materialobjeto')
@@ -234,7 +235,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                  ]);
 
                 if ($validator->fails()) {
-                    return redirect('/objeto/'.$ref.'/parte/'.$parte.'/medidas')->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
 
@@ -264,7 +265,7 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/objeto/'.$ref.'/parte/'.$parte.'/medidas')->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
 

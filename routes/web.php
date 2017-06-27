@@ -109,18 +109,20 @@ Route::post('/update_relacion_estratigrafica','RelacionesEstratigraficasControll
 
 Route::get('/matrices_harris','MatrixHarrisController@index');
 Route::post('/matrices_harris/delete','MatrixHarrisController@delete');
-Route::get('/matriz_harris', 'MatrixHarrisController@get');
-Route::post('matriz_harris','MatrixHarrisController@update');
+Route::get('/matriz_harris/{id}', 'MatrixHarrisController@get');
+Route::post('/update_matriz_harris','MatrixHarrisController@update');
 
 
 //bibliografia artículos
 Route::get('/articulos','ArticulosController@index');
 Route::get('/articulo/{id}','ArticulosController@get_articulo');
-Route::get('/articulo_new',function(){return view('catalogo.bibliografia.articulos.layout_new_articulo');});
-Route::post('/articulo_new','ArticulosController@create');
-Route::get('/editar_articulo','ArticulosController@get_form_update');
+Route::get('/new_articulo',function(){return view('catalogo.bibliografia.articulos.layout_new_articulo');});
+Route::post('/new_articulo','ArticulosController@create');
+Route::get('/articulo/{id}/datos','ArticulosController@get_form_update');
 Route::post('/editar_articulo','ArticulosController@update');
 Route::post('delete_articulo','ArticulosController@delete');
+Route::get('/search_articulos','ArticulosController@search');
+Route::post('/add_nota_articulo','ArticulosController@add_nota');
 
 Route::get('/articulo/{id}/palabras_clave','PalabrasClaveController@indexArticulo');
 Route::post('/articulo_palabras_clave/delete','PalabrasClaveController@eliminarAsociacionArticulo');
@@ -129,6 +131,9 @@ Route::post('/articulo_palabras_clave/add','PalabrasClaveController@asociarArtic
 Route::get('/articulo/{id}/autores','AutoresController@indexArticulo');
 Route::post('/articulo_autores/delete','AutoresController@eliminarAsociacionArticulo');
 Route::post('/articulo_autores/add','AutoresController@asociarArticulo');
+
+Route::get('/articulo/{id}/multimedias','MultimediasController@indexMultimedia');
+
 
 
 

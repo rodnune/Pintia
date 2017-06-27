@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Input;
+use URL;
 
 
 class UdsEstratigraficasController extends \App\Http\Controllers\Controller
@@ -173,7 +174,7 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/ud_estratigrafica/'.$id.'/datos_generales')
+                    return redirect(URL::previous())
                         ->withErrors($validator);
                 }
                 $ud_estratigrafica = UnidadEstratigrafica::find($id);
@@ -264,7 +265,7 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/ud_estratigrafica/'.$id.'/pendientes')->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
                 DB::table('pendienteue')
@@ -285,7 +286,7 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return redirect('/ud_estratigrafica/'.$id.'/pendientes')->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
 
@@ -343,7 +344,7 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/objeto/' . $ue. '/notas')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         $nota_seccion = UdsEstratigraficasController::get_nota_seccion($ue,$seccion,$request);

@@ -157,7 +157,7 @@ class UsuariosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/usuario/'.$user_id)->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
 
         }
 
@@ -193,7 +193,7 @@ class UsuariosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/delete_usuario/'.$user_id)->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
 
         }
 

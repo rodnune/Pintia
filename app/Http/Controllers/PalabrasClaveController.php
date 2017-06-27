@@ -12,6 +12,8 @@ use App\Models\Articulo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Lang;
+use URL;
 
 class PalabrasClaveController extends \App\Http\Controllers\Controller
 {
@@ -34,7 +36,7 @@ class PalabrasClaveController extends \App\Http\Controllers\Controller
 
         DB::table('keywordsarticulo')->insert(['IdPalabraClave' => $palabra,'IdArticulo' => $id]);
 
-        return redirect('/articulo/'.$id.'/palabras_clave');
+        return redirect('/articulo/'.$id.'/palabras_clave')->with('success','Palabra clave asociada correctamente');
     }
 
     public function eliminarAsociacionArticulo(Request $request){
@@ -50,7 +52,7 @@ class PalabrasClaveController extends \App\Http\Controllers\Controller
                 ->where('IdArticulo', '=', $id)
                 ->delete();
 
-            return redirect('/articulo/'.$id.'/palabras_clave');
+            return redirect('/articulo/'.$id.'/palabras_clave')->with('success',Lang::get('messages.asociacion_eliminada'));
 
 
 

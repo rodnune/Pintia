@@ -4,20 +4,29 @@
         <div id="content-edit" style="margin-top:0px;">
             <div class="post">
                 <h1 class="text-center">Articulo ({{$articulo->Titulo}}) </h1>
-
+                    @include('errors.errores')
+                    @include('messages.success')
                 <table class="table table-hover table-bordered" rules="none">
                     <tbody>
+
+                    {{Form::open(array('action' => 'AutoresController@asociarArticulo' ,'method' => 'post'))}}
+
 
                     <tr>
                         <td class="info" colspan="4" align="center"><h3>Autores </h3></td>
                     </tr>
 
+                    <tr>
+                        <td align="center">Orden de firma
+                            <input class="form-control" type="number" name="orden">
+                        </td>
 
+                    </tr>
                     <tr>
                         <td colspan="2" align="center">
                             <strong>Autores no asociados:</strong><br><br>
 
-                            {{Form::open(array('action' => 'AutoresController@asociarArticulo' ,'method' => 'post'))}}
+
                             <input type="hidden" name="id" value="{{$articulo->IdArticulo}}">
                             <select class="form-control" name="add" size="10" style="width:100%" />
 
@@ -32,7 +41,7 @@
                         </td>
 
                         <td colspan="2" align="center">
-                            <strong>Autores  asociados:</strong><br><br>
+                            <strong>Autores  asociados al articulo:</strong><br><br>
                             {{Form::open(array('action' => 'AutoresController@eliminarAsociacionArticulo', 'method' => 'post'))}}
                             <input type="hidden" name="id" value="{{$articulo->IdArticulo}}">
                             <select class="form-control" name="delete" size="10" style="width:100%">

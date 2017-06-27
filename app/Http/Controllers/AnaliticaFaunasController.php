@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 use Lang;
+use URL;
 
 class AnaliticaFaunasController extends \App\Http\Controllers\Controller
 {
@@ -121,7 +122,7 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $id_ue .'/dietas')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('dietasfauna')->insert(['IdAnalitica' => $id_analitica, 'UE' => $id_ue]);
@@ -143,7 +144,7 @@ class AnaliticaFaunasController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $id_ue .'/dietas')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 

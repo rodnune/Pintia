@@ -18,6 +18,7 @@ use Session;
 use Config;
 use Carbon\Carbon;
 use App\Models\Objeto;
+use URL;
 
 class ObjetosController extends \App\Http\Controllers\Controller
 {
@@ -285,6 +286,8 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
     public function update_general_data(Request $request){
+
+
         $ref = $request->input('ref');
         $visible = $request->input('visible');
         $anyo = $request->input('anyo');
@@ -306,7 +309,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
                 ]);
 
             if ($validator->fails()) {
-                return redirect('/objeto/'.$ref.'/datos_generales')
+                return redirect(URL::previous())
                     ->withErrors($validator);
             }
 
@@ -331,7 +334,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('/objeto/' . $ref .'/datos_generales')
+                return redirect(URL::previous())
                     ->withErrors($validator);
             }
 
@@ -364,7 +367,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/objeto/'.$ref.'/datos_generales')
+            return redirect(URL::previous())
                 ->withErrors($validator);
         }
 
@@ -452,7 +455,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/objeto/'.$ref.'/localizacion')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
 
@@ -501,7 +504,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
         if ($request->submit == 'Asociar') {
 
             if ($validator->fails()) {
-                return redirect('/objeto/' . $ref .'/articulos')->withErrors($validator);
+                return redirect(URL::previous())->withErrors($validator);
             }
 
             $articulo = $request->input('articulo');
@@ -571,7 +574,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
             if($request->submit == "Asociar"){
 
                 if ($validator->fails()) {
-                    return redirect('/objeto/'.$ref.'/multimedias')->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
 
@@ -590,7 +593,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
                 if ($validator->fails()) {
-                    return redirect('/multimedias_objeto/' . $ref)->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
 
@@ -643,7 +646,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
                 if ($validator->fails()) {
-                    return redirect('/objeto/'.$ref.'/pendientes')->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
 
@@ -661,7 +664,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
                 if ($validator->fails()) {
-                    return redirect('/objeto/'.$ref.'/pendientes')->withErrors($validator);
+                    return redirect(URL::previous())->withErrors($validator);
                 }
 
 
@@ -705,7 +708,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/objeto/' . $ref. '/notas')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
        $nota_seccion = ObjetosController::get_nota_seccion($ref,$seccion,$request);

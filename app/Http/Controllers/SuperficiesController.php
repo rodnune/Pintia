@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 use Lang;
+use URL;
 
 class SuperficiesController extends \App\Http\Controllers\Controller
 
@@ -41,7 +42,7 @@ class SuperficiesController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $id_ue .'/superficies')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('superficiesue')->insert(['IdSuperficie' => $id_superficie, 'UE' => $id_ue]);
@@ -66,7 +67,7 @@ class SuperficiesController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return redirect('/ud_estratigrafica/' . $id_ue .'/superficies')->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
         }
 
         DB::table('superficiesue')->where(

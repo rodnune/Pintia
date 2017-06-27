@@ -1,33 +1,47 @@
 <div id="sidebar" style="float:left; margin:20px 35px 0 0;">
-    <a class="post" style="padding-right: 0px; padding-left: 0px;">
-        <form action="unidad_e.php" method="post"><input type="hidden" name="seccion" value="Formulario">
+    <div class="post" style="padding-right: 0px; padding-left: 0px;">
+
+        @php
+            $id =  $articulo->IdArticulo;
+            $nota = $articulo->notaArticulo();
+        @endphp
+
+        {{Form::open(array('action' => 'ArticulosController@add_nota','method' => 'post'))}}
+                    <input type="hidden" name="id" value="{{$id}}">
+
             <h4 class="text-center" style="color: #000;">Notas</h4>
             <textarea class="noresize notas" style="background: url('/images/lined_paper.png');
-                    background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" name="contenido-nota">
-
+                    background-repeat: repeat;box-shadow: 4px 4px 5px #888888;" rows="6" cols="22" name="nota">
+                @if(count($nota) > 0)
+                        {{$nota->Contenido}}
+                    @endif
                     </textarea>
             <p></p>
-            <center>
-                <button type="submit" name="accion" class="btn btn-sm btn-success" value="guardar-nota">
-                    <i class="fa fa-check"></i> Guardar nota
+           <div style="text-align:center">
+               <button type="submit" name="accion" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Guardar nota</button>
+           </div>
+
                 </button>
             </center>
-        </form>
+        {{Form::close()}}
         <hr>
         <h4 class="text-center" style="color: #000;">Secciones</h4>
         <p></p>
 
 
 
-        <a href="/articulo/{{$articulo->IdArticulo}}/autores"><input type="submit" class="btn btn-default btn-block" value="Autores"></a>
-         <a href="/articulo/{{$articulo->IdArticulo}}/palabras_clave"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Palabras Clave"></a>
-        <!--<input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos Pendientes">-->
+
+        <button onclick="window.location.href='/articulo/{{$id}}/datos'" class="btn btn-default btn-block">Datos</button>
+        <button onclick="window.location.href='/articulo/{{$id}}/autores'" class="btn btn-default btn-block">Autores</button>
+        <button onclick="window.location.href='/articulo/{{$id}}/palabras_clave'" class="btn btn-default btn-block">Palabras Clave</button>
+
+
         <hr>
-            <center>
+            <div style="text-align: center">
 
                 <a href="/articulos" class="btn btn-primary btn-block">
                     <i class="fa fa-arrow-left"></i> Lista de Articulos / Salir</a>
-            </center>
+            </div>
             <br>
 
         <p></p>
