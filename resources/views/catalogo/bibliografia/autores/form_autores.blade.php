@@ -7,8 +7,10 @@
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
 
-                    <h1 class="text-center">Lista de Artículos</h1><br>
+                    <h1 class="text-center">Lista de Autores</h1><br>
 
+                        @include('messages.success')
+                        @include('errors.errores')
 
 
 
@@ -31,7 +33,7 @@
                                 @if( Session::get('admin_level') > 1 )
 
 
-                                    <td align="center"><a href="/autor_new"><button type="submit" name="submit" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo Autor</button></a></td>
+                                    <td align="center"><a href="/new_autor"><button type="submit" name="submit" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo Autor</button></a></td>
 
 
 
@@ -40,14 +42,10 @@
                             </tr>
 
 
-
-
-
-
                             </tbody>
                         </table>
 
-                        <p class="text-center text-muted"><strong>Total de resultados encontrados:{{$autores->count()}} </strong></p>
+                        <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados:{{$autores->count()}} </strong></p>
                         <table id="pagination_table" class="table table-bordered table-hover" rules="all">
                             <thead>
 
@@ -93,10 +91,7 @@
 
 
                                         <td align="center">
-                                            {{Form::open(array('action' => 'AutoresController@get_form_update','method' => 'get'))}}
-                                            <input type="hidden" name="autor" value="{{$autor->IdAutor}}"/>
-                                            <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar Autor</button>
-                                            {{Form::close()}}
+                                            <button type="submit" onclick="window.location.href='/autor/{{$autor->IdAutor}}/datos'" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar Autor</button>
                                         </td>
 
                                     <td align="center">
@@ -118,5 +113,6 @@
         </div>
     </div>
 </div>
+<script src="/js/results.js"></script>
 
 

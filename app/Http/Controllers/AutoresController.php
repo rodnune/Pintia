@@ -53,7 +53,7 @@ class AutoresController extends \App\Http\Controllers\Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/autor_new')
+            return redirect('/new_autor')
                 ->withErrors($validator);
         }
 
@@ -62,7 +62,7 @@ class AutoresController extends \App\Http\Controllers\Controller
                 'Filiacion' => $filiacion ]
         );
 
-        return redirect('/autores');
+        return redirect('/autores')->with('success','Autor: '.$nombre.' '.$apellido. ' creado correctamente');
 
 
     }
@@ -71,9 +71,25 @@ class AutoresController extends \App\Http\Controllers\Controller
 
         $id = $request->input('id');
 
+        $validator = Validator::make($request->all(), [
+
+
+
+            'id'      => 'required|exists:autor,idautor',
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/autores')
+                ->withErrors($validator);
+        }
+
+
+
         DB::table('autor')->where('IdAutor',$id)->delete();
 
-        return redirect('/autores');
+        return redirect('/autores')->with('success','Autor eliminado correctamente');
 
     }
 
@@ -88,11 +104,9 @@ class AutoresController extends \App\Http\Controllers\Controller
 
     }
 
-    public function get_form_update(Request $request){
+    public function get_form_update($id){
 
-        $id = $request -> input('autor');
         $autor = Autor::find($id);
-
 
         return view('catalogo.bibliografia.autores.layout_update_autor',['autor' => $autor]);
 
@@ -108,25 +122,26 @@ class AutoresController extends \App\Http\Controllers\Controller
         $validator = Validator::make($request->all(), [
 
 
-
-            'nombre'      => 'required|alpha',
-            'apellido'    => 'required|alpha',
-            'filiacion'   => 'required|alpha'
+            'id'          => 'required|exists:autor,idautor',
+            'nombre'      => 'alpha',
+            'apellido'    => 'alpha',
+            'filiacion'   => 'alpha'
 
         ]);
 
 
 
         if ($validator->fails()) {
-            $autor = Autor::find($id);
-            return view('catalogo.bibliografia.autores.layout_update_autor',['autor' => $autor])->withErrors($validator);
+
+            return view(URL::previous())->withErrors($validator);
 
         }
 
         DB::table('autor')->where('IdAutor',$id)->update(['Nombre' =>$nombre , 'Apellido' => $apellido,
             'Filiacion' => $filiacion]);
 
-        return redirect('/autores');
+        return redirect(URL::previous())
+            ->with('success','Datos del autor: ' .$nombre. ' '.$apellido.' modificados correctamente');
     }
 
     public function asociarArticulo(Request $request){

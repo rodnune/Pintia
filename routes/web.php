@@ -132,18 +132,19 @@ Route::get('/articulo/{id}/autores','AutoresController@indexArticulo');
 Route::post('/articulo_autores/delete','AutoresController@eliminarAsociacionArticulo');
 Route::post('/articulo_autores/add','AutoresController@asociarArticulo');
 
-Route::get('/articulo/{id}/multimedias','MultimediasController@indexMultimedia');
-
+Route::get('/articulo/{id}/multimedias','ArticulosController@index_multimedia');
+Route::post('/add_multimedia_articulo','ArticulosController@asociar_multimedia');
+Route::post('/delete_multimedia_articulo','ArticulosController@eliminar_multimedia');
 
 
 
 //bibliografia autores
 
 Route::get('/autores','AutoresController@index');
-Route::get('/autor_new',function(){return view('catalogo.bibliografia.autores.layout_new_autor');});
+Route::get('/new_autor',function(){return view('catalogo.bibliografia.autores.layout_new_autor');});
 Route::post('/autor_new','AutoresController@create');
 Route::post('/autor_delete','AutoresController@delete');
-Route::get('/editar_autor','AutoresController@get_form_update');
+Route::get('/autor/{id}/datos','AutoresController@get_form_update');
 Route::post('/editar_autor','AutoresController@update');
 Route::get('/autor/{id}', 'AutoresController@get_autor');
 

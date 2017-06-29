@@ -34,6 +34,7 @@
         <button onclick="window.location.href='/articulo/{{$id}}/datos'" class="btn btn-default btn-block">Datos</button>
         <button onclick="window.location.href='/articulo/{{$id}}/autores'" class="btn btn-default btn-block">Autores</button>
         <button onclick="window.location.href='/articulo/{{$id}}/palabras_clave'" class="btn btn-default btn-block">Palabras Clave</button>
+        <button onclick="window.location.href='/articulo/{{$id}}/multimedias'" class="btn btn-default btn-block">Multimedia</button>
 
 
         <hr>

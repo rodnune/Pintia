@@ -115,4 +115,26 @@ public function notaArticulo(){
     return $nota;
 }
 
+public function multimedia(){
+
+   $multimedia = DB::table('almacenmultimedia')
+        ->where('idmutimedia','=',$this->IdDocumento)
+        ->get()
+        ->first();
+
+   return $multimedia;
+
+}
+
+public function multimediaNoAsociado(){
+
+    $multimedias = DB::table('almacenmultimedia')
+        ->where('idmutimedia','<>',$this->IdDocumento)
+        ->get();
+
+    return $multimedias;
+
+
+}
+
 }

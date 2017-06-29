@@ -95,26 +95,25 @@
 
 
 
-                        @if($multimedias -> count()==0)
+                        @if(count($multimedia)==0)
                             <tr>
                                 <td colspan="4" align="center"><strong>No hay elemento multimedia asociado</strong></td>
                             </tr>
                         @else
                             <tr>
                                 <th><strong>T&iacute;tulo</strong></th>
-                                <th><strong>Descripci&oacute;n</strong></th>
+                                <th><strong>Descripción</strong></th>
                                 <th><strong>Tipo</strong></th>
                                 <th><strong>Archivo</strong></th>
                             </tr>
-                        @foreach($multimedias as $multimedia)
+
 
                         <tr>
-                           <td></td>
-                            <td>{{$multimedia->Titulo}}/td>
+                            <td>{{$multimedia->Titulo}}</td>
+                            <td>{{$multimedia->Descripcion}}</td>
                             <td>{{$multimedia->Tipo}}</td>
                             <td>{{$multimedia->NombreArchivo}}</td>
                         </tr>
-                        @endforeach
                         @endif
 
 

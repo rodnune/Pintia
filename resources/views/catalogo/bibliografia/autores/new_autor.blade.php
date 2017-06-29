@@ -10,15 +10,7 @@
                     <h1 class="text-center">Introducir Nuevo Autor</h1>
 
 
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                   @include('errors.errores')
                     {{Form::open(array('action' => 'AutoresController@create', 'method' => 'post'))}}
                     <br><table class="table table-bordered">
                         <thead>

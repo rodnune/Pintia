@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Articulo;
 use Input;
 use URL;
+use Lang;
 
 
 class ArticulosController extends \App\Http\Controllers\Controller
@@ -121,13 +122,13 @@ class ArticulosController extends \App\Http\Controllers\Controller
             $articulo = Articulo::find($id);
             $autores = $articulo->autoresAsociados();
             $keywords =  $articulo->palabrasClaveAsociadas();
-            $multimedias = $articulo->multimediaAsociado();
+            $multimedia = $articulo->multimedia();
 
 
 
 
 
-            return view('catalogo.bibliografia.articulos.layout_articulo',['articulo' => $articulo,'autores' => $autores,'keywords' => $keywords,'multimedias' => $multimedias ]);
+            return view('catalogo.bibliografia.articulos.layout_articulo',['articulo' => $articulo,'autores' => $autores,'keywords' => $keywords,'multimedia' => $multimedia ]);
         }
 
         public function get_form_update($id){
@@ -230,6 +231,66 @@ class ArticulosController extends \App\Http\Controllers\Controller
 
 
         }
+
+
+        public function index_multimedia($id){
+
+            $articulo = Articulo::find($id);
+            $multimedia = $articulo->multimedia();
+            $multimedias = $articulo->multimediaNoAsociado();
+
+
+            return view('catalogo.bibliografia.articulos.layout_multimedia',
+                ['articulo' => $articulo,'multimedia' => $multimedia,'multimedias' => $multimedias]);
+        }
+
+
+        public function asociar_multimedia(Request $request){
+
+            $articulo =   $request->input('id');
+            $multimedia = $request->input('multimedia');
+
+            $validator = Validator::make($request->all(), [
+
+                'id'            => 'required|exists:articulos,idarticulo',
+                'multimedia'    => 'required|exists:almacenmultimedia,idmutimedia'
+            ]);
+
+            if ($validator->fails()) {
+                return redirect(URL::previous())->withErrors($validator);
+            }
+
+            Articulo::where('idarticulo',$articulo)
+                ->update(['iddocumento' => $multimedia] );
+
+            return redirect(URL::previous())->with('success','Multimedia asociado correctamente al articulo');
+
+
+
+        }
+
+        public function eliminar_multimedia(Request $request){
+
+            $articulo =   $request->input('id');
+
+            $validator = Validator::make($request->all(), [
+
+                'id'            => 'required|exists:articulos,idarticulo',
+
+            ]);
+
+            if ($validator->fails()) {
+                return redirect(URL::previous())->withErrors($validator);
+            }
+
+            Articulo::where('idarticulo',$articulo)
+                ->update(['iddocumento' => NULL] );
+
+            return redirect(URL::previous())->with('success',Lang::get('messages.asociacion_eliminada'));
+
+        }
+
+
 
 
 }
