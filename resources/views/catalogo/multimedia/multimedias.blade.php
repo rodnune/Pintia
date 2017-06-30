@@ -32,8 +32,7 @@
                                             </select>
                                         </td>
 
-                                    <td align="center"><button type="submit" name="submit" class="btn btn-primary" value="ver">
-                                            <i class="fa fa-eye"></i> Ver elementos</button>
+                                    <td align="center"><a href="/multimedias" class="btn btn-primary" value="ver"><i class="fa fa-eye"></i> Ver elementos</a>
                                     </td>
 
                                 @if( Session::get('admin_level') > 1 )
@@ -49,111 +48,41 @@
                             </tbody>
                         </table>
 
-                       <p class="text-center text-muted"><strong>Total de resultados encontrados: {{count($multimedias)}}</strong></p>
+                       <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($multimedias)}}</strong></p>
 
 
 
-                        <!--Hay que cambiarlo a table para poderlo paginar--->
+                    <div class="container" id="tourpackages-carousel">
 
+                        <div class="row">
+                            @foreach($multimedias as $multimedia)
+                                <div class="col-xs-18 col-sm-6 col-md-3">
+                                    <div class="thumbnail">
+                                        <img src="/archivo/{{$multimedia->IdMutimedia}}" alt="">
 
-                            <div class="container-fluid" >
+                                            <h5>Titulo: <strong>{{$multimedia->Titulo}}</strong></h5>
 
+                                            @if((Session::get('admin_level') > 1))
 
-
-                                    @php
-                                    $elementos=1;
-                                    @endphp
-
-
-
-                                    <div class="row">
-
-                                        @foreach($multimedias as $multimedia)
-                                            @if(!(($elementos++ ) % 3))
-                                                @if($multimedia->Tipo!="Documento")
-                                        <div id="ficha" class="col-md-4" style="border: thin solid black">
-                                            <a href="/archivo/{{$multimedia->IdMutimedia}}"><img class="img-thumbnail"  height="50px" width="100px"   src="/archivo/{{$multimedia->IdMutimedia}}"></a>
-
-
-                                            <a href="/edit_multimedia/{{$multimedia->IdMutimedia}}" type="submit" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</a>
-
-                                            <a href="/delete_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</a>
-                                            <div class="row"  style="border-top: thin solid black">
-                                                <ul class="list-group">
-                                                    <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
-                                                    <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
-                                                </ul>
-
-                                            </div>
-                                        </div>
-
-                                            @else
-                                                    <div id="ficha" class="col-md-4" style="border: thin solid black">
-                                                        <a class="btn btn-primary" href="/archivo/{{$multimedia->IdMutimedia}}" download><i class="fa fa-download"></i>Descargar</a>
-
-
-                                                        <a href="/edit_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</a>
-                                                        <a href="/delete_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</a>
-
-                                                        <div class="row"  style="border-top: thin solid black">
-                                                            <ul class="list-group">
-                                                                <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
-                                                                <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
-                                                            </ul>
-
-                                                        </div>
-                                                    </div>
-                                            @endif
-                                    </div>
-                                    <div class="row">
-
-                                        @else
-
-                                            @if($multimedia->Tipo!="Documento")
-                                                <div id="ficha" class="col-md-4" style="border: thin solid black">
-                                                    <a href="/archivo/{{$multimedia->IdMutimedia}}"><img class="img-thumbnail"  height="50px" width="100px"   src="/archivo/{{$multimedia->IdMutimedia}}"></a>
-
-
-                                                    <a href="/edit_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</a>
-                                                    <a href="/delete_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</a>
-
-                                                    <div class="row"  style="border-top: thin solid black">
-                                                        <ul class="list-group">
-                                                            <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
-                                                            <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
-                                                        </ul>
-
-                                                    </div>
-                                                </div>
-
-                                            @else
-
-                                                <div id="ficha" class="col-md-4" style="border: thin solid black">
-                                                    <a class="btn btn-primary" href="/archivo/{{$multimedia->IdMutimedia}}" download><i class="fa fa-download"></i>Descargar</a>
-
-
-                                                    <a href="/edit_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i>Gestionar</a>
-
-
-                                                    <a href="/delete_multimedia/{{$multimedia->IdMutimedia}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>Eliminar</a>
-
-                                                    <div class="row"  style="border-top: thin solid black">
-                                                        <ul class="list-group">
-                                                            <li class="list-group-item"><strong>{{$multimedia->Titulo}} </strong></li>
-                                                            <li class="list-group-item"><span class="text-danger">{{$multimedia->Tipo}}</span></li>
-                                                        </ul>
-
-                                                    </div>
-                                                </div>
-
-
-                                        @endif
+                                                    <a href="#" class="btn btn-info btn-xs" role="button">Button</a>
+                                                    <a href="#" class="btn btn-danger btn-xs" role="button">Button</a>
                                                 @endif
-                                @endforeach
+
+
+                                        </div>
+                                    </div>
+
+
+                            @endforeach
 
 
 
-                                </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align:center" class="easyPaginateNav" style="width: 300px;">
+
+                    </div>
 
 
 
@@ -169,14 +98,18 @@
             </div>
         </div>
     </div>
+<script src="/js/results.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/js/jquery.easyPaginate.js"></script>
+<script>
+
+    $('#tourpackages-carousel').easyPaginate({
+        paginateElement: '.col-xs-18.col-sm-6.col-md-3',
+        elementsPerPage: 4,
+    });
+</script>
 <style>
-    #ficha {
-        padding-top: 20px;
-        padding-right: 40px;
-        padding-bottom: 40px;
-        padding-left: 25px;
-    }
-
-
-
+    .easyPaginateNav a {padding:5px;}
+    .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
 </style>
+

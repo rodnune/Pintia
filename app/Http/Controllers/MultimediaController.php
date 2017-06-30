@@ -76,10 +76,11 @@ class MultimediaController extends \App\Http\Controllers\Controller
             }
         }
 
+        DB::table('almacenmultimedia')->insert(['titulo' => $titulo, 'tipo' => $tipo, 'nombrearchivo' => $nombre_archivo]);
 
         MultimediaController::procesar_multimedia($tipo, $archivo);
 
-        DB::table('almacenmultimedia')->insert(['titulo' => $titulo, 'tipo' => $tipo, 'nombrearchivo' => $nombre_archivo]);
+
 
 
         return redirect('/multimedias');
@@ -89,6 +90,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
     public function procesar_multimedia($tipo, $file)
     {
+
 
 
         $last = DB::table('almacenmultimedia')->orderBy('idmutimedia', 'desc')->get()->first();
@@ -107,7 +109,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
 
                     //Calculamos nuevas dimensiones
-                    $new_width = 200;
+                    $new_width = 345;
                     $new_height = 200;
 
                     $thumb = Image::make($file)->resize($new_width, $new_height);
@@ -166,7 +168,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
                 {
 
-                    $file = File::get(public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg');
+                    $file = File::get(public_path() . '/images/fotos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
 
                     return response($file, 200)->header('Content-Type', 'image/jpg');
                     break;
