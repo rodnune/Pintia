@@ -60,7 +60,10 @@
                                     <div class="thumbnail">
                                         <img src="/archivo/{{$multimedia->IdMutimedia}}" alt="">
 
-                                            <h5>Titulo: <strong>{{$multimedia->Titulo}}</strong></h5>
+                                            <h5>
+                                                <strong>{{$multimedia->Titulo}}</strong>
+                                                <strong class="text-danger">{{$multimedia->Tipo}}</strong>
+                                            </h5>
 
                                             @if((Session::get('admin_level') > 1))
 
@@ -109,7 +112,6 @@
     });
 </script>
 <style>
-    .easyPaginateNav a {padding:5px;}
-    .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
+
 </style>
 

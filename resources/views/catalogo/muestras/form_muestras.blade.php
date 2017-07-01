@@ -157,3 +157,6 @@
         }
     }
 </script>
+
+<script src="/js/jquery.simplePagination.js"></script>
+<script src="/js/pagination-bar-normal.js"></script>
