@@ -185,7 +185,7 @@
                     </div>
                         <!-- End row -->
 
-                    <div style="text-align:center" class="easyPaginateNav" style="width: 300px;">
+                    <div style="text-align:center" class="easyPaginateNav">
 
                     </div>
 
@@ -198,6 +198,7 @@
 </div>
 <script src="/js/results.js"></script>
 <link href="/css/materiales.css" rel="stylesheet">
+<link href="/css/pagination-bar.css" rel="stylesheet">
 
 
 <script>
@@ -270,15 +271,4 @@
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/jquery.easyPaginate.js"></script>
-
-<script>
-
-    $('#tourpackages-carousel').easyPaginate({
-        paginateElement: '.col-xs-18.col-sm-6.col-md-3',
-        elementsPerPage: 4,
-    });
-</script>
-<style>
-    .easyPaginateNav a {padding:5px;}
-    .easyPaginateNav a.current {font-weight:bold;text-decoration:underline;}
-</style>
+<script src="/js/multimedia-objetos.js"></script>

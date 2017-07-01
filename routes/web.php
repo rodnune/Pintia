@@ -238,6 +238,8 @@ Route::get('/archivo/{id}','MultimediaController@getArchivo');
 Route::get('/edit_multimedia/{id}','MultimediaController@form_update');
 Route::post('/edit_multimedia','MultimediaController@update');
 Route::get('/delete_multimedia/{id}','MultimediaController@delete');
+Route::get('/search_multimedias','MultimediaController@search');
+Route::get('/foto/{id}','MultimediaController@getRealPhoto');
 
 //Analisis metalografico
 Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');

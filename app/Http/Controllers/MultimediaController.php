@@ -15,6 +15,9 @@ use Image;
 use Illuminate\Support\Facades\File;
 use Validator;
 use Config;
+use App\Models\Multimedia;
+use Input;
+use URL;
 
 
 class MultimediaController extends \App\Http\Controllers\Controller
@@ -27,6 +30,36 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
 
         return view('catalogo.multimedia.layout_multimedias', ['multimedias' => $multimedias]);
+    }
+
+
+    public function search(Request $request,Multimedia $multimedia)
+    {
+
+
+        $multimedias = $multimedia->newQuery();
+        $datos = collect();
+
+        if ($request->has('tipo')) {
+            $multimedias->where('tipo',$request->input('tipo'));
+
+
+            $datos->put('tipo',Input::get('tipo'));
+
+        }
+
+        if ($request->has('titulo')){
+            $multimedias->where('titulo', 'like', '%' . Input::get('titulo') . '%');
+
+            $datos->put('titulo',$request->input('titulo'));
+
+        }
+
+        $busqueda = $multimedias->get();
+
+      return  MultimediaController::index()->with(['multimedias' => $busqueda,'datos' => $datos]);
+
+
     }
 
 
@@ -83,7 +116,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
 
 
-        return redirect('/multimedias');
+        return redirect('/multimedias')->with('success','Archivo multimedia creado correctamente');
 
 
     }
@@ -120,7 +153,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
                     $thumb->save(public_path() . '/images/fotos/thumb/thumb_' . $last->IdMutimedia . '.jpg');
 
 
-                    //Storage::put('fotos/thumb', $thumb);
+
 
                 }//PROCESADO IMAGENES
 
@@ -155,6 +188,15 @@ class MultimediaController extends \App\Http\Controllers\Controller
         }
     }
 
+    public function getRealPhoto($id){
+
+        $multimedia = DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->first();
+
+        $file = File::get(public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg');
+
+        return response($file, 200)->header('Content-Type', 'image/jpg');
+
+    }
 
     public function getArchivo($id)
     {
@@ -253,14 +295,14 @@ class MultimediaController extends \App\Http\Controllers\Controller
         $validator = Validator::make($request->all(), [
 
             'id' => 'required|exists:almacenmultimedia,idmutimedia',
-            'titulo' => 'required|unique:almacenmultimedia,titulo',
+            'titulo' => 'required|unique:almacenmultimedia,titulo,'.$titulo.',Titulo',
             'tipo' => 'in:' . implode(',', Config::get('enums.multimedia')),
 
         ]);
 
         if ($validator->fails()) {
 
-            return redirect('/edit_multimedia/' . $multimedia->IdMutimedia)
+            return redirect(URL::previous())
                 ->withErrors($validator);
         }
 
@@ -307,7 +349,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
                 DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->update(['titulo' => $titulo, 'tipo' => $tipo]);
 
-                return redirect('/multimedias');
+                return redirect(URL::previous())->with('success','Multimedia modificado correctamente');
 
             }
 

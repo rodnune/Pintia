@@ -5,20 +5,8 @@
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
                     <h1 class="text-center">Modificar elemento multimedia</h1><br><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-
-
-
-
+                    @include('errors.errores')
+                    @include('messages.success')
 
 
     <table class="table table-hover table-bordered" rules="all">
@@ -34,7 +22,7 @@
         {{Form::open(array('action' => 'MultimediaController@update', 'method' => 'post'))}}
         <input type="hidden" name="id" value="{{$multimedia->IdMutimedia}}">
         <tr>
-            <td width="30%"><img src="{{public_path()}}/images/required.gif" height="16" width="16"><strong><label for="titulo">Titulo:</label></strong></td>
+            <td width="30%"><img src="/images/required.gif" height="16" width="16"><strong><label for="titulo">Titulo:</label></strong></td>
             <td width="70%"><input class="form-control" type="text" name="titulo"  size="25" maxlength="255" value="{{$multimedia->Titulo}}" required/>
                 </td>
         </tr>
@@ -42,7 +30,7 @@
 
             @if($multimedia->Tipo != 'Documento')
         <tr>
-            <td><img src="{{public_path()}}/images/required.gif" height="16" width="16"><strong><label for="descripcion">Tipo:</label></strong></td>
+            <td><img src="/images/required.gif" height="16" width="16"><strong><label for="descripcion">Tipo:</label></strong></td>
             <td>
 
                <select class="form-control" name="tipo" style="width:100%" required>

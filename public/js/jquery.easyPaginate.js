@@ -56,7 +56,7 @@ $.fn.easyPaginate = function (options) {
         };
         
         var displayNav = function() {
-            htmlNav = '<div class="easyPaginateNav">';
+            htmlNav = '<div class="easyPaginateNav" style="text-align:center">';
             
             if(plugin.settings.firstButton) {
                 htmlNav += '<a href="#'+plugin.settings.hashPage+':1" title="First page" rel="1" class="first">'+plugin.settings.firstButtonText+'</a>';
@@ -228,3 +228,4 @@ $.fn.easyPaginate = function (options) {
     });
 };
 })(jQuery);
+
