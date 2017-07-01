@@ -170,9 +170,35 @@
                         $("#modalLogin").modal('show');
                     });
                 });
+
+                $(document).ready(function(){
+                    $("#boton-ayuda").click(function(){
+                        $("#helpModal").modal('show');
+                    });
+                });
+
+
             </script>
 
 
+            <div id="helpModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h3 class="modal-title"><i class="fa fa-info-circle"></i> Ayuda</h3>
+                        </div>
+
+                        <div class="modal-body">
+
+
+                           Pulsar <strong> Acceder</strong> para iniciar sesi&oacuten en el sistema.<br>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
@@ -186,6 +212,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>
                                 <h3 class="modal-title">Acceso de usuarios</h3>
                                 </div><br>
+
 
 
                         <div class="modal-body">
