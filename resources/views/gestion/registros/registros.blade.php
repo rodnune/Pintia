@@ -4,7 +4,8 @@
         <div id="page" style="margin: 0px 0 20px 0;">
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
-
+                    @include('errors.errores')
+                    @include('messages.success')
                    <h1 class="text-center">Lista de Registros</h1><br><br>
 
                    <div class="form-group">
@@ -28,7 +29,7 @@
                             </th>
 
                            <td align="center"><button type="submit" name="submit" class="btn btn-primary" value="ver"><i class="fa fa-search"></i> Buscar registros</button></td>
-                            <td align="center"><a class="btn btn-primary" href="registro.php"><i class="fa fa-eye"></i> Ver todo</a></td>
+                            <td align="center"><a class="btn btn-primary" href="/registros"><i class="fa fa-eye"></i> Ver todo</a></td>
 
 
                         </tr>
@@ -49,7 +50,7 @@
                      </tbody>
                     </table>
 
-                    <p class="text-center text-muted"><strong>Total de resultados encontrados: '.mysql_num_rows($result).'</strong></p></center>
+                    <p class="text-center text-muted"><strong>Total de resultados encontrados: {{count($registros)}}</strong></p></center>
                     <p>
                         <table id="pagination_table" class="table table-hover table-bordered" rules="all">
                             <thead>
@@ -65,48 +66,80 @@
                            </tr>
                        </thead>
                         <tbody>
+                        @if(count($registros) > 0 )
+                        @foreach($registros as $registro)
                         <tr>
                            <td align="center">
-
-                                Objeto ('. $row['Ref'] .')
+                                @if($registro->Ref != null)
+                                Objeto ({{$registro->Ref}})
+                                    @elseif($registro->IdTumba !=null)
+                                Tumba  ({{$registro->IdTumba}})
+                                    @elseif($registro->IdEnterramiento !=null)
+                               Inhumacion ({{$registro->IdEnterramiento}})
+                                    @endif
 
                            </td>
 
-                            <td align="center">' . $row2['first_name'] . '</td>
-                            <td align="center">' . $row2['last_name'] . '</td>
+                            <td align="center">{{$registro->first_name}}</td>
+                            <td align="center">{{$registro->last_name}}</td>
 
 
-                           <td align="center">' . $fecha . '</td>
+                           <td align="center">{{date("d-m-Y",strtotime($registro->Fecha))}}</td>
                             <td align="center">
-                              <button type="submit" name="submit" class="btn btn-info" value="Ver"><i class="fa fa-eye"></i> Ver</button>
+                                @if($registro->Ref != null)
+                                    <button type="submit" onclick="window.location.href='/objeto/{{$registro->Ref}}'" class="btn btn-info" value="Ver"><i class="fa fa-eye"></i> Ver</button>
+
+                                @elseif($registro->IdTumba !=null)
+                                    <button type="submit" onclick="window.location.href='/tumba/{{$registro->IdTumba}}'" class="btn btn-info" value="Ver"><i class="fa fa-eye"></i> Ver</button>
+
+                                @elseif($registro->IdEnterramiento !=null)
+                                    <button type="submit" onclick="window.location.href='/tumba/{{$registro->IdEnterramiento}}'" class="btn btn-info" value="Ver"><i class="fa fa-eye"></i> Ver</button>
+
+                                @endif
                                 </td>
 
                             <td align="center">
 
-                                <form action="ficha_objeto.php" method="post">
-                                    <input type="hidden" name="seccion" value="Formulario">
-                                   <input type="hidden" name="subsec" value="Datos Generales">
-                                    <input type="hidden" name="ref" value=' . $row['Ref'] . '>
-                                    <input type="hidden" name="anterior" value="registro"/>
-                                    <button type="submit" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
-                                </form>
+                                @if($registro->Ref != null)
+                                    <button type="submit" onclick="window.location.href='/objeto/{{$registro->Ref}}/datos_generales'" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
+
+                                @elseif($registro->IdTumba !=null)
+                                    <button type="submit" onclick="window.location.href='/tumba/{{$registro->IdTumba}}/datos_generales'" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
+
+                                @elseif($registro->IdEnterramiento !=null)
+                                    {{Form::open(array('action' => 'InhumacionesController@form_update','method' => 'get'))}}
+                                    <input type="hidden" name="id" value="{{$registro->IdEnterramiento}}">
+                                    <button type="submit" onclick="window.location.href='/tumba/{{$registro->IdEnterramiento}}'" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
+                                        {{Form::close()}}
+                                @endif
+
 
 
                               </td>
 
+                            <td align="center">
+                                {{Form::open(array('action' => 'RegistrosController@validar','method' => 'post'))}}
+                                <input name="num_control" type="hidden" value="{{$registro->NumControl}}">
+                                <button type="submit" name="submit" class="btn btn-success" value="Gestionar"><i class="fa fa-check"></i> Validar</button>
+                                {{Form::close()}}
+                            </td>
+
 
                            </tr>
-
+                            @endforeach
                        </tbody>
                     </table>
 
-
+                    @else
                     <div style="text-align:center">
                     <h4 class="text-danger">No hay registros pendientes.</h4>
                     </div>
+                        @endif
 
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="/js/jquery.simplePagination.js"></script>
+<script src="/js/pagination-bar-normal.js"></script>

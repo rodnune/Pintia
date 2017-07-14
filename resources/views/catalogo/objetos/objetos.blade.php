@@ -107,13 +107,16 @@
 
                                 </td>
                             </tr>
-                           {{Form::close()}}
+
 
                             <tr id="fila_ref" style="display:none;">
                                 <td><strong>Buscar por referencia objeto:</strong></td>
-                                <td><input type="text" id="myInput" onkeyup="filter()" class="form-control" placeholder="Referencia"></td>
+                                <td><input type="text" name="ref" class="form-control" placeholder="Referencia"></td>
+
+
 
                                 <td align="center" colspan="2">
+                                    <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar objetos</button>
                                     <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
                                     @if(Session::get('admin_level') > 0)
                                         <a href="/new_objeto" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo </a>
@@ -147,6 +150,9 @@
                             @if($datos->has('sectortrama'))
                                 <strong>Localizacion:</strong> {{$datos->get('sectortrama')}}-{{$datos->get('sectorsubtrama')}}
                             @endif
+                                @if($datos->has('referencia'))
+                                    <strong>Referencia:</strong> {{$datos->get('referencia')}}
+                                @endif
 
                         @endif
 
@@ -158,21 +164,46 @@
                     <div class="row">
                     @foreach($objetos as $objeto)
                         <div class="col-xs-18 col-sm-6 col-md-3">
+
                             <div class="thumbnail">
-                                <img src="http://placehold.it/500x300" alt="">
-                                <div id="materialObjeto_{{$objeto->Ref}}"class="caption">
-                                    <h5>Referencia: {{$objeto->Ref}} <i class="fa fa-calendar" aria-hidden="true"></i>  {{$objeto->AnyoCampanya}}</h5>
+                               @if($objeto->multimediasAsociados()->first()!=null)
+                                   @php
+                                      $id_multi = $objeto->multimediasAsociados()->first()->IdMutimedia;
+                                   @endphp
+
+                                   @if($objeto->multimediasAsociados()->first()->Tipo == 'Fotografia')
+                                        <a href="/foto/{{$objeto->multimediasAsociados()->first()->IdMutimedia}}"><img src="/archivo/{{$objeto->multimediasAsociados()->first()->IdMutimedia}}" alt="fotografia"></a>
+                                       @elseif($objeto->multimediasAsociados()->first()->Tipo == 'Dibujo')
+                                        <a href="/dibujo/{{$objeto->multimediasAsociados()->first()->IdMutimedia}}"><img src="/archivo/{{$objeto->multimediasAsociados()->first()->IdMutimedia}}" alt="dibujo"></a>
+                                    @elseif($objeto->multimediasAsociados()->first()->Tipo == 'Planimetria')
+                                        <a href="/plano/{{$objeto->multimediasAsociados()->first()->IdMutimedia}}"><img src="/archivo/{{$objeto->multimediasAsociados()->first()->IdMutimedia}}" alt="plano"></a>
+                                    @else
+                                        <a href="/archivo/{{$objeto->multimediasAsociados()->first()->IdMutimedia}}"><img src="/images/document.jpg" alt="documento" ></a>
+                                    @endif
+                                    @else
+                                    <img src="/images/undefined.png" alt="multimedia">
+                                @endif
+                                <div class="caption">
+                                    <h5>Ref: {{$objeto->Ref}} <i class="fa fa-calendar" aria-hidden="true"></i>  {{$objeto->AnyoCampanya}}</h5>
                                     @if(is_null($objeto->Descripcion))
                                         <p>Sin descripcion</p>
                                         @else
                                     <p>{{$objeto->Descripcion}}</p>
                                         @endif
-                                    <p>@if((Session::get('admin_level') == 3) || ($objeto->user_id == Session::get('user_id')))
 
-                                        <a href="#" class="btn btn-info btn-xs" role="button">Button</a>
+
+                                    <p id="materialObjeto_{{$objeto->Ref}}">
+
+                                        @if((Session::get('admin_level') == 3) || ($objeto->user_id == Session::get('user_id')))
+
+                                            <button onclick="window.location.href='/objeto/{{$objeto->Ref}}/datos_generales'" class="btn btn-info btn-md"><i class="fa fa-pencil-square-o"></i></button>
                                         @endif
+                                        <button onclick="window.location.href='/objeto/{{$objeto->Ref}}'" class="btn btn-primary btn-md"><i class="fa fa-eye"></i></button>
 
-                                            <a href="#" class="btn btn-default btn-xs" role="button">Button</a></p>
+
+
+                                    </p>
+
                                 </div>
                             </div>
                         </div>
@@ -197,8 +228,9 @@
 </div>
 </div>
 <script src="/js/results.js"></script>
-<link href="/css/materiales.css" rel="stylesheet">
+
 <link href="/css/pagination-bar.css" rel="stylesheet">
+<link href="/css/materiales.css" rel="stylesheet">
 
 
 <script>

@@ -144,7 +144,7 @@
             <ul class="nav navbar-nav navbar-right" style="padding-top: 7px">
                 <!--Si no se ha iniciado sesion, no se muestra el boton -->
                 @if(is_null(Session::get('logged')))
-                <a id="boton" class="btn btn-primary btn-user-gris">Acceder</a>
+                <button id="boton" data-toggle="modal" data-target="#modal-login" class="btn btn-primary btn-user-gris">Acceder</button>
                 @elseif(Session::get('admin_level')==0)
                     <a class="btn btn-success btn-user-regular" href="/perfil">{{Session::get('real_name')}}</a>
                 @elseif(Session::get('admin_level')==1)
@@ -161,27 +161,10 @@
                             @endif
 
 
-                <a href="#" id="boton-ayuda" class="btn btn-warning" title="Ayuda"><i class="fa fa-info-circle fa-lg"></i></a>
+                <button id="boton-ayuda" data-toggle="modal" data-target="#modal-ayuda" class="btn btn-warning" title="Ayuda"><i class="fa fa-info-circle fa-lg"></i></button>
                 </ul>
 
-            <script type="text/javascript">
-                $(document).ready(function(){
-                    $("#boton").click(function(){
-                        $("#modalLogin").modal('show');
-                    });
-                });
-
-                $(document).ready(function(){
-                    $("#boton-ayuda").click(function(){
-                        $("#helpModal").modal('show');
-                    });
-                });
-
-
-            </script>
-
-
-            <div id="helpModal" class="modal fade">
+            <div id="modal-ayuda" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -203,7 +186,7 @@
 
 
             <!-- Modal login -->
-            <div id="modalLogin" class="modal fade">
+            <div id="modal-login" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
 

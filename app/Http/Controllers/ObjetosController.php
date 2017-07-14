@@ -9,6 +9,7 @@
 namespace app\Http\Controllers;
 
 use App\Models\ParteObjeto;
+use App\Models\Objeto;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
@@ -17,7 +18,6 @@ use Validator;
 use Session;
 use Config;
 use Carbon\Carbon;
-use App\Models\Objeto;
 use URL;
 
 class ObjetosController extends \App\Http\Controllers\Controller
@@ -51,10 +51,11 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
         if (Session::get('admin_level') > 0) {
-            $objetos = DB::table('fichaobjeto')->orderBy('ref')->get();
+            $objetos = Objeto::orderBy('ref')->get();
         } else {
-            $objetos = DB::table('fichaobjeto')->where('visiblecatalogo', '=', 'Si')->orderBy('ref')->get();
+            $objetos = Objeto::where('visiblecatalogo', '=', 'Si')->orderBy('ref')->get();
         }
+
 
 
         return view('catalogo.objetos.layout_objetos', ['categorias' => $categorias,
@@ -135,6 +136,12 @@ class ObjetosController extends \App\Http\Controllers\Controller
                 $material = DB::table('materiaprima')->where('idmat','=',$_REQUEST['material'])->first();
                 $datos_consulta->put('material',$material->Denominacion);
 
+
+                }
+
+                if($request->has('ref')){
+                    $objetos->where('ref',$request->input('ref'));
+                    $datos_consulta->put('referencia',$request->input('ref'));
 
                 }
 

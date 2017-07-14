@@ -20,42 +20,26 @@
         <p>
         </p>
 
+            <button onclick="window.location.href='/objeto/{{$id}}/datos_generales'" class="btn btn-default btn-block">Datos generales</button>
+            <button onclick="window.location.href='/objeto/{{$id}}/clasificacion_partes'" class="btn btn-default btn-block">Clasificación y Partes</button>
+            <button onclick="window.location.href='/objeto/{{$id}}/materiales'" class="btn btn-default btn-block">Materiales Objeto</button>
 
-                <a href="/objeto/{{$id}}/datos_generales"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Datos Generales"/></a>
-                <br>
-                <a href="/objeto/{{$id}}/clasificacion_partes"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Clasificación y Partes"/></a>
-                <br>
-                <a href="/objeto/{{$id}}/materiales"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Materiales Objeto"/></a>
-                <br>
                 @if(is_null($objeto->IdAnalisisMatalografico))
 
-                        <a href="/analisis_objeto/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Nuevo Analisis"/></a>
+                        <button onclick="window.location.href='/analisis_objeto/{{$id}}'" class="btn btn-default btn-block" /> Nuevo analisis</button>
 
                         @else
 
-        <a href="/gestion_analisis/{{$id}}"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Analisis Metalografico"/></a>
+                <button onclick="window.location.href='/gestion_analisis/{{$id}}'" class="btn btn-default btn-block" /> Analisis Metalografico</button>
 
                         @endif
-                        <br>
-        <a href="/objeto/{{$id}}/medidas"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Medidas Objeto"/></a>
-                    <br>
-                <a href="/objeto/{{$id}}/localizacion"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Localizacion"/></a>
 
-
-        <br>
-            <a href="/objeto/{{$id}}/articulos"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Articulos"/></a>
-        <br>
-
-            <a href="/objeto/{{$id}}/multimedias"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Multimedia"/></a>
-
-        <br>
-            <a href="/objeto/{{$id}}/pendientes"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Campos pendientes"/></a>
-        <br>
-            <a href="/objeto/{{$id}}/notas"><input type="submit" name="subsec" class="btn btn-default btn-block" value="Notas objeto"/></a>
-
-
-
-
+            <button onclick="window.location.href='/objeto/{{$id}}/medidas'" class="btn btn-default btn-block" /> Medidas Objeto</button>
+            <button onclick="window.location.href='/objeto/{{$id}}/localizacion'" class="btn btn-default btn-block" /> Localizacion</button>
+            <button onclick="window.location.href='/objeto/{{$id}}/articulos'" class="btn btn-default btn-block" /> Articulos</button>
+            <button onclick="window.location.href='/objeto/{{$id}}/multimedias'" class="btn btn-default btn-block" /> Multimedia</button>
+            <button onclick="window.location.href='/objeto/{{$id}}/pendientes'" class="btn btn-default btn-block" /> Campos pendientes</button>
+            <button onclick="window.location.href='/objeto/{{$id}}/notas'" class="btn btn-default btn-block" /> Notas Objeto</button>
             <hr><a href="/objetos" class="btn btn-primary btn-block"><i class="fa fa-arrow-left"></i> Lista Objetos / Salir</a>
 
 

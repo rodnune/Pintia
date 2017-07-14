@@ -8,6 +8,7 @@
 <h1 class="text-center">Lista de Elementos Multimedia</h1><br><br>
 
                     @include('messages.success')
+                    @include('errors.errores')
 
                         <table class="table table-bordered table-hover" rules="all">
                             <tbody valign="top">
@@ -79,28 +80,40 @@
                                 <div class="col-xs-18 col-sm-6 col-md-3">
                                     <div class="thumbnail">
                                         @if($multimedia->Tipo == 'Fotografia')
-                                        <a href="/foto/{{$multimedia->IdMutimedia}}"><img src="/archivo/{{$multimedia->IdMutimedia}}" alt=""></a>
+                                        <a href="/foto/{{$multimedia->IdMutimedia}}"><img src="/archivo/{{$multimedia->IdMutimedia}}" alt="foto"></a>
                                         @elseif($multimedia->Tipo == 'Documento')
                                             <img src="/images/document.jpg" alt="">
                                         @elseif($multimedia->Tipo == 'Planimetria')
-                                            <a href="/archivo/{{$multimedia->IdMutimedia}}"><img src="/images/default-planim.png" alt=""></a>
+                                            <a href="/plano/{{$multimedia->IdMutimedia}}"><img src="/archivo/{{$multimedia->IdMutimedia}}" alt="plano"></a>
                                             @elseif($multimedia->Tipo == 'Dibujo')
-                                            <a href="/archivo/{{$multimedia->IdMutimedia}}"><img src="/images/principal1.png" alt=""></a>
+                                            <a href="/dibujo/{{$multimedia->IdMutimedia}}"><img src="/archivo/{{$multimedia->IdMutimedia}}" alt="dibujo"></a>
                                         @endif
                                             <h5>
                                                 <strong id="titulo">{{$multimedia->Titulo}}</strong>
                                                 <strong class="text-danger">{{$multimedia->Tipo}}</strong>
                                             </h5>
+                                            <h6><i class="fa fa-file-o" aria-hidden="true"></i><strong>  {{$multimedia->NombreArchivo}}</strong> </h6>
 
+                                            <div class="row" align="center">
                                             @if((Session::get('admin_level') > 1))
 
+                                                <div class="col-xs-6" align="left">
                                                 @if($multimedia->Tipo == 'Documento')
                                                   <a href="/archivo/{{$multimedia->IdMutimedia}}" class="btn btn-info btn-md" download><i class="fa fa-download"></i></a>
                                                     @endif
                                             <button onclick="window.location.href='/edit_multimedia/{{$multimedia->IdMutimedia}}'" class="btn btn-info btn-md"><i class="fa fa-pencil-square-o"></i></button>
+                                                </div>
 
-                                                    <a href="#" class="btn btn-danger btn-md" role="button"><i class="fa fa-trash"></i></a>
+                                                <div class="col-xs-6" align="right">
+                                                {{Form::open(array('action' => 'MultimediaController@delete','method' => 'post'))}}
+                                                    <input name="id" type="hidden" value="{{$multimedia->IdMutimedia}}">
+                                                    <button type="submit" name="submit" class="btn btn-danger btn-md"><i class="fa fa-trash"></i></button>
+
+                                                {{Form::close()}}
+                                                </div>
                                                 @endif
+
+                                            </div>
 
 
                                         </div>
@@ -131,29 +144,4 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/jquery.easyPaginate.js"></script>
 <script src="/js/multimedia-objetos.js"></script>
-
-<script>
-
-    function filter(){
-
-        var txt = $('#myInput').val();
-
-        $('.thumbnail').each(function() {
-            var titulo = $(this).find('#titulo').text();
-
-            if (titulo.indexOf(txt) != -1) {
-                $(this).parent().show();
-            }else{
-                $(this).parent().css("display","none")
-            }
-
-        });
-        }
-
-
-
-
-
-
-</script>
 

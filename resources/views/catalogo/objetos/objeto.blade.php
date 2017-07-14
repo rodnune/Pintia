@@ -151,7 +151,7 @@
                            @if ($multimedia->Tipo == 'Fotografia')
 
                            <td align="center" style="width: 25%;">
-                               <a href="/archivo/{{$multimedia->IdMutimedia}}" target="_blank"><img class="img-thumbnail" width="100" src="/images/fotos/thumb/thumb_{{$multimedia->IdMutimedia}}.jpg" /></a>&nbsp;&nbsp;&nbsp;
+                               <a href="/foto/{{$multimedia->IdMutimedia}}" target="_blank"><img class="img-thumbnail" width="100" src="/images/fotos/thumb/thumb_{{$multimedia->IdMutimedia}}.jpg" /></a>&nbsp;&nbsp;&nbsp;
                               <br><strong>{{$multimedia->Titulo}}</strong>
                                <br><span class="text-danger"><strong>{{$multimedia->Tipo}}</strong></span>
                                </td>
@@ -173,7 +173,7 @@
                                <i class="fa fa-file-powerpoint-o fa-5x"></i>
                                <br><br>
 
-                               <a href="/archivo/{{$multimedia->IdMutimedia}}">{{$multimedia->Titulo}}
+                               <a href="/plano/{{$multimedia->IdMutimedia}}">{{$multimedia->Titulo}}
                                </a>
                                <br><span class="text-danger"><strong>{{$multimedia->Tipo}}</strong></span>
                            </td>
@@ -182,7 +182,7 @@
 
                            @if($multimedia->Tipo == 'Dibujo')
                            <td align="center" style="width: 25%;">
-                               <a href="/archivo/{{$multimedia->IdMutimedia}}"></br>Orden ({{$multimedia->Orden}}) {{str_pad($multimedia->Tipo, 20, "-")}}  T&iacute;tulo: {{$multimedia->Titulo}};
+                               <a href="/dibujo/{{$multimedia->IdMutimedia}}"></br>Orden ({{$multimedia->Orden}}) {{str_pad($multimedia->Tipo, 20, "-")}}  T&iacute;tulo: {{$multimedia->Titulo}};
                                </a>
                            </td>
                            @endif

@@ -200,7 +200,7 @@ use Carbon\Carbon;
 
                                         </div>
 
-                                            <textarea class="form-control vresize" rows="6" cols="60" name="medidas" id="display2" style="display:none;">'.$medidas.'</textarea>
+                                            <textarea class="form-control vresize" rows="6" cols="60" name="medidas" id="display2" style="display:none;"></textarea>
 
                                          </td>
 

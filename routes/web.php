@@ -237,9 +237,11 @@ Route::post('/new_multimedia','MultimediaController@create');
 Route::get('/archivo/{id}','MultimediaController@getArchivo');
 Route::get('/edit_multimedia/{id}','MultimediaController@form_update');
 Route::post('/edit_multimedia','MultimediaController@update');
-Route::get('/delete_multimedia/{id}','MultimediaController@delete');
+Route::post('/delete_multimedia','MultimediaController@delete');
 Route::get('/search_multimedias','MultimediaController@search');
 Route::get('/foto/{id}','MultimediaController@getRealPhoto');
+Route::get('/dibujo/{id}','MultimediaController@getRealDibujo');
+Route::get('/plano/{id}','MultimediaController@getRealPlano');
 
 //Analisis metalografico
 Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');
@@ -365,6 +367,7 @@ Route::group(['middleware' => ['experto']], function () {
 //GESTION REGISTROS
 
 Route::get('/registros','RegistrosController@index');
+Route::post('/validar_registro','RegistrosController@validar');
 
 
 

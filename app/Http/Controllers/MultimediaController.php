@@ -123,7 +123,9 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
     public function procesar_multimedia($tipo, $file)
     {
-
+            /*Redimensionar para thumb*/
+        $new_width = 345;
+        $new_height = 200;
 
 
         $last = DB::table('almacenmultimedia')->orderBy('idmutimedia', 'desc')->get()->first();
@@ -135,45 +137,28 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
         switch ($tipo) {
             case "Fotografia": {
-                {
 
 
-
-
-
-                    //Calculamos nuevas dimensiones
-                    $new_width = 345;
-                    $new_height = 200;
 
                     $thumb = Image::make($file)->resize($new_width, $new_height);
-
-                    //No vamos a guardarlo en storage
-
-
                     $thumb->save(public_path() . '/images/fotos/thumb/thumb_' . $last->IdMutimedia . '.jpg');
-
-
-
-
-                }//PROCESADO IMAGENES
-
                 $real->save(public_path() . '/images/fotos/Foto_' . $last->IdMutimedia . '.jpg');
 
-
-                //Storage::put('fotos',$real);
 
                 break;
             }
             case 'Planimetria': {
 
+                $thumb = Image::make($file)->resize($new_width, $new_height);
 
                 $real->save(public_path() . '/images/planimetria/Plani_' . $last->IdMutimedia . '.jpg');
-
+                $thumb->save(public_path() . '/images/planimetria/thumb/thumb_' . $last->IdMutimedia . '.jpg');
                 break;
             }
             case 'Dibujo': {
 
-
+                $thumb = Image::make($file)->resize($new_width, $new_height);
+                $thumb->save(public_path() . '/images/dibujos/thumb/thumb_' . $last->IdMutimedia . '.jpg');
                 $real->save(public_path() . '/images/dibujos/Dib_' . $last->IdMutimedia . '.jpg');
 
                 break;
@@ -197,6 +182,23 @@ class MultimediaController extends \App\Http\Controllers\Controller
         return response($file, 200)->header('Content-Type', 'image/jpg');
 
     }
+
+    public function getRealDibujo($id){
+        $multimedia = DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->first();
+
+        $file = File::get(public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg');
+
+        return response($file, 200)->header('Content-Type', 'image/jpg');
+    }
+
+
+    public function getRealPlano($id){
+        $multimedia = DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->first();
+
+        $file = File::get(public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg');
+
+        return response($file, 200)->header('Content-Type', 'image/jpg');
+        }
 
     public function getArchivo($id)
     {
@@ -222,7 +224,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
                 {
 
-                    $file = File::get(public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg');
+                    $file = File::get(public_path() . '/images/planimetria/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
 
                     return response($file, 200)->header('Content-Type', 'image/jpg');
                     break;
@@ -234,7 +236,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
                 {
 
-                    $file = File::get(public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg');
+                    $file = File::get(public_path() . '/images/dibujos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
 
                     return response($file, 200)->header('Content-Type', 'image/jpg');
                     break;
@@ -247,21 +249,19 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
                 $extension = explode(".", $multimedia->NombreArchivo);
 
+                $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.' . $extension[1]);
 
                 if ($extension[1] == 'txt') {
-                    $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.' . $extension[1]);
 
                     return response($file, 200)->header('Content-Type', 'text/plain');
                 }
 
                 if ($extension[1] == 'pdf') {
-                    $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.' . $extension[1]);
 
                     return response($file, 200)->header('Content-Type', 'application/pdf');
                 }
 
                 if ($extension[1] == 'doc') {
-                    $file = File::get(public_path() . '/images/doc/Doc_' . $multimedia->IdMutimedia . '.' . $extension[1]);
 
                     return response($file, 200)->header('Content-Type', 'application/msword');
                 }
@@ -353,14 +353,64 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
             }
 
-            public function delete($id){
+            public function delete(Request $request){
+
+        $id = $request->input('id');
+
+                $validator = Validator::make($request->all(), [
+
+                    'id' => 'required|exists:almacenmultimedia,idmutimedia',
+
+                ]);
+
+                if ($validator->fails()) {
+
+                    return redirect(URL::previous())
+                        ->withErrors($validator);
+                }
+
+                $multimedia = Multimedia::find($id);
+
+                $id_multimedia = $multimedia->IdMutimedia;
+                $tipo =  $multimedia->Tipo;
+
+
+
+
+                if ($tipo == 'Fotografia') {
+                    File::delete(public_path() . '/images/fotos/Foto_' . $id_multimedia.'.jpg');
+                    File::delete(public_path() . '/images/fotos/thumb/thumb_' . $id_multimedia.'.jpg');
+                }
+
+                if ($tipo == 'Planimetria') {
+                    File::delete(public_path() . '/images/planimetria/thumb/thumb_' . $id_multimedia.'.jpg');
+                    File::delete(public_path() . '/images/planimetria/Plani_' . $id_multimedia.'.jpg');
+                }
+
+                if ($tipo == 'Documento') {
+                    $nombre = explode('.',$multimedia->NombreArchivo);
+                    $extension = $nombre[1];
+
+                    File::delete(public_path() . '/images/doc/Doc_' . $id_multimedia.'.'.$extension);
+                }
+
+                if($tipo == 'Dibujo'){
+                    File::delete(public_path() . '/images/dibujos/thumb/thumb_' . $id_multimedia.'.jpg');
+                    File::delete(public_path() . '/images/dibujos/Dib_' . $id_multimedia.'.jpg');
+                }
+
 
         DB::table('almacenmultimedia')
             ->where('idmutimedia','=',$id)
             ->delete();
 
-        return redirect('/multimedias');
-            }
+
+
+
+        return redirect('/multimedias')->with('success','Multimedia con id: '.$id.' eliminado correctamente');
+
+
+    }
 }
 
 
