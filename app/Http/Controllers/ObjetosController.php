@@ -246,6 +246,30 @@ class ObjetosController extends \App\Http\Controllers\Controller
     }
 
 
+    public function delete(Request $request){
+
+        $ref = $request->input('ref');
+
+        $validator = Validator::make($request->all(), [
+
+            'ref'        => 'required|exists:fichaobjeto,ref',
+
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(URL::previous())
+                ->withErrors($validator);
+        }
+
+        DB::table('fichaobjeto')
+            ->where('ref','=',$ref)
+            ->delete();
+
+        return redirect('/objetos')->with('success','Objetos con referencia: '.$ref.' eliminado correctamente');
+    }
+
+
     public function get_datos($id){
 
 

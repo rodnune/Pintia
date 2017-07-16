@@ -42,7 +42,7 @@
                             <th scope="col" align="center"><strong>Identificador</strong></th>
                             <th colspan="2" scope="col" align="center"><strong>Descripción</strong></th>
                             <th colspan="2" align="center"><strong>Partes Oseas, Especie, Edad</strong></th>
-                            @if(Session::get('admin_level')>1)
+                            @if(Session::get('admin_level') > 1)
                                 <th colspan="2" align="center"></th>
                                 @endif
 

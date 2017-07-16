@@ -8,7 +8,6 @@
                     <table class="table table-bordered table-hover" rules="rows">
                         <tbody>
 
-                            <input type="hidden" name="seccion" value="Lista">
                             <tr><td colspan="4" class="info" align="center"><h3>Datos generales</h3></td></tr>
                             <tr>
                                 <td colspan="2"align="left"><strong>Id Tumba </strong></td>
@@ -141,7 +140,7 @@
                                 <td colspan="2">
 
 
-                                    @if(count($objetos) == 0 ){
+                                    @if(count($objetos) == 0 )
                                     <p class="text-danger">No hay objetos asociados</p>
                                     @else
 
@@ -305,15 +304,10 @@
 
 
                             <tr>
-                                <td colspan="2" align="center">
+                                <td colspan="4" align="center">
                                     <a href="/tumbas" class="btn btn-primary" value="Volver"><i class="fa fa-arrow-left"></i> Volver a lista de tumbas</a>
                                 </td>
 
-                                <td colspan="2" align="center">
-
-                                      <button type="submit" name="accion" class="btn btn-success" value="OK"><i class="fa fa-check"></i> Validar</button>
-
-                                </td>
                             </tr>
 
 

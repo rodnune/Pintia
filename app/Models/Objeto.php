@@ -158,6 +158,16 @@ class Objeto extends Model
         return $materiales;
     }
 
+    public function registro(){
+
+        $registro = DB::table('registro')
+            ->where('Ref','=',$this->Ref)
+            ->select('registro.NumControl')
+            ->first();
+
+        return $registro;
+    }
+
 
 
 }

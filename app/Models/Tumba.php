@@ -212,4 +212,15 @@ class Tumba extends Model
         return $pendientes;
     }
 
+    public function registro(){
+
+        $registro = DB::table('registro')
+            ->where('IdTumba','=',$this->IdTumba)
+            ->select('registro.NumControl')
+            ->first();
+
+        return $registro;
+    }
+
+
 }

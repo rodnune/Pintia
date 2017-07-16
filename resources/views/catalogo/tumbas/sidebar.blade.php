@@ -30,6 +30,14 @@
             {{Form::close()}}
         </div>
         <br>
+        @if(($tumba->registro()!= null) && (Session::get('admin_level') > 2 ))
+            {{Form::open(array('action' => 'RegistrosController@validar','method' => 'post'))}}
+            <input type="hidden" name="num_control" value="{{$tumba->registro()->NumControl}}">
+            <button type="submit" name="submit" class="btn btn-success btn-block"><i class="fa fa-check"></i> Validar</button>
+
+            {{Form::close()}}
+
+        @endif
 
         <br/><br/>
         </p>

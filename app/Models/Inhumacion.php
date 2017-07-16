@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 
 class Inhumacion extends Model
@@ -13,4 +14,15 @@ class Inhumacion extends Model
     protected $primaryKey = 'IdEnterramiento';
     public $timestamps = false;
 
+
+
+    public function registro(){
+        $registro = DB::table('registro')
+            ->where('IdEnterramiento','=',$this->IdEnterramiento)
+            ->select('registro.NumControl')
+            ->first();
+
+        return $registro;
+
+    }
 }

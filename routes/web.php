@@ -262,6 +262,7 @@ Route::get('/objeto/{id}','ObjetosController@get_objeto');
 Route::get('/objeto/{id}/datos_generales','ObjetosController@get_datos');
 Route::post('/objeto_update','ObjetosController@update_general_data');
 Route::get('/search_objetos','ObjetosController@search');
+Route::post('/delete_objeto','ObjetosController@delete');
 
 //Partes Objeto
 Route::get('/objeto/{id}/clasificacion_partes','ObjetosController@get_clasificacion_partes');

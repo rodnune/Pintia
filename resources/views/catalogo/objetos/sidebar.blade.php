@@ -44,8 +44,21 @@
 
 
 
-        <br/><button type="submit" name="subsec" class="btn btn-danger btn-block" value="Eliminar Ficha"><i class="fa fa-close"></i> Eliminar Ficha </button>
 
+        <br/>
+            {{Form::open(array('action' => 'ObjetosController@delete','method' => 'post'))}}
+            <input type="hidden" name="ref" value="{{$id}}">
+            <button type="submit" name="subsec" class="btn btn-danger btn-block" value="Eliminar Ficha"><i class="fa fa-close"></i> Eliminar Ficha </button>
+            {{Form::close()}}
+        <br>
+            @if(($objeto->registro()!= null) && (Session::get('admin_level') > 2 ))
+                {{Form::open(array('action' => 'RegistrosController@validar','method' => 'post'))}}
+                <input type="hidden" name="num_control" value="{{$objeto->registro()->NumControl}}">
+                <button type="submit" name="submit" class="btn btn-success btn-block"><i class="fa fa-check"></i> Validar</button>
+
+                {{Form::close()}}
+
+            @endif
 
 
 

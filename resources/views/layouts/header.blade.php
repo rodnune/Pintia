@@ -18,6 +18,17 @@
 <link href='http://fonts.googleapis.com/css?family=Caesar+Dressing' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Courgette' rel='stylesheet' type='text/css'>
 
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- Filtrar lista o buscar por identificador -->
+    <script src="/js/filtros.js"></script>
+    <!-- Dar formato al texto -->
+    <script src="/js/formato.js"></script>
+
+    <!--Para buscar por identificador-->
+    <script src="/js/busqueda.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
@@ -40,17 +51,7 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 
-<!-- Bootstrap JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 
-<!-- Filtrar lista o buscar por identificador -->
-<script src="/js/filtros.js"></script>
-<!-- Dar formato al texto -->
-<script src="/js/formato.js"></script>
-
-    <!--Para buscar por identificador-->
-    <script src="/js/busqueda.js"></script>
 
 
 

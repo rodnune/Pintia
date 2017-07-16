@@ -11,6 +11,7 @@
 
  <h1 class="text-center">Modificar Inhumaci&oacute;n  ({{$inhumacion->IdEnterramiento}})</h1><br>
                    @include('errors.errores')
+                    @include('messages.success')
                     <table class="table table-bordered table-hover" rules="all">
                         <tbody>
 
@@ -293,7 +294,7 @@
                        <input type="hidden" name="id" value="{{$inhumacion->IdEnterramiento}}">
 
 
-                        <tr><td colspan="3" align="right">
+                        <tr><td colspan="3" align="center">
 
                                 <button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar cambios</button>
 
@@ -302,10 +303,28 @@
                             {{Form::close()}}
 
 
-                            <td colspan="3" align="left">
+
+
+                            <td colspan="2" align="center">
 
                                 <a href="/inhumaciones" class="btn btn-danger" value="Volver a listado"><i class="fa fa-times"></i> Cancelar/Volver a lista inhumaciones</a>
 
+
+
+
+                            </td>
+
+
+                            <td colspan="2" align="center">
+
+
+                                    @if(($inhumacion->registro()!=null) && (Session::get('admin_level') > 2))
+                                {{Form::open(array('action' => 'RegistrosController@validar','method' => 'post'))}}
+                                <input type="hidden" name="num_control" value="{{$inhumacion->registro()->NumControl}}">
+                                <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-check"></i> Validar</button>
+
+                                {{Form::close()}}
+                                        @endif
 
 
                             </td>
