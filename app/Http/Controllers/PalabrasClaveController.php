@@ -81,7 +81,7 @@ class PalabrasClaveController extends \App\Http\Controllers\Controller
             }
             DB::table('palabraclave')->insert(['palabraclave' => $keyword]);
 
-            return redirect('/gestion_keywords');
+            return redirect('/gestion_keywords')->with('success','Palabra clave: '.$keyword.' creada correctamente');
 
         }
 
@@ -103,8 +103,9 @@ class PalabrasClaveController extends \App\Http\Controllers\Controller
                 ->where('idpalabraclave','=',$keyword)
                 ->update(['palabraclave' => $keyword_update]);
 
+            $denominacion = DB::table('palabraclave')->where('idpalabraclave','=',$keyword)->first();
 
-            return redirect('/gestion_keywords');
+            return redirect('/gestion_keywords')->with('success','Palabra clave: '.$denominacion->PalabraClave.' actualizada correctamente');
         }
 
 
@@ -120,12 +121,14 @@ class PalabrasClaveController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_keywords')->withErrors($validator);
             }
 
+           $denominacion = DB::table('palabraclave')->where('idpalabraclave','=',$keyword)->first();
+
             DB::table('palabraclave')
                 ->where('idpalabraclave','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_keywords');
+            return redirect('/gestion_keywords')->with('success','Palabra clave: '.$denominacion->PalabraClave.' eliminada correctamente');
         }
 
 

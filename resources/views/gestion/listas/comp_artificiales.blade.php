@@ -7,15 +7,8 @@
                 <div class="post">
                     <h1 class="text-center"> Componentes Artificiales</h1><br>
 
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    @include('errors.errores')
+                    @include('messages.success')
 
 
                     <table class="table table-bordered table-hover" rules="all">
@@ -42,7 +35,7 @@
                             </td></tr>
                         <tr><td align="left"><strong>Modificar el elemento seleccionado por:</strong></td>
                             <td>
-                                <input class="form-control" type="text" name="reemplazar" id="reemplazar" size="40" maxlength="255" value="">
+                                <input class="form-control" type="text" name="reemplazar" size="40" maxlength="255" value="">
                             </td>
                             <td align="center">
                                 <button type="submit" name="submit" class="btn btn-primary btn-block" value="Modificar"><i class="fa fa-check"></i> Modificar</button></td>

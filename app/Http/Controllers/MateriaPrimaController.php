@@ -40,7 +40,7 @@ public function get(){
             }
             DB::table('materiaprima')->insert(['denominacion' => $keyword]);
 
-            return redirect('/gestion_materia_prima');
+            return redirect('/gestion_materia_prima')->with('success','Materia prima: '.$keyword.' creada correctamente');
 
         }
 
@@ -58,12 +58,17 @@ public function get(){
                 return redirect('/gestion_materia_prima')->withErrors($validator);
             }
 
+            $materia_prima =   DB::table('materiaprima')
+                ->where('idmat','=',$keyword)->first();
+
             DB::table('materiaprima')
                 ->where('idmat','=',$keyword)
                 ->update(['denominacion' => $keyword_update]);
 
 
-            return redirect('/gestion_materia_prima');
+
+            return redirect('/gestion_materia_prima')
+                ->with('success','Materia prima: '.$materia_prima->Denominacion.' actualizada correctamente');
         }
 
 
@@ -79,12 +84,17 @@ public function get(){
                 return redirect('/gestion_materia_prima')->withErrors($validator);
             }
 
+            $materia_prima =   DB::table('materiaprima')
+                ->where('idmat','=',$keyword)->first();
+
+
             DB::table('materiaprima')
                 ->where('idmat','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_materia_prima');
+            return redirect('/gestion_materia_prima')
+                ->with('success','Materia prima: '.$materia_prima->Denominacion.' borrada correctamente');
         }
 
 

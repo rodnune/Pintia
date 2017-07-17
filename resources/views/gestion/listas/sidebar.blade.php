@@ -1,24 +1,26 @@
-<div id="sidebar-list" class="affix" style="float:left; margin:20px 35px 0 0;">
-    <div class="post" style="padding-right: 0px; padding-left: 0px;">
-        <h3 class="text-center">Listas</h3>
+<div id="sidebar" style="float:left; margin:0px 35px 0 0;">
+    <div class="post" style="padding-right: 10px; padding-left: 0px;">
+        <h3 class="text-center"style="color: #000;">Listas</h3>
         <p class="text-center">
-            <a href="/gestion_keywords" class="btn btn-default btn-block">Palabras clave</a>
+            <button onclick="window.location.href='/gestion_keywords'" class="btn btn-default btn-block">Palabras clave</button>
 
-            <a href="/gestion_materia_prima" class="btn btn-default btn-block">Materias primas</a>
+            <button onclick="window.location.href='/gestion_materia_prima'" class="btn btn-default btn-block">Materias primas</button>
 
-            <a href="/gestion_tipos_tumba" class="btn btn-default btn-block">Tipos de tumbas</a>
+            <button onclick="window.location.href='/gestion_tipos_tumba'" class="btn btn-default btn-block">Tipos de tumbas</button>
 
-            <a href="/gestion_tipos_muestra" class="btn btn-default btn-block">Tipos de muestras</a>
+            <button onclick="window.location.href='/gestion_tipos_muestra'" class="btn btn-default btn-block">Tipos de muestras</button>
 
-            <a href="/gestion_artificiales" class="btn btn-default btn-block">Componentes artificiales</a>
+            <button onclick="window.location.href='/gestion_artificiales'" class="btn btn-default btn-block">Componentes artificiales</button>
 
-            <a href="/gestion_geologicos" class="btn btn-default btn-block">Componentes geol&oacute;gicos</a>
+            <button onclick="window.location.href='/gestion_geologicos'" style="text-align:center" class="btn btn-default btn-block">Componentes geológicos</button>
 
-            <a href="/gestion_organicos" class="btn btn-default btn-block">Componentes org&aacute;nicos</a>
+            <button onclick="window.location.href='/gestion_organicos'" style="text-align:center" class="btn btn-default btn-block">Componentes orgánicos</button>
 
-            <a href="/gestion_artefactos" class="btn btn-default btn-block">Artefactos</a>
+            <button onclick="window.location.href='/gestion_artefactos'" class="btn btn-default btn-block">Artefactos</button>
 
-            <a href="/gestion_superficies" class="btn btn-default btn-block">Superficies</a>
+            <button onclick="window.location.href='/gestion_superficies'" class="btn btn-default btn-block">Superficies</button>
+
+
         </p>
 
 

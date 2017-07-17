@@ -22,13 +22,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 
-    <!-- Filtrar lista o buscar por identificador -->
-    <script src="/js/filtros.js"></script>
-    <!-- Dar formato al texto -->
-    <script src="/js/formato.js"></script>
-
-    <!--Para buscar por identificador-->
-    <script src="/js/busqueda.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
@@ -49,6 +42,14 @@
 
 <!-- Font Awesome icons --->
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- Filtrar lista o buscar por identificador -->
+    <script src="/js/filtros.js"></script>
+    <!-- Dar formato al texto -->
+    <script src="/js/formato.js"></script>
+
+    <!--Para buscar por identificador-->
+    <script src="/js/busqueda.js"></script>
 
 
 

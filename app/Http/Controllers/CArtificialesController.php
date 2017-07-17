@@ -102,7 +102,8 @@ class CArtificialesController extends \App\Http\Controllers\Controller
             }
             DB::table('componentesartificiales')->insert(['denominacion' => $keyword]);
 
-            return redirect('/gestion_artificiales');
+            return redirect('/gestion_artificiales')
+                ->with('success','Componente artificial: '.$keyword.' creado correctamente');
 
         }
 
@@ -120,12 +121,16 @@ class CArtificialesController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_artificiales')->withErrors($validator);
             }
 
+           $artificial = DB::table('componentesartificiales')
+                ->where('idcartificial','=',$keyword)->first();
+
             DB::table('componentesartificiales')
                 ->where('idcartificial','=',$keyword)
                 ->update(['denominacion' => $keyword_update]);
 
 
-            return redirect('/gestion_artificiales');
+            return redirect('/gestion_artificiales')
+                ->with('success','Componente artificial: '.$artificial->Denominacion.' modificado correctamente');
         }
 
 
@@ -142,12 +147,16 @@ class CArtificialesController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_artificiales')->withErrors($validator);
             }
 
+            $artificial = DB::table('componentesartificiales')
+                ->where('idcartificial','=',$keyword)->first();
+
             DB::table('componentesartificiales')
                 ->where('idcartificial','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_artificiales');
+            return redirect('/gestion_artificiales')
+                ->with('success','Componente artificial: '.$artificial->Denominacion.' borrado correctamente');
         }
     }
 }

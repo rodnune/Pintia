@@ -8,15 +8,7 @@
                 <div class="post">
 
                     <h1 class="text-center">Nueva muestra</h1><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                                @endif
+                    @include('errors.errores')
                     <table class="table table-bordered" rules="all">
                        <tbody>
 
@@ -32,14 +24,14 @@
 
 
 <tr>
-    <td colspan="2" align="right">
+    <td colspan="3" align="center">
         <button type="submit" name="submit" class="btn btn-success" value="Aceptar"><i class="fa fa-check"></i> Guardar </button>
     </td>
 
     {{Form::close()}}
 
 
-    <td colspan="2">
+    <td colspan="3" align="center">
      <a href="/muestras"   class="btn btn-danger" value="Cancelar / Volver"><i class="fa fa-times"></i> Cancelar/Volver a lista</a>
     </td>
 </tr>

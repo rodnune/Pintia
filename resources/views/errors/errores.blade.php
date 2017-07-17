@@ -6,7 +6,7 @@
         <i class="fa fa-thumbs-down fa-1x"></i>
         <ul>
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+                <li style="font-size: 14px">{{ $error }}</li>
             @endforeach
         </ul>
     </div>

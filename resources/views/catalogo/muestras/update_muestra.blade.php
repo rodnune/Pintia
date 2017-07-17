@@ -8,15 +8,8 @@
                 <div class="post">
 
                     <h1 class="text-center">Gestionar Muestra: {{$muestra->NumeroRegistro}}</h1><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                        @include('messages.success')
+                        @include('errors.errores')
                     <table class="table table-bordered" rules="all">
                         <tbody>
 
@@ -24,7 +17,7 @@
                         {{Form::open(array('action' => 'MuestrasController@update','method' => 'post'))}}
                         <input type="hidden" name="id" value="{{$muestra->NumeroRegistro}}">
                         <tr>
-                            <td colspan="2" align="left"><img src="images/required.gif" height="16" width="16"><strong>N&uacute;mero Registro</strong></td>
+                            <td colspan="2" align="left"><img src="/images/required.gif" height="16" width="16"><strong>N&uacute;mero Registro</strong></td>
                             <td colspan="2" align="center"><input class="form-control" type="number" name="registro" value="{{$muestra->NumeroRegistro}}" style="width:100%" maxlength="20" /></td></tr><tr>
                             <td colspan="2" align="left"><strong>Notas</strong></td><td colspan="2">   <textarea class="form-control vresize" rows="6" cols="60" name="notas" value="{{$muestra->Notas}}">{{$muestra->Notas}}</textarea>
                             </td>

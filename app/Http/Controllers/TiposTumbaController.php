@@ -40,7 +40,7 @@ class TiposTumbaController extends \App\Http\Controllers\Controller
             }
             DB::table('tipostumbas')->insert(['denominacion' => $keyword]);
 
-            return redirect('/gestion_tipos_tumba');
+            return redirect('/gestion_tipos_tumba')->with('success','Tipo de tumba: '.$keyword.' creado correctamente');
 
         }
 
@@ -58,12 +58,17 @@ class TiposTumbaController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_tipos_tumba')->withErrors($validator);
             }
 
+            $tipo_tumba = DB::table('tipostumbas')
+                ->where('idtipotumba','=',$keyword)
+                ->first();
+
             DB::table('tipostumbas')
                 ->where('idtipotumba','=',$keyword)
                 ->update(['denominacion' => $keyword_update]);
 
 
-            return redirect('/gestion_tipos_tumba');
+            return redirect('/gestion_tipos_tumba')
+                ->with('success','Tipo de tumba: '.$tipo_tumba->Denominacion.' actualizado correctamente');
         }
 
 
@@ -79,12 +84,17 @@ class TiposTumbaController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_tipos_tumba')->withErrors($validator);
             }
 
+            $tipo_tumba = DB::table('tipostumbas')
+                ->where('idtipotumba','=',$keyword)
+                ->first();
+
             DB::table('tipostumbas')
                 ->where('idtipotumba','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_tipos_tumba');
+            return redirect('/gestion_tipos_tumba')
+                ->with('success','Tipo de tumba: '.$tipo_tumba->Denominacion.' borrado correctamente');;
         }
     }
 }

@@ -7,15 +7,8 @@
                 <div class="post">
                     <h1 class="text-center"> Tipos de Muestra</h1><br>
 
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    @include('errors.errores')
+                    @include('messages.success')
 
 
                     <table class="table table-bordered table-hover" rules="all">

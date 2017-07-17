@@ -91,7 +91,7 @@ class CGeologicosController extends \App\Http\Controllers\Controller
             }
             DB::table('componentesgeologicos')->insert(['denominacion' => $keyword]);
 
-            return redirect('/gestion_geologicos');
+            return redirect('/gestion_geologicos')->with('success','Componente geológico: '.$keyword.' creado correctamente');
 
         }
 
@@ -109,12 +109,17 @@ class CGeologicosController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_geologicos')->withErrors($validator);
             }
 
+           $geologico = DB::table('componentesgeologicos')
+                ->where('idcgeologico','=',$keyword)
+                ->first();
+
             DB::table('componentesgeologicos')
                 ->where('idcgeologico','=',$keyword)
                 ->update(['denominacion' => $keyword_update]);
 
 
-            return redirect('/gestion_geologicos');
+            return redirect('/gestion_geologicos')
+                ->with('success','Componente geológico: '.$geologico->Denominacion.' modificado correctamente');
         }
 
 
@@ -131,12 +136,17 @@ class CGeologicosController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_geologicos')->withErrors($validator);
             }
 
+            $geologico = DB::table('componentesgeologicos')
+                ->where('idcgeologico','=',$keyword)
+                ->first();
+
             DB::table('componentesgeologicos')
                 ->where('idcgeologico','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_geologicos');
+            return redirect('/gestion_geologicos')
+                ->with('success','Componente geológico: '.$geologico->Denominacion.' borrado correctamente');
         }
 
 

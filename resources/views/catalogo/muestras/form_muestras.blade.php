@@ -8,7 +8,7 @@
                 <div class="post">
 
                     <h1 class="text-center">Lista de Muestras</h1><br>
-
+                        @include('messages.success')
                     <div class="form-group">
                         <input id="verfiltro" type="radio" name="filtro" value="Si" checked> Buscar por filtro(s) &nbsp;&nbsp;&nbsp;
                         <input id="ocultarfiltro" type="radio" name="filtro" value="No"> Buscar por número de registro
@@ -21,7 +21,7 @@
                            <tr id="fila_filtros">
                                <td align="center"><strong>Tipo de muestra: </strong></td>
                                 <td align="left">
-                                    {{Form::open(array('action' => 'MuestrasController@index','method' => 'get' ))}}
+                                    {{Form::open(array('action' => 'MuestrasController@search','method' => 'get' ))}}
                                     <select class="form-control" name="tipo" style="width:100%">
 
                                         @foreach($tipos as $tipo)
@@ -54,22 +54,34 @@
 
                     </table>
 
-                  <p class="text-muted text-center"><strong>Total de resultados encontrados: {{count($muestras)}}</strong></p>
-                        <table id="pagination_table" class="table table-bordered" rules="all">
+                  <p id="total" class="text-muted text-center"><strong>Total de resultados encontrados: {{count($muestras)}}</strong></p>
+
+                    <p class="text-muted text-center">
+                        @if(isset($datos))
+                            @if($datos->has('tipo'))
+                                <strong>Tipo de muestra:</strong> {{$datos->get('tipo')}}
+                            @endif
+
+
+                    @endif
+                        <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                         <thead>
 
                         <tr class="info">
-                            <th align="center"><strong>Nº Registro</strong></th>
-                            <th colspan="1" align="center"><strong>Notas</strong></th>
-                            <th colspan="1" align="center"><strong>Muestras</strong></th>
+                            <th style="text-align:center" scope="col"><strong>Nº Registro</strong></th>
+                            <th style="text-align:center" scope="col"><strong>Notas</strong></th>
+                            <th style="text-align:center" scope="col"><strong>Muestras</strong></th>
                             @if(Session::get('admin_level') > 1 )
 
 
 
-                               <th scope="col" align="center"></th>
-                                <td align="center">
+                               <th scope="col"></th>
+
+                                <th style="text-align:center" scope="col">
+
                                     <a href="/new_muestra" class="btn btn-success" value="Nueva"><i class="fa fa-plus"></i> Nueva</a>
-                                 </td>
+
+                                </th>
 
                             @endif
                         </tr>
@@ -98,7 +110,7 @@
                             @if(Session::get('admin_level') > 1 )
 
                            <td align="center">
-                                <form action="muestras.php" method="post">
+
                                     <a href="/muestra/{{$muestras[$key][0]->NumeroRegistro}}" class="btn btn-primary" value="Modificar"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
 
 
@@ -128,35 +140,6 @@
     </div>
 </div>
 
-<script>
-
-    function filter() {
-        // Declare variables
-        var input, filter, table, tr, td, i;
-
-        input = $("#myInput");
-        filter = input.val();
-
-        table = $("#pagination_table");
-        tr = table.find("tr");
-        for (i = 0; i < tr.length; i++) {
-            /*Busqueda por ID*/
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                if (td.innerHTML.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-
-                } else {
-                    $('.info').show();
-                    tr[i].style.display = "none";
-                }
-            }
-
-
-
-        }
-    }
-</script>
-
+<script src="/js/results.js"></script>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>

@@ -19,41 +19,46 @@ class MuestrasController extends \App\Http\Controllers\Controller
 {
 
     public function index(Request $request){
-                if(!$request->has('tipo')){
+
                     $tipos = DB::table('tiposmuestra')->orderBy('denominacion','asc')->get();
                     $muestras = DB::table('muestras')
                         ->leftJoin('muestraesdetipo','muestras.NumeroRegistro','=','muestraesdetipo.NumeroRegistro')
                         ->leftJoin('tiposmuestra','tiposmuestra.IdTipoMuestra','=','muestraesdetipo.IdTipoMuestra')
                         ->select('tiposmuestra.denominacion','muestras.*')->get();
 
-
                     $grouped = $muestras->groupBy('NumeroRegistro');
-
                     $array = $grouped->toArray();
 
-
-
-
                     return view('catalogo.muestras.layout_muestras',['tipos'=>$tipos,'muestras' => $array]);
-                } else {
-                    $tipo = $request->input('tipo');
 
-                    $tipos = DB::table('tiposmuestra')->orderBy('denominacion','asc')->get();
-                    $muestras = DB::table('muestraesdetipo')
-                        ->join('muestras','muestras.NumeroRegistro','=','muestraesdetipo.NumeroRegistro')
-                        ->join('tiposmuestra','tiposmuestra.IdTipoMuestra','=','muestraesdetipo.IdTipoMuestra')
-                        ->where('tiposmuestra.IdTipoMuestra',$tipo)
-                        ->select('tiposmuestra.denominacion','muestras.*')->get();
+    }
+
+    public function search(Request $request){
+
+        $consulta = collect();
+
+        if($request->has('tipo')){
+
+            $tipo = $request->input('tipo');
+            $muestras = DB::table('muestraesdetipo')
+                ->join('muestras','muestras.NumeroRegistro','=','muestraesdetipo.NumeroRegistro')
+                ->join('tiposmuestra','tiposmuestra.IdTipoMuestra','=','muestraesdetipo.IdTipoMuestra')
+                ->where('tiposmuestra.IdTipoMuestra',$tipo)
+                ->select('tiposmuestra.denominacion','muestras.*')->get();
+
+            $muestra = DB::table('tiposmuestra')->where('idtipomuestra','=',$tipo)->first();
+
+            $consulta->put('tipo',$muestra->Denominacion);
+
+            $grouped = $muestras->groupBy('NumeroRegistro');
+
+            $array = $grouped->toArray();
+
+            $tipos = DB::table('tiposmuestra')->orderBy('denominacion','asc')->get();
+        }
 
 
-                    $grouped = $muestras->groupBy('NumeroRegistro');
-
-                    $array = $grouped->toArray();
-
-
-
-                    return view('catalogo.muestras.layout_muestras',['tipos'=>$tipos,'muestras' => $array]);
-                }
+        return view('catalogo.muestras.layout_muestras',['tipos'=>$tipos,'muestras' => $array,'datos' => $consulta]);
 
     }
 
@@ -77,7 +82,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
 
 
 
-        return redirect('/muestras');
+        return redirect('/muestras')->with('success','Muestra con numero de registro: '.$registro.' creada correctamente');
     }
 
 
@@ -86,7 +91,8 @@ class MuestrasController extends \App\Http\Controllers\Controller
 
         DB::table('muestras')->where('NumeroRegistro', '=', $registro)->delete();
 
-        return redirect('/muestras');
+        return redirect('/muestras')
+            ->with('success','Muestra con numero de registro: '.$registro.' borrada correctamente');
     }
 
     public function get($id){
@@ -108,7 +114,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
 
 
 
-            'registro' => 'required|numeric|min:0|unique:muestras,NumeroRegistro',
+            'registro' => 'required|numeric|min:0|unique:muestras,numeroregistro,'.$registro.',numeroregistro',
         ]);
 
         if ($validator->fails()) {
@@ -120,7 +126,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
                     ->where('NumeroRegistro',$registro)
                     ->update(['NumeroRegistro' => $new_registro,'Notas' => $notas ]);
 
-                return redirect('/muestra/'.$new_registro);
+                return redirect('/muestra/'.$new_registro)->with('success','Muestra actualizada correctamente');
     }
 
     public function eliminarAsociacion(Request $request){
@@ -128,10 +134,8 @@ class MuestrasController extends \App\Http\Controllers\Controller
                 $muestra = $request->input('muestra');
 
         $validator = Validator::make($request->all(), [
-
-
-
-            'muestra' => 'required|numeric'
+            'id'      => 'required|exists:muestras,numeroregistro',
+            'muestra' => 'required|exists:tiposmuestra,idtipomuestra'
         ]);
 
         if ($validator->fails()) {
@@ -144,7 +148,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
                     ->where('IdTipoMuestra','=',$muestra)
                     ->delete();
 
-                return redirect('/muestra/'.$id);
+                return redirect(URL::previous())->with('success',Lang::get('messages.asociacion_eliminada'));
     }
 
     public function addAsociacion(Request $request){
@@ -154,18 +158,18 @@ class MuestrasController extends \App\Http\Controllers\Controller
         $validator = Validator::make($request->all(), [
 
 
-
-            'muestra' => 'required|numeric'
+            'id'      => 'required|exists:muestras,numeroregistro',
+            'muestra' => 'required|exists:tiposmuestra,idtipomuestra'
         ]);
 
         if ($validator->fails()) {
-            return redirect('/muestra/'.$id)
+            return redirect(URL::previous())
                 ->withErrors($validator);
         }
 
         DB::table('muestraesdetipo')->insert(['NumeroRegistro' => $id , 'IdTipoMuestra' => $muestra]);
 
-        return redirect('/muestra/'.$id);
+        return redirect(URL::previous())->with('success','Tipo de muestra asociado correctamente');
     }
 
 
@@ -244,7 +248,7 @@ class MuestrasController extends \App\Http\Controllers\Controller
             }
             DB::table('tiposmuestra')->insert(['denominacion' => $keyword]);
 
-            return redirect('/gestion_tipos_muestra');
+            return redirect('/gestion_tipos_muestra')->with('success','Tipo de muestra: '.$keyword.' creada correctamente');
 
         }
 
@@ -262,12 +266,16 @@ class MuestrasController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_tipos_muestra')->withErrors($validator);
             }
 
+         $tipo_muestra =   DB::table('tiposmuestra')
+                ->where('idtipomuestra','=',$keyword)->first();
+
             DB::table('tiposmuestra')
                 ->where('idtipomuestra','=',$keyword)
                 ->update(['denominacion' => $keyword_update]);
 
 
-            return redirect('/gestion_tipos_muestra');
+            return redirect('/gestion_tipos_muestra')
+                ->with('success','Tipo de muestra: '.$tipo_muestra->Denominacion. ' actualizada correctamente');
         }
 
 
@@ -283,12 +291,16 @@ class MuestrasController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_tipos_muestra')->withErrors($validator);
             }
 
+            $tipo_muestra =   DB::table('tiposmuestra')
+                ->where('idtipomuestra','=',$keyword)->first();
+
             DB::table('tiposmuestra')
                 ->where('idtipomuestra','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_tipos_muestra');
+            return redirect('/gestion_tipos_muestra')
+                ->with('success','Tipo de muestra: '.$tipo_muestra->Denominacion. ' borrada correctamente');
         }
     }
 
