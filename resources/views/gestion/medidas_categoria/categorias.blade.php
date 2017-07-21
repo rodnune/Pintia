@@ -6,15 +6,8 @@
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
                     <h1 class="text-center">Gesti&oacute;n de Categor&iacute;as y Subcategor&iacute;as de objetos</h1><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    @include('errors.errores')
+                    @include('messages.success')
 
                     <table class="table table-hover table-bordered" rules="all">
                         <tbody>

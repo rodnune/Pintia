@@ -47,7 +47,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
         DB::table('medidas')->insert(['siglasmedida' => $siglas, 'denominacion' => $denominacion,
             'unidades' => $uds]);
 
-        return redirect('/gestion_medidas');
+        return redirect('/gestion_medidas')->with('success','Medida: ' .$siglas. ' creada correctamente');
     }
 
         if ($request->submit == 'Modificar') {
@@ -57,9 +57,9 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
             $uds = $request->input('update_unidades');
 
             $validator = Validator::make($request->all(), [
-                'update_siglas' => 'string',
-                'new_denominacion' => 'string',
-                'new_unidades' => 'string'
+                'update_siglas' => 'required|unique:medidas,siglasmedida,'.$medida.',siglasmedida',
+                'update_denominacion' => 'required|string',
+                'update_unidades' => 'required|string'
             ]);
 
             if ($validator->fails()) {
@@ -70,14 +70,14 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 'denominacion' => $denominacion, 'unidades' => $uds]);
 
 
-            return redirect('/gestion_medidas');
+            return redirect('/gestion_medidas')->with('success','Medida: ' .$medida. ' modificada correctamente');
         }
 
         if($request->submit == 'Borrar'){
             $medida = $request->input('medida');
 
             $validator = Validator::make($request->all(), [
-                'medida' => 'exists:medidas,siglasmedida',
+                'medida' => 'required|exists:medidas,siglasmedida',
 
             ]);
 
@@ -90,7 +90,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 ->where('siglasmedida','=', $medida)
                 ->delete();
 
-            return redirect('/gestion_medidas');
+            return redirect('/gestion_medidas')->with('success','Medida: ' .$medida. ' borrada correctamente');
 
 
         }
@@ -121,7 +121,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 $categoria = $request->input('categoria');
 
                 $validator = Validator::make($request->all(), [
-                    'categoria' => 'unique:categoria,denominacion',
+                    'categoria' => 'required|unique:categoria,denominacion',
 
                 ]);
 
@@ -131,7 +131,8 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
 
                 DB::table('categoria')->insert(['denominacion' => $categoria]);
 
-                return redirect('/gestion_categorias');
+                return redirect('/gestion_categorias')
+                    ->with('success','Categoria: '.$categoria.' creada correctamente');
 
             }
 
@@ -140,8 +141,8 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 $denominacion = $request->input('denominacion');
 
                 $validator = Validator::make($request->all(), [
-                    'id' => 'exists:categoria,idcat',
-                    'denominacion' => 'unique:categoria,denominacion'
+                    'id' => 'required|exists:categoria,idcat',
+                    'denominacion' => 'required|unique:categoria,denominacion,'.$denominacion.',denominacion',
 
                 ]);
 
@@ -151,7 +152,8 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
 
                 DB::table('categoria')->where('idcat','=',$idcat)->update(['denominacion' => $denominacion]);
 
-                return redirect('/categoria/'.$idcat);
+                return redirect(URL::previous())
+                    ->with('success','Categoria: '.$denominacion.' modificada correctamente');
 
             }
 
@@ -159,7 +161,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                 $idcat = $request->input('id');
 
                 $validator = Validator::make($request->all(), [
-                    'id' => 'exists:categoria,idcat'
+                    'id' => 'required|exists:categoria,idcat'
 
                 ]);
 
@@ -167,11 +169,16 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                     return redirect(URL::previous())->withErrors($validator);
                 }
 
+               $categoria =  DB::table('categoria')
+                    ->where('idcat','=',$idcat)
+                    ->first();
+
                 DB::table('categoria')
                     ->where('idcat','=',$idcat)
                     ->delete();
 
-                return redirect('/gestion_categorias');
+                return redirect('/gestion_categorias')
+                    ->with('success','Categoria: '.$categoria->Denominacion.' borrada correctamente');
 
             }
 
@@ -216,7 +223,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
 
                     DB::table('medidascategoria')->insert(['idcat' => $id, 'siglasmedida' => $medida]);
 
-                    return redirect('/categoria/'.$id);
+                    return redirect(URL::previous())->with('success','Medida: ' .$medida.' asociada correctamente');
                 }
 
 
@@ -229,7 +236,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
                     ->where('siglasmedida','=',$medida)
                     ->delete();
 
-                return redirect('/categoria/'.$id);
+                return redirect(URL::previous())->with('success','Asociacion eliminada correctamente');
 
             }
 

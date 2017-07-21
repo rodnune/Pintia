@@ -27,7 +27,7 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
-            'subcategoria' => 'required|string',
+            'subcategoria' => 'required|exists:subcategoria,idsubcat',
             'categoria' => 'required|exists:categoria,idcat'
         ]);
 
@@ -40,7 +40,7 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
             DB::table('subcategoria')->insert(['idcat' => $categoria,
                 'denominacion' => $subcategoria]);
 
-            return redirect('/categoria/' . $categoria);
+            return redirect(URL::previous())->with('success','Subcategoria: '.$subcategoria.' creada correctamente');
 
 
         }
@@ -50,19 +50,25 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
                 $denominacion = $request->input('denominacion');
 
             $validator = Validator::make($request->all(), [
+                'subcategoria' => 'required|exists:subcategoria,idsubcat',
                 'denominacion' => 'required|string',
             ]);
 
             if ($validator->fails()) {
-                return redirect('/subcategoria/' . $subcategoria)->withErrors($validator);
+                return redirect(URL::previous())->withErrors($validator);
             }
+
+            $subcat = DB::table('subcategoria')
+                ->where('idsubcat','=', $subcategoria)
+                ->first();
 
             DB::table('subcategoria')
                 ->where('idsubcat','=', $subcategoria)
                 ->where('idcat','=', $categoria)
                 ->update(['denominacion' => $denominacion]);
 
-            return redirect('/subcategoria/' . $subcategoria);
+            return redirect(URL::previous())
+                ->with('success','Subcategoria: '.$subcat->Denominacion. ' modificada correctamente');
         }
 
         if($request->submit == 'Borrar'){
@@ -116,7 +122,7 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
             DB::table('medidassubcategoria')->insert(['idcat' => $categoria,
                 'idsubcat' => $subcat , 'siglasmedida' => $medida]);
 
-            return redirect('/subcategoria/' . $subcat);
+            return redirect(URL::previous())->with('success','Medida: '.$medida.' asociada correctamente');
 
 
         }
@@ -128,7 +134,8 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
                 ->where('siglasmedida','=',$medida)
                 ->delete();
 
-            return redirect('/subcategoria/' . $subcat);
+            return redirect(URL::previous())
+                ->with('success','Asociacion eliminada correctamente');
         }
 
 
