@@ -89,7 +89,8 @@ class COrganicosController extends \App\Http\Controllers\Controller
             }
             DB::table('componentesorganicos')->insert(['denominacion' => $keyword]);
 
-            return redirect('/gestion_organicos');
+            return redirect('/gestion_organicos')
+                ->with('success','Componente orgánico: '.$keyword.' creado correctamente');
 
         }
 
@@ -107,12 +108,17 @@ class COrganicosController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_organicos')->withErrors($validator);
             }
 
+            $organico = DB::table('componentesorganicos')
+                ->where('idcorganico','=',$keyword)->first();
+
             DB::table('componentesorganicos')
                 ->where('idcorganico','=',$keyword)
                 ->update(['denominacion' => $keyword_update]);
 
 
-            return redirect('/gestion_organicos');
+            return redirect('/gestion_organicos')
+                ->with('success','Componente organico: '.$organico->Denominacion.' modificado correctamente');
+
         }
 
 
@@ -129,12 +135,17 @@ class COrganicosController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_organicos')->withErrors($validator);
             }
 
+            $organico = DB::table('componentesorganicos')
+                ->where('idcorganico','=',$keyword)->first();
+
             DB::table('componentesorganicos')
                 ->where('idcorganico','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_organicos');
+            return redirect('/gestion_organicos')
+                ->with('success','Componente organico: '.$organico->Denominacion.' borrado correctamente');
+
         }
 
 

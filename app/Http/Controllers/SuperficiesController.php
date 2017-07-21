@@ -99,7 +99,8 @@ class SuperficiesController extends \App\Http\Controllers\Controller
             }
             DB::table('superficies')->insert(['denominacion' => $keyword]);
 
-            return redirect('/gestion_superficies');
+            return redirect('/gestion_superficies')
+                ->with('success','Superficie: '.$keyword.' creada correctamente');
 
         }
 
@@ -117,12 +118,16 @@ class SuperficiesController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_superficies')->withErrors($validator);
             }
 
+            $superficie = DB::table('superficies')
+                ->where('idsuperficie','=',$keyword)->first();
+
             DB::table('superficies')
                 ->where('idsuperficie','=',$keyword)
                 ->update(['denominacion' => $keyword_update]);
 
 
-            return redirect('/gestion_superficies');
+            return redirect('/gestion_superficies')
+                ->with('success','Superficie: '.$superficie->Denominacion.' modificada correctamente');
         }
 
 
@@ -139,12 +144,16 @@ class SuperficiesController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_superficies')->withErrors($validator);
             }
 
+            $superficie = DB::table('superficies')
+                ->where('idsuperficie','=',$keyword)->first();
+
             DB::table('superficies')
                 ->where('idsuperficie','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_superficies');
+            return redirect('/gestion_superficies')
+                ->with('success','Superficie: '.$superficie->Denominacion.' borrada correctamente');
         }
 
     }

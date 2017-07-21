@@ -97,7 +97,8 @@ class ArtefactosController extends \App\Http\Controllers\Controller
             }
             DB::table('fosiles')->insert(['denominacion' => $keyword]);
 
-            return redirect('/gestion_artefactos');
+            return redirect('/gestion_artefactos')
+                ->with('success','Artefacto: '.$keyword.' creado correctamente');
 
         }
 
@@ -115,12 +116,16 @@ class ArtefactosController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_artefactos')->withErrors($validator);
             }
 
+            $artefacto = DB::table('fosiles')
+                ->where('idfosil','=',$keyword)->first();
+
             DB::table('fosiles')
                 ->where('idfosil','=',$keyword)
                 ->update(['denominacion' => $keyword_update]);
 
 
-            return redirect('/gestion_artefactos');
+            return redirect('/gestion_artefactos')
+                ->with('success','Artefacto: '.$artefacto->Denominacion.' modificado correctamente');
         }
 
 
@@ -137,12 +142,16 @@ class ArtefactosController extends \App\Http\Controllers\Controller
                 return redirect('/gestion_artefactos')->withErrors($validator);
             }
 
+            $artefacto = DB::table('fosiles')
+                ->where('idfosil','=',$keyword)->first();
+
             DB::table('fosiles')
                 ->where('idfosil','=',$keyword)
                 ->delete();
 
 
-            return redirect('/gestion_artefactos');
+            return redirect('/gestion_artefactos')
+                ->with('success','Artefacto: '.$artefacto->Denominacion.' borrado correctamente');
         }
 
     }
