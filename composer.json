@@ -11,7 +11,8 @@
         "krlove/eloquent-model-generator": "1.0.0",
         "illuminate/auth": "5.3.x-dev",
         "laravelcollective/html": "5.3.x-dev",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

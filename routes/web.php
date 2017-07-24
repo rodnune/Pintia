@@ -407,6 +407,11 @@ Route::get('/perfil','UsuariosController@profile');
 Route::post('/delete_perfil','UsuariosController@delete_profile');
 
 
+//Mandar mensaje
+
+Route::post('/send_message','MailController@enviarMensaje');
+
+
 
 //otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');
