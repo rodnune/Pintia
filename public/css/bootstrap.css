@@ -3026,22 +3026,22 @@ fieldset[disabled] .btn {
 /* Custom buttons login */
 .btn-user-gris {
 	padding-left: 40px;
-	background: url(/public/images/user-gris.png) no-repeat 12px 7px;
+	background: url(/images/user-gris.png) no-repeat 12px 7px;
 }
 
 .btn-user-regular {
 	padding-left: 40px;
-	background: url(/public/images/user.png) no-repeat 12px 7px;
+	background: url(/images/user.png) no-repeat 12px 7px;
 }
 
 .btn-user-business {
 	padding-left: 40px;
-	background: url(/public/images/user_business.png) no-repeat 12px 7px;
+	background: url(/images/user_business.png) no-repeat 12px 7px;
 }
 
 .btn-user-admin {
 	padding-left: 40px;
-	background: url(/public/images/user-gris.png) no-repeat 12px 7px;
+	background: url(/images/user-gris.png) no-repeat 12px 7px;
 }
 
 /**************************/
