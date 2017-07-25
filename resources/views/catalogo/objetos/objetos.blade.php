@@ -304,3 +304,15 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/jquery.easyPaginate.js"></script>
 <script src="/js/multimedia-objetos.js"></script>
+
+<script>
+   $('#modal-ayuda').find('.modal-body').load('/js/ayuda/ayuda-objeto.html');
+</script>
+
+@if(Session::get('logged')!=null && Session::get('admin_level') > 0)
+    <script>
+    $('#modal-ayuda').find('.extra-body').load('/js/ayuda/ayuda-objeto-user.html');
+    </script>
+
+    @else
+@endif

@@ -93,3 +93,6 @@
     <br class="clearfix" />
 </div> <!-- PAGE -->
 </div>
+@if(Session::get('admin_level') > 0)
+    <script src="/js/ayuda/ayuda-inicio.js"></script>
+@endif
