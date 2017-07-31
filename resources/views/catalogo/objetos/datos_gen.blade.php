@@ -120,106 +120,146 @@
 
                                 </select>
                             </td>
+                        </tr>
+                        <tr>
+                            @if($pendientes->has('Cronologia'))
+                                <td align="left"style="background-color: #F9F9E1;"><strong>Cronolog&iacute;a</strong></td>
+                            @else
+                                <td align="left"><strong>Cronolog&iacute;a</strong></td>
+                            @endif
+                           <td colspan="3">
+                                <div onclick="displayHtml('source1','display1');">
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
+                                </div>
+                                <br>
 
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source1','display1');" contenteditable id="source1";>
 
+                            {{$objeto->Cronologia}}
+                                </div>
 
-
+                            <textarea class="form-control vresize" rows="6" cols="60" name="cronologia" id="display1" value ="{{$objeto->Cronologia}}" style="display:none;">{{$objeto->Cronologia}}</textarea>
+                           </td>
                         </tr>
 
-                            <tr>
-
-                                @if($pendientes->has('Cronologia'))
-                                    <td align="left"style="background-color: #F9F9E1;"><strong>Cronolog&iacute;a</strong></td>
-                                @else
-                                    <td align="left"><strong>Cronolog&iacute;a</strong></td>
-                                @endif
-                                <td colspan="3">
 
 
+                        <tr>
+                            @if($pendientes->has('Descripcion'))
+                                <td align="left"style="background-color: #F9F9E1;"><strong>Descripci&oacute;n</strong></td>
+                            @else
+                                <td align="left"><strong>Descripci&oacute;n</strong></td>
+                            @endif
+                            <td colspan="3">
+                                <div onclick="displayHtml('source2','display2');">
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
+                                </div>
+                                <br>
 
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="cronologia" placeholder="Nueva cronologia" >{{$objeto->Cronologia}}</textarea>
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source2','display2');" contenteditable id="source2";>
 
-                                </td>
-                            </tr>
+                                    {{$objeto->Descripcion}}
+                                </div>
 
-                            <tr>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" id="display2" value ="{{$objeto->Descripcion}}" style="display:none;">{{$objeto->Descripcion}}</textarea>
+                            </td>
+                        </tr>
 
-                                @if($pendientes->has('Descripcion'))
-                                    <td align="left"style="background-color: #F9F9E1;"><strong>Descripcion</strong></td>
-                                @else
-                                    <td align="left"><strong>Descripcion</strong></td>
-                                @endif
+                        <tr>
+                            @if($pendientes->has('Forma'))
+                                <td align="left"style="background-color: #F9F9E1;"><strong>Forma</strong></td>
+                            @else
+                                <td align="left"><strong>Forma</strong></td>
+                            @endif
+                            <td colspan="3">
+                                <div onclick="displayHtml('source3','display3');">
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
+                                </div>
+                                <br>
 
-                                <td colspan="3">
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source3','display3');" contenteditable id="source3";>
 
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="descripcion" placeholder="Nueva descripcion" >{{$objeto->Descripcion}}</textarea>
+                                    {{$objeto->Forma}}
+                                </div>
 
-                                </td>
-                            </tr>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="forma" id="display3" value ="{{$objeto->Forma}}" style="display:none;">{{$objeto->Forma}}</textarea>
+                            </td>
+                        </tr>
 
-                            <tr>
-                                @if($pendientes->has('Forma'))
-                                    <td align="left"style="background-color: #F9F9E1;"><strong>Forma</strong></td>
-                                @else
-                                    <td align="left"><strong>Forma</strong></td>
-                                @endif
+                        <tr>
+                            @if($pendientes->has('Decoracion'))
+                                <td align="left"style="background-color: #F9F9E1;"><strong>Decoraci&oacute;n</strong></td>
+                            @else
+                                <td align="left"><strong>Decoraci&oacute;n</strong></td>
+                            @endif
+                            <td colspan="3">
+                                <div onclick="displayHtml('source4','display4');">
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
+                                </div>
+                                <br>
 
-                                <td colspan="3">
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source4','display4');" contenteditable id="source4";>
 
+                                    {{$objeto->Decoracion}}
+                                </div>
 
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="forma" placeholder="Nueva forma" >{{$objeto->Forma}}</textarea>
+                                <textarea class="form-control vresize" rows="6" cols="60" name="decoracion" id="display4" value ="{{$objeto->Decoracion}}" style="display:none;">{{$objeto->Decoracion}}</textarea>
+                            </td>
+                        </tr>
 
-                                </td>
-                            </tr>
+                        <tr>
+                            @if($pendientes->has('Observaciones'))
+                                <td align="left"style="background-color: #F9F9E1;"><strong>Observaciones</strong></td>
+                            @else
+                                <td align="left"><strong>Observaciones</strong></td>
+                            @endif
+                            <td colspan="3">
+                                <div onclick="displayHtml('source5','display5');">
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
+                                </div>
+                                <br>
 
-                            <tr>
-                                @if($pendientes->has('Decoracion'))
-                                    <td align="left"style="background-color: #F9F9E1;"><strong>Decoracion</strong></td>
-                                @else
-                                    <td align="left"><strong>Decoracion</strong></td>
-                                @endif
-                                <td colspan="3">
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source5','display5');" contenteditable id="source5";>
 
+                                    {{$objeto->Observaciones}}
+                                </div>
 
+                                <textarea class="form-control vresize" rows="6" cols="60" name="observaciones" id="display5" value ="{{$objeto->Observaciones}}" style="display:none;">{{$objeto->Observaciones}}</textarea>
+                            </td>
+                        </tr>
 
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="decoracion" placeholder="Nueva decoracion" >{{$objeto->Decoracion}}</textarea>
+                        <tr>
+                            @if($pendientes->has('Almacen'))
+                                <td align="left"style="background-color: #F9F9E1;"><strong>Almac&eacute;n</strong></td>
+                            @else
+                                <td align="left"><strong>Almac&eacute;n</strong></td>
+                            @endif
+                            <td colspan="3">
+                                <div onclick="displayHtml('source6','display6');">
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('bold',false,null);"><i class="fa fa-bold"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('italic',false,null);"><i class="fa fa-italic"></i></button>
+                                    <button type="button" class="btn btn-default" onclick="document.execCommand('underline',false,null);"><i class="fa fa-underline"></i></button>
+                                </div>
+                                <br>
 
-                                </td>
-                            </tr>
+                                <div class="form-control fake-textarea" onkeyup="JavaScript:displayHtml('source6','display6');" contenteditable id="source6";>
 
-                            <tr>
-                                @if($pendientes->has('Observaciones'))
-                                    <td align="left"style="background-color: #F9F9E1;"><strong>Observaciones</strong></td>
-                                @else
-                                    <td align="left"><strong>Observaciones</strong></td>
-                                @endif
+                                    {{$objeto->Almacen}}
+                                </div>
 
-
-
-
-                                <td colspan="3">
-
-
-
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="observaciones" placeholder="Nuevas observaciones" >{{$objeto->Observaciones}}</textarea>
-
-                                </td>
-                            </tr>
-
-                            <tr>
-                                @if($pendientes->has('Almacen'))
-                                <td align="left"style="background-color: #F9F9E1;"><strong>Almacen</strong></td>
-                                @else
-                                    <td align="left"><strong>Almacen</strong></td>
-                                @endif
-                                <td colspan="3">
-
-
-                                    <textarea class="form-control vresize" rows="6" cols="60" name="almacen" placeholder="Nuevo almacen" >{{$objeto->Almacen}}</textarea>
-
-                                </td>
-                            </tr>
-
+                                <textarea class="form-control vresize" rows="6" cols="60" name="almacen" id="display6" value ="{{$objeto->Almacen}}" style="display:none;">{{$objeto->Almacen}}</textarea>
+                            </td>
+                        </tr>
 
 
                         <tr>
@@ -244,3 +284,7 @@
     </div>
 
 <script src="/js/objetos.js"></script>
+<script src="/js/format.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/js/ayuda/general-data-objeto.html');
+</script>

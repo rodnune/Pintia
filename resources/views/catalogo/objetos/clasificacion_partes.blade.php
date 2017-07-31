@@ -95,4 +95,8 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/js/ayuda/partes-objeto.html');
+
+</script>
 

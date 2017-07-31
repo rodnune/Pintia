@@ -109,7 +109,6 @@
                                     </div>
                                     <textarea class="form-control vresize" rows="6" cols="60" name="conservacion" id="display1" value ="{{$tumba->Conservacion}}" style="display:none;">{{$tumba->Conservacion}}</textarea>
                                     </td>
-
                                   </tr>
                                    <tr>
                                        @if($pendientes->has('Estructura'))
