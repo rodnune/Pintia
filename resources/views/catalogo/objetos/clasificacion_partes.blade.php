@@ -70,7 +70,7 @@
                                              <input type="hidden" name="parte" value="{{$parte->IdParte}}">
                                              <input type="hidden" name="ref" value="{{$objeto->Ref}}">
                                <td colspan="1" align="center">
-                                    <button class="btn btn-danger" type="submit" name="submit" value="Eliminar"><i class="fa fa-pencil-square-o"></i> Eliminar </button>
+                                    <button class="btn btn-danger" type="submit" name="submit" value="Eliminar"><i class="fa fa-trash-o"></i> Eliminar </button>
                                </td>
                                {{Form::close()}}
                            </tr>
@@ -96,7 +96,7 @@
     </div>
 </div>
 <script>
-    $('#modal-ayuda').find('.modal-body').load('/js/ayuda/partes-objeto.html');
+    $('#modal-ayuda').find('.modal-body').load('/html/objetos/partes-objeto.html');
 
 </script>
 

@@ -10,15 +10,7 @@
                    <br>
                     <table class="table table-bordered" rules="all">
 
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                     @include('errors.errores')
 
                         <tbody>
                        {{Form::open(array('action' => 'ObjetosController@create', 'method' => 'post'))}}
@@ -49,3 +41,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/objetos/new_objeto.html');
+</script>

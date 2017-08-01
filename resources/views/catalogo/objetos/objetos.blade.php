@@ -188,7 +188,7 @@
                                     @if(is_null($objeto->Descripcion))
                                         <p>Sin descripcion</p>
                                         @else
-                                    <p>{{$objeto->Descripcion}}</p>
+                                    <p id="descripcion_objeto">{{$objeto->Descripcion}}</p>
                                         @endif
 
 
@@ -304,15 +304,16 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/jquery.easyPaginate.js"></script>
 <script src="/js/multimedia-objetos.js"></script>
+<script src="/js/format.js"></script>
 
 <script>
-   $('#modal-ayuda').find('.modal-body').load('/js/ayuda/ayuda-objeto.html');
+    $('#modal-ayuda').find('.modal-body').load('/html/objetos/ayuda-objeto.html');
 </script>
 
 @if(Session::get('logged')!=null && Session::get('admin_level') > 0)
     <script>
-    $('#modal-ayuda').find('.extra-body').load('/js/ayuda/ayuda-objeto-user.html');
+    $('#modal-ayuda').find('.extra-body').load('/html/objetos/ayuda-objeto-user.html');
     </script>
-
     @else
+
 @endif

@@ -67,3 +67,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/objetos/pendientes.html');
+</script>

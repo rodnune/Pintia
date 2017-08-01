@@ -286,5 +286,5 @@
 <script src="/js/objetos.js"></script>
 <script src="/js/format.js"></script>
 <script>
-    $('#modal-ayuda').find('.modal-body').load('/js/ayuda/general-data-objeto.html');
+    $('#modal-ayuda').find('.modal-body').load('/html/objetos/general-data-objeto.html');
 </script>

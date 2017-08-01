@@ -75,3 +75,7 @@
 
 
 <script src="/js/ajax/notas_objeto.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/objetos/notas.html');
+
+</script>

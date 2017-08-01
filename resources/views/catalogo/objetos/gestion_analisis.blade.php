@@ -5,27 +5,8 @@
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
                     <h1 class="text-center">Modificar Analisis metalografico</h1>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                @endif
-
-                    @if (session('success'))
-                        <div class="col-md-12">
-                            <div class="alert alert-success alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="text-center"><i class="fa fa-thumbs-up fa-1x"></i>
-
-                                    {{session('success')}}
-                                </h4>
-                            </div>
-                        </div>
-                    @endif
+                    @include('errors.errores')
+                    @include('messages.success')
 
 
 
@@ -315,3 +296,6 @@
 </div>
 
 <script src="/js/analisis-meta.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/objetos/analisis-meta.html');
+</script>
