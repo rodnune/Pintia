@@ -208,3 +208,13 @@
 <script src="/js/format.js"></script>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/inhumaciones/lista-inhumaciones.html');
+</script>
+@if(Session::get('logged')!=null && Session::get('admin_level') > 0)
+    <script>
+        $('#modal-ayuda').find('.extra-body').load('/html/inhumaciones/lista-logged.html');
+    </script>
+@else
+
+@endif

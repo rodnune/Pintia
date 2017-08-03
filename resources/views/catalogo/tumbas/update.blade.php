@@ -248,3 +248,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/tumbas/datos-generales.html');
+</script>

@@ -54,14 +54,14 @@ class CremacionesController extends \App\Http\Controllers\Controller
 
 
         $validator = Validator::make($request->all(), [
-            'ue' => 'required|numeric|exists:unidadestratigrafica,ue',
+            'ue' => 'numeric|exists:unidadestratigrafica,ue',
             'codigo' => 'required|alpha_num|unique:cremacion,CodigoPropio',
             'presentacion' => 'string',
-            'peso' => 'required|numeric|min:0',
+            'peso' => 'numeric|min:0',
             'sexo' => 'in:' . implode(',', Config::get('enums.sexo')),
             'edad' => 'string',
             'calidad' => 'string',
-            'analisis' => 'required|integer',
+            'analisis' => 'integer',
             'descripcion' => 'string',
             'observaciones' => 'string'
 

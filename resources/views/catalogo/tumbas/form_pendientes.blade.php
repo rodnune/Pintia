@@ -70,3 +70,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/tumbas/pendientes.html');
+</script>

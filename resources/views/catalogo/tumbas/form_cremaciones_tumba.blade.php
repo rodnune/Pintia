@@ -61,3 +61,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/tumbas/cremaciones.html');
+</script>

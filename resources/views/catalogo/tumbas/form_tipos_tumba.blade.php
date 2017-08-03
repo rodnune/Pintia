@@ -64,3 +64,6 @@
         </div>
     </div>
 </div>
+<script>
+$('#modal-ayuda').find('.modal-body').load('/html/tumbas/tipo-tumba.html');
+</script>

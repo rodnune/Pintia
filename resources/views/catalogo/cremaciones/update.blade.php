@@ -147,3 +147,6 @@
     </div>
 </div>
 <script src="/js/format.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/cremaciones/update.html');
+</script>

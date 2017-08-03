@@ -104,8 +104,8 @@
 
                         <thead>
                         <tr class="info">
-                            <th align="center"><strong>UE</strong></th>
                             <th colspan="2" align="center"><strong>C&oacute;digo Propio</strong></th>
+                            <th align="center"><strong>UE</strong></th>
                             <th colspan="2" align="center"><strong>Sexo</strong></th>
                             @if(Session::get('admin_level') > 1 )
 
@@ -123,8 +123,8 @@
                        @if(count($cremaciones) > 0)
                         @foreach($cremaciones as $cremacion)
                        <tr>
+                           <td colspan="2" align="left">{{$cremacion->CodigoPropio}}</td>
                             <td align="left">{{$cremacion->UE}}</td>
-                            <td colspan="2" align="left">{{$cremacion->CodigoPropio}}</td>
                             <td colspan="2" align="left">{{$cremacion->Sexo}}</td>
 
                                 <td align="center"><a href="/cremacion/{{$cremacion->IdCremacion}}" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</a></td>
@@ -169,5 +169,13 @@
 <script src="/js/results.js"></script>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/cremaciones/lista-cremaciones.html');
+</script>
+@if(Session::get('logged')!=null && Session::get('admin_level') > 1)
+    <script>
+        $('#modal-ayuda').find('.extra-body').load('/html/cremaciones/lista-logged.html');
+    </script>
 
+@endif
 

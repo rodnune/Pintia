@@ -6,7 +6,7 @@ function filter() {
     var input, filter, table, tr, td,td2, i;
 
     input = $("#myInput");
-    filter = input.val();
+    filter = input.val().toUpperCase();
     table = $("#pagination_table");
     tr = table.find("tr");
 
@@ -15,7 +15,7 @@ function filter() {
 
         td2 = tr[i].getElementsByTagName("td")[0];
         if (td2) {
-            if (td2.innerHTML.indexOf(filter) > -1) {
+            if (td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";

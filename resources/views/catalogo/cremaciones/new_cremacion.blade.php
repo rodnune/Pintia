@@ -134,3 +134,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/cremaciones/new.html');
+</script>

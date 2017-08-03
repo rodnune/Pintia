@@ -344,3 +344,6 @@
 
 <script src="/js/inhumacion.js"></script>
 <script src="/js/format.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/inhumaciones/editar.html');
+</script>

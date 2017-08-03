@@ -296,3 +296,7 @@ use Carbon\Carbon;
 
 
 </script>
+
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/inhumaciones/new.html');
+</script>
