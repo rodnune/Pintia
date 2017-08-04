@@ -15,7 +15,7 @@
                     <table class="table table-bordered table-hover" rules="rows">
 
                         <tr>
-                            <td><strong>Buscar por UE o UE relacionada:</strong></td>
+                            <td><strong>Buscar por UE</strong></td>
                             <td><input id="myInput" type="text" class="form-control" onkeyup="filter()" name="id" placeholder="Identificador"></td>
                             <td align="center" colspan="4">
 
@@ -91,4 +91,12 @@
 <script src="/js/results.js"></script>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/matrix-harris/lista.html');
+</script>
+@if(Session::get('logged')!=null && Session::get('admin_level') > 1)
+    <script>
+        $('#modal-ayuda').find('.extra-body').load('/html/matrix-harris/lista-logged.html');
+    </script>
 
+@endif

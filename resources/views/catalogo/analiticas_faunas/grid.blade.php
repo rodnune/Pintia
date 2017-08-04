@@ -77,7 +77,7 @@
                                             </div>
                                             <div class="col-xs-6">
                                         {{Form::open(array('method' => 'post', 'action' => 'AnaliticaFaunasController@delete'))}}
-                                            <button align="center" type="submit" name="id" class="btn btn-danger" value="{{$analiticasFauna -> IdAnalitica}}"><i class="fa fa-trash"></i> Borrar</button>
+                                            <button align="center" type="submit" name="id" class="btn btn-danger" value="{{$analiticasFauna -> IdAnalitica}}"><i class="fa fa-trash"></i> Eliminar</button>
                                             {{Form::close()}}
                                             </div>
 
@@ -103,3 +103,13 @@
 <script src="/js/format.js"></script>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>
+
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/faunas/lista-faunas.html');
+</script>
+@if(Session::get('logged')!=null && Session::get('admin_level') > 1)
+    <script>
+        $('#modal-ayuda').find('.extra-body').load('/html/faunas/lista-logged.html');
+    </script>
+
+@endif

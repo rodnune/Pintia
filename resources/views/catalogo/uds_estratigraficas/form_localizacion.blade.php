@@ -104,3 +104,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/ue/localizacion.html');
+</script>

@@ -46,3 +46,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/muestras/new.html');
+</script>

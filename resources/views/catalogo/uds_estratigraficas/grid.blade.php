@@ -156,3 +156,13 @@
 <script src="/js/format.js"></script>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/ue/lista-ue.html');
+</script>
+@if(Session::get('logged')!=null && Session::get('admin_level') > 1)
+    <script>
+        $('#modal-ayuda').find('.extra-body').load('/html/ue/lista-logged.html');
+    </script>
+
+@endif
+

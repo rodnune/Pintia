@@ -17,16 +17,16 @@
             $id = $ud_estratigrafica->UE;
             @endphp
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/datos_generales'" class="btn btn-default btn-block">Datos Generales</button>
-        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/geologicos'" class="btn btn-default btn-block">Componentes Geologicos</button>
-        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/organicos'" class="btn btn-default btn-block">Componentes Organicos</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/geologicos'" class="btn btn-default btn-block">Componentes Geológicos</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/organicos'" class="btn btn-default btn-block">Componentes Órganicos</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/artificiales'" class="btn btn-default btn-block">Componentes Artificiales</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/superficies'" class="btn btn-default btn-block">Superficies</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/artefactos'" class="btn btn-default btn-block">Artefactos</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/dietas'" class="btn btn-default btn-block">Dietas Fauna</button>
-        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/relaciones'" class="btn btn-default btn-block">Relaciones Estratigraficas</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/relaciones'" class="btn btn-default btn-block">Relaciones Estratigráficas</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/matrix_harris'" class="btn btn-default btn-block">Matriz Harris</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/muestras'" class="btn btn-default btn-block">Muestras</button>
-        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/localizacion'" class="btn btn-default btn-block">Localizacion</button>
+        <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/localizacion'" class="btn btn-default btn-block">Localización</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/pendientes'" class="btn btn-default btn-block">Campos pendientes</button>
         <button onclick="window.location.href='/ud_estratigrafica/{{$id}}/notas'" class="btn btn-default btn-block">Notas UE</button>
 

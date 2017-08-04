@@ -58,3 +58,6 @@
 
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/ue/artificiales.html');
+</script>

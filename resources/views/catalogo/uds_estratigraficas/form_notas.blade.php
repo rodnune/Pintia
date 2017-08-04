@@ -75,3 +75,6 @@
 
 
 <script src="/js/ajax/notas_ue.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/ue/notas.html');
+</script>

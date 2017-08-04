@@ -86,3 +86,6 @@
     </div>
 </div>
 <script src="/js/format.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/faunas/gestionar.html');
+</script>

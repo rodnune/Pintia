@@ -70,3 +70,6 @@
     </div>
 </div>
 <script src="/js/format-options.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/ue/dietas.html');
+</script>

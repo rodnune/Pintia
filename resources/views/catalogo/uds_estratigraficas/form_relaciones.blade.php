@@ -84,3 +84,6 @@
 
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/ue/relaciones.html');
+</script>
