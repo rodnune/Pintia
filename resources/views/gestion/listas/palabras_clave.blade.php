@@ -54,3 +54,7 @@
     </div>
 </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/listas/keywords.html');
+</script>
+

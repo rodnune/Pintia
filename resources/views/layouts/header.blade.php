@@ -52,8 +52,4 @@
     <script src="/js/busqueda.js"></script>
 
 
-
-
-
-
 </head>
