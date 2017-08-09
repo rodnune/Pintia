@@ -54,6 +54,7 @@
 </div>
 
 
+
 <script>
 
 
@@ -61,4 +62,8 @@
         var id = ($('#categoria').val());
         $('a').attr('href','/categoria/'+id);
     });
+</script>
+
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/gestion/categorias.html');
 </script>

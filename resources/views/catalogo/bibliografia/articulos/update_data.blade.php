@@ -62,3 +62,6 @@
 
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/bibliografia/datos-articulo.html');
+</script>

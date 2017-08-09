@@ -114,6 +114,10 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/gestion/medidas.html');
+</script>
+
 
 
 <script src="/js/ajax/medida.js"></script>

@@ -94,3 +94,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/bibliografia/multimedia.html');
+</script>

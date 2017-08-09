@@ -78,17 +78,7 @@
 
                                     </td>
 
-
-
-
-
-
-
-
                                     @if( Session::get('admin_level') > 1 )
-
-
-
 
                                         <td align="center">
                                             <button type="submit" onclick="window.location.href='/autor/{{$autor->IdAutor}}/datos'" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar Autor</button>
@@ -97,7 +87,7 @@
                                     <td align="center">
                                         {{Form::open(array('action' => 'AutoresController@delete','method' => 'post'))}}
                                             <input type="hidden" name="id" value="{{$autor->IdAutor}}"/>
-                                            <button type="submit" name="accion" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Borrar</button>
+                                            <button type="submit" name="accion" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Eliminar</button>
                                                 {{Form::close()}}
 
                                     </td>
@@ -116,5 +106,8 @@
 <script src="/js/results.js"></script>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/bibliografia/autores.html');
+</script>
 
 

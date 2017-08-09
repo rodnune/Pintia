@@ -17,7 +17,7 @@
                     </tr>
 
                     <tr>
-                        <td align="center">Orden de firma
+                        <td align="center"><img src="/images/required.gif">Orden de firma
                             <input class="form-control" type="number" name="orden">
                         </td>
 
@@ -61,3 +61,7 @@
 
     </div>
 </div>
+
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/bibliografia/autores-articulo.html');
+</script>

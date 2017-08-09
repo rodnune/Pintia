@@ -9,31 +9,9 @@
         @include('mensajes.sidebar')
         <div id="content-edit" style="margin-top:20px; width: 73%">
             <div class="post">
-                @if($errors->any())
-                    <div class="col-md-12">
-                        <div class="alert alert-danger alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
-                            <h4><i class="fa fa-exclamation-triangle fa-1x"></i><strong> Error: </strong></h4> Se han producido los siguientes errores:
+                @include('errors.errores')
 
-                            @foreach ($errors->all() as $error)
-                                <h5>{{ $error }}</h5>
-                            @endforeach
-
-                        </div>
-                    </div>
-
-                @endif
-
-                    @if (session('success'))
-                        <div class="col-md-12">
-                            <div class="alert alert-success alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="text-center"><i class="fa fa-thumbs-up fa-1x"></i>
-
-                                    {{session('success')}}
-                                </h4>
-                            </div>
-                        </div>
-                    @endif
+                    @include('messages.success')
 
                 <h4 class="text-center">Seleccione una sala para ver los mensajes </h4>
                 <div class="btn-group">
@@ -391,5 +369,9 @@
 
             }
 
+</script>
+
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/mensajes/mensajes.html');
 </script>
 

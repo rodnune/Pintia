@@ -37,11 +37,11 @@
                                 </select>
                             </td></tr>
 
-                        <tr><td align="right" colspan="2"><img src="images/required.gif" height="16" width="16">&nbsp;
+                        <tr><td align="right" colspan="2"><img src="/images/required.gif" height="16" width="16">&nbsp;
                                 <strong>Sector Trama:</strong></td>
                             <td colspan="3"><input class="form-control" type="text" name="trama" required size="40" maxlength="255" value="{{$localizacion->SectorTrama}}"/></td>
                         </tr>
-                        <tr><td align="right" colspan="2"><img src="images/required.gif" height="16" width="16">&nbsp;<strong>Sector Subtrama:</strong></td>
+                        <tr><td align="right" colspan="2"><img src="/images/required.gif" height="16" width="16">&nbsp;<strong>Sector Subtrama:</strong></td>
                             <td colspan="3"><input class="form-control" type="text" name="subtrama" required size="40" maxlength="255" value="{{$localizacion->SectorSubtrama}}"/></td>
                         </tr>
                         <tr><td align="right" colspan="2"><strong>Notas:</strong></td>

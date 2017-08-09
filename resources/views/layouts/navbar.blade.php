@@ -173,10 +173,6 @@
 
                         <div class="modal-body">
 
-
-                           Pulsar <strong> Acceder</strong> para iniciar sesi&oacuten en el sistema.<br>
-
-
                         </div>
 
                         <div class="extra-body">

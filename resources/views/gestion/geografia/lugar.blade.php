@@ -6,15 +6,7 @@
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
                     <h1 class="text-center">Gesti&oacute;n de Lugares</h1><br><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    @include('errors.errores')
                    <table class="table table-hover table-bordered" rules="all">
                        <tbody>
                         <tr>
@@ -29,7 +21,7 @@
                                 {{Form::open(array('action' => 'LugaresController@gestion_lugares','method' => 'post'))}}
 
                                     <select id="zona" class="form-control" name="id_lugar" style="width:100%">
-                                        <option value="-1">--- Seleccione una zona para Modificar/Borrar ---</option>
+                                        <option value="-1">--- Definir nueva zona ---</option>
 
                                         @foreach($lugares as $lugar)
                                         <option value="{{$lugar->SiglaZona}}">  ({{$lugar->SiglaZona}}) {{$lugar->Municipio}}, {{$lugar->Toponimo}}, {{$lugar->Parcela}}</option>
@@ -157,56 +149,8 @@
     </div>
 </div>
 
-
 <script>
-    if($('#zona').val()==-1) {
-
-        $( "#nuevaZona" ).show();
-
-    }
-
-    /*
-     *Funcion AJAX que trae la medida que queremos
-     */
-    $( "#zona" ).change(function () {
-        if($('#zona').val()==-1){
-            $('#zonaUpdate').css('display','none');
-            $('#nuevaZona').show();
-
-        }else{
-
-            $('#nuevaZona').css('display','none');
-            $('#zonaUpdate').show();
-
-            $(document).ready(function(){
-                var sigla = $('#zona').val();
-                $.ajax({
-                    type:   'GET',
-                    url:    '/lugar/'+sigla,
-
-                    success: function(lugar) {
-                        lugar = lugar[0];
-
-                        $('#siglazona').val(lugar.SiglaZona);
-                        $('#municipio').val(lugar.Municipio);
-                        $('#toponimo').val(lugar.Toponimo);
-                        $('#parcela').val(lugar.Parcela);
-
-
-                    },
-                    error: function(data){
-                        alert('Error en la conexion');
-                    }
-                });
-            });
-
-
-        }
-
-    });
-
-
-
-
-
+    $('#modal-ayuda').find('.modal-body').load('/html/gestion/lugares.html');
 </script>
+
+<script src="/js/ajax/lugares.js"></script>
