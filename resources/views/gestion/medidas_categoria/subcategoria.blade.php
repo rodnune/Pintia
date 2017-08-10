@@ -118,3 +118,7 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/gestion/subcategoria.html');
+</script>

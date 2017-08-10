@@ -5,19 +5,7 @@
             <div id="content-wide" style="margin-top:20px;">
                 <div class="post">
                     <h1 class="text-center">Actualizacion de la informacion personal de {{$usuario->username}}</h1><br><br>
-                    @if($errors->any())
-                        <div class="col-md-12">
-                            <div class="alert alert-danger alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
-                                <h4><i class="fa fa-exclamation-triangle fa-1x"></i><strong> Error: </strong> No se puede actualizar la cuenta.</h4> Se han producido los siguientes errores:
-
-                                @foreach ($errors->all() as $error)
-                                    <h5>{{ $error }}</h5>
-                                @endforeach
-
-                               </div>
-                            </div>
-
-                    @endif
+                   @include('errors.errores')
 
 
                     <table class="table table-hover table-bordered">
@@ -27,11 +15,12 @@
                         <input name="id" type="hidden" value="{{$usuario->user_id}}">
                         <tr>
                             <td colspan="1">&nbsp;<strong><label for="username">Username:</label></strong></td>
-                            <td colspan="1"><input class="form-control" type="text" name="username" id="username" size="20" maxlength="20" />
+                            <td colspan="1"><input class="form-control" type="text" name="username" id="username" size="20" maxlength="20" value="{{$usuario->username}}"/>
+
                             </td>
 
                             <td colspan="1">&nbsp;<strong><label for="password">Password:</label></strong></td>
-                            <td colspan="1"><input class="form-control" type="password" name="password" id="password" size="20" maxlength="20" /></td>
+                            <td colspan="1"><input class="form-control" type="password" name="password" id="password" size="20" maxlength="20"/></td>
                         </tr>
 
 

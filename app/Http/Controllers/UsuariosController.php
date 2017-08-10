@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
 use Session;
+use URL;
 
 class UsuariosController extends \App\Http\Controllers\Controller
 {
@@ -145,7 +146,7 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
 
             'id'            => 'required|exists:site_user,user_id',
-            'username'      => 'required|unique:site_user,username',
+            'username'      => 'required|unique:site_user,username,'.$username.',username',
             'password'      => 'required|string',
             'admin_level'   => 'required|numeric|between:0,3',
             'email'         => 'required|email',

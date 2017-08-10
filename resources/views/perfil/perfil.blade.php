@@ -59,3 +59,6 @@
     <br class="clearfix" />
 </div>
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/gestion/profile.html');
+</script>

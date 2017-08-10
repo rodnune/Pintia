@@ -26,7 +26,7 @@
                     </table>
 
                     <p id="total" class="text-center text-muted"><strong>Total de resultados encontrados: {{count($registros)}}</strong></p></center>
-                    <p>
+
                         <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                             <thead>
 
@@ -119,3 +119,6 @@
 <script src="/js/results.js"></script>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/gestion/registros.html');
+</script>

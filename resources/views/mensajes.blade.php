@@ -76,3 +76,6 @@
     </div>
     <br class="clearfix" />
 </div>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/mail/contactar.html');
+</script>

@@ -151,3 +151,7 @@
 
     });
 </script>
+
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/gestion/categoria.html');
+</script>

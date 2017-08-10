@@ -6,17 +6,7 @@
                 <div class="post">
 
                     <h1 class="text-center">Administración de usuarios</h1><br><br>
-                    @if (session('success'))
-                        <div class="col-md-12">
-                           <div class="alert alert-success alert-dismissible col-sm-6" role="alert" style="margin-left: 25%">
-                               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="text-center"><i class="fa fa-thumbs-up fa-1x"></i>
-
-                                       {{session('success')}}
-                                </h4>
-                           </div>
-                        </div>
-                    @endif
+                @include('messages.success')
                     <div class="form-group">
                        <input id="verfiltro" type="radio" name="filtro" value="Si" checked> Buscar por filtro(s) &nbsp;&nbsp;&nbsp;
                         <input id="ocultarfiltro" type="radio" name="filtro" value="No"> Buscar por nombre de usuario
@@ -53,7 +43,7 @@
 
 
                             <tr id="fila_ref" style="display:none;">
-                               <td><strong>Buscar por nombre de usuario:</strong></td>
+                               <td><strong>Buscar por username:</strong></td>
                                 <td><input type="text" class="form-control" id="myInput" onkeyup="filter()" name="buscarRef" placeholder="Nombre usuario" required></td>
 
                                 <td align="center" colspan="4">
@@ -65,18 +55,18 @@
                        </table>
 
                         @if(count($usuarios)>0)
-                        <table id="pagination_table" class="table table-hover table-bordered" rules="rows" width="100%">
+                        <table id="pagination_table" class="table table-bordered table-hover" rules="rows">
                             <thead>
                                 <tr class="info">
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Apellidos</th>
-                                    <th scope="col">Tipo User</th>
+                                    <th style="text-align : center;" scope="col">Username</th>
+                                    <th style="text-align : center;" scope="col">Nombre</th>
+                                    <th style="text-align : center;" scope="col">Apellidos</th>
+                                    <th style="text-align : center;" scope="col">Tipo User</th>
                             @if(Session::get('admin_level') > 2 )
-                                    <th scope="col"></th>
+                                    <th style="text-align : center;" scope="col"></th>
                             @endif
 
-                            <td scope="col" align="center"><a href="/new_usuario" class="btn btn-success"><i class="fa fa-plus"></i> A&ntilde;adir usuario</a></td>
+                            <th scope="col" align="center"><a href="/new_usuario" class="btn btn-success"><i class="fa fa-plus"></i> A&ntilde;adir usuario</a></th>
 
                             </tr>
                         </thead>
@@ -84,7 +74,7 @@
 
                         <tbody>
 
-                       <p class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($usuarios)}}</strong></p>
+                       <p id="total" class=" text-center text-muted"><strong>Total de resultados encontrados: {{count($usuarios)}}</strong></p>
                         @foreach($usuarios as $usuario)
                             <tr>
                                 <td>{{$usuario->username}}</td>
@@ -98,7 +88,7 @@
                             </td>
 
                             <td align="center">
-                                <a href="/delete_usuario/{{$usuario->user_id}}" class="btn btn-danger"><i class="fa fa-trash"></i> Borrar</a>
+                                <button onclick="window.location.href='/delete_usuario/{{$usuario->user_id}}'" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
                             </td>
                             @else
                             <td></td>
@@ -120,3 +110,7 @@
 </div>
 <script src="/js/jquery.simplePagination.js"></script>
 <script src="/js/pagination-bar-normal.js"></script>
+<script src="/js/results.js"></script>
+<script>
+    $('#modal-ayuda').find('.modal-body').load('/html/gestion/usuarios.html');
+</script>
