@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Middleware\CheckIfExperto;
+use App\Http\Middleware\OwnerObjeto;
 use App\Models\Objeto;
 
 //Rutas generales
@@ -260,7 +261,7 @@ Route::get('/objetos','ObjetosController@index');
 Route::get('/new_objeto',function(){return view('catalogo.objetos.layout_new_objeto');});
 Route::post('/new_objeto','ObjetosController@create');
 Route::get('/objeto/{id}','ObjetosController@get_objeto');
-Route::get('/objeto/{id}/datos_generales','ObjetosController@get_datos');
+Route::get('/objeto/{id}/datos_generales','ObjetosController@get_datos')->middleware(OwnerObjeto::class);
 Route::post('/objeto_update','ObjetosController@update_general_data');
 Route::get('/search_objetos','ObjetosController@search');
 Route::post('/delete_objeto','ObjetosController@delete');

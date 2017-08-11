@@ -188,13 +188,13 @@
                                     @if(is_null($objeto->Descripcion))
                                         <p>Sin descripcion</p>
                                         @else
-                                    <p id="descripcion_objeto">{{$objeto->Descripcion}}</p>
+                                    <p id="descripcion_objeto">@php echo $objeto->Descripcion @endphp</p>
                                         @endif
 
 
                                     <p id="materialObjeto_{{$objeto->Ref}}">
 
-                                        @if((Session::get('admin_level') == 3) || ($objeto->user_id == Session::get('user_id')))
+                                        @if( (Session::get('admin_level') > $objeto->admin_level)  || ($objeto->user_id == Session::get('user_id')))
 
                                             <button onclick="window.location.href='/objeto/{{$objeto->Ref}}/datos_generales'" class="btn btn-info btn-md"><i class="fa fa-pencil-square-o"></i></button>
                                         @endif
@@ -304,7 +304,6 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="/js/jquery.easyPaginate.js"></script>
 <script src="/js/multimedia-objetos.js"></script>
-<script src="/js/format.js"></script>
 
 <script>
     $('#modal-ayuda').find('.modal-body').load('/html/objetos/ayuda-objeto.html');

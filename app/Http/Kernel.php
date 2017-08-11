@@ -36,6 +36,10 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\CheckIfExperto::class
         ],
 
+        'owner_objeto' => [
+          \App\Http\Middleware\OwnerObjeto::class
+        ],
+
         'api' => [
             'throttle:60,1',
             'bindings',

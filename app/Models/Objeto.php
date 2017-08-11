@@ -168,6 +168,33 @@ class Objeto extends Model
         return $registro;
     }
 
+    public static function getObjetos(){
+
+        $objetos = Objeto::leftJoin('site_user', function ($join) {
+            $join->on('fichaobjeto.user_id', '=', 'site_user.user_id')
+                ->select('fichaobjeto.*','site_user.admin_level')
+                ->orderBy('fichaobjeto.ref');
+
+        })
+            ->get();
+
+        return $objetos;
+
+    }
+
+    public function owner(){
+        $objeto = Objeto::leftJoin('site_user', function ($join) {
+            $join->on('fichaobjeto.user_id', '=', 'site_user.user_id')
+                ->where('fichaobjeto.ref','=',$this->Ref);
+            })
+            ->get()
+            ->first();
+
+        return $objeto;
+    }
+
+
+
 
 
 }

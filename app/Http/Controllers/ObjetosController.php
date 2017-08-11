@@ -51,9 +51,13 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
         if (Session::get('admin_level') > 0) {
-            $objetos = Objeto::orderBy('ref')->get();
+
+            $objetos = Objeto::getObjetos();
+
         } else {
-            $objetos = Objeto::where('visiblecatalogo', '=', 'Si')->orderBy('ref')->get();
+            $objetos = Objeto::where('visiblecatalogo', '=', 'Si')
+                ->orderBy('ref')
+                ->get();
         }
 
 
@@ -201,6 +205,8 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
     public function get_objeto($id){
+
+
 
        $objeto = Objeto::find($id);
 
