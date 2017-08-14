@@ -261,51 +261,61 @@ Route::get('/objetos','ObjetosController@index');
 Route::get('/new_objeto',function(){return view('catalogo.objetos.layout_new_objeto');});
 Route::post('/new_objeto','ObjetosController@create');
 Route::get('/objeto/{id}','ObjetosController@get_objeto');
-Route::get('/objeto/{id}/datos_generales','ObjetosController@get_datos')->middleware(OwnerObjeto::class);
-Route::post('/objeto_update','ObjetosController@update_general_data');
-Route::get('/search_objetos','ObjetosController@search');
-Route::post('/delete_objeto','ObjetosController@delete');
 
-//Partes Objeto
-Route::get('/objeto/{id}/clasificacion_partes','ObjetosController@get_clasificacion_partes');
-Route::post('/add_parte_objeto','PartesObjetoController@addParte');
-Route::get('/objeto/{ref}/parte/{id}','PartesObjetoController@get_parte');
-Route::post('/gestionar_parte_objeto','PartesObjetoController@update');
-Route::delete('/delete_parte_objeto','PartesObjetoController@delete');
+Route::group(['middleware' => ['owner_objeto']] ,function() {
+    Route::get('/objeto/{id}/datos_generales','ObjetosController@get_datos');
+    Route::post('/objeto_update','ObjetosController@update_general_data');
+    Route::post('/delete_objeto','ObjetosController@delete');
+    Route::get('/objeto/{id}/materiales','ObjetosController@get_materiales_objeto');
 
-//MaterialesObjeto
+    //Partes Objeto
+    Route::get('/objeto/{id}/clasificacion_partes','ObjetosController@get_clasificacion_partes');
+    Route::post('/add_parte_objeto','PartesObjetoController@addParte');
+    Route::get('/objeto/{ref}/parte/{id}','PartesObjetoController@get_parte');
+    Route::post('/gestionar_parte_objeto','PartesObjetoController@update');
+    Route::delete('/delete_parte_objeto','PartesObjetoController@delete');
 
-Route::get('/objeto/{id}/materiales','ObjetosController@get_materiales_objeto');
-Route::post('/gestionar_material_parte','PartesObjetoController@gestion_materiales_parte');
-Route::get('/objeto/{ref}/parte/{id}/material','ObjetosController@get_material_objeto');
+    //MaterialesObjeto
+    Route::get('/objeto/{ref}/parte/{id}/material','ObjetosController@get_material_objeto');
+    Route::post('/gestionar_material_parte','PartesObjetoController@gestion_materiales_parte');
+    //Medidas Parte Objeto
 
-//Medidas Parte Objeto
-
-Route::get('/objeto/{ref}/medidas','PartesObjetoController@get_medidas_parte_objeto');
-Route::get('/objeto/{ref}/parte/{id}/medidas','PartesObjetoController@get_medida_parte_objeto');
-Route::post('/gestion_medida_parte','PartesObjetoController@gestionar_medidas_parte');
+    Route::get('/objeto/{ref}/medidas','PartesObjetoController@get_medidas_parte_objeto');
+    Route::get('/objeto/{ref}/parte/{id}/medidas','PartesObjetoController@get_medida_parte_objeto');
+    Route::post('/gestion_medida_parte','PartesObjetoController@gestionar_medidas_parte');
 
 //Localizacion Objeto
-Route::get('/objeto/{id}/localizacion','ObjetosController@get_localizacion');
-Route::post('/asignar_localizacion_objeto','ObjetosController@asignar_localizacion');
+    Route::get('/objeto/{id}/localizacion','ObjetosController@get_localizacion');
+    Route::post('/asignar_localizacion_objeto','ObjetosController@asignar_localizacion');
 
 
 //Articulos objeto
-Route::get('/objeto/{id}/articulos','ObjetosController@get_articulos');
-Route::post('/gestion_articulos_objeto','ObjetosController@gestion_articulos_objeto');
+    Route::get('/objeto/{id}/articulos','ObjetosController@get_articulos');
+    Route::post('/gestion_articulos_objeto','ObjetosController@gestion_articulos_objeto');
 
 //Multimedias objeto
-Route::get('/objeto/{id}/multimedias','ObjetosController@get_multimedias');
-Route::post('/gestion_multimedias_objeto','ObjetosController@gestion_multimedias_objeto');
+    Route::get('/objeto/{id}/multimedias','ObjetosController@get_multimedias');
+    Route::post('/gestion_multimedias_objeto','ObjetosController@gestion_multimedias_objeto');
 
 //Campos pendiente objeto
-Route::get('/objeto/{id}/pendientes','ObjetosController@get_pendientes');
-Route::post('/gestion_campos_pendientes','ObjetosController@gestion_campos_pendientes');
+    Route::get('/objeto/{id}/pendientes','ObjetosController@get_pendientes');
+    Route::post('/gestion_campos_pendientes','ObjetosController@gestion_campos_pendientes');
 
 //Notas objeto
-Route::get('/objeto/{id}/notas','ObjetosController@get_notas');
-Route::post('/add_nota_objeto','ObjetosController@add_nota');
-Route::get('/notas_objeto_seccion/{id}/{seccion}','ObjetosController@get_nota_seccion');
+    Route::get('/objeto/{id}/notas','ObjetosController@get_notas');
+    Route::post('/add_nota_objeto','ObjetosController@add_nota');
+    Route::get('/notas_objeto_seccion/{id}/{seccion}','ObjetosController@get_nota_seccion');
+
+
+});
+
+Route::get('/search_objetos','ObjetosController@search');
+
+
+
+
+
+
 
 
 
@@ -411,8 +421,6 @@ Route::post('/delete_perfil','UsuariosController@delete_profile');
 //Mandar mensaje
 
 Route::post('/send_message','MailController@enviarMensaje');
-
-
 
 //otros
 Route::get('/cataloguePic','CatalogoController@retrievePic');
