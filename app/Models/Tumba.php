@@ -222,5 +222,17 @@ class Tumba extends Model
         return $registro;
     }
 
+    public function owner(){
+        $tumba = Tumba::leftJoin('site_user', function ($join) {
+            $join->on('tumba.user_id', '=', 'site_user.user_id')
+                ->where('tumba.idtumba','=',$this->IdTumba);
+        })
+            ->get()
+            ->first();
+
+        return $tumba;
+    }
+
+
 
 }

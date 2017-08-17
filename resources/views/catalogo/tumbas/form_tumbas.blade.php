@@ -106,6 +106,9 @@
                                     <center><a href="/new_tumba" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo</a></center>
 
                             </th>
+                                @else
+
+                                <th scope="col"></th>
 
                             @endif
 
@@ -137,6 +140,10 @@
                                     <a href="/tumba/{{$tumba->IdTumba}}/datos_generales" type="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
 
                            </td>
+
+                                @else
+
+                                <td align="center"></td>
 
 
                            @endif

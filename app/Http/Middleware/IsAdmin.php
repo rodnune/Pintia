@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Rodrigo
- * Date: 07/06/2017
- * Time: 0:06
+ * Date: 16/08/2017
+ * Time: 18:00
  */
 
 namespace app\Http\Middleware;
@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 use Lang;
 
-class IsExperto
+class IsAdmin
 {
+
     /**
      * Handle an incoming request.
      *
@@ -25,13 +26,20 @@ class IsExperto
      */
     public function handle($request, Closure $next)
     {
-       if(Session::get('admin_level') < 2){
-
-           return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
-               'descripcion' => Lang::get('messages.no_autorizado')]);
-       }
+        if(Session::get('admin_level')  == 3){
 
 
-        return $next($request);
+            return $next($request);
+
+        }else{
+
+            return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
+                'descripcion' => Lang::get('messages.no_autorizado')]);
+
+        }
+
+
+
     }
+
 }

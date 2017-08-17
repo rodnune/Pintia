@@ -35,9 +35,12 @@
                            <td align="left">{{$relacion->TipoRelacion}}</td>
                            <td align="left">{{$relacion->RelacionadaConUE}}</td>
 
+                           @if(Session::get('admin_level') > 1 )
+                                <td align="center"><button onclick="window.location.href='/relacion_estratigrafica/{{$relacion->IdRelacion}}'" type="submit" name="submit" class="btn btn-primary" value="Modificar"><i class="fa fa-pencil-square-o"></i> Gestionar</button></td>
+                           @else
+                               <td></td>
+                           @endif
 
-                                <td align="center"><button onclick="window.location.href='/relacion_estratigrafica/{{$relacion->IdRelacion}}'" type="submit" name="submit" class="btn btn-primary" value="Modificar"><i class="fa fa-pencil-square-o"></i> Gestionar</button></th></td>
-                            </td>
 
                         @if(Session::get('admin_level') > 1 )
 
@@ -49,7 +52,9 @@
                                 {{Form::close()}}
                             </td>
 
-                            @endif
+                            @else
+                               <td></td>
+                           @endif
 
                            </tr>
                        @endforeach
