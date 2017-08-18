@@ -77,12 +77,12 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
         return redirect('/objeto/'.$ref.'/parte/'.$parte)->with('success','Cambios guardados correctamente');
     }
 
-    public function get_parte($id){
+    public function get_parte($ref,$id){
 
 
         $parte = DB::table('parteobjeto')->where('idparte','=',$id)->get()->first();
 
-        $objeto = Objeto::find($parte->Ref);
+        $objeto = Objeto::find($ref);
         $categorias = DB::table('categoria')->get();
 
         $nota = $objeto->notaSeccion('Clasificacion y Partes');

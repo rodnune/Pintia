@@ -112,6 +112,8 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
     public function get_usuario($id){
 
+
+
         $usuario = DB::table('site_user_info')
             ->join('site_user', 'site_user.user_id', '=', 'site_user_info.user_id')
             ->where('site_user.user_id','=',$id)
@@ -228,7 +230,7 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
         Session::flush();
 
-        return redirect('/index')->with('success', 'Cuenta borrada con exito');
+        return redirect('/')->with('success', 'Cuenta borrada con exito');
     }
 
 }

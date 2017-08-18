@@ -10,6 +10,7 @@ namespace app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use \App\Models\User;
 
 class Objeto extends Model
 {
@@ -182,15 +183,10 @@ class Objeto extends Model
 
     }
 
-    public function owner(){
-        $objeto = Objeto::leftJoin('site_user', function ($join) {
-            $join->on('fichaobjeto.user_id', '=', 'site_user.user_id')
-                ->where('fichaobjeto.ref','=',$this->Ref);
-            })
-            ->get()
-            ->first();
+    public function admin_level(){
+        $admin_level = User::find($this->user_id)->admin_level;
 
-        return $objeto;
+        return $admin_level;
     }
 
 

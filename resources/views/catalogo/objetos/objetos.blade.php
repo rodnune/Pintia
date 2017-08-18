@@ -193,7 +193,6 @@
 
 
                                     <p id="materialObjeto_{{$objeto->Ref}}">
-
                                         @if( (Session::get('admin_level') > $objeto->admin_level)  || ($objeto->user_id == Session::get('user_id')))
 
                                             <button onclick="window.location.href='/objeto/{{$objeto->Ref}}/datos_generales'" class="btn btn-info btn-md"><i class="fa fa-pencil-square-o"></i></button>

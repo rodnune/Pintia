@@ -128,9 +128,8 @@
 
                            </td>
 
-                           <!--if(($_SESSION['admin_level'] == 3) OR ($row['user_id'] == $_SESSION['user_id']) OR (($admin_level != NULL) AND ($admin_level < $_SESSION['admin_level'])))-->
 
-                            @if(Session::get('admin_level') >= 2)
+                            @if((Session::get('admin_level') > $tumba->admin_level)  || ($tumba->user_id == Session::get('user_id')))
 
 
                            <td align="center">

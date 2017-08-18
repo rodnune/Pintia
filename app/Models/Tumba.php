@@ -10,6 +10,7 @@ namespace app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use \App\Models\User;
 
 class Tumba extends Model
 {
@@ -17,6 +18,17 @@ class Tumba extends Model
     protected $primaryKey = 'idtumba';
 
 
+    public static function getTumbas(){
+        $tumbas = Tumba::leftJoin('site_user', function ($join) {
+            $join->on('tumba.user_id', '=', 'site_user.user_id')
+                ->select('tumba.*','site_user.admin_level')
+                ->orderBy('tumba.idtumba');
+
+        })
+            ->get();
+
+        return $tumbas;
+    }
     public function tiposTumbaAsociados(){
 
         $asociadas = DB::table('tipostumbas')
@@ -222,15 +234,9 @@ class Tumba extends Model
         return $registro;
     }
 
-    public function owner(){
-        $tumba = Tumba::leftJoin('site_user', function ($join) {
-            $join->on('tumba.user_id', '=', 'site_user.user_id')
-                ->where('tumba.idtumba','=',$this->IdTumba);
-        })
-            ->get()
-            ->first();
-
-        return $tumba;
+    public function admin_level(){
+        $admin_level = User::find($this->user_id)->admin_level;
+        return $admin_level;
     }
 
 

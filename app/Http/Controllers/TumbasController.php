@@ -32,7 +32,7 @@ class TumbasController extends \App\Http\Controllers\Controller
         $localizaciones = DB::table('localizacion')->get(['IdLocalizacion','SectorTrama','SectorSubtrama']);
 
 
-       $tumbas =  DB::table('tumba')->orderBy('IdTumba')->get();
+       $tumbas =  Tumba::getTumbas();
 
         return view('catalogo.tumbas.layout_tumbas',['tumbas' => $tumbas,
             'campanyas' => $campanyas, 'tipos' => $tipos,'localizaciones' => $localizaciones]);

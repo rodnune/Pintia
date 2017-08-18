@@ -41,9 +41,14 @@ Route::get('/cremaciones','CremacionesController@index');
 Route::get('/cremacion/{id}','CremacionesController@get');
 Route::get('/search_cremaciones','CremacionesController@search');
 
+//inhumaciones
+Route::get('/inhumaciones','InhumacionesController@index');
+Route::get('/inhumacion/{id}','InhumacionesController@get');
+Route::get('/search_inhumaciones','InhumacionesController@search');
+
 //Objetos
 Route::get('/search_objetos','ObjetosController@search');
-Route::get('/objeto/{id}','ObjetosController@get_objeto');
+Route::get('/objeto/{id}','ObjetosController@get_objeto')->middleware('visible');
 Route::get('/objetos','ObjetosController@index');
 
 //Multimedia
@@ -61,8 +66,22 @@ Route::get('/plano/{id}','MultimediaController@getRealPlano');
 Route::post('/send_message','MailController@enviarMensaje');
 
 
+Route::group(['middleware' =>['regular']], function(){
+
+    //Perfil
+    Route::get('/perfil','UsuariosController@profile');
+    Route::post('/delete_perfil','UsuariosController@delete_profile');
+});
+
+Route::get('/usuario/{id}','UsuariosController@get_usuario')->middleware('authorized');
+
+
 
 Route::group(['middleware' => ['novel']], function() {
+    //Crear objeto
+    Route::get('/new_objeto',function(){return view('catalogo.objetos.layout_new_objeto');});
+    Route::post('/new_objeto','ObjetosController@create');
+
     //relaciones estratigraficas
     Route::get('/relaciones_estratigraficas', 'RelacionesEstratigraficasController@index');
 
@@ -75,9 +94,7 @@ Route::group(['middleware' => ['novel']], function() {
     Route::get('/new_tumba',function(){return view('catalogo.tumbas.layout_new_tumba');});
     Route::post('/new_tumba','TumbasController@create');
 
-    //Crear objeto
-    Route::get('/new_objeto',function(){return view('catalogo.objetos.layout_new_objeto');});
-    Route::post('/new_objeto','ObjetosController@create');
+
 
 });
 
@@ -262,7 +279,7 @@ Route::group(['middleware' => ['experto']] ,function() {
 
     //Usuarios
     Route::get('/usuarios','UsuariosController@index');
-    Route::get('/usuario/{id}','UsuariosController@get_usuario');
+
     Route::get('/new_usuario','UsuariosController@form_create');
     Route::post('/new_usuario','UsuariosController@create');
     Route::get('/search_usuarios','UsuariosController@search');
@@ -290,12 +307,9 @@ Route::group(['middleware' => ['admin']], function (){
 
 
 
-//inhumaciones
-Route::get('/inhumaciones','InhumacionesController@index');
+
 Route::get('/new_inhumacion','InhumacionesController@form_create');
 Route::post('/new_inhumacion','InhumacionesController@create');
-Route::get('/inhumacion/{id}','InhumacionesController@get');
-Route::get('/search_inhumaciones','InhumacionesController@search');
 Route::post('/delete_inhumacion','InhumacionesController@delete');
 Route::get('/edit_inhumacion','InhumacionesController@form_update');
 Route::post('/edit_inhumacion','InhumacionesController@update');
@@ -353,13 +367,13 @@ Route::group(['middleware' => ['owner_tumba']] ,function() {
 
 
 Route::group(['middleware' => ['owner_objeto']] ,function() {
-    Route::get('/objeto/{id}/datos_generales','ObjetosController@get_datos');
+    Route::get('/objeto/{ref}/datos_generales','ObjetosController@get_datos');
     Route::post('/objeto_update','ObjetosController@update_general_data');
     Route::post('/delete_objeto','ObjetosController@delete');
-    Route::get('/objeto/{id}/materiales','ObjetosController@get_materiales_objeto');
+    Route::get('/objeto/{ref}/materiales','ObjetosController@get_materiales_objeto');
 
     //Partes Objeto
-    Route::get('/objeto/{id}/clasificacion_partes','ObjetosController@get_clasificacion_partes');
+    Route::get('/objeto/{ref}/clasificacion_partes','ObjetosController@get_clasificacion_partes');
     Route::post('/add_parte_objeto','PartesObjetoController@addParte');
     Route::get('/objeto/{ref}/parte/{id}','PartesObjetoController@get_parte');
     Route::post('/gestionar_parte_objeto','PartesObjetoController@update');
@@ -375,26 +389,26 @@ Route::group(['middleware' => ['owner_objeto']] ,function() {
     Route::post('/gestion_medida_parte','PartesObjetoController@gestionar_medidas_parte');
 
 //Localizacion Objeto
-    Route::get('/objeto/{id}/localizacion','ObjetosController@get_localizacion');
+    Route::get('/objeto/{ref}/localizacion','ObjetosController@get_localizacion');
     Route::post('/asignar_localizacion_objeto','ObjetosController@asignar_localizacion');
 
 
 //Articulos objeto
-    Route::get('/objeto/{id}/articulos','ObjetosController@get_articulos');
+    Route::get('/objeto/{ref}/articulos','ObjetosController@get_articulos');
     Route::post('/gestion_articulos_objeto','ObjetosController@gestion_articulos_objeto');
 
 //Multimedias objeto
-    Route::get('/objeto/{id}/multimedias','ObjetosController@get_multimedias');
+    Route::get('/objeto/{ref}/multimedias','ObjetosController@get_multimedias');
     Route::post('/gestion_multimedias_objeto','ObjetosController@gestion_multimedias_objeto');
 
 //Campos pendiente objeto
-    Route::get('/objeto/{id}/pendientes','ObjetosController@get_pendientes');
+    Route::get('/objeto/{ref}/pendientes','ObjetosController@get_pendientes');
     Route::post('/gestion_campos_pendientes','ObjetosController@gestion_campos_pendientes');
 
 //Notas objeto
-    Route::get('/objeto/{id}/notas','ObjetosController@get_notas');
+    Route::get('/objeto/{ref}/notas','ObjetosController@get_notas');
     Route::post('/add_nota_objeto','ObjetosController@add_nota');
-    Route::get('/notas_objeto_seccion/{id}/{seccion}','ObjetosController@get_nota_seccion');
+    Route::get('/notas_objeto_seccion/{ref}/{seccion}','ObjetosController@get_nota_seccion');
 
 
 });
@@ -424,10 +438,7 @@ Route::get('/search_mensajes','MensajesController@search');
 Route::post('/delete_mensaje','MensajesController@delete');
 
 
-//Perfil
 
-Route::get('/perfil','UsuariosController@profile');
-Route::post('/delete_perfil','UsuariosController@delete_profile');
 
 
 
@@ -438,7 +449,7 @@ Route::get('/icono','CatalogoController@retrieveIcono');
 Route::get('/pruebas',function(){
 
 
-return view('pruebas');
+    return view('pruebas');
 
 });
 
