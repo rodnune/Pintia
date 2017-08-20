@@ -12,7 +12,7 @@ class User extends Authenticatable
     protected $table = 'site_user';
     protected $primaryKey = 'user_id';
     protected $fillable = [
-        'username', 'password'
+        'username',
     ];
 
     /**
@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password'
     ];
 
 }

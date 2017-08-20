@@ -25,8 +25,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
 
 
-        $inhumaciones = DB::table('inhumacion')->get(['IdEnterramiento','UECadaver'
-            ,'UERelleno','UEFosa','UEEstructura','Descripcion']);
+        $inhumaciones = Inhumacion::getInhumaciones();
 
         $ud_estratigraficas = UnidadEstratigrafica::all();
 
@@ -143,7 +142,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
                 'Orientacion' => $orientacion, 'Conservacion' => $conservacion, 'ConexAnatomica' => $conexion,
                 'Posicion' => $posicion, 'Actitud' => $actitud, 'MedidasEsqueleto' => $medidas,
                 'Sexo' => $sexo, 'Edad' => $edad, 'Descripcion' => $descripcion, 'Ajuar' => $ajuar,
-                'AdscricionCulturalCronologia' => $adscripcion, 'Observaciones' => $observaciones]);
+                'AdscricionCulturalCronologia' => $adscripcion, 'Observaciones' => $observaciones,'user_id' => Session::get('user_id')]);
 
             if ((Session::get('admin_level') == 1) || (Session::get('admin_level') == 2)) {
 
@@ -183,9 +182,8 @@ class InhumacionesController extends \App\Http\Controllers\Controller
         return view('catalogo.inhumaciones.layout_new_inhumacion',['ud_estratigraficas' => $ud_estratigraficas]);
     }
 
-    public function form_update(Request $request){
+    public function form_update($id){
 
-                $id = $request->input('id');
 
         $inhumacion = Inhumacion::find($id);
         $ud_estratigraficas = DB::table('unidadestratigrafica')->get(['UE']);

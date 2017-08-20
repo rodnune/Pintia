@@ -54,14 +54,16 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         /*middleware propio*/
-        'admin'        => \App\Http\Middleware\IsAdmin::class,
-        'experto'      => \App\Http\Middleware\IsExperto::class,
-        'novel'        => \App\Http\Middleware\IsNovel::class,
-        'regular'      => \App\Http\Middleware\IsRegular::class,
-        'authorized'   => \App\Http\Middleware\AuthorizedUser::class,
-        'owner_objeto' => \App\Http\Middleware\OwnerObjeto::class,
-        'owner_tumba'  => \App\Http\Middleware\OwnerTumba::class,
-        'visible'      => \App\Http\Middleware\Visible::class,
+
+        'admin'            => \App\Http\Middleware\IsAdmin::class,
+        'experto'          => \App\Http\Middleware\IsExperto::class,
+        'novel'            => \App\Http\Middleware\IsNovel::class,
+        'regular'          => \App\Http\Middleware\IsRegular::class,
+        'authorized'       => \App\Http\Middleware\AuthorizedUser::class,
+        'owner_objeto'     => \App\Http\Middleware\OwnerObjeto::class,
+        'owner_tumba'      => \App\Http\Middleware\OwnerTumba::class,
+        'owner_inhumacion' => \App\Http\Middleware\OwnerInhumacion::class,
+        'visible'          => \App\Http\Middleware\Visible::class,
 
     ];
 }

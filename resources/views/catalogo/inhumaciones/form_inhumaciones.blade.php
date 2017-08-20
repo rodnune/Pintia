@@ -138,7 +138,7 @@
                                 <th scope="col" align="right"><center><a href="/new_inhumacion" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nueva</a></center></th>
                                 <th scope="col" align="center"></th>
                                 <th scope="col" align="center"></th>
-                            @else{
+                            @else
                                 <th scope="col" align="center"></th>
                             @endif
 
@@ -161,12 +161,12 @@
 
                                 <td colspan="1" align="center"><a href="/inhumacion/{{$inhumacion ->IdEnterramiento}}" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</a></td>
 
-                            @if( Session::get('admin_level') > 1 )
+                            @if( (Session::get('admin_level') > $inhumacion->admin_level)  || ($inhumacion->user_id == Session::get('user_id')) )
                                 <td colspan="1" align="center">
-                                    {{Form::open(array('action' => 'InhumacionesController@form_update','method' => 'get'))}}
-                                    <input type="hidden" name="id" value="{{$inhumacion ->IdEnterramiento}}">
-                                    <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-pencil"></i> Gestionar</button>
-                                        {{Form::close()}}
+
+
+                                    <button onclick="window.location.href='/inhumacion/{{$inhumacion->IdEnterramiento}}/datos'" type="submit" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
+
                                 </td>
                                 <td colspan="1" align="center">
                                     {{Form::open(array('action' => 'InhumacionesController@delete','method' => 'post'))}}
@@ -176,6 +176,11 @@
                                     {{Form::close()}}
 
                             </td>
+
+                                @else
+
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
 
                             @endif
                            </tr>

@@ -15,6 +15,19 @@ class Inhumacion extends Model
     public $timestamps = false;
 
 
+    public static function getInhumaciones(){
+
+        $inhumaciones = Inhumacion::leftJoin('site_user', function ($join) {
+            $join->on('inhumacion.user_id', '=', 'site_user.user_id')
+                ->select('inhumacion.*','site_user.admin_level')
+                ->orderBy('tumba.identerramiento');
+
+        })
+            ->get();
+
+        return $inhumaciones;
+
+    }
 
     public function registro(){
         $registro = DB::table('registro')
@@ -24,5 +37,11 @@ class Inhumacion extends Model
 
         return $registro;
 
+    }
+
+
+    public function admin_level(){
+        $admin_level = User::find($this->user_id)->admin_level;
+        return $admin_level;
     }
 }

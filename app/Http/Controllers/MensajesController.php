@@ -110,6 +110,7 @@ class MensajesController extends \App\Http\Controllers\Controller
                    $join->on('mensajesusuario.user_id', '=', 'site_user.user_id')
                        ->where('mensajesusuario.usuariodestino', '=', Session::all()['user_id']);
                })
+               ->select('mensajesusuario.*','site_user.username')
                ->get();
 
 
@@ -124,7 +125,9 @@ class MensajesController extends \App\Http\Controllers\Controller
                    $join->on('mensajesusuario.user_id', '=', 'site_user.user_id')
                        ->where('mensajesusuario.categoria', '=', 3);
                })
+               ->select('mensajesusuario.*','site_user.username')
                ->get();
+
 
            return $expertos;
        }
@@ -139,7 +142,9 @@ class MensajesController extends \App\Http\Controllers\Controller
             ->join('site_user', function ($join) {
                 $join->on('mensajesusuario.user_id', '=', 'site_user.user_id')
                     ->where('mensajesusuario.categoria', '=', 2);
+
             })
+            ->select('mensajesusuario.*','site_user.username')
             ->get();
 
         return $noveles;
@@ -153,6 +158,7 @@ class MensajesController extends \App\Http\Controllers\Controller
                 $join->on('mensajesusuario.user_id', '=', 'site_user.user_id')
                     ->where('mensajesusuario.categoria', '=', 1);
             })
+            ->select('mensajesusuario.*','site_user.username')
             ->get();
 
         return $generales;

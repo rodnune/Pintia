@@ -65,6 +65,9 @@ Route::get('/plano/{id}','MultimediaController@getRealPlano');
 
 Route::post('/send_message','MailController@enviarMensaje');
 
+//otros
+Route::get('/cataloguePic','CatalogoController@retrievePic');
+Route::get('/icono','CatalogoController@retrieveIcono');
 
 Route::group(['middleware' =>['regular']], function(){
 
@@ -94,6 +97,23 @@ Route::group(['middleware' => ['novel']], function() {
     Route::get('/new_tumba',function(){return view('catalogo.tumbas.layout_new_tumba');});
     Route::post('/new_tumba','TumbasController@create');
 
+
+    //Crear inhumacion
+    Route::get('/new_inhumacion','InhumacionesController@form_create');
+    Route::post('/new_inhumacion','InhumacionesController@create');
+
+    //Informacion de analisis metalograficos
+    Route::get('/analisis_metalograficos','AnalisisMetalController@index');
+    Route::get('/analisis_metalografico/{id}','AnalisisMetalController@get');
+
+    //Mensajes
+    Route::get('/mensajes','MensajesController@index');
+    Route::get('/search_mensajes','MensajesController@search');
+    Route::post('/enviar_mensaje','MensajesController@enviar_mensaje');
+    Route::get('/privados','MensajesController@privados');
+    Route::get('/generales','MensajesController@generales');
+    Route::get('/noveles','MensajesController@noveles');
+    Route::post('/delete_mensaje','MensajesController@delete');
 
 
 });
@@ -232,6 +252,14 @@ Route::group(['middleware' => ['experto']] ,function() {
     Route::post('/edit_multimedia','MultimediaController@update');
     Route::post('/delete_multimedia','MultimediaController@delete');
 
+    //Analisis metalograficos
+    Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');
+    Route::post('/new_analisis','AnalisisMetalController@nuevo_analisis');
+    Route::get('/gestion_analisis/{id}','AnalisisMetalController@gestionar');
+    Route::post('/update_analisis','AnalisisMetalController@update');
+    Route::delete('/delete_analisis','AnalisisMetalController@delete');
+
+
     //GESTION MEDIDAS Y CATEGORIAS
 
     Route::get('/gestion_medidas','MedidasCategoriaController@get_medidas');
@@ -285,6 +313,10 @@ Route::group(['middleware' => ['experto']] ,function() {
     Route::get('/search_usuarios','UsuariosController@search');
 
 
+    //Mensajes
+    Route::get('/expertos','MensajesController@expertos');
+
+
 
 
 });
@@ -299,27 +331,6 @@ Route::group(['middleware' => ['admin']], function (){
     Route::post('/update_usuario','UsuariosController@update');
     Route::delete('/delete_usuario','UsuariosController@delete');
 });
-
-
-
-
-
-
-
-
-
-Route::get('/new_inhumacion','InhumacionesController@form_create');
-Route::post('/new_inhumacion','InhumacionesController@create');
-Route::post('/delete_inhumacion','InhumacionesController@delete');
-Route::get('/edit_inhumacion','InhumacionesController@form_update');
-Route::post('/edit_inhumacion','InhumacionesController@update');
-
-
-
-
-
-
-
 
 Route::group(['middleware' => ['owner_tumba']] ,function() {
 
@@ -413,29 +424,13 @@ Route::group(['middleware' => ['owner_objeto']] ,function() {
 
 });
 
+Route::group(['middleware' => ['owner_inhumacion']], function() {
 
+    Route::post('/delete_inhumacion','InhumacionesController@delete');
+    Route::get('/inhumacion/{id}/datos','InhumacionesController@form_update');
+    Route::post('/edit_inhumacion','InhumacionesController@update');
 
-
-
-//Analisis metalografico
-Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');
-Route::post('/new_analisis','AnalisisMetalController@nuevo_analisis');
-Route::get('/gestion_analisis/{id}','AnalisisMetalController@gestionar');
-Route::get('/analisis_metalograficos','AnalisisMetalController@index');
-Route::get('/analisis_metalografico/{id}','AnalisisMetalController@get');
-Route::post('/update_analisis','AnalisisMetalController@update');
-Route::delete('/delete_analisis','AnalisisMetalController@delete');
-
-//Mensajes
-
-Route::get('/mensajes','MensajesController@index');
-Route::post('/enviar_mensaje','MensajesController@enviar_mensaje');
-Route::get('/privados','MensajesController@privados');
-Route::get('/expertos','MensajesController@expertos');
-Route::get('/generales','MensajesController@generales');
-Route::get('/noveles','MensajesController@noveles');
-Route::get('/search_mensajes','MensajesController@search');
-Route::post('/delete_mensaje','MensajesController@delete');
+});
 
 
 
@@ -443,9 +438,8 @@ Route::post('/delete_mensaje','MensajesController@delete');
 
 
 
-//otros
-Route::get('/cataloguePic','CatalogoController@retrievePic');
-Route::get('/icono','CatalogoController@retrieveIcono');
+
+
 Route::get('/pruebas',function(){
 
 
