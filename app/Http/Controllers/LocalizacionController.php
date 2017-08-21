@@ -155,7 +155,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
             'sectorsubtrama' => $sector_subtrama,'notas' => $notas]);
 
 
-        return redirect('/gestion_localizaciones');
+        return redirect('/gestion_localizaciones')->with('success','Localizacion añadida correctamente');
 
 
     }
@@ -188,7 +188,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
 
 
             $validator = Validator::make($request->all(), [
-                'id'        => 'required|idlocalizacion',
+                'id'        => 'required|exists:localizacion,idlocalizacion',
                 'siglazona' => 'required|exists:lugar,SiglaZona',
                 'trama'  => 'required|string',
                 'subtrama' => 'required|string'
@@ -206,7 +206,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
                 'sectorsubtrama' => $sector_subtrama,'notas' => $notas]);
 
 
-            return redirect('/localizacion/' . $idlocal);
+            return redirect('/localizacion/' . $idlocal)->with('success','Localizacion con id: '.$idlocal.' modificada correctamente');
 
         }
 
@@ -227,7 +227,7 @@ class LocalizacionController extends \App\Http\Controllers\Controller
             DB::table('localizacion')->where('idlocalizacion','=',$idlocal)->delete();
 
 
-            return redirect('/gestion_localizaciones');
+            return redirect('/gestion_localizaciones')->with('success','Localizacion con id: '.$idlocal.' borrada correctamente');
         }
 
 

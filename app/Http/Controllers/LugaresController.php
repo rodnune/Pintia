@@ -62,7 +62,7 @@ class LugaresController extends \App\Http\Controllers\Controller
        DB::table('lugar')->insert(['siglazona' => $siglazona,
            'municipio' => $municipio,'toponimo' => $toponimo, 'parcela' => $parcela]);
 
-       return redirect('/gestion_lugares');
+       return redirect('/gestion_lugares')->with('success','Lugar con sigla zona: '.$siglazona.' creado correctamente');
 
    }
 
@@ -88,7 +88,7 @@ class LugaresController extends \App\Http\Controllers\Controller
                 ->where('siglazona','=',$id)
                 ->delete();
 
-            return redirect('/gestion_lugares');
+            return redirect('/gestion_lugares')->with('success','Lugar con sigla zona: '.$id.' borrado correctamente');
 
 
         }
@@ -115,7 +115,7 @@ class LugaresController extends \App\Http\Controllers\Controller
          DB::table('lugar')->where('siglazona','=',$id)->update([
              'municipio' => $municipio , 'toponimo' => $toponimo , 'parcela' => $parcela]);
 
-         return redirect('/gestion_lugares');
+         return redirect('/gestion_lugares')->with('success','Lugar con sigla zona: '.$id.' actualizado correctamente');
 
 
      }

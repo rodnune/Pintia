@@ -7,6 +7,7 @@
                 <div class="post">
                     <h1 class="text-center">Gesti&oacute;n de Lugares</h1><br><br>
                     @include('errors.errores')
+                    @include('messages.success')
                    <table class="table table-hover table-bordered" rules="all">
                        <tbody>
                         <tr>

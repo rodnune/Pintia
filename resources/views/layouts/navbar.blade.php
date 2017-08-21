@@ -13,11 +13,20 @@
                         <li><a href="/tumbas">Tumbas</a></li>
                         <li><a href="/inhumaciones">Inhumaciones</a></li>
                         <li><a href="/cremaciones">Cremaciones</a></li>
+                        @if(Session::has('logged') && Session::get('admin_level') >= 1 )
+                        <li><a href="/muestras">Muestras</a></li>
+                            <li><a href="/analisis_metalograficos">Análisis metalográficos</a></li>
+                        @endif
+
+
 
                        <li class="dropdown-submenu">
                            <a tabindex="-1" href="#">Estratigraf&iacute;as</a>
                             <ul class="dropdown-menu">
                                 <li><a href="/uds_estratigraficas">Unidades estratigr&aacute;ficas</a></li>
+                                @if(Session::has('logged') && Session::get('admin_level') >= 1 )
+                                <li><a href="/relaciones_estratigraficas">Relaciones estratigráficas</a></li>
+                                @endif
                                 <li><a href="/matrices_harris">Matrices de Harris</a></li>
                                 </ul>
                             </li>
@@ -36,45 +45,6 @@
                         </ul>
                     </li> <!--Dropdown Consultar -->
 
-               @if(Session::has('logged') && Session::get('admin_level') >= 1 )
-
-
-                       <!--Menu Nuevo/Modificar -->
-                       <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Nuevo/Modificar <b class="caret"></b></a>
-                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                                    <li><a href="/objetos">Objetos</a></li>
-                                    <li><a href="/tumbas">Tumbas</a></li>
-                                    <li><a href="/inhumaciones">Inhumaciones</a></li>
-                                    <li><a href="/cremaciones">Cremaciones</a></li>
-                                    <li><a href="/muestras">Muestras</a></li>
-
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Estratigraf&iacute;as</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="/uds_estratigraficas">Unidades estratigr&aacute;ficas</a></li>
-                                        <li><a href="/relaciones_estratigraficas">Relaciones estratigráficas</a></li>
-                                        <li><a href="/matrices_harris">Matrices de Harris</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="/analisis_metalograficos">Análisis metalográficos</a></li>
-                                <li><a href="/analiticas_faunas">Analíticas de faunas</a></li>
-
-
-                                <li class="dropdown-submenu">
-                                     <a tabindex="-1" href="#">Bibliografía</a>
-                                     <ul class="dropdown-menu">
-                                         <li><a href="/articulos">Artículos</a></li>
-                                         <li><a href="/autores">Autores</a></li>
-                                         <li><a href="/gestion_keywords">Palabras clave</a></li>
-                                         </ul>
-                                </li>
-
-                                <li><a href="/multimedias">Multimedia</a></li>
-                                </ul>
-                            </li>
-                       @endif
 
 
                    @if( Session::has('logged') && Session::get('admin_level')>=2)

@@ -92,7 +92,7 @@ class ArticulosController extends \App\Http\Controllers\Controller
 
 
 
-                'titulo'      => 'required|unique:articulos,Titulo',
+                'titulo'      => 'required|unique:articulos,titulo',
                 'publicacion' => 'required',
                 'numero'      => 'required|numeric|min:0',
                 'volumen'     => 'required|numeric|min:0',
@@ -156,7 +156,7 @@ class ArticulosController extends \App\Http\Controllers\Controller
 
 
                 'id'          => 'required|exists:articulos,idarticulo',
-                'titulo'      => 'required|unique:articulos,Titulo,'.$titulo.',Titulo',
+                'titulo'      => 'required|unique:articulos,titulo,'.$titulo.',idarticulo',
                 'publicacion' => 'required',
                 'numero'      => 'required|numeric|min:0',
                 'volumen'     => 'required|numeric|min:0',

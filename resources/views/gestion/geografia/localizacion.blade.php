@@ -7,6 +7,7 @@
                 <div class="post">
                     <h1 class="text-center">Modificar localización</h1><br><br>
                     @include('errors.errores')
+                    @include('messages.success')
                     <br><table class="table table-hover table-bordered" rules="rows">
                         <tbody valign="top">
 

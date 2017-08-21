@@ -6,15 +6,7 @@
             <div id="content-edit" style="margin-top:0px">
                 <div class="post">
                     <h1 class="text-center">Nueva Localizacion</h1><br><br>
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    @include('errors.errores')
                     <br><table class="table table-hover table-bordered" rules="rows">
                        <tbody valign="top">
 

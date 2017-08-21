@@ -24,6 +24,8 @@
             <button onclick="window.location.href='/objeto/{{$id}}/clasificacion_partes'" class="btn btn-default btn-block">Clasificación y Partes</button>
             <button onclick="window.location.href='/objeto/{{$id}}/materiales'" class="btn btn-default btn-block">Materiales Objeto</button>
 
+            @if(Session::get('admin_level') > 1)
+
                 @if(is_null($objeto->IdAnalisisMatalografico))
 
                         <button onclick="window.location.href='/analisis_objeto/{{$id}}'" class="btn btn-default btn-block" /> Nuevo analisis</button>
@@ -33,6 +35,8 @@
                 <button onclick="window.location.href='/gestion_analisis/{{$id}}'" class="btn btn-default btn-block" /> Analisis Metalografico</button>
 
                         @endif
+
+            @endif
 
             <button onclick="window.location.href='/objeto/{{$id}}/medidas'" class="btn btn-default btn-block" /> Medidas Objeto</button>
             <button onclick="window.location.href='/objeto/{{$id}}/localizacion'" class="btn btn-default btn-block" /> Localizacion</button>
