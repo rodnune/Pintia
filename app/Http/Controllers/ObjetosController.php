@@ -19,6 +19,8 @@ use Session;
 use Config;
 use Carbon\Carbon;
 use URL;
+use View;
+use App;
 
 class ObjetosController extends \App\Http\Controllers\Controller
 {
@@ -66,6 +68,52 @@ class ObjetosController extends \App\Http\Controllers\Controller
             'materiales' => $materiales, 'localizaciones' => $localizaciones, 'objetos' => $objetos, 'materiales_objeto' => $materiales_objeto]);
 
     }
+
+    public function get_data($id){
+        $objeto = Objeto::find($id);
+
+
+
+        $partes = collect($objeto->partesobjeto()->keyBy('IdParte')->all());
+
+        $multimedias = $objeto->multimediasAsociados();
+        $articulos    = $objeto->articulosAsociados();
+        $localizacion = $objeto->localizacion();
+        $medidas = $objeto->medidasObjeto();
+        $materiales = $objeto->materialesObjeto();
+        $categorias = collect();
+        $subcategorias = collect();
+
+
+
+
+        foreach($partes as $parte) {
+
+
+            if (is_null($parte->idCat)) {
+                $categorias->put($parte->IdParte, null);
+
+            } else {
+                $categorias->put($parte->IdParte, Categoria::find($parte->idCat));
+            }
+
+            if (is_null($parte->IdSubcat)) {
+                $subcategorias->put($parte->IdParte, null);
+
+            } else {
+                $subcategorias->put($parte->IdParte, Subcategoria::find($parte->IdSubcat));
+            }
+
+        }
+
+
+
+        return array('objeto' => $objeto,'partes' => $partes,'categorias' => $categorias,
+            'subcategorias' => $subcategorias,'multimedias' => $multimedias,
+            'articulos' => $articulos,'localizacion' => $localizacion,'medidas' => $medidas,'materiales' => $materiales);
+
+    }
+
 
     public function search(Request $request,Objeto $objeto)
     {
@@ -147,6 +195,8 @@ class ObjetosController extends \App\Http\Controllers\Controller
                     $objetos->where('ref',$request->input('ref'));
                     $datos_consulta->put('referencia',$request->input('ref'));
 
+
+
                 }
 
 
@@ -154,7 +204,15 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
         if (Session::get('admin_level') > 0) {
-            $objetos = $objetos->get();
+            $objetos = $objetos->leftJoin('site_user', function ($join) {
+                $join->on('fichaobjeto.user_id', '=', 'site_user.user_id')
+                    ->select('fichaobjeto.*','site_user.admin_level')
+                    ->orderBy('fichaobjeto.ref');
+
+            })
+                ->get();
+
+
         } else {
             $objetos = $objetos->where('visiblecatalogo','=','Si')->get();
         }
@@ -208,47 +266,17 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
 
-       $objeto = Objeto::find($id);
-
-
-
-        $partes = collect($objeto->partesobjeto()->keyBy('IdParte')->all());
-
-        $multimedias = $objeto->multimediasAsociados();
-        $articulos    = $objeto->articulosAsociados();
-        $localizacion = $objeto->localizacion();
-        $medidas = $objeto->medidasObjeto();
-        $materiales = $objeto->materialesObjeto();
-        $categorias = collect();
-        $subcategorias = collect();
+      $objeto = ObjetosController::get_data($id);
 
 
 
 
-       foreach($partes as $parte) {
 
+       return view('catalogo.objetos.layout_objeto',['objeto' => $objeto['objeto'],'partes' => $objeto['partes'],'categorias' => $objeto['categorias'],
+           'subcategorias' => $objeto['subcategorias'],'multimedias' => $objeto['multimedias'],
+           'articulos' => $objeto['articulos'],'localizacion' => $objeto['localizacion'],'medidas' => $objeto['medidas']
+           ,'materiales' => $objeto['materiales']]);
 
-           if (is_null($parte->idCat)) {
-               $categorias->put($parte->IdParte, null);
-
-           } else {
-               $categorias->put($parte->IdParte, Categoria::find($parte->idCat));
-           }
-
-           if (is_null($parte->IdSubcat)) {
-               $subcategorias->put($parte->IdParte, null);
-
-           } else {
-               $subcategorias->put($parte->IdParte, Subcategoria::find($parte->IdSubcat));
-           }
-
-       }
-
-
-
-        return view('catalogo.objetos.layout_objeto',['objeto' => $objeto,'partes' => $partes,
-            'categorias' => $categorias,'subcategorias' => $subcategorias,'multimedias' => $multimedias,
-            'articulos' => $articulos,'localizacion' => $localizacion,'medidas' => $medidas,'materiales' => $materiales]);
     }
 
 
@@ -273,6 +301,19 @@ class ObjetosController extends \App\Http\Controllers\Controller
             ->delete();
 
         return redirect('/objetos')->with('success','Objetos con referencia: '.$ref.' eliminado correctamente');
+    }
+
+    public function exportarPdf($id){
+        $objeto = ObjetosController::get_data($id);
+
+      $view =  View::make('catalogo.objetos.pdf',['objeto' => $objeto['objeto'],'partes' => $objeto['partes'],'categorias' => $objeto['categorias'],
+            'subcategorias' => $objeto['subcategorias'],'multimedias' => $objeto['multimedias'],
+            'articulos' => $objeto['articulos'],'localizacion' => $objeto['localizacion'],'medidas' => $objeto['medidas']
+            ,'materiales' => $objeto['materiales']]);
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream();
     }
 
 

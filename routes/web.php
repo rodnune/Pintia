@@ -431,11 +431,7 @@ Route::group(['middleware' => ['owner_inhumacion']], function() {
     Route::post('/edit_inhumacion','InhumacionesController@update');
 
 });
-
-
-
-
-
+Route::get('/pdf/{id}','ObjetosController@exportarPdf');
 
 
 

@@ -188,16 +188,19 @@
                                     @if(is_null($objeto->Descripcion))
                                         <p>Sin descripcion</p>
                                         @else
+                                        @if(strlen($objeto->Descripcion) < 50)
                                     <p id="descripcion_objeto">@php echo $objeto->Descripcion @endphp</p>
+                                            @else
+                                            <p id="descripcion_objeto"></p>
                                         @endif
-
+                                    @endif
 
                                     <p id="materialObjeto_{{$objeto->Ref}}">
                                         @if( (Session::get('admin_level') > $objeto->admin_level)  || ($objeto->user_id == Session::get('user_id')))
 
-                                            <button onclick="window.location.href='/objeto/{{$objeto->Ref}}/datos_generales'" class="btn btn-info btn-md"><i class="fa fa-pencil-square-o"></i></button>
+                                            <a href="/objeto/{{$objeto->Ref}}/datos_generales" class="btn btn-primary btn-md"><i class="fa fa-pencil-square-o"></i></a>
                                         @endif
-                                        <button onclick="window.location.href='/objeto/{{$objeto->Ref}}'" class="btn btn-primary btn-md"><i class="fa fa-eye"></i></button>
+                                        <a href="/objeto/{{$objeto->Ref}}" class="btn btn-primary btn-md"><i class="fa fa-eye"></i></a>
 
 
 

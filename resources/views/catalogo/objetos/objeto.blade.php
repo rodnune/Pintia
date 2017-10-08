@@ -131,11 +131,32 @@
                            </td>
                         </tr>
 
+                       <tr>
+                           <td colspan="4" align="center" class="info"><h3>Multimedia Asociado</h3></td>
+                       </tr>
+
+                       <tr>
+                           <td id="slider" align="center">
+
+
+                                   <button onclick="prev()"> Prev </button>
+
+                               <a href="" target="_blank"><img class="img-thumbnail" width="100" src="" /></a>&nbsp;&nbsp;&nbsp;
+                               <br><strong>Titulo</strong>
+                               <br><span class="text-danger"><strong>Tipo</strong></span>
+
+                                   <button onclick="next()"> Next </button>
+
+
+                           </td>
+                       </tr>
 
 
                         <tr>
                            <td colspan="4" align="center" class="info"><h3>Multimedia Asociado</h3></td>
                             </tr>
+
+
 
                         @php
                         $linea = 0;
@@ -360,9 +381,88 @@
         </div>
     </div>
 </div>
+<script>
 
+    var multimedias = "{{ json_encode($multimedias) }}";
+    var fixedString = multimedias.replace(/&quot;/g, '\"');
+    var multimediasJson = JSON.parse(fixedString);
+
+    var num = 0;
+    function next() {
+
+        var slider = $('#slider');
+        //console.log(slider.find('a'));
+        console.log(multimediasJson[num].IdMutimedia);
+
+        num++;
+
+        if(num >= multimediasJson.length) {
+            num = 0;
+        }
+
+        tipoMultimedia(multimediasJson[num].IdMutimedia,multimediasJson[num].Tipo);
+
+
+    }
+
+    function prev() {
+        var slider = $('#slider');
+        num--;
+        if(num < 0) {
+            num = multimediasJson.length-1;
+        }
+        tipoMultimedia(multimediasJson[num].IdMutimedia,multimediasJson[num].Tipo);
+    }
+
+
+
+  function tipoMultimedia(id,tipo){
+                    var enlace= $('#slider').find('a');
+                    var img = enlace.find('img');
+      switch (tipo) {
+          case 'Fotografia':
+              enlace.attr('href','/foto/'+id);
+
+              img.attr('src','/images/fotos/thumb/thumb_'+id+'.jpg');
+              break;
+          case 'Documento':
+              $('#slider').find('i').remove();
+              $('#slider').prepend('<i class="fa fa-file-text-o fa-5x"></i>');
+              enlace.attr('href','/archivo/'+id);
+
+              break;
+
+          case 'Dibujo':
+              enlace.attr('href','/dibujo/'+id);
+
+              img.attr('src','/images/fotos/thumb/thumb_'+id+'.jpg');
+              break;
+          case 'Planimetria':
+              $('#slider').find('i').remove();
+            $('#slider').prepend('<i class="fa fa-file-powerpoint-o fa-5x"></i>');
+           enlace.attr('href','/plano/'+id);
+              break;
+          case 4:
+              day = "Thursday";
+              break;
+          case 5:
+              day = "Friday";
+              break;
+          case 6:
+              day = "Saturday";
+
+
+      }
+
+  }
+
+
+</script>
 <script>
     function printFunction() {
         window.print();
     }
 </script>
+
+
+
