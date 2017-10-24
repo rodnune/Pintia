@@ -27,7 +27,9 @@
                                                 <select class="form-control" name="anio" style="width:100%">
                                                     <option value="" selected>---Seleccionar año---</option>
                                                     @foreach($campanyas as $campanya)
+                                                        @if($campanya->anyocampanya!="")
                                                     <option value="{{$campanya->anyocampanya}}">{{$campanya->anyocampanya}}</option>
+                                                        @endif
                                                         @endforeach
                                                 </select>
                                             </td>

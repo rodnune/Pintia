@@ -34,6 +34,7 @@ class TumbasController extends \App\Http\Controllers\Controller
 
        $tumbas =  Tumba::getTumbas();
 
+
         return view('catalogo.tumbas.layout_tumbas',['tumbas' => $tumbas,
             'campanyas' => $campanyas, 'tipos' => $tipos,'localizaciones' => $localizaciones]);
     }
@@ -239,7 +240,9 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         }
 
-        $tumbas_busqueda = $tumbas->get();
+
+        $tumbas_busqueda = $tumbas->join('site_user','site_user.user_id','=','tumba.user_id')->get();
+
 
 
         return TumbasController::index()->with(['datos' => $datos_consulta,'tumbas' => $tumbas_busqueda]);
