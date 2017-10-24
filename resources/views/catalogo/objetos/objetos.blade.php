@@ -184,15 +184,24 @@
                                     <img src="/images/undefined.png" alt="multimedia">
                                 @endif
                                 <div class="caption">
-                                    <h5>Ref: {{$objeto->Ref}} <i class="fa fa-calendar" aria-hidden="true"></i>  {{$objeto->AnyoCampanya}}</h5>
-                                    @if(is_null($objeto->Descripcion))
+                                    <h5>Ref: {{$objeto->Ref}} @if($objeto->AnyoCampanya!=null)<i class="fa fa-calendar" aria-hidden="true"></i>  {{$objeto->AnyoCampanya}} @endif </h5>
+                                    @if(is_null($objeto->Descripcion) || $objeto->Descripcion =="")
                                         <p>Sin descripcion</p>
                                         @else
                                         @if(strlen($objeto->Descripcion) < 50)
                                     <p id="descripcion_objeto">@php echo $objeto->Descripcion @endphp</p>
                                             @else
-                                            <p id="descripcion_objeto"></p>
+
+                                            <p id="descripcion_objeto">{{str_limit(strval(strip_tags($objeto->Descripcion)), 30,'...')}} </p>
                                         @endif
+                                    @endif
+
+                                    @if(Session::get('admin_level') > 0)
+                                    		@if($objeto->VisibleCatalogo == 'Si')
+                                    	<p><i class="fa fa-eye" aria-hidden="true"></i></p>
+                                    		@else
+                                    	<p><i class="fa fa-eye-slash" aria-hidden="true"></i></p>
+                                    		@endif
                                     @endif
 
                                     <p id="materialObjeto_{{$objeto->Ref}}">
@@ -309,6 +318,9 @@
 
 <script>
     $('#modal-ayuda').find('.modal-body').load('/html/objetos/ayuda-objeto.html');
+
+
+
 </script>
 
 @if(Session::get('logged')!=null && Session::get('admin_level') > 0)

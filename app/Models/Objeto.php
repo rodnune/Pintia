@@ -183,6 +183,20 @@ class Objeto extends Model
 
     }
 
+    public static function getObjetosVisibles(){
+        $objetos = Objeto::leftJoin('site_user', function ($join) {
+            $join->on('fichaobjeto.user_id', '=', 'site_user.user_id')
+                ->select('fichaobjeto.*','site_user.admin_level')
+                ->orderBy('fichaobjeto.ref');
+
+        })
+            ->where('fichaobjeto.visiblecatalogo','=','Si')
+            ->get();
+
+            return $objetos;
+
+    }
+
     public function admin_level(){
         $admin_level = User::find($this->user_id)->admin_level;
 

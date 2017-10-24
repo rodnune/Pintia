@@ -61,7 +61,7 @@
                         </td>
                         @if(Session::get('admin_level') > 1)
 
-                            <td align="center"><a href="/new_articulo" class="btn btn-success" ><i class="fa fa-plus"></i> Nuevo</a></td>
+                            <td align="center"><a href="/new_articulo" class="btn btn-success" ><i class="fa fa-plus"></i> Nuevo artículo</a></td>
 
 
                         @endif
@@ -80,7 +80,7 @@
                                 @if( Session::get('admin_level') > 1 )
 
 
-                                    <td align="center"><button type="submit" name="submit" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo Artículo</button></td>
+                                    <td align="center"><a href="/new_articulo" class="btn btn-success" ><i class="fa fa-plus"></i> Nuevo artículo</a></td>
 
 
                                </tr>

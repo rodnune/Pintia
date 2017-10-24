@@ -22,15 +22,16 @@ class Visible
 
         $objeto = Objeto::find($id);
 
-        $visible = $objeto->visibleCatalogo;
+        $visible = $objeto->VisibleCatalogo;
 
-        if ((Session::get('admin_level') < 1) && $visible = 'No'){
 
-            return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
-                'descripcion' => Lang::get('messages.no_autorizado')]);
+
+        if ($visible == 'Si'){
+
+                return $next($request);
         }else{
-
-            return $next($request);
+             return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
+                'descripcion' => Lang::get('messages.no_autorizado')]);
         }
 
 

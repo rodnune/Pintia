@@ -57,9 +57,10 @@ class ObjetosController extends \App\Http\Controllers\Controller
             $objetos = Objeto::getObjetos();
 
         } else {
-            $objetos = Objeto::where('visiblecatalogo', '=', 'Si')
-                ->orderBy('ref')
-                ->get();
+          
+                $objetos = Objeto::getObjetosVisibles();
+
+                //return $objetos;
         }
 
 
@@ -267,9 +268,6 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
       $objeto = ObjetosController::get_data($id);
-
-
-
 
 
        return view('catalogo.objetos.layout_objeto',['objeto' => $objeto['objeto'],'partes' => $objeto['partes'],'categorias' => $objeto['categorias'],
