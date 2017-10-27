@@ -79,7 +79,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
            $datos_consulta->put('Tumba',$request->input('filtro_tumba'));
         }
 
-        $inhumaciones = $inhumaciones->get();
+        $inhumaciones = $inhumaciones->join('site_user','site_user.user_id','=','inhumacion.user_id')->get();
 
 
 

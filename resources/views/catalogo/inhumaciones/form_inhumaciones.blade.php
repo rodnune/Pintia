@@ -177,10 +177,8 @@
 
                             </td>
 
-                                @else
+                      
 
-                                <td colspan="1"></td>
-                                <td colspan="1"></td>
 
                             @endif
                            </tr>

@@ -44,6 +44,7 @@
                             <th colspan="2" align="center"><strong>Partes Oseas, Especie, Edad</strong></th>
                             @if(Session::get('admin_level') > 1)
                                 <th colspan="2" align="center"></th>
+                                <th colspan="2" align="center"></th>
                                 @endif
 
 
@@ -69,22 +70,14 @@
 
                                 </td>
                                 @if(Session::get('admin_level')>1)
-                                    <td colspan="2">
-                                        <div class="row">
-                                            <div class="col-xs-6">
+                                    <td colspan="2" style="text-align : center">
                                                 <a href="/analitica_fauna/{{$analiticasFauna -> IdAnalitica}}" align="center" type="submit" name="id" class="btn btn-primary"><i class="fa fa-pencil"></i> Gestionar</a>
-
-                                            </div>
-                                            <div class="col-xs-6">
+                                     </td>
+                                     	<td colspan="2" style="text-align : center">
                                         {{Form::open(array('method' => 'post', 'action' => 'AnaliticaFaunasController@delete'))}}
                                             <button align="center" type="submit" name="id" class="btn btn-danger" value="{{$analiticasFauna -> IdAnalitica}}"><i class="fa fa-trash"></i> Eliminar</button>
                                             {{Form::close()}}
-                                            </div>
-
-
-
-                                        </div>
-                                    </td>
+                     						</td>
                                 @endif
                             </tr>
                         @endforeach
