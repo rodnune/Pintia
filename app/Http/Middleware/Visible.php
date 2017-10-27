@@ -29,14 +29,23 @@ class Visible
         if ($visible == 'Si'){
 
                 return $next($request);
-        }else{
-             return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
-                'descripcion' => Lang::get('messages.no_autorizado')]);
         }
 
+
+        if($visible == 'No'){
+
+            if(is_null(Session::get('admin_level')) || Session::get('admin_level')<1 ){
+                    return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
+                'descripcion' => Lang::get('messages.no_autorizado')]);
+        }else{
+
+            return $next($request);
+        }
+            }
 
 
 
     }
 
 }
+

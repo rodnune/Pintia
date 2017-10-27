@@ -149,7 +149,7 @@
                                     @if(($objeto->VisibleCatalogo == "Si") || Session::get('admin_level') > 1)
 
                                         <a href="/objeto/{{$objeto->Ref}}" class="btn btn-link" value="Ver">
-                                            Ref: {{$objeto->Ref}} ----- Nombre: {{$objeto->NumeroSerie}}</a>
+                                            Ref: {{$objeto->Ref}}</a>
 
                                         @endif
                                         @endforeach
