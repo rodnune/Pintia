@@ -91,13 +91,17 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
         ]);
 
+        $hash = $this->sqlPassword($password);
+
+
+
         if ($validator->fails()) {
             return redirect('/new_usuario')
                 ->withErrors($validator);
         }
 
 
-            DB::table('site_user')->insert(['username' => $username,'password' => DB::raw('PASSWORD('.$password.')'),'admin_level' => $admin_level]);
+            User::create(['username' => $username,'password' => $hash,'admin_level' => $admin_level]);
 
         $user_id = User::all()->last()->user_id;
 
@@ -109,6 +113,8 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
 
     }
+
+
 
     public function get_usuario($id){
 
@@ -125,6 +131,17 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
         return view('gestion.usuarios.layout_update_usuario',['usuario' => $usuario]);
     }
+
+
+   public function sqlPassword($input) {
+    $pass = strtoupper(
+            sha1(
+                    sha1($input, true)
+            )
+    );
+    $pass = '*' . $pass;
+    return $pass;
+}
 
 
     public function update(Request $request){

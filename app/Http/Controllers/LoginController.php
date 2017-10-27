@@ -25,9 +25,7 @@ class LoginController extends \App\Http\Controllers\Controller
             $username = $request ->input('usuario');
             $password = $request ->input('password');
 
-            $password = (int)$password;
-        $password_sql =  DB::select("SELECT PASSWORD(". $password .") as password;");
-        $password_sql = $password_sql[0]->password;
+            $password_sql = $this->sqlPassword($password);
 
 
         $usuario = DB::table('site_user')
@@ -61,5 +59,15 @@ class LoginController extends \App\Http\Controllers\Controller
 
         }
     }
+
+       public function sqlPassword($input) {
+    $pass = strtoupper(
+            sha1(
+                    sha1($input, true)
+            )
+    );
+    $pass = '*' . $pass;
+    return $pass;
+}
 
 }

@@ -11,8 +11,9 @@ class User extends Authenticatable
 
     protected $table = 'site_user';
     protected $primaryKey = 'user_id';
+    public $timestamps = false;
     protected $fillable = [
-        'username',
+        'username','password','admin_level'
     ];
 
     /**
