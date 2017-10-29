@@ -2,11 +2,11 @@
 <div id="page">
     <div id="content">
         <div class="post">
-            <h1 class="text-center">Informaci&oacute;n personal</h1><br>
-            <h1 class="text-center">{{$usuario->username}}</h1><br>
 
+         
 
-
+        <br><br><br><br><br>
+                 @include('messages.success');
             <h2 class="text-center">
             @if(Session::get('admin_level') == 1 )
                 <img src="/images/imagen-novel.png" class="img-thumbnail" alt="Novel">
@@ -18,6 +18,8 @@
                 <img src="/images/imagen-regular.png" class="img-thumbnail" alt="Regular">
             @endif
             </h2><br>
+
+               <h1 class="text-center">Informaci&oacute;n personal {{$usuario->username}}</h1><br>
 
 
             <table class="table table-hover table-bordered">
@@ -44,7 +46,7 @@
             </table>
 
             <span style="float:left; margin-left:35%;">
-			<a href="/usuario/{{Session::get('user_id')}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
+			<a href="/edit_perfil/{{Session::get('user_id')}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Gestionar</a>
 			</span>
             <span style="float:right; margin-right:35%;">
                 {{Form::open(array('action' => 'UsuariosController@delete_profile','method' => 'post'))}}

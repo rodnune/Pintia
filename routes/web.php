@@ -76,8 +76,8 @@ Route::group(['middleware' =>['regular']], function(){
     Route::post('/delete_perfil','UsuariosController@delete_profile');
 });
 
-Route::get('/usuario/{id}','UsuariosController@get_usuario')->middleware('authorized');
-
+Route::get('/edit_perfil/{id}','UsuariosController@edit_profile')->middleware('authorized');
+Route::post('/update_perfil','UsuariosController@update_profile');
 
 
 Route::group(['middleware' => ['novel']], function() {
@@ -431,7 +431,6 @@ Route::group(['middleware' => ['owner_inhumacion']], function() {
     Route::post('/edit_inhumacion','InhumacionesController@update');
 
 });
-Route::get('/pdf/{id}','ObjetosController@exportarPdf');
 
 
 

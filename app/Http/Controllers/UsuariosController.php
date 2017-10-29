@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Session;
 use URL;
+use Config;
 
 class UsuariosController extends \App\Http\Controllers\Controller
 {
@@ -87,7 +88,7 @@ class UsuariosController extends \App\Http\Controllers\Controller
             'first_name'    => 'required|string',
             'last_name'     => 'required|string',
             'pais'          => 'required|size:2',
-            'city'          => 'string|max:20',
+            'city'          => 'string|max:50',
 
         ]);
 
@@ -161,6 +162,8 @@ class UsuariosController extends \App\Http\Controllers\Controller
             $hobbies = array();
         }
 
+
+
         $validator = Validator::make($request->all(), [
 
 
@@ -172,9 +175,11 @@ class UsuariosController extends \App\Http\Controllers\Controller
             'first_name'    => 'required|string',
             'last_name'     => 'required|string',
             'pais'          => 'required|size:2',
-            'city'          => 'string|max:20',
+            'city'          => 'string|max:50',
 
         ]);
+
+        $password = $this->sqlPassword($password);
 
         if ($validator->fails()) {
             return redirect(URL::previous())->withErrors($validator);
@@ -183,7 +188,7 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
         DB::table('site_user')
             ->where('user_id','=',$user_id)
-            ->update(['admin_level' => $admin_level ,'username' => $username,'password' => DB::raw('PASSWORD('.$password.')')]);
+            ->update(['admin_level' => $admin_level ,'username' => $username,'password' => $password]);
 
         DB::table('site_user_info')
             ->where('user_id','=',$user_id)
@@ -236,6 +241,59 @@ class UsuariosController extends \App\Http\Controllers\Controller
             ->first();
 
         return view('perfil.layout_perfil',['usuario' => $usuario]);
+
+
+    }
+
+    public function edit_profile(){
+               $usuario = DB::table('site_user_info')
+            ->join('site_user', 'site_user.user_id', '=', 'site_user_info.user_id')
+            ->where('site_user.user_id','=',Session::get('user_id'))
+            ->get()
+            ->first();
+
+                $paises = Config::get('paises.countries');
+
+                $usuario->hobbies = explode(", ",$usuario->hobbies);
+
+
+        return view('gestion.usuarios.layout_update_profile',['usuario' => $usuario,'paises' => $paises]); 
+    }
+
+    public function update_profile(Request $request){
+
+        $user_id = $request->input('user_id');
+        $email = $request->input('email');
+        $first_name = $request->input('first_name');
+        $last_name = $request->input('last_name');
+        $pais = $request->input('pais');
+        $city = $request->input('city');
+        $hobbies = $request->input('hobbies');
+
+        if(is_null($hobbies)){
+            $hobbies = array();
+        }
+
+
+
+        $validator = Validator::make($request->all(), [
+
+
+            'user_id'       => 'required|exists:site_user,user_id',
+            'email'         => 'required|email',
+            'first_name'    => 'required|string',
+            'last_name'     => 'required|string',
+            'pais'          => 'required|size:2',
+            'city'          => 'string|max:30',
+
+        ]);
+
+         DB::table('site_user_info')
+            ->where('user_id','=',$user_id)
+            ->update(['first_name' => $first_name,'last_name' => $last_name,'email' => $email,'city' => $city,
+            'state' => $pais,'hobbies' =>join(', ', $hobbies) ]);
+
+            return redirect('/perfil')->with('success','Perfil actualizado con exito');
 
 
     }
