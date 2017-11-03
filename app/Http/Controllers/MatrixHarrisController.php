@@ -11,6 +11,7 @@ use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use URL;
 
 
 class MatrixHarrisController extends \App\Http\Controllers\Controller

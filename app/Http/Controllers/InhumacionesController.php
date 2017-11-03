@@ -189,6 +189,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
         $ud_estratigraficas = DB::table('unidadestratigrafica')->get(['UE']);
 
 
+
         return view('catalogo.inhumaciones.layout_update',['ud_estratigraficas' => $ud_estratigraficas
             ,'inhumacion' => $inhumacion]);
     }
@@ -242,7 +243,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
 
         if ($validator->fails()) {
 
-           return InhumacionesController::form_update($request)->withErrors($validator);
+           return redirect('/inhumacion/'.$id.'/datos')->withErrors($validator);
 
         }
 

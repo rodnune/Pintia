@@ -63,7 +63,7 @@ use Carbon\Carbon;
 
 
                             <td colspan="2"><strong>Fecha (dd-mm-aa) </strong>
-                                <input type="date" name="fecha" size="25" maxlength="255" />
+                                <input type="date" name="fecha" size="25"   max="{{Carbon::now()->toDateString()}}" maxlength="255" />
                             </td>
 
                             <td colspan="4"><strong>Fecha actual </strong>

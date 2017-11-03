@@ -198,9 +198,15 @@ class Objeto extends Model
     }
 
     public function admin_level(){
-        $admin_level = User::find($this->user_id)->admin_level;
 
-        return $admin_level;
+            if(is_null($this->user_id)){
+                        return null;
+            }else{
+                 $admin_level = User::find($this->user_id)->admin_level;
+
+                 return $admin_level;    
+            }
+
     }
 
 

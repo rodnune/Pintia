@@ -301,25 +301,13 @@ class ObjetosController extends \App\Http\Controllers\Controller
         return redirect('/objetos')->with('success','Objetos con referencia: '.$ref.' eliminado correctamente');
     }
 
-    public function exportarPdf($id){
-        $objeto = ObjetosController::get_data($id);
-
-      $view =  View::make('catalogo.objetos.pdf',['objeto' => $objeto['objeto'],'partes' => $objeto['partes'],'categorias' => $objeto['categorias'],
-            'subcategorias' => $objeto['subcategorias'],'multimedias' => $objeto['multimedias'],
-            'articulos' => $objeto['articulos'],'localizacion' => $objeto['localizacion'],'medidas' => $objeto['medidas']
-            ,'materiales' => $objeto['materiales']]);
-
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream();
-    }
 
 
     public function get_datos($id){
 
-
-
         $objeto = Objeto::find($id);
+
+
 
         $ues = DB::table('unidadestratigrafica')->orderBy('ue')->get();
         $tumbas = DB::table('tumba')->orderBy('idtumba')->get();

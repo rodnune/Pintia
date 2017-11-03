@@ -26,9 +26,14 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
 
 
 
-        $validator = Validator::make($request->all(), [
-            'subcategoria' => 'required|exists:subcategoria,idsubcat',
-            'categoria' => 'required|exists:categoria,idcat'
+        
+
+
+        if ($request->submit == 'Agregar') {
+
+            $validator = Validator::make($request->all(), [
+            'categoria' => 'required|exists:categoria,idcat',
+            'subcategoria' => 'required|string'
         ]);
 
         if ($validator->fails()) {
@@ -36,7 +41,6 @@ class MedidasSubcategoriaController extends \App\Http\Controllers\Controller
         }
 
 
-        if ($request->submit == 'Agregar') {
             DB::table('subcategoria')->insert(['idcat' => $categoria,
                 'denominacion' => $subcategoria]);
 

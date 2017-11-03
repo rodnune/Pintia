@@ -57,7 +57,7 @@ class CremacionesController extends \App\Http\Controllers\Controller
             'ue' => 'numeric|exists:unidadestratigrafica,ue',
             'codigo' => 'required|string|unique:cremacion,CodigoPropio',
             'presentacion' => 'string',
-            'peso' => 'numeric|min:0',
+            'peso' => 'integer|min:0',
             'sexo' => 'in:' . implode(',', Config::get('enums.sexo')),
             'edad' => 'string',
             'calidad' => 'string',
@@ -76,8 +76,8 @@ class CremacionesController extends \App\Http\Controllers\Controller
 
 
         DB::table('cremacion')->insert(['UE' => $ue,'CodigoPropio' => $codigo , 'Presentacion' => $presentacion,
-        'Peso' => $peso, 'Descripcion' => $descripcion, 'Sexo' => $sexo , 'Edad' => $edad,
-        'CalidadCombustion' => $calidad_combustion , 'AnalisisPosdeposicional' => $analisis,
+        'Peso' => intval($peso), 'Descripcion' => $descripcion, 'Sexo' => $sexo , 'Edad' => $edad,
+        'CalidadCombustion' => $calidad_combustion , 'AnalisisPosdeposicional' => intval($analisis),
         'Observaciones' => $observaciones]);
 
 
@@ -152,9 +152,9 @@ class CremacionesController extends \App\Http\Controllers\Controller
 
         $validator = Validator::make($request->all(), [
             'ue' => 'required|numeric',
-            'codigo' => 'required|alpha_num|unique:cremacion,codigopropio,'.$codigo.',CodigoPropio',
+            'codigo' => 'required|string|unique:cremacion,codigopropio,'.$codigo.',CodigoPropio',
             'presentacion' => 'string',
-            'peso' => 'numeric|min:0',
+            'peso' => 'integer|min:0',
             'sexo' => 'in:' . implode(',', Config::get('enums.sexo')),
             'edad' => 'string',
             'calidad' => 'string',
@@ -173,8 +173,8 @@ class CremacionesController extends \App\Http\Controllers\Controller
         DB::table('cremacion')
             ->where('IdCremacion', $id)
             ->update(['UE' => $ue, 'CodigoPropio' => $codigo, 'Presentacion' => $presentacion
-                , 'Peso' => $peso, 'Descripcion' => $descripcion, 'Sexo' => $sexo,
-                'Edad' => $edad, 'CalidadCombustion' => $calidad_combustion, 'AnalisisPosdeposicional' => $analisis,
+                , 'Peso' => intval($peso), 'Descripcion' => $descripcion, 'Sexo' => $sexo,
+                'Edad' => $edad, 'CalidadCombustion' => $calidad_combustion, 'AnalisisPosdeposicional' => intval($analisis),
                 'Observaciones' => $observaciones ]);
 
         return redirect('/cremacion/'.$id)->with('success','Cremacion modificada correctamente');

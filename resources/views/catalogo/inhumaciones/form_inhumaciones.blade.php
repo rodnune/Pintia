@@ -179,8 +179,8 @@
 
                             @else
 
-                            <td></td>
-                            <td></td>
+                            <td colspan="1" align="center"></td>
+                            <td colspan="1" align="center"></td>
 
                       
 

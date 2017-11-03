@@ -84,7 +84,7 @@
 
 
                             <td colspan="3"><strong>Fecha nueva(dd-mm-aa) </strong>
-                                <input type="date" name="fecha" value="{{$inhumacion->Fecha}}" />
+                                <input type="date" name="fecha" value="{{$inhumacion->Fecha}}" max="{{Carbon::now()->toDateString()}}"/>
                             </td>
 
                             <td colspan="3"><strong>Fecha actual </strong>
