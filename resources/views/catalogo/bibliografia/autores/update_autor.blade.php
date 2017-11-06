@@ -9,24 +9,24 @@
 
 
 
-                   <h1 class="text-center">Modificar informaci&oacute;n de autor {{$autor->Nombre}}</h1><br>
+                   <h1 class="text-center">Modificar informaci&oacute;n de autor {{$autor->Nombre}} {{$autor->Apellido}}</h1><br>
                    @include('errors.errores')
                     @include('messages.success')
                     {{Form::open(array('action' => 'AutoresController@update', 'method' => 'post'))}}
                         <table class="table table-hover table-bordered">
                             <tbody>
                             <tr>
-                                <td width="30%"><strong><label for="nombre">Nombre:</label></strong></td>
+                                <td width="30%"><img src="/images/required.gif" height="16" width="16"><strong><label for="nombre">Nombre:</label></strong></td>
                                 <td width="70%"><input class="form-control" type="text" name="nombre" size="25" maxlength="255" value="{{$autor->Nombre}}" required/></td>
                             </tr>
 
                             <tr>
-                               <td><strong><label for="apellido">Apellido:</label></strong></td>
+                               <td><img src="/images/required.gif" height="16" width="16"><strong><label for="apellido">Apellido:</label></strong></td>
                                 <td><input class="form-control" type="text" name="apellido" size="25" maxlength="255" value="{{$autor->Apellido}}" required/></td>
                             </tr>
 
                             <tr>
-                                <td><strong><label for="filiacion">Filiacion:</label></strong></td>
+                                <td><img src="/images/required.gif" height="16" width="16"><strong><label for="filiacion">Filiacion:</label></strong></td>
                                 <td><input class="form-control" type="text" name="filiacion" size="25" maxlength="255" value="{{$autor->Filiacion}}" required/></td>
                             </tr>
                            </tbody>

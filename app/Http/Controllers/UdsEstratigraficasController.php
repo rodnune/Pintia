@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 use Input;
 use URL;
+use Config;
 
 
 class UdsEstratigraficasController extends \App\Http\Controllers\Controller
@@ -161,7 +162,7 @@ class UdsEstratigraficasController extends \App\Http\Controllers\Controller
                     'descripcion'               => 'string',
                     'interpretacion'            => 'string',
                     'observaciones'             => 'string',
-                    'unidad'                    => 'in:Natural,Zoologica,Antropica,Indeterminado',
+                    'unidad_accion'                    => 'in:' . implode(',', Config::get('enums.unidad_accion')),
                     'tipo_unidad'               => 'in:Estrato,Superficie',
                     'estratoc1'                 => 'in:Compacta,Suelta',
                     'estratoc2'                 => 'in:Homogenea,Heterogenea',

@@ -28,7 +28,7 @@
 
                                 @if(count($no_asociadas) > 0)
                             @foreach($no_asociadas as $no_asociada)
-                                    <option value="{{$no_asociada->IdAnalitica}}">Id Ofrenda: {{$no_asociada->IdAnalitica}} --- Notas: {{substr($no_asociada->PartesOseasEspecieEdad,0,45)}}</option>
+                                    <option value="{{$no_asociada->IdAnalitica}}">Id Ofrenda: {{$no_asociada->IdAnalitica}} --- Notas: @php echo substr($no_asociada->PartesOseasEspecieEdad,0,45) @endphp</option>
                                     @endforeach
                                             @endif
                                     </select></br>

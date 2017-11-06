@@ -123,17 +123,16 @@ class AutoresController extends \App\Http\Controllers\Controller
 
 
             'id'          => 'required|exists:autor,idautor',
-            'nombre'      => 'alpha',
-            'apellido'    => 'alpha',
-            'filiacion'   => 'alpha'
+            'nombre'      => 'required|string',
+            'apellido'    => 'required|string',
+            'filiacion'   => 'required|string'
 
         ]);
 
 
-
         if ($validator->fails()) {
 
-            return view(URL::previous())->withErrors($validator);
+            return redirect(URL::previous())->withErrors($validator);
 
         }
 
