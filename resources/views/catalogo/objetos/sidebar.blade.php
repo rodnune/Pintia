@@ -24,7 +24,7 @@
             <button onclick="window.location.href='/objeto/{{$id}}/clasificacion_partes'" class="btn btn-default btn-block">Clasificación y Partes</button>
             <button onclick="window.location.href='/objeto/{{$id}}/materiales'" class="btn btn-default btn-block">Materiales Objeto</button>
 
-            @if(Session::get('admin_level') > 1)
+            @if(Session::get('admin_level') >= 1)
 
                 @if(is_null($objeto->IdAnalisisMatalografico))
 

@@ -115,6 +115,11 @@ Route::group(['middleware' => ['novel']], function() {
     Route::get('/noveles','MensajesController@noveles');
     Route::post('/delete_mensaje','MensajesController@delete');
 
+    //Analisis metalograficos
+    Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');
+    Route::post('/new_analisis','AnalisisMetalController@nuevo_analisis');
+    
+
 
 });
 
@@ -252,12 +257,7 @@ Route::group(['middleware' => ['experto']] ,function() {
     Route::post('/edit_multimedia','MultimediaController@update');
     Route::post('/delete_multimedia','MultimediaController@delete');
 
-    //Analisis metalograficos
-    Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');
-    Route::post('/new_analisis','AnalisisMetalController@nuevo_analisis');
-    Route::get('/gestion_analisis/{id}','AnalisisMetalController@gestionar');
-    Route::post('/update_analisis','AnalisisMetalController@update');
-    Route::delete('/delete_analisis','AnalisisMetalController@delete');
+    
 
 
     //GESTION MEDIDAS Y CATEGORIAS
@@ -420,6 +420,11 @@ Route::group(['middleware' => ['owner_objeto']] ,function() {
     Route::get('/objeto/{ref}/notas','ObjetosController@get_notas');
     Route::post('/add_nota_objeto','ObjetosController@add_nota');
     Route::get('/notas_objeto_seccion/{ref}/{seccion}','ObjetosController@get_nota_seccion');
+
+//Gestionar o borrar análisis metalograficos
+    Route::get('/gestion_analisis/{ref}','AnalisisMetalController@gestionar');
+    Route::post('/update_analisis','AnalisisMetalController@update');
+    Route::delete('/delete_analisis','AnalisisMetalController@delete');
 
 
 });

@@ -12,6 +12,7 @@ use App\Models\Objeto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Validator;
+use URL;
 
 class AnalisisMetalController extends \App\Http\Controllers\Controller
 {
@@ -153,7 +154,7 @@ class AnalisisMetalController extends \App\Http\Controllers\Controller
                 ->where('ref','=',$ref)
                 ->update(['idanalisismatalografico' => $id_analisis]);
 
-            return redirect('/gestion_analisis/'.$ref)->with('success','Analisis metalografico creado correctamente');
+            return redirect('/analisis_metalograficos')->with('success','Analisis metalografico creado correctamente');
 
 
 

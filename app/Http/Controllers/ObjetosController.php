@@ -92,17 +92,17 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
             if (is_null($parte->idCat)) {
-                $categorias->put($parte->IdParte, null);
+                $categorias->put($parte->idCat, null);
 
             } else {
-                $categorias->put($parte->IdParte, Categoria::find($parte->idCat));
+                $categorias->put($parte->idCat, Categoria::find($parte->idCat));
             }
 
             if (is_null($parte->IdSubcat)) {
-                $subcategorias->put($parte->IdParte, null);
+                $subcategorias->put($parte->IdSubcat, null);
 
             } else {
-                $subcategorias->put($parte->IdParte, Subcategoria::find($parte->IdSubcat));
+                $subcategorias->put($parte->IdSubcat, Subcategoria::find($parte->IdSubcat));
             }
 
         }
@@ -268,6 +268,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
       $objeto = ObjetosController::get_data($id);
+
 
 
        return view('catalogo.objetos.layout_objeto',['objeto' => $objeto['objeto'],'partes' => $objeto['partes'],'categorias' => $objeto['categorias'],

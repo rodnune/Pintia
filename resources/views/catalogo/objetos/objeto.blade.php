@@ -67,7 +67,7 @@
                            <td>
 
 
-                               {{$categorias->get($parte->IdParte)->Denominacion}}
+                               {{$categorias->get($parte->idCat)->Denominacion}}
 
 
                            </td>
@@ -79,7 +79,7 @@
                            @if($parte->IdSubcat !=null)
                           <td>
 
-                                      {{$subcategorias->get($parte->IdParte)->Denominacion}}
+                                      {{$subcategorias->get($parte->IdSubcat)->Denominacion}}
 
                           </td>
                             @else
@@ -96,6 +96,8 @@
                                     </td>
                                 </tr>
                             @endif
+                            </tr>
+                            
 
                         <tr>
                             <td colspan="1" align="left"><strong>Cronolog&iacute;a</strong></td>
@@ -288,7 +290,7 @@
 
                        @else
                         <tr><td colspan="4" align="center">
-                               <p>No existen localizacion</p>
+                               <p>No existe localizacion asociada</p>
                             </td>
                         </tr>
                         @endif
@@ -367,7 +369,7 @@
 </div>
 
 
-
+<script src="/js/format.js"></script>
 
 
 <script>

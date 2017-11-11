@@ -72,7 +72,7 @@ class ParteObjeto extends Model
 
             return $medidas;
 
-    }
+    } 
 
 
 

@@ -90,7 +90,11 @@
 
                             <select name="ue" style="width:60%">
                                 @if(count($uds_estratigraficas) > 0)
+                                    @if($objeto->UE != null)
+                                    <option value="">Eliminar asociaci&oacute;n</option>
+                                    @else
                                     <option value="">Seleccione ue</option>
+                                    @endif
                                     @foreach($uds_estratigraficas as $ud_estratigrafica)
                                         @if($objeto->UE == $ud_estratigrafica->UE)
                                     <option value="{{$ud_estratigrafica->UE}}" selected>{{$ud_estratigrafica->UE}}</option>
