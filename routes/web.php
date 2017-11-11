@@ -118,6 +118,9 @@ Route::group(['middleware' => ['novel']], function() {
     //Analisis metalograficos
     Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');
     Route::post('/new_analisis','AnalisisMetalController@nuevo_analisis');
+
+
+        Route::get('/subcategorias/{id}','MedidasCategoriaController@get_subcategorias');
     
 
 
@@ -272,7 +275,7 @@ Route::group(['middleware' => ['experto']] ,function() {
     Route::post('/gestion_subcategorias','MedidasSubcategoriaController@gestionar_subcategoria');
     Route::get('/subcategoria/{id}','MedidasSubcategoriaController@get_subcategoria');
     Route::post('/gestion_medida_subcategoria','MedidasSubcategoriaController@gestionar_medida');
-    Route::get('/subcategorias/{id}','MedidasCategoriaController@get_subcategorias');
+
 
     //GESTION LISTAS
     Route::get('/gestion_keywords','PalabrasClaveController@get');

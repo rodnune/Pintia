@@ -222,13 +222,17 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                 $medida = $request->input('medida');
                 $posible = $request->input('posible');
 
+  
+
+                
+
                 $valor = $request->input('valor');
 
                 $validator = Validator::make($request->all(), [
                     'ref'     => 'required|integer|min:0|exists:fichaobjeto,ref',
                     'parte'   => 'required|integer|min:0|exists:parteobjeto,idparte',
                     'cat'     => 'required|integer|min:0|exists:categoria,idcat',
-                    'subcat'  => 'integer|min:0|exists:subcategoria,idsubcat',
+                    'subcat'  => 'required|integer|min:0|exists:subcategoria,idsubcat',
                     'medida'  => 'required|min:0|exists:medidas,siglasmedida',
                     'posible' => 'in:'. implode(',', Config::get('enums.bool')),
                     'valor'   => 'required|numeric'

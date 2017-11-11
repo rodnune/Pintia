@@ -79,7 +79,7 @@
 
                                 <td colspan="1" align="center">
                                     <br><br>
-                                    <button class="btn btn-danger" type="submit" name="submit" value="Eliminar"><i class="fa fa-plus"></i> Eliminar medida </button>
+                                    <button class="btn btn-danger" type="submit" name="submit" value="Eliminar"><i class="fa fa-trash"></i> Eliminar medida </button>
                                 </td>
                             </tr>
 

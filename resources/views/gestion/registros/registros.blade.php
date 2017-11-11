@@ -68,7 +68,7 @@
                                     <button type="submit" onclick="window.location.href='/tumba/{{$registro->IdTumba}}'" class="btn btn-info" value="Ver"><i class="fa fa-eye"></i> Ver</button>
 
                                 @elseif($registro->IdEnterramiento !=null)
-                                    <button type="submit" onclick="window.location.href='/tumba/{{$registro->IdEnterramiento}}'" class="btn btn-info" value="Ver"><i class="fa fa-eye"></i> Ver</button>
+                                    <button type="submit" onclick="window.location.href='/inhumacion/{{$registro->IdEnterramiento}}'" class="btn btn-info" value="Ver"><i class="fa fa-eye"></i> Ver</button>
 
                                 @endif
                                 </td>
@@ -82,10 +82,8 @@
                                     <button type="submit" onclick="window.location.href='/tumba/{{$registro->IdTumba}}/datos_generales'" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
 
                                 @elseif($registro->IdEnterramiento !=null)
-                                    {{Form::open(array('action' => 'InhumacionesController@form_update','method' => 'get'))}}
-                                    <input type="hidden" name="id" value="{{$registro->IdEnterramiento}}">
-                                    <button type="submit" onclick="window.location.href='/tumba/{{$registro->IdEnterramiento}}'" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
-                                        {{Form::close()}}
+                                    
+                                    <button type="submit" onclick="window.location.href='/inhumacion/{{$registro->IdEnterramiento}}/datos'" name="submit" class="btn btn-primary" value="Gestionar"><i class="fa fa-pencil-square-o"></i> Gestionar</button>
                                 @endif
 
 

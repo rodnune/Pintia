@@ -33,6 +33,8 @@ $( "#mySelect" ).change(function () {
 
 function render(subcategorias) {
 
+  
+
     if(subcategorias.length == 0){
         $('#subcategorias').append($('<option>', {
             value: 0,
