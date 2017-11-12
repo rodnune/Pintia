@@ -41,7 +41,13 @@ class Inhumacion extends Model
 
 
     public function admin_level(){
-        $admin_level = User::find($this->user_id)->admin_level;
-        return $admin_level;
+
+        if(is_null($this->user_id)){
+                        return 1;
+            }else{
+                 $admin_level = User::find($this->user_id)->admin_level;
+
+                 return $admin_level;    
+            }
     }
 }

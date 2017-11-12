@@ -20,10 +20,10 @@ class RegistrosController extends \App\Http\Controllers\Controller
     public function index(){
 
       $registros =   DB::table('registro')
-          ->join('site_user_info', 'registro.user_id', '=', 'site_user_info.user_id')
+          ->leftJoin('site_user_info', 'registro.user_id', '=', 'site_user_info.user_id')
           ->select('registro.*','site_user_info.first_name','site_user_info.last_name')
+          ->orderBy('registro.numcontrol','desc')
           ->get();
-
 
         return view('gestion.registros.layout_registros',['registros' => $registros]);
     }

@@ -54,9 +54,12 @@
                                     @endif
 
                            </td>
-
+                           @if($registro->user_id!=null)
                             <td align="center">{{$registro->first_name}}</td>
                             <td align="center">{{$registro->last_name}}</td>
+                            @else
+                            <td align="center" colspan="2"><span class="text-danger"><strong>Usuario eliminado</strong></span></td>
+                            @endif
 
 
                            <td align="center">{{date("d-m-Y",strtotime($registro->Fecha))}}</td>

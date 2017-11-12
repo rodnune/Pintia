@@ -31,7 +31,7 @@
 
 
                         <tr>
-                            <td><strong><label for="admin_level">Nivel de usuario:</label></strong></td>
+                            <td><img src="images/required.gif" height="16" width="16"><strong><label for="admin_level">Nivel de usuario:</label></strong></td>
                             <td>
                                 <select class="form-control" name="admin_level" id="admin_level" size="4" style="width:100%">
                                     <option value = 0>Usuario Regular</option>
@@ -54,7 +54,7 @@
 
                         <tr>
 
-                           <td><strong><label for="first_name">Nombre:</label></strong></td>
+                           <td><img src="images/required.gif" height="16" width="16"><strong><label for="first_name">Nombre:</label></strong></td>
 
                             <td><input class="form-control" type="text" name="first_name" id="first_name" style="width:100%" maxlength="20" />
                             </td>
@@ -66,7 +66,7 @@
                         </tr>
 
                         <tr>
-                           <td><strong><label for="state">Pa&iacute;s:</label></strong></td>
+                           <td><img src="images/required.gif" height="16" width="16"><strong><label for="state">Pa&iacute;s:</label></strong></td>
                             <td>
                                 <select name="pais">
                                         @foreach(Config::get('paises.countries') as $key => $value)

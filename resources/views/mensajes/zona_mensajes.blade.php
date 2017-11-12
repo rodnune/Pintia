@@ -313,7 +313,7 @@
                 "<div class='form-group'><label for='Fecha'>Fecha: </label>" + mensaje.Fecha + "</div>";
 
             if ((user_id == mensaje.user_id) || (user_id == mensaje.UsuarioDestino) || admin_level == 3) {
-                var form = "<a href='/delete_mensaje/'"+mensaje.id_mensaje+"' type='submit' name='submit' class='btn btn-danger' value='Borrar'><i class='fa fa-trash'></i> Borrar mensaje</a>";
+                var form = "<a href='/delete_mensaje/"+mensaje.id_mensaje+"' type='submit' name='submit' class='btn btn-danger' value='Borrar'><i class='fa fa-trash'></i> Borrar mensaje</a>";
 
 
                 msg = msg.concat(form);

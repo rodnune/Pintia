@@ -200,7 +200,7 @@ class Objeto extends Model
     public function admin_level(){
 
             if(is_null($this->user_id)){
-                        return null;
+                        return 1;
             }else{
                  $admin_level = User::find($this->user_id)->admin_level;
 
