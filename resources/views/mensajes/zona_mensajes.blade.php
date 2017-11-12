@@ -158,10 +158,8 @@
 
 
                                                    @if((Session::get('user_name') == $mensaje->username) || (Session::get('admin_level') == 3))
-                                                   {{Form::open(array('action' => 'MensajesController@delete', 'method' => 'post'))}}
-                                                        <input type="hidden" name="id_mensaje" value="{{$mensaje->id_mensaje}}">
-                                                       <button type="submit" name="submit" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Borrar mensaje</button>
-                                                     {{Form::close()}}
+
+                                                       <a href="/delete_mensaje/{{$mensaje->id_mensaje}}" type="submit" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Borrar mensaje</a>
                                                    @endif
 
                                                 </div>
@@ -303,6 +301,7 @@
         });
 
         function template(mensaje) {
+
             var msg = "<tr>"
 
                 + "<td>"
@@ -314,11 +313,7 @@
                 "<div class='form-group'><label for='Fecha'>Fecha: </label>" + mensaje.Fecha + "</div>";
 
             if ((user_id == mensaje.user_id) || (user_id == mensaje.UsuarioDestino) || admin_level == 3) {
-                var form = "<form action='/delete_mensaje' method='delete'> " +
-                    "<input type='hidden' name='id_mensaje' value='" + mensaje.id_mensaje + "'>" +
-                        " <input type='hidden' name='_token' value='{{ csrf_token() }}'>" +
-                    "<button type='submit' name='submit' class='btn btn-danger' value='Borrar'><i class='fa fa-trash'></i> Borrar mensaje</button>" +
-                    "</form>";
+                var form = "<a href='/delete_mensaje/'"+mensaje.id_mensaje+"' type='submit' name='submit' class='btn btn-danger' value='Borrar'><i class='fa fa-trash'></i> Borrar mensaje</a>";
 
 
                 msg = msg.concat(form);

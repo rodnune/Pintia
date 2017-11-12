@@ -241,7 +241,17 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                 if ($validator->fails()) {
                     return redirect(URL::previous())->withErrors($validator);
                 }
+                    if(DB::table('medidassubcategoria')->where('idsubcat','=',$subcat)->where('idcat','=',$cat)->where('siglasmedida','=',$medida)->exists()){
 
+                    }else{
+                        DB::table('medidassubcategoria')->insert(['idcat' => $cat,'idsubcat' => $subcat,
+                    'siglasmedida' => $medida]);
+                    }
+                
+
+                        if(DB::table('medidascategoria')->where('idcat','=',$cat)->where('siglasmedida','=',$medida)->exists())
+                DB::table('medidascategoria')->insert(['idcat' => $cat,
+                    'siglasmedida' => $medida]);
 
 
                 DB::table('medidasobjeto')->insert(['idcat' => $cat,'idsubcat' => $subcat,

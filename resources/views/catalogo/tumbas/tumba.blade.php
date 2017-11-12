@@ -37,37 +37,37 @@
                             <tr>
                                 <td colspan="2" align="left"><strong>Conservaci&oacute;n</strong></br>
                                     <td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="conservacion">{{$tumba->Conservacion}}</div>
+                                    <div class="form-control fake-textarea-lg" disabled="disabled" name="conservacion">{{$tumba->Conservacion}}</div>
                                     </td>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" align="left"><strong>Estructura</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="estructura">{{$tumba->Estructura}}</div>
+                                    <div class="form-control fake-textarea-lg" disabled="disabled" name="estructura">{{$tumba->Estructura}}</div>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td colspan="2" align="left"><strong>Composici&oacute;n</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="composicion">{{$tumba->Composicion}}</div>
+                                    <div class="form-control fake-textarea-lg" disabled="disabled" name="composicion">{{$tumba->Composicion}}</div>
                                 </td>
                             </tr>
 
                             <tr>
                                <td colspan="2" align="left"><strong>Sintaxis</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="organizacion">{{$tumba->OrganizacionYJerarquia}}</div>
+                                    <div class="form-control fake-textarea-lg" disabled="disabled" name="organizacion">{{$tumba->OrganizacionYJerarquia}}</div>
                                 </td>
                             </tr>
 
                             <tr>
                                <td colspan="2" align="left"><strong>Restos Humanos</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="restos">{{$tumba->RestosHumanos}}</div>
+                                    <div class="form-control fake-textarea-lg" disabled="disabled" name="restos">{{$tumba->RestosHumanos}}</div>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td colspan="2" align="left"><strong>Ofrendas Animales</strong></td><td colspan="2">
-                                    <div class="form-control fake-textarea-xlg" disabled="disabled" name="ofrendas">{{$tumba->OfrendasAnimales}}</div>
+                                    <div class="form-control fake-textarea-lg" disabled="disabled" name="ofrendas">{{$tumba->OfrendasAnimales}}</div>
                                 </td>
                             </tr>
 
@@ -321,3 +321,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/format.js"></script>

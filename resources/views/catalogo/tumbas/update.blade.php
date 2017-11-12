@@ -73,7 +73,11 @@
 
                         <td>
                             <select name="ue" style="width:60%">
+                            	@if($tumba->UE !=null)
+                            	<option value="">Eliminar asociaci&oacute;n</option>
+                            	@else
                                 <option value="">Seleccionar UE</option>
+                                @endif
                                 @foreach($uds_estratigraficas as $ud_estratigrafica)
 
                                     @if($tumba->UE == $ud_estratigrafica->UE)
@@ -248,6 +252,7 @@
         </div>
     </div>
 </div>
+<script src="/js/format.js"></script>
 <script>
     $('#modal-ayuda').find('.modal-body').load('/html/tumbas/datos-generales.html');
 </script>

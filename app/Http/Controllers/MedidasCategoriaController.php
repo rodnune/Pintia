@@ -190,6 +190,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
             $categoria = Categoria::find($id);
 
             $asociadas    =  $categoria->medidasAsociadas();
+
             $no_asociadas =  $categoria->medidasNoAsociadas();
             $subcategorias = $categoria->subcategorias();
 

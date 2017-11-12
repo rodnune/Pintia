@@ -76,7 +76,7 @@ class MensajesController extends \App\Http\Controllers\Controller
            DB::table('mensajesusuario')->insert(['user_id' => Session::get('user_id'),
                'admin_level' => Session::get('admin_level'),'fecha' => $fecha,'comentario' => $contenido,'usuariodestino' => $user_destino]);
 
-           return redirect('/mensajes');
+           return redirect('/mensajes')->with('success','Mensaje privado enviado con éxito');
 
        } else {
 
@@ -95,7 +95,7 @@ class MensajesController extends \App\Http\Controllers\Controller
            DB::table('mensajesusuario')->insert(['user_id' => Session::get('user_id'),
                'admin_level' => Session::get('admin_level'),'fecha' => $fecha,'comentario' => $contenido,'categoria' => $categoria]);
 
-                return redirect('/mensajes');
+                return redirect('/mensajes')->with('success','Mensaje enviado a sala con exito');
        }
 
        }
@@ -238,25 +238,19 @@ class MensajesController extends \App\Http\Controllers\Controller
     }
 
 
-    public function delete(Request $request){
-        $id = $request->input('id_mensaje');
+    public function delete(Request $request,$id){
+        $id_mensaje = $request->route('id');
+
+          if(DB::table('mensajesusuario')->where('id_mensaje','=', $id_mensaje)->exists()){
 
 
-
-
-        $validator = Validator::make($request->all(), [
-            'id_mensaje' => 'required|exists:mensajesusuario,id_mensaje'
-
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('/mensajes')
-                ->withErrors($validator);
-        }
-
-        DB::table('mensajesusuario')
+                 DB::table('mensajesusuario')
             ->where('id_mensaje','=',$id)
             ->delete();
+          }
+
+
+   
 
         return redirect('/mensajes')->with('success','Mensaje borrado correctamente');
 

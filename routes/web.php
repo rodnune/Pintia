@@ -113,7 +113,7 @@ Route::group(['middleware' => ['novel']], function() {
     Route::get('/privados','MensajesController@privados');
     Route::get('/generales','MensajesController@generales');
     Route::get('/noveles','MensajesController@noveles');
-    Route::post('/delete_mensaje','MensajesController@delete');
+    Route::get('/delete_mensaje/{id}','MensajesController@delete');
 
     //Analisis metalograficos
     Route::get('/analisis_objeto/{id}','AnalisisMetalController@nuevo');
