@@ -159,7 +159,7 @@
 
                                                    @if((Session::get('user_name') == $mensaje->username) || (Session::get('admin_level') == 3))
 
-                                                       <a href="/delete_mensaje/{{$mensaje->id_mensaje}}" type="submit" class="btn btn-danger" value="Borrar"><i class="fa fa-trash"></i> Borrar mensaje</a>
+                                                       <a href="/delete_mensaje/{{$mensaje->id_mensaje}}" class="btn btn-danger"><i class="fa fa-trash"></i> Borrar mensaje</a>
                                                    @endif
 
                                                 </div>
@@ -170,7 +170,7 @@
                                @endforeach
 
                            @else
-                           <h4 class=" text-center text-danger">No se encuentran resultados.</h4>
+                           <h4 id="sinResultados" class="text-center text-danger">No se encuentran resultados.</h4>
                            @endif
 
                        </table>
@@ -207,7 +207,14 @@
 
             success: function(generales) {
                 $('#pagination_table').find("tr").remove();
-                render(generales);
+                if(generales.length==0){
+                    $('#sinResultados').text('');
+                    $('#sinResultados').text('No se encuentran resultados');
+                }else{
+                   $('#sinResultados').text('');
+                  render(generales);
+                }
+                
 
 
 
@@ -233,7 +240,14 @@
 
             success: function(noveles) {
                 $('#pagination_table').find("tr").remove();
-                render(noveles);
+                if(noveles.length==0){
+                    $('#sinResultados').empty();
+                    $('#sinResultados').text('No se encuentran resultados');
+                }else{
+                  $('#sinResultados').text('');
+                  render(noveles);
+                }
+                
 
 
 
@@ -259,7 +273,14 @@
 
             success: function(privados) {
                 $('#pagination_table').find("tr").remove();
-                render(privados);
+
+                 if(privados.length==0){
+                    $('#sinResultados').text('');
+                    $('#sinResultados').text('No hay mensajes privados');
+                }else{
+                  $('#sinResultados').text('');
+                  render(privados);
+                }
 
 
 
@@ -288,6 +309,14 @@
                     $('#pagination_table').find("tr").remove();
                     render(expertos);
 
+                    if(expertos.length==0){
+                    $('#sinResultados').text('');
+                    $('#sinResultados').text('No se encuentran resultados');
+                }else{
+                  $('#sinResultados').text('');
+                  render(expertos);
+                }
+
 
 
 
@@ -313,7 +342,7 @@
                 "<div class='form-group'><label for='Fecha'>Fecha: </label>" + mensaje.Fecha + "</div>";
 
             if ((user_id == mensaje.user_id) || (user_id == mensaje.UsuarioDestino) || admin_level == 3) {
-                var form = "<a href='/delete_mensaje/"+mensaje.id_mensaje+"' type='submit' name='submit' class='btn btn-danger' value='Borrar'><i class='fa fa-trash'></i> Borrar mensaje</a>";
+                var form = "<button onclick=window.location.href='/delete_mensaje/"+mensaje.id_mensaje+"' type='submit' name='submit' class='btn btn-danger' value='Borrar'><i class='fa fa-trash'></i> Borrar mensaje</button>";
 
 
                 msg = msg.concat(form);
