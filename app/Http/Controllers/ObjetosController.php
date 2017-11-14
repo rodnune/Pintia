@@ -204,7 +204,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
 
 
-        if (Session::get('admin_level') > 0) {
+        if (Session::get('admin_level') >= 0) {
             $objetos = $objetos->leftJoin('site_user', function ($join) {
                 $join->on('fichaobjeto.user_id', '=', 'site_user.user_id')
                     ->select('fichaobjeto.*','site_user.admin_level')

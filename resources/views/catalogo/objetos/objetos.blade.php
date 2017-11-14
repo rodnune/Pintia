@@ -203,11 +203,13 @@
                                     	<p><i class="fa fa-eye-slash" aria-hidden="true"></i></p>
                                     		@endif
                                     @endif
-
                                     <p id="materialObjeto_{{$objeto->Ref}}">
-                                        @if( (Session::get('admin_level') > $objeto->admin_level)  || ($objeto->user_id == Session::get('user_id')))
+
+                                    @if(Session::get('admin_level')!=null)
+                                        @if((Session::get('admin_level') > $objeto->admin_level())  || ($objeto->user_id == Session::get('user_id')))
 
                                             <a href="/objeto/{{$objeto->Ref}}/datos_generales" class="btn btn-primary btn-md"><i class="fa fa-pencil-square-o"></i></a>
+                                        @endif
                                         @endif
                                         <a href="/objeto/{{$objeto->Ref}}" class="btn btn-primary btn-md"><i class="fa fa-eye"></i></a>
 
