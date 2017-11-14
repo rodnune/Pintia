@@ -21,7 +21,7 @@
 
                                 <tr>
                                     <td rowspan="2">
-                                        @if($parte->idCat!=null)
+                                        @if($parte->idCat!=null && $parte->IdSubcat)
                                     {{Form::open(array('action' => 'PartesObjetoController@gestionar_medidas_parte','method' => 'post'))}}
                                         <input type="hidden" name="ref" value="{{$objeto->Ref}}">
                                         <input type="hidden" name="parte" value="{{$parte->IdParte}}">
@@ -88,7 +88,7 @@
 
 
                             @else
-                            <h4 class="text-center text-danger">Esta parte aun no esta clasificada.<br><br>Para clasificarla en la sección <i>Clasificación y Partes</i>.</h4>
+                            <h4 class="text-center text-danger">Esta parte aún no está clasificada (no tiene categoría ni subcategoría)<br><br>Para clasificarla en la sección <i>Clasificación y Partes</i>.</h4>
                             @endif
 
 

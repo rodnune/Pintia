@@ -311,11 +311,17 @@ class MultimediaController extends \App\Http\Controllers\Controller
             if ($tipo == 'Planimetria') {
                 File::move(public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg',
                     public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg');
+
+                 File::move(public_path() . '/images/fotos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg',
+                    public_path() . '/images/planimetria/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
             }
 
             if ($tipo == 'Dibujo') {
                 File::move(public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg',
                     public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg');
+
+                 File::move(public_path() . '/images/fotos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg',
+                    public_path() . '/images/dibujos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
             }
         }
 
@@ -324,23 +330,37 @@ class MultimediaController extends \App\Http\Controllers\Controller
                 if ($tipo == 'Fotografia') {
                     File::move(public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg',
                         public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg');
+
+                    File::move(public_path() . '/images/planimetria/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg',
+                    public_path() . '/images/fotos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
                 }
 
                 if ($tipo == 'Dibujo') {
                     File::move(public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg',
                         public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg');
+
+                    File::move(public_path() . '/images/planimetria/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg',
+                    public_path() . '/images/dibujos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
                 }
             }
+
                 if ($multimedia->Tipo == 'Dibujo') {
 
                     if ($tipo == 'Fotografia') {
                         File::move(public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg',
                             public_path() . '/images/fotos/Foto_' . $multimedia->IdMutimedia . '.jpg');
+
+                    File::move(public_path() . '/images/dibujos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg',
+                    public_path() . '/images/fotos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
                     }
 
                     if ($tipo == 'Planimetria') {
+
                         File::move(public_path() . '/images/dibujos/Dib_' . $multimedia->IdMutimedia . '.jpg',
                             public_path() . '/images/planimetria/Plani_' . $multimedia->IdMutimedia . '.jpg');
+
+                         File::move(public_path() . '/images/dibujos/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg',
+                    public_path() . '/images/planimetria/thumb/thumb_' . $multimedia->IdMutimedia . '.jpg');
                     }
 
 
@@ -349,7 +369,7 @@ class MultimediaController extends \App\Http\Controllers\Controller
 
                 DB::table('almacenmultimedia')->where('idmutimedia', '=', $id)->update(['titulo' => $titulo, 'tipo' => $tipo]);
 
-                return redirect(URL::previous())->with('success','Multimedia modificado correctamente');
+                return redirect('/multimedias')->with('success','Multimedia modificado correctamente');
 
             }
 

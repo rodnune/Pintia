@@ -144,6 +144,19 @@ class Objeto extends Model
 
     }
 
+    public function medidasNoAsociadas(){
+
+
+        $no_asociadas = DB::table('medidas')->whereNotIn('medidas.siglasmedida',function($q){
+            $q->select('medidasobjeto.siglasmedida')->from('medidasobjeto')->where('medidasobjeto.ref','=',$this->Ref);
+        })
+            ->get();
+
+
+        return $no_asociadas;
+
+    }
+
     public function materialesObjeto(){
 
 

@@ -99,7 +99,7 @@
 
                                                 <div class="col-xs-6" align="left">
                                                 @if($multimedia->Tipo == 'Documento')
-                                                  <a href="/archivo/{{$multimedia->IdMutimedia}}" class="btn btn-info btn-md" download><i class="fa fa-download"></i></a>
+                                                  <a href="/archivo/{{$multimedia->IdMutimedia}}" class="btn btn-primary btn-md" download><i class="fa fa-download"></i></a>
                                                     @endif
                                             <button onclick="window.location.href='/edit_multimedia/{{$multimedia->IdMutimedia}}'" class="btn btn-primary btn-md"><i class="fa fa-pencil-square-o"></i></button>
                                                 </div>

@@ -186,27 +186,20 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
 
             $objeto = Objeto::find($ref);
             $parte = ParteObjeto::find($id);
-            $medidas_categoria = $parte->medidasAsociadasCategoria()->keyBy('SiglasMedida')->all();
-            $medidas_subcategoria = $parte->medidasAsociadasSubcategoria()->keyBy('SiglasMedida')->all();
-
-            $medidas_parte_objeto = $parte->medidasParteObjeto()->keyBy('SiglasMedida')->all();
-
-            $medidas_parte_objeto = collect($medidas_parte_objeto);
-
-           $medidas_categoria = collect($medidas_categoria);
-           $medidas_subcategoria = collect($medidas_subcategoria);
+            
 
 
-           $medidas = collect($medidas_categoria->union($medidas_subcategoria)->all());
+           $medidas = $objeto->medidasNoAsociadas();
 
-           $medidas = $medidas->diffKeys($medidas_parte_objeto);
+           $asociadas = $objeto->medidasObjeto();
+
 
 
             $nota = $objeto->notaSeccion('Medidas Objeto');
 
 
             return view('catalogo.objetos.layout_medidas_parte',['objeto' => $objeto,'parte' => $parte,
-                'medidas' => $medidas,'asociadas' => $medidas_parte_objeto,'nota' => $nota]);
+                'medidas' => $medidas,'asociadas' => $asociadas,'nota' => $nota]);
         }
 
 
@@ -238,25 +231,35 @@ class PartesObjetoController extends \App\Http\Controllers\Controller
                     'valor'   => 'required|numeric'
                  ]);
 
+            
+
                 if ($validator->fails()) {
                     return redirect(URL::previous())->withErrors($validator);
                 }
+
                     if(DB::table('medidassubcategoria')->where('idsubcat','=',$subcat)->where('idcat','=',$cat)->where('siglasmedida','=',$medida)->exists()){
 
                     }else{
                         DB::table('medidassubcategoria')->insert(['idcat' => $cat,'idsubcat' => $subcat,
                     'siglasmedida' => $medida]);
                     }
+                    
                 
 
-                        if(DB::table('medidascategoria')->where('idcat','=',$cat)->where('siglasmedida','=',$medida)->exists())
-                DB::table('medidascategoria')->insert(['idcat' => $cat,
+                        if(DB::table('medidascategoria')->where('idcat','=',$cat)->where('siglasmedida','=',$medida)->exists()){
+
+                        }else{
+                        DB::table('medidascategoria')->insert(['idcat' => $cat,
                     'siglasmedida' => $medida]);
+                        }
+                
 
 
                 DB::table('medidasobjeto')->insert(['idcat' => $cat,'idsubcat' => $subcat,
                     'ref' => $ref,'idparte' => $parte,'siglasmedida' => $medida
                     ,'valor' => $valor,'esposible' => $posible]);
+
+
 
                 return redirect('/objeto/'.$ref.'/parte/'.$parte.'/medidas')->with('success','Medida añadida a la parte del objeto');
 

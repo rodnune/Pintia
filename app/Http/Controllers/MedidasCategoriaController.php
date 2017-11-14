@@ -222,6 +222,7 @@ class MedidasCategoriaController extends \App\Http\Controllers\Controller
 
                 if($request->submit == 'Asociar'){
 
+                    
                     DB::table('medidascategoria')->insert(['idcat' => $id, 'siglasmedida' => $medida]);
 
                     return redirect(URL::previous())->with('success','Medida: ' .$medida.' asociada correctamente');
