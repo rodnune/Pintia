@@ -160,8 +160,8 @@
                             </td>
 
                                 <td colspan="1" align="center"><a href="/inhumacion/{{$inhumacion ->IdEnterramiento}}" class="btn btn-primary" value="Ver"><i class="fa fa-eye"></i> Ver</a></td>
-
-                            @if( (Session::get('admin_level') > $inhumacion->admin_level)  || ($inhumacion->user_id == Session::get('user_id')) )
+                        @if(Session::get('admin_level')!=null)
+                            @if( (Session::get('admin_level') > $inhumacion->admin_level())  || ($inhumacion->user_id == Session::get('user_id')) )
                                 <td colspan="1" align="center">
 
 
@@ -177,14 +177,8 @@
 
                             </td>
 
-                            @else
-
-                            <td colspan="1" align="center"></td>
-                            <td colspan="1" align="center"></td>
-
-                      
-
-
+                       
+                            @endif
                             @endif
                            </tr>
 

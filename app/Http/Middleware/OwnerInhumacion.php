@@ -38,13 +38,20 @@ class OwnerInhumacion
         $admin_level = $inhumacion->admin_level();
 
 
+            if(Session::get('admin_level')!=null){
 
-        if ((Session::get('admin_level') > $admin_level) OR ($owner == Session::get('user_id'))) {
-            return $next($request);
-        }else{
-            return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
+                if ((Session::get('admin_level') > $admin_level) OR ($owner == Session::get('user_id'))) {
+                        return $next($request);
+                    }else{
+
+                        return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
+                            'descripcion' => Lang::get('messages.no_autorizado')]);
+                    }
+            }else{
+                return response()->view('errors.layout_response',['mensaje' => Lang::get('messages.denegado'),
                 'descripcion' => Lang::get('messages.no_autorizado')]);
-        }
+            }
+       
 
     }
 

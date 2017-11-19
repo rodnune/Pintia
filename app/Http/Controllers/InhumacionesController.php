@@ -170,6 +170,7 @@ class InhumacionesController extends \App\Http\Controllers\Controller
     public function get($id){
             $inhumacion = Inhumacion::find($id);
 
+
             return view('catalogo.inhumaciones.layout_inhumacion',['inhumacion' => $inhumacion]);
 
 
