@@ -12,6 +12,7 @@ use App\Models\ParteObjeto;
 use App\Models\Objeto;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
+use App\Models\UnidadEstratigrafica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -51,6 +52,8 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
         $materiales_objeto = $materiales_grouped->groupBy('Ref');
 
+        $ues = UnidadEstratigrafica::all();
+
 
         if (Session::get('admin_level') > 0) {
 
@@ -60,13 +63,12 @@ class ObjetosController extends \App\Http\Controllers\Controller
           
                 $objetos = Objeto::getObjetosVisibles();
 
-                //return $objetos;
         }
 
 
 
         return view('catalogo.objetos.layout_objetos', ['categorias' => $categorias,
-            'materiales' => $materiales, 'localizaciones' => $localizaciones, 'objetos' => $objetos, 'materiales_objeto' => $materiales_objeto]);
+            'materiales' => $materiales, 'localizaciones' => $localizaciones, 'objetos' => $objetos, 'materiales_objeto' => $materiales_objeto,'ues' => $ues]);
 
     }
 
@@ -167,6 +169,12 @@ class ObjetosController extends \App\Http\Controllers\Controller
 
             $datos_consulta->put('sectortrama',$localizacion->SectorTrama);
             $datos_consulta->put('sectorsubtrama',$localizacion->SectorSubtrama);
+            }
+
+            if ($request->has('ue')) {
+
+                $objetos->where('ue','=',$request->input('ue'));
+                $datos_consulta->put('ue',$request->input('ue'));
             }
 
             if($request->has('material')){

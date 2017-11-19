@@ -56,10 +56,21 @@
                                                     @endforeach
                                             </select>
                                         </td>
+
+                                        <td align="center"><strong>UE: </strong></td>
+                                        <td align="left">
+                                            <select class="form-control" name="ue" style="width:100%">
+                                                <option value="" selected>---Seleccionar UE---</option>
+                                                @foreach($ues as $ue)
+                                                <option value="{{$ue->UE}}">{{$ue->UE}}</option>
+
+                                                    @endforeach
+                                            </select>
+                                        </td>
                                     </tr>
 
                                     <tr id="fila_botones_filtros">
-                                        <td align="center" colspan="6">
+                                        <td align="center" colspan="8">
                                             <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar tumbas</button>
                                                 <a class="btn btn-primary" href="/tumbas"><i class="fa fa-eye"></i> Ver todo</a>
                                         </td>
@@ -93,6 +104,13 @@
                                         <strong>Localizacion:</strong> {{$datos->get('sector_trama')}}-{{$datos->get('sector_subtrama')}}
                                     @endif
 
+                                    @if($datos->has('ue'))
+                                        <strong>UE:</strong> {{$datos->get('ue')}}
+                                    @endif
+
+
+
+
 
                                 @endif
                             </p>
@@ -110,7 +128,6 @@
                             </th>
                                 @else
 
-                                <th scope="col"></th>
 
                             @endif
 
@@ -130,8 +147,8 @@
 
                            </td>
 
-
-                            @if((Session::get('admin_level') > $tumba->admin_level)  || ($tumba->user_id == Session::get('user_id')))
+                        @if(Session::get('admin_level')!=null)
+                            @if((Session::get('admin_level') > $tumba->admin_level())  || ($tumba->user_id == Session::get('user_id')))
 
 
                            <td align="center">
@@ -144,9 +161,9 @@
 
                                 @else
 
-                                <td align="center"></td>
 
 
+                           @endif
                            @endif
 
                        </tr>

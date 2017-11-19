@@ -14,6 +14,7 @@ use Validator;
 use Carbon\Carbon;
 use Config;
 use App\Models\Tumba;
+use App\Models\UnidadEstratigrafica;
 use Illuminate\Support\Facades\Session;
 use URL;
 
@@ -31,12 +32,14 @@ class TumbasController extends \App\Http\Controllers\Controller
 
         $localizaciones = DB::table('localizacion')->get(['IdLocalizacion','SectorTrama','SectorSubtrama']);
 
+        $ues = DB::table('unidadestratigrafica')->orderBy('ue')->get(['UE']);
+
 
        $tumbas =  Tumba::getTumbas();
 
 
         return view('catalogo.tumbas.layout_tumbas',['tumbas' => $tumbas,
-            'campanyas' => $campanyas, 'tipos' => $tipos,'localizaciones' => $localizaciones]);
+            'campanyas' => $campanyas, 'tipos' => $tipos,'localizaciones' => $localizaciones,'ues' => $ues]);
     }
 
 
@@ -205,9 +208,15 @@ class TumbasController extends \App\Http\Controllers\Controller
         $tumbas =  $tumba->newQuery();
 
         if($request->has('anio')){
-            $tumbas->where('AnyoCampanya', $request->input('anio'));
+            $tumbas->where('AnyoCampanya','=', $request->input('anio'));
 
                 $datos_consulta->put('anio',$request->input('anio'));
+        }
+
+        if($request->has('ue')){
+            $tumbas->where('UE', $request->input('ue'));
+
+                $datos_consulta->put('ue',$request->input('ue'));
         }
 
         if($request->has('tipo_tumba')){
@@ -241,7 +250,10 @@ class TumbasController extends \App\Http\Controllers\Controller
         }
 
 
-        $tumbas_busqueda = $tumbas->join('site_user','site_user.user_id','=','tumba.user_id')->get();
+
+
+        $tumbas_busqueda = $tumbas->leftJoin('site_user','site_user.user_id','=','tumba.user_id')->get();
+
 
 
 

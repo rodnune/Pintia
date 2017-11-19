@@ -31,6 +31,7 @@
                             <tr>
                                <td colspan="2"><strong>UE </strong></td>
                                 <td colspan="2">
+                                {{$tumba->UE}}
                                 </td>
                             </tr>
 

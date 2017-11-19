@@ -91,6 +91,26 @@
 
                                         </select>
                                 </td>
+
+                                <td align="center"><strong>UE: </strong></td>
+
+                                <td align="left">
+                                    <select class="form-control" name="ue" style="width:100%">
+
+                                        @if(count($localizaciones) == 0)
+
+                                            <option disabled>No hay UEs</option>
+
+                                        @else
+                                                  <option value="">--- Seleccionar UE ---</option>
+                                            @foreach($ues as $ue)
+                                                <option value="{{$ue->UE}}">{{$ue->UE}}</option>
+                                            @endforeach
+                                            @endif
+
+
+                                        </select>
+                                </td>
                             </tr>
 
 
@@ -98,7 +118,7 @@
 
 
                             <tr id="fila_botones_filtros">
-                                <td align="center" colspan="6">
+                                <td align="center" colspan="8">
                                     <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar objetos</button>
                                     <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
                                                     @if(Session::get('admin_level') > 0)
@@ -152,6 +172,10 @@
                             @endif
                                 @if($datos->has('referencia'))
                                     <strong>Referencia:</strong> {{$datos->get('referencia')}}
+                                @endif
+
+                                @if($datos->has('ue'))
+                                    <strong>UE:</strong> {{$datos->get('ue')}}
                                 @endif
 
                         @endif
