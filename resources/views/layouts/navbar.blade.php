@@ -173,7 +173,7 @@
                             <div class="form-group">
                                 <div class="input-group col-sm-6 col-sm-offset-3">
                                     <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                    <input type="text" class="form-control" id="usuario" name="usuario" autocomplete="off" size="14" placeholder="Usuario" required autofocus>
+                                    <input type="text" class="form-control" style="width : 150%" id="usuario" name="usuario" autocomplete="off" size="14" placeholder="Usuario" required autofocus>
 
                                     </div>
                             </div>
@@ -181,7 +181,7 @@
                             <div class="form-group">
                                 <div class="input-group col-sm-6 col-sm-offset-3">
                                     <div class="input-group-addon"><i class="fa fa-lock"></i></div>
-                                    <input type="password" class="form-control" id="password" name="password" autocomplete="off" size="14" placeholder="Contraseña" required>
+                                    <input type="password" class="form-control" style="width : 150%" id="password" name="password" autocomplete="off" size="14" placeholder="Contraseña" required>
 
                                 </div>
                             </div><br>
@@ -195,8 +195,7 @@
                                         <i class="fa fa-sign-in"></i> Entrar</button>
                                     &nbsp;&nbsp;&nbsp;
 
-                                    <button type="reset" name="cancel" class="btn btn-danger">
-                                   <i class="fa fa-times"></i> Limpiar</button>
+                                    <button type="reset" name="cancel" class="btn btn-danger" value="Cancelar">  <i class="fa fa-times"></i> Cancelar</button>
                                     </p>
 
                             </div>
