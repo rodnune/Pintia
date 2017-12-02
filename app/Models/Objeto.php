@@ -222,6 +222,18 @@ class Objeto extends Model
 
     }
 
+    public function lugarObjeto(){
+
+      $lugar = DB::table('lugar')
+            ->join('localizacion', function ($join) {
+                $join->on('localizacion.siglazona', '=', 'lugar.siglazona')
+                    ->where('localizacion.idlocalizacion', '=', $this->Localizacion);
+            })
+            ->first();
+
+            return $lugar;
+    }
+
 
 
 

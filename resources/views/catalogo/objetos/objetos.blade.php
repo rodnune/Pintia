@@ -120,6 +120,7 @@
                             <tr id="fila_botones_filtros">
                                 <td align="center" colspan="8">
                                     <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar objetos</button>
+                                    <a  href="{{URL::previous()}}" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retroceder </a>
                                     <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
                                                     @if(Session::get('admin_level') > 0)
                                     <a href="/new_objeto" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo </a>
@@ -137,6 +138,7 @@
 
                                 <td align="center" colspan="2">
                                     <button type="submit" name="submit" class="btn btn-primary" value="Ver"> <i class="fa fa-search"></i> Buscar objetos</button>
+                                    <a  href="{{URL::previous()}}" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retroceder </a>
                                     <a class="btn btn-primary" href="/objetos"><i class="fa fa-eye"></i> Ver todo</a>
                                     @if(Session::get('admin_level') > 0)
                                         <a href="/new_objeto" class="btn btn-success" value="Nuevo"><i class="fa fa-plus"></i> Nuevo </a>
@@ -185,7 +187,6 @@
 
                     <div class="container" id="tourpackages-carousel">
 
-                    <div class="row">
                     @foreach($objetos as $objeto)
                         <div class="col-xs-18 col-sm-6 col-md-3">
 
@@ -219,6 +220,11 @@
                                             <p id="descripcion_objeto">{{str_limit(strval(strip_tags($objeto->Descripcion)), 30,'...')}} </p>
                                         @endif
                                     @endif
+                                    @if($objeto->Localizacion!=null)
+                                    <p><i class="fa fa-map-marker" aria-hidden="true"></i> {{$objeto->lugarObjeto()->Toponimo}}</p>
+                                    @else
+                                    <p><i class="fa fa-map-marker" aria-hidden="true"></i> Sin localizacion asignada</p>
+                                    @endif
 
                                     @if(Session::get('admin_level') > 0)
                                     		@if($objeto->VisibleCatalogo == 'Si')
@@ -249,7 +255,6 @@
 
 
 
-                    </div>
                     </div>
                         <!-- End row -->
 

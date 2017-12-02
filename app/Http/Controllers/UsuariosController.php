@@ -22,11 +22,10 @@ class UsuariosController extends \App\Http\Controllers\Controller
 
     public function index(){
 
-       $usuarios = DB::table('site_user_info')
-            ->join('site_user', 'site_user.user_id', '=', 'site_user_info.user_id')
-            ->select('site_user_info.first_name','site_user_info.last_name','site_user.username','site_user.admin_level','site_user.user_id')
-            ->orderBy('site_user.admin_level','desc')
-            ->get();
+       $usuarios = User::all();
+
+        $usuario = User::find(11);
+
 
         return view('gestion.usuarios.layout_usuarios',['usuarios' => $usuarios]);
     }
@@ -234,13 +233,14 @@ class UsuariosController extends \App\Http\Controllers\Controller
     public function profile(){
 
 
-        $usuario = DB::table('site_user_info')
-            ->join('site_user', 'site_user.user_id', '=', 'site_user_info.user_id')
-            ->where('site_user.user_id','=',Session::get('user_id'))
+        $usuario = User::find(Session::get('user_id'));
+
+            $informacion = DB::table('site_user_info')
+            ->where('site_user_info.user_id','=',Session::get('user_id'))
             ->get()
             ->first();
 
-        return view('perfil.layout_perfil',['usuario' => $usuario]);
+        return view('perfil.layout_perfil',['usuario' => $usuario,'info' => $informacion]);
 
 
     }

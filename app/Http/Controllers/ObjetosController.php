@@ -29,6 +29,7 @@ class ObjetosController extends \App\Http\Controllers\Controller
     public function index()
     {
 
+
         $subcategorias = DB::table('categoria')->leftJoin('subcategoria', 'subcategoria.idcat', '=', 'categoria.idcat')
             ->select('categoria.denominacion as denominacioncat', 'subcategoria.denominacion as denominacionsubcat', 'categoria.idcat', 'subcategoria.idsubcat')
             ->get();

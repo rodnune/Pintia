@@ -59,8 +59,6 @@
                             <thead>
                                 <tr class="info">
                                     <th style="text-align : center;" scope="col">Username</th>
-                                    <th style="text-align : center;" scope="col">Nombre</th>
-                                    <th style="text-align : center;" scope="col">Apellidos</th>
                                     <th style="text-align : center;" scope="col">Tipo User</th>
                             @if(Session::get('admin_level') > 2 )
                                     <th style="text-align : center;" scope="col"></th>
@@ -78,8 +76,6 @@
                         @foreach($usuarios as $usuario)
                             <tr>
                                 <td>{{$usuario->username}}</td>
-                                <td>{{$usuario->first_name}}</td>
-                                <td>{{$usuario->last_name}}</td>
                                 <td>{{$tipos_usuario[$usuario->admin_level]}}</td>
                             @if(Session::get('admin_level') > 2 )
 
@@ -88,7 +84,11 @@
                             </td>
 
                             <td align="center">
+                                @if($usuario->registrosPendientes()->registros == 0)
                                 <button onclick="window.location.href='/delete_usuario/{{$usuario->user_id}}'" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
+                                @else
+                                <span class="text-danger">Registros pendientes</span>
+                                @endif
                             </td>
                             @else
                             <td></td>

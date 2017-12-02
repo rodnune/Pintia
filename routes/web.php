@@ -310,7 +310,7 @@ Route::group(['middleware' => ['experto']] ,function() {
 
     //Usuarios
     Route::get('/usuarios','UsuariosController@index');
-
+    Route::get('/usuario/{id}','UsuariosController@get_usuario');
     Route::get('/new_usuario','UsuariosController@form_create');
     Route::post('/new_usuario','UsuariosController@create');
     Route::get('/search_usuarios','UsuariosController@search');
